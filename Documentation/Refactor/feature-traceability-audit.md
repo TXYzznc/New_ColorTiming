@@ -27,6 +27,8 @@ Unity 已完成脚本编译且该文件编译错误为 0。由于 8093 当前仍
 
 新增 `PlayerRuntimeExecutionPlayModeTests`：通过 `IGameInput` 语义边界驱动真实 Hero，覆盖双向移动/朝向、武器拾取、受击强制丢弃、受击拒绝窗口、Dash 移动、成功 Dash 回血与 0.45 时间脉冲、连续伤害、死亡镜头及 `DeathOver` Animation Event 强制重开。脚本编译错误为 0；执行前不提升对应证据等级。
 
+新增 `WeaponAnimationEventExecutionPlayModeTests`：从正式 `HeroAnimStae.Attack` 接收器进入，覆盖普通攻击、Boss1 三武器×三颜色、Boss2 三武器×四色和剪刀第二段，共 23 条实际事件路径；每条都等待对应 GF.Entity，读取 `Skill_base` 的武器身份、攻击者和炸弹/飞机指针参数。脚本编译错误为 0；执行及最终视觉观察前，`WEAPON-006`/`ANIM-003` 继续保持非完成证据。
+
 ## 回到实现/验收的弱证据项
 
 - StartMenu：退出应用、每条加载淡入淡出、设置新测试执行。
