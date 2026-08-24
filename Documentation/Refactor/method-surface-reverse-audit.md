@@ -10,6 +10,7 @@
 - 目标：`Assets/Game/Scripts/ColorTiming/Legacy` 及拆出的 ColorTiming 框架模块
 - 解析器：Unity 2022.3 自带 `Microsoft.CodeAnalysis.CSharp`，比较方法名和参数类型，不使用文本正则猜测 C# 结构。
 - 交叉证据：资源处置表、UnityEvent/Animation Event 清单、代码引用、场景/Prefab missing-script 审计、现有 EditMode/PlayMode 合同。
+- 可重复执行：`powershell -File tools/audit_color_timing_method_surface.ps1`；机器可读结果为 `method-surface-audit.json`。
 
 ## 汇总
 

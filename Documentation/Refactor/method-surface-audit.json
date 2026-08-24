@@ -1,0 +1,904 @@
+{
+  "status": "PASS",
+  "generatedAtUtc": "2026-08-24T13:25:00.7987374Z",
+  "sourceProject": "D:\\unity\\UnityProject\\ColorTimeing\\ColorTimeing",
+  "targetProject": "D:\\unity\\UnityProject\\ColorTimeing\\New\\_ColorTiming",
+  "roslynRoot": "C:\\Program Files\\Unity\\Hub\\Editor\\2022.3.62f3c1\\Editor\\Data\\Tools\\ScriptUpdater",
+  "sourceScriptCount": 64,
+  "removedScriptCount": 7,
+  "retainedScriptCount": 57,
+  "unchangedSurfaceScriptCount": 36,
+  "refactoredSurfaceScriptCount": 21,
+  "missingTargetCount": 0,
+  "unexpectedMissingCount": 0,
+  "staleAllowedExceptionCount": 0,
+  "countChecks": {
+    "source64": true,
+    "removed7": true,
+    "retained57": true,
+    "refactoredSurface21": true
+  },
+  "failures": [],
+  "records": [
+    {
+      "script": "Anim/AnimStateMachine_DMD.cs",
+      "disposition": "removed",
+      "reason": "unreferenced animation prototype",
+      "sourceMethodCount": 10,
+      "targetMethodCount": 0,
+      "missingSourceMethods": [
+        "Start()",
+        "Update()",
+        "TryGoState_CNow(StateItem)",
+        "GoState(StateItem)",
+        "AddCondition(TransfomAnimCondition)",
+        "CheckCondition(GlobalConditionPram)",
+        "AddCondition(string)",
+        "AddCondition(float,float)",
+        "CheckCondition(GlobalConditionPram)",
+        "AddGlobalConditionPram(ConditionPram)"
+      ],
+      "allowedMissingMethods": [
+        "Start()",
+        "Update()",
+        "TryGoState_CNow(StateItem)",
+        "GoState(StateItem)",
+        "AddCondition(TransfomAnimCondition)",
+        "CheckCondition(GlobalConditionPram)",
+        "AddCondition(string)",
+        "AddCondition(float,float)",
+        "CheckCondition(GlobalConditionPram)",
+        "AddGlobalConditionPram(ConditionPram)"
+      ],
+      "unexpectedMissingMethods": [],
+      "staleAllowedExceptions": []
+    },
+    {
+      "script": "Anim/EnterAnimStateEvent.cs",
+      "disposition": "source-surface-retained",
+      "reason": "",
+      "sourceMethodCount": 2,
+      "targetMethodCount": 2,
+      "missingSourceMethods": [],
+      "allowedMissingMethods": null,
+      "unexpectedMissingMethods": [],
+      "staleAllowedExceptions": []
+    },
+    {
+      "script": "Anim/PlayAnimation.cs",
+      "disposition": "removed",
+      "reason": "unreferenced no-op prototype",
+      "sourceMethodCount": 2,
+      "targetMethodCount": 0,
+      "missingSourceMethods": [
+        "Start()",
+        "Update()"
+      ],
+      "allowedMissingMethods": [
+        "Start()",
+        "Update()"
+      ],
+      "unexpectedMissingMethods": [],
+      "staleAllowedExceptions": []
+    },
+    {
+      "script": "Anim/RestXuli.cs",
+      "disposition": "source-surface-retained",
+      "reason": "",
+      "sourceMethodCount": 1,
+      "targetMethodCount": 1,
+      "missingSourceMethods": [],
+      "allowedMissingMethods": null,
+      "unexpectedMissingMethods": [],
+      "staleAllowedExceptions": []
+    },
+    {
+      "script": "Anim/Xuli.cs",
+      "disposition": "source-surface-retained",
+      "reason": "",
+      "sourceMethodCount": 1,
+      "targetMethodCount": 1,
+      "missingSourceMethods": [],
+      "allowedMissingMethods": null,
+      "unexpectedMissingMethods": [],
+      "staleAllowedExceptions": []
+    },
+    {
+      "script": "Boss1_CollionTest.cs",
+      "disposition": "source-surface-retained",
+      "reason": "",
+      "sourceMethodCount": 2,
+      "targetMethodCount": 2,
+      "missingSourceMethods": [],
+      "allowedMissingMethods": null,
+      "unexpectedMissingMethods": [],
+      "staleAllowedExceptions": []
+    },
+    {
+      "script": "Boss1_Controller.cs",
+      "disposition": "refactored-method-surface",
+      "reason": "",
+      "sourceMethodCount": 16,
+      "targetMethodCount": 21,
+      "missingSourceMethods": [
+        "CreateHP_ctp(ColorType,int)"
+      ],
+      "allowedMissingMethods": "CreateHP_ctp(ColorType,int)",
+      "unexpectedMissingMethods": [],
+      "staleAllowedExceptions": []
+    },
+    {
+      "script": "Boss1Anim.cs",
+      "disposition": "source-surface-retained",
+      "reason": "",
+      "sourceMethodCount": 6,
+      "targetMethodCount": 7,
+      "missingSourceMethods": [],
+      "allowedMissingMethods": null,
+      "unexpectedMissingMethods": [],
+      "staleAllowedExceptions": []
+    },
+    {
+      "script": "Boss1SoundManager.cs",
+      "disposition": "refactored-method-surface",
+      "reason": "",
+      "sourceMethodCount": 3,
+      "targetMethodCount": 2,
+      "missingSourceMethods": [
+        "Start()",
+        "Update()"
+      ],
+      "allowedMissingMethods": [
+        "Start()",
+        "Update()"
+      ],
+      "unexpectedMissingMethods": [],
+      "staleAllowedExceptions": []
+    },
+    {
+      "script": "Boss2_Controller_w.cs",
+      "disposition": "source-surface-retained",
+      "reason": "",
+      "sourceMethodCount": 7,
+      "targetMethodCount": 10,
+      "missingSourceMethods": [],
+      "allowedMissingMethods": null,
+      "unexpectedMissingMethods": [],
+      "staleAllowedExceptions": []
+    },
+    {
+      "script": "Boss2_Controller.cs",
+      "disposition": "refactored-method-surface",
+      "reason": "",
+      "sourceMethodCount": 19,
+      "targetMethodCount": 25,
+      "missingSourceMethods": [
+        "CreateHP_ctp(ColorType,int)"
+      ],
+      "allowedMissingMethods": "CreateHP_ctp(ColorType,int)",
+      "unexpectedMissingMethods": [],
+      "staleAllowedExceptions": []
+    },
+    {
+      "script": "Boss2Anim_s.cs",
+      "disposition": "source-surface-retained",
+      "reason": "",
+      "sourceMethodCount": 7,
+      "targetMethodCount": 8,
+      "missingSourceMethods": [],
+      "allowedMissingMethods": null,
+      "unexpectedMissingMethods": [],
+      "staleAllowedExceptions": []
+    },
+    {
+      "script": "Boss2SoundManager.cs",
+      "disposition": "refactored-method-surface",
+      "reason": "",
+      "sourceMethodCount": 3,
+      "targetMethodCount": 2,
+      "missingSourceMethods": [
+        "Start()",
+        "Update()"
+      ],
+      "allowedMissingMethods": [
+        "Start()",
+        "Update()"
+      ],
+      "unexpectedMissingMethods": [],
+      "staleAllowedExceptions": []
+    },
+    {
+      "script": "CameraShow.cs",
+      "disposition": "source-surface-retained",
+      "reason": "",
+      "sourceMethodCount": 2,
+      "targetMethodCount": 3,
+      "missingSourceMethods": [],
+      "allowedMissingMethods": null,
+      "unexpectedMissingMethods": [],
+      "staleAllowedExceptions": []
+    },
+    {
+      "script": "Death_sc_Over.cs",
+      "disposition": "source-surface-retained",
+      "reason": "",
+      "sourceMethodCount": 3,
+      "targetMethodCount": 4,
+      "missingSourceMethods": [],
+      "allowedMissingMethods": null,
+      "unexpectedMissingMethods": [],
+      "staleAllowedExceptions": []
+    },
+    {
+      "script": "GameManager.cs",
+      "disposition": "removed",
+      "reason": "replaced by persistent IColorTimingSettings/GF.Setting",
+      "sourceMethodCount": 0,
+      "targetMethodCount": 0,
+      "missingSourceMethods": [],
+      "allowedMissingMethods": [],
+      "unexpectedMissingMethods": [],
+      "staleAllowedExceptions": []
+    },
+    {
+      "script": "Hero_XuliTip.cs",
+      "disposition": "source-surface-retained",
+      "reason": "",
+      "sourceMethodCount": 3,
+      "targetMethodCount": 4,
+      "missingSourceMethods": [],
+      "allowedMissingMethods": null,
+      "unexpectedMissingMethods": [],
+      "staleAllowedExceptions": []
+    },
+    {
+      "script": "HeroAnimStae.cs",
+      "disposition": "refactored-method-surface",
+      "reason": "",
+      "sourceMethodCount": 13,
+      "targetMethodCount": 12,
+      "missingSourceMethods": [
+        "StartSupHit()"
+      ],
+      "allowedMissingMethods": "StartSupHit()",
+      "unexpectedMissingMethods": [],
+      "staleAllowedExceptions": []
+    },
+    {
+      "script": "HeroCamera_.cs",
+      "disposition": "source-surface-retained",
+      "reason": "",
+      "sourceMethodCount": 1,
+      "targetMethodCount": 1,
+      "missingSourceMethods": [],
+      "allowedMissingMethods": null,
+      "unexpectedMissingMethods": [],
+      "staleAllowedExceptions": []
+    },
+    {
+      "script": "HeroController.cs",
+      "disposition": "refactored-method-surface",
+      "reason": "",
+      "sourceMethodCount": 21,
+      "targetMethodCount": 24,
+      "missingSourceMethods": [
+        "BulletTime()",
+        "GetIntType()"
+      ],
+      "allowedMissingMethods": [
+        "BulletTime()",
+        "GetIntType()"
+      ],
+      "unexpectedMissingMethods": [],
+      "staleAllowedExceptions": []
+    },
+    {
+      "script": "HeroFrireSystem.cs",
+      "disposition": "source-surface-retained",
+      "reason": "",
+      "sourceMethodCount": 2,
+      "targetMethodCount": 6,
+      "missingSourceMethods": [],
+      "allowedMissingMethods": null,
+      "unexpectedMissingMethods": [],
+      "staleAllowedExceptions": []
+    },
+    {
+      "script": "HeroSoundManager.cs",
+      "disposition": "refactored-method-surface",
+      "reason": "",
+      "sourceMethodCount": 7,
+      "targetMethodCount": 7,
+      "missingSourceMethods": [
+        "Start()"
+      ],
+      "allowedMissingMethods": "Start()",
+      "unexpectedMissingMethods": [],
+      "staleAllowedExceptions": []
+    },
+    {
+      "script": "I_Damage.cs",
+      "disposition": "source-surface-retained",
+      "reason": "",
+      "sourceMethodCount": 1,
+      "targetMethodCount": 1,
+      "missingSourceMethods": [],
+      "allowedMissingMethods": null,
+      "unexpectedMissingMethods": [],
+      "staleAllowedExceptions": []
+    },
+    {
+      "script": "Pickup_Weapon.cs",
+      "disposition": "refactored-method-surface",
+      "reason": "",
+      "sourceMethodCount": 11,
+      "targetMethodCount": 17,
+      "missingSourceMethods": [
+        "OnTriggerStay2D(Collider2D)",
+        "Start()",
+        "TrayPickUP()"
+      ],
+      "allowedMissingMethods": [
+        "Start()",
+        "OnTriggerStay2D(Collider2D)",
+        "TrayPickUP()"
+      ],
+      "unexpectedMissingMethods": [],
+      "staleAllowedExceptions": []
+    },
+    {
+      "script": "PlayerInput.cs",
+      "disposition": "removed",
+      "reason": "empty prototype; replaced by IGameInput",
+      "sourceMethodCount": 2,
+      "targetMethodCount": 0,
+      "missingSourceMethods": [
+        "Start()",
+        "Update()"
+      ],
+      "allowedMissingMethods": [
+        "Start()",
+        "Update()"
+      ],
+      "unexpectedMissingMethods": [],
+      "staleAllowedExceptions": []
+    },
+    {
+      "script": "Skill/HitFX_Base.cs",
+      "disposition": "source-surface-retained",
+      "reason": "",
+      "sourceMethodCount": 1,
+      "targetMethodCount": 4,
+      "missingSourceMethods": [],
+      "allowedMissingMethods": null,
+      "unexpectedMissingMethods": [],
+      "staleAllowedExceptions": []
+    },
+    {
+      "script": "Skill/Sk_Bo2_dundi.cs",
+      "disposition": "source-surface-retained",
+      "reason": "",
+      "sourceMethodCount": 3,
+      "targetMethodCount": 7,
+      "missingSourceMethods": [],
+      "allowedMissingMethods": null,
+      "unexpectedMissingMethods": [],
+      "staleAllowedExceptions": []
+    },
+    {
+      "script": "Skill/sk_bo2_luodian.cs",
+      "disposition": "refactored-method-surface",
+      "reason": "",
+      "sourceMethodCount": 4,
+      "targetMethodCount": 7,
+      "missingSourceMethods": [
+        "End()"
+      ],
+      "allowedMissingMethods": "End()",
+      "unexpectedMissingMethods": [],
+      "staleAllowedExceptions": []
+    },
+    {
+      "script": "Skill/skill_base_randomHit.cs",
+      "disposition": "source-surface-retained",
+      "reason": "",
+      "sourceMethodCount": 1,
+      "targetMethodCount": 1,
+      "missingSourceMethods": [],
+      "allowedMissingMethods": null,
+      "unexpectedMissingMethods": [],
+      "staleAllowedExceptions": []
+    },
+    {
+      "script": "Skill/Skill_base.cs",
+      "disposition": "source-surface-retained",
+      "reason": "",
+      "sourceMethodCount": 8,
+      "targetMethodCount": 16,
+      "missingSourceMethods": [],
+      "allowedMissingMethods": null,
+      "unexpectedMissingMethods": [],
+      "staleAllowedExceptions": []
+    },
+    {
+      "script": "Skill/Skill_Bo1_Atk5_b.cs",
+      "disposition": "refactored-method-surface",
+      "reason": "",
+      "sourceMethodCount": 6,
+      "targetMethodCount": 5,
+      "missingSourceMethods": [
+        "Start()",
+        "Update()"
+      ],
+      "allowedMissingMethods": [
+        "Start()",
+        "Update()"
+      ],
+      "unexpectedMissingMethods": [],
+      "staleAllowedExceptions": []
+    },
+    {
+      "script": "Skill/Skill_Bo1_Atk5_I.cs",
+      "disposition": "source-surface-retained",
+      "reason": "",
+      "sourceMethodCount": 2,
+      "targetMethodCount": 2,
+      "missingSourceMethods": [],
+      "allowedMissingMethods": null,
+      "unexpectedMissingMethods": [],
+      "staleAllowedExceptions": []
+    },
+    {
+      "script": "Skill/Skill_Bo1_Atk5_Item.cs",
+      "disposition": "source-surface-retained",
+      "reason": "",
+      "sourceMethodCount": 4,
+      "targetMethodCount": 8,
+      "missingSourceMethods": [],
+      "allowedMissingMethods": null,
+      "unexpectedMissingMethods": [],
+      "staleAllowedExceptions": []
+    },
+    {
+      "script": "Skill/Skill_Bo1_Atk5.cs",
+      "disposition": "source-surface-retained",
+      "reason": "",
+      "sourceMethodCount": 3,
+      "targetMethodCount": 3,
+      "missingSourceMethods": [],
+      "allowedMissingMethods": null,
+      "unexpectedMissingMethods": [],
+      "staleAllowedExceptions": []
+    },
+    {
+      "script": "Skill/Skill_Bo2_atk2_s.cs",
+      "disposition": "refactored-method-surface",
+      "reason": "",
+      "sourceMethodCount": 1,
+      "targetMethodCount": 1,
+      "missingSourceMethods": [
+        "Start()"
+      ],
+      "allowedMissingMethods": "Start()",
+      "unexpectedMissingMethods": [],
+      "staleAllowedExceptions": []
+    },
+    {
+      "script": "Skill/Skill_Bo2_Atk2.cs",
+      "disposition": "refactored-method-surface",
+      "reason": "",
+      "sourceMethodCount": 4,
+      "targetMethodCount": 3,
+      "missingSourceMethods": [
+        "SetSkill_Atk2()"
+      ],
+      "allowedMissingMethods": "SetSkill_Atk2()",
+      "unexpectedMissingMethods": [],
+      "staleAllowedExceptions": []
+    },
+    {
+      "script": "Skill/Skill_Bo2w_Atk.cs",
+      "disposition": "refactored-method-surface",
+      "reason": "",
+      "sourceMethodCount": 2,
+      "targetMethodCount": 2,
+      "missingSourceMethods": [
+        "GetW2()"
+      ],
+      "allowedMissingMethods": "GetW2()",
+      "unexpectedMissingMethods": [],
+      "staleAllowedExceptions": []
+    },
+    {
+      "script": "Skill/Skill_futou_child.cs",
+      "disposition": "source-surface-retained",
+      "reason": "",
+      "sourceMethodCount": 2,
+      "targetMethodCount": 2,
+      "missingSourceMethods": [],
+      "allowedMissingMethods": null,
+      "unexpectedMissingMethods": [],
+      "staleAllowedExceptions": []
+    },
+    {
+      "script": "Skill/Skill_futou.cs",
+      "disposition": "source-surface-retained",
+      "reason": "",
+      "sourceMethodCount": 2,
+      "targetMethodCount": 2,
+      "missingSourceMethods": [],
+      "allowedMissingMethods": null,
+      "unexpectedMissingMethods": [],
+      "staleAllowedExceptions": []
+    },
+    {
+      "script": "Skill/Skill_Jiandao.cs",
+      "disposition": "removed",
+      "reason": "empty prototype; formal attack path retained elsewhere",
+      "sourceMethodCount": 2,
+      "targetMethodCount": 0,
+      "missingSourceMethods": [
+        "Start()",
+        "Update()"
+      ],
+      "allowedMissingMethods": [
+        "Start()",
+        "Update()"
+      ],
+      "unexpectedMissingMethods": [],
+      "staleAllowedExceptions": []
+    },
+    {
+      "script": "Skill/Skill_Nor.cs",
+      "disposition": "source-surface-retained",
+      "reason": "",
+      "sourceMethodCount": 0,
+      "targetMethodCount": 0,
+      "missingSourceMethods": [],
+      "allowedMissingMethods": null,
+      "unexpectedMissingMethods": [],
+      "staleAllowedExceptions": []
+    },
+    {
+      "script": "Skill/Skill_Zhadan.cs",
+      "disposition": "refactored-method-surface",
+      "reason": "",
+      "sourceMethodCount": 2,
+      "targetMethodCount": 3,
+      "missingSourceMethods": [
+        "Start()"
+      ],
+      "allowedMissingMethods": "Start()",
+      "unexpectedMissingMethods": [],
+      "staleAllowedExceptions": []
+    },
+    {
+      "script": "Tool/FunctionLibrary.cs",
+      "disposition": "source-surface-retained",
+      "reason": "",
+      "sourceMethodCount": 2,
+      "targetMethodCount": 2,
+      "missingSourceMethods": [],
+      "allowedMissingMethods": null,
+      "unexpectedMissingMethods": [],
+      "staleAllowedExceptions": []
+    },
+    {
+      "script": "TransformTool.cs",
+      "disposition": "source-surface-retained",
+      "reason": "",
+      "sourceMethodCount": 1,
+      "targetMethodCount": 1,
+      "missingSourceMethods": [],
+      "allowedMissingMethods": null,
+      "unexpectedMissingMethods": [],
+      "staleAllowedExceptions": []
+    },
+    {
+      "script": "UI/BtnSound.cs",
+      "disposition": "source-surface-retained",
+      "reason": "",
+      "sourceMethodCount": 3,
+      "targetMethodCount": 5,
+      "missingSourceMethods": [],
+      "allowedMissingMethods": null,
+      "unexpectedMissingMethods": [],
+      "staleAllowedExceptions": []
+    },
+    {
+      "script": "UI/LoadScenes.cs",
+      "disposition": "refactored-method-surface",
+      "reason": "",
+      "sourceMethodCount": 8,
+      "targetMethodCount": 13,
+      "missingSourceMethods": [
+        "Fead(bool)",
+        "FixedUpdate()",
+        "LoadScenesSync(string)",
+        "LodOK(AsyncOperation)"
+      ],
+      "allowedMissingMethods": [
+        "FixedUpdate()",
+        "LodOK(AsyncOperation)",
+        "Fead(bool)",
+        "LoadScenesSync(string)"
+      ],
+      "unexpectedMissingMethods": [],
+      "staleAllowedExceptions": []
+    },
+    {
+      "script": "UI/StartVido.cs",
+      "disposition": "refactored-method-surface",
+      "reason": "",
+      "sourceMethodCount": 4,
+      "targetMethodCount": 9,
+      "missingSourceMethods": [
+        "Start()",
+        "Startred()",
+        "Update()"
+      ],
+      "allowedMissingMethods": [
+        "Start()",
+        "Update()",
+        "Startred()"
+      ],
+      "unexpectedMissingMethods": [],
+      "staleAllowedExceptions": []
+    },
+    {
+      "script": "UI/U_HeroHit.cs",
+      "disposition": "source-surface-retained",
+      "reason": "",
+      "sourceMethodCount": 3,
+      "targetMethodCount": 5,
+      "missingSourceMethods": [],
+      "allowedMissingMethods": null,
+      "unexpectedMissingMethods": [],
+      "staleAllowedExceptions": []
+    },
+    {
+      "script": "UI/UI_BossHP_Item.cs",
+      "disposition": "source-surface-retained",
+      "reason": "",
+      "sourceMethodCount": 3,
+      "targetMethodCount": 4,
+      "missingSourceMethods": [],
+      "allowedMissingMethods": null,
+      "unexpectedMissingMethods": [],
+      "staleAllowedExceptions": []
+    },
+    {
+      "script": "UI/UI_BossHPController.cs",
+      "disposition": "source-surface-retained",
+      "reason": "",
+      "sourceMethodCount": 2,
+      "targetMethodCount": 4,
+      "missingSourceMethods": [],
+      "allowedMissingMethods": null,
+      "unexpectedMissingMethods": [],
+      "staleAllowedExceptions": []
+    },
+    {
+      "script": "UI/UI_BossHPController2.cs",
+      "disposition": "source-surface-retained",
+      "reason": "",
+      "sourceMethodCount": 2,
+      "targetMethodCount": 4,
+      "missingSourceMethods": [],
+      "allowedMissingMethods": null,
+      "unexpectedMissingMethods": [],
+      "staleAllowedExceptions": []
+    },
+    {
+      "script": "UI/UI_ButtonAction.cs",
+      "disposition": "source-surface-retained",
+      "reason": "",
+      "sourceMethodCount": 13,
+      "targetMethodCount": 20,
+      "missingSourceMethods": [],
+      "allowedMissingMethods": null,
+      "unexpectedMissingMethods": [],
+      "staleAllowedExceptions": []
+    },
+    {
+      "script": "UI/UI_ESC.cs",
+      "disposition": "source-surface-retained",
+      "reason": "",
+      "sourceMethodCount": 6,
+      "targetMethodCount": 9,
+      "missingSourceMethods": [],
+      "allowedMissingMethods": null,
+      "unexpectedMissingMethods": [],
+      "staleAllowedExceptions": []
+    },
+    {
+      "script": "UI/UI_Game.cs",
+      "disposition": "refactored-method-surface",
+      "reason": "",
+      "sourceMethodCount": 6,
+      "targetMethodCount": 8,
+      "missingSourceMethods": [
+        "Awake()",
+        "GOBoss2()",
+        "GoStart()",
+        "StartFead(bool)"
+      ],
+      "allowedMissingMethods": [
+        "Awake()",
+        "StartFead(bool)",
+        "GOBoss2()",
+        "GoStart()"
+      ],
+      "unexpectedMissingMethods": [],
+      "staleAllowedExceptions": []
+    },
+    {
+      "script": "UI/UI_HeroHPBox.cs",
+      "disposition": "source-surface-retained",
+      "reason": "",
+      "sourceMethodCount": 4,
+      "targetMethodCount": 6,
+      "missingSourceMethods": [],
+      "allowedMissingMethods": null,
+      "unexpectedMissingMethods": [],
+      "staleAllowedExceptions": []
+    },
+    {
+      "script": "UI/UI_HeroHPItem.cs",
+      "disposition": "source-surface-retained",
+      "reason": "",
+      "sourceMethodCount": 1,
+      "targetMethodCount": 1,
+      "missingSourceMethods": [],
+      "allowedMissingMethods": null,
+      "unexpectedMissingMethods": [],
+      "staleAllowedExceptions": []
+    },
+    {
+      "script": "UI/UI_HeroInfo.cs",
+      "disposition": "source-surface-retained",
+      "reason": "",
+      "sourceMethodCount": 3,
+      "targetMethodCount": 9,
+      "missingSourceMethods": [],
+      "allowedMissingMethods": null,
+      "unexpectedMissingMethods": [],
+      "staleAllowedExceptions": []
+    },
+    {
+      "script": "UI/UI_SoundManager.cs",
+      "disposition": "refactored-method-surface",
+      "reason": "",
+      "sourceMethodCount": 3,
+      "targetMethodCount": 5,
+      "missingSourceMethods": [
+        "Awake()",
+        "Start()"
+      ],
+      "allowedMissingMethods": [
+        "Awake()",
+        "Start()"
+      ],
+      "unexpectedMissingMethods": [],
+      "staleAllowedExceptions": []
+    },
+    {
+      "script": "UI/UI_WeaponTip.cs",
+      "disposition": "refactored-method-surface",
+      "reason": "",
+      "sourceMethodCount": 5,
+      "targetMethodCount": 8,
+      "missingSourceMethods": [
+        "TimeOK()",
+        "WaitForTime(float)"
+      ],
+      "allowedMissingMethods": [
+        "TimeOK()",
+        "WaitForTime(float)"
+      ],
+      "unexpectedMissingMethods": [],
+      "staleAllowedExceptions": []
+    },
+    {
+      "script": "Weapon_Hero.cs",
+      "disposition": "removed",
+      "reason": "empty prototype",
+      "sourceMethodCount": 2,
+      "targetMethodCount": 0,
+      "missingSourceMethods": [
+        "Start()",
+        "Update()"
+      ],
+      "allowedMissingMethods": [
+        "Start()",
+        "Update()"
+      ],
+      "unexpectedMissingMethods": [],
+      "staleAllowedExceptions": []
+    },
+    {
+      "script": "WeaponControSystem_2.cs",
+      "disposition": "refactored-method-surface",
+      "reason": "",
+      "sourceMethodCount": 8,
+      "targetMethodCount": 4,
+      "missingSourceMethods": [
+        "CheckWeapon()",
+        "CheckWeaponTip()",
+        "CreateWeapon_dis(Vector3,ColorType,WeaponType)",
+        "CreateWeapon(ColorType,WeaponType)",
+        "GetRandomPos()",
+        "OnBossDamage()",
+        "Start()",
+        "Update()"
+      ],
+      "allowedMissingMethods": [
+        "Start()",
+        "Update()",
+        "OnBossDamage()",
+        "CheckWeapon()",
+        "CheckWeaponTip()",
+        "CreateWeapon(ColorType,WeaponType)",
+        "GetRandomPos()",
+        "CreateWeapon_dis(Vector3,ColorType,WeaponType)"
+      ],
+      "unexpectedMissingMethods": [],
+      "staleAllowedExceptions": []
+    },
+    {
+      "script": "WeaponControSystem.cs",
+      "disposition": "refactored-method-surface",
+      "reason": "",
+      "sourceMethodCount": 8,
+      "targetMethodCount": 4,
+      "missingSourceMethods": [
+        "CheckWeapon()",
+        "CheckWeaponTip()",
+        "CreateWeapon_dis(Vector3,ColorType,WeaponType)",
+        "CreateWeapon(ColorType,WeaponType)",
+        "GetRandomPos()",
+        "OnBossDamage()",
+        "Start()",
+        "Update()"
+      ],
+      "allowedMissingMethods": [
+        "Start()",
+        "Update()",
+        "OnBossDamage()",
+        "CheckWeapon()",
+        "CheckWeaponTip()",
+        "CreateWeapon(ColorType,WeaponType)",
+        "GetRandomPos()",
+        "CreateWeapon_dis(Vector3,ColorType,WeaponType)"
+      ],
+      "unexpectedMissingMethods": [],
+      "staleAllowedExceptions": []
+    },
+    {
+      "script": "XiaoCao.cs",
+      "disposition": "source-surface-retained",
+      "reason": "",
+      "sourceMethodCount": 3,
+      "targetMethodCount": 4,
+      "missingSourceMethods": [],
+      "allowedMissingMethods": null,
+      "unexpectedMissingMethods": [],
+      "staleAllowedExceptions": []
+    },
+    {
+      "script": "ZZZZZZZZZZ.cs",
+      "disposition": "removed",
+      "reason": "unreferenced Spine bone debug probe",
+      "sourceMethodCount": 1,
+      "targetMethodCount": 0,
+      "missingSourceMethods": [
+        "Update()"
+      ],
+      "allowedMissingMethods": [
+        "Update()"
+      ],
+      "unexpectedMissingMethods": [],
+      "staleAllowedExceptions": []
+    }
+  ]
+}
