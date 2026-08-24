@@ -25,6 +25,8 @@ Unity 已完成脚本编译且该文件编译错误为 0。由于 8093 当前仍
 
 随后新增 `BossAttackExecutionPlayModeTests`：强制实际播放 Boss1 六攻击并监听各自 Spine Event→GF.Entity，检查攻击 5 无敌窗口及恢复；Boss2 则覆盖头部近战/投射、完整潜地换位出土、12→11 尾部激活、尾部初次潜地和两种尾部攻击。脚本编译错误为 0，但同样因尚未执行而只作为“已准备的直接测试”，相关行仍维持原证据等级。
 
+新增 `PlayerRuntimeExecutionPlayModeTests`：通过 `IGameInput` 语义边界驱动真实 Hero，覆盖双向移动/朝向、武器拾取、受击强制丢弃、受击拒绝窗口、Dash 移动、成功 Dash 回血与 0.45 时间脉冲、连续伤害、死亡镜头及 `DeathOver` Animation Event 强制重开。脚本编译错误为 0；执行前不提升对应证据等级。
+
 ## 回到实现/验收的弱证据项
 
 - StartMenu：退出应用、每条加载淡入淡出、设置新测试执行。
