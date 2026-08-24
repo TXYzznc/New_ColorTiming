@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
+using Spine.Unity;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
@@ -27,6 +28,11 @@ namespace ColorTiming.Tests.PlayMode
             var boss1 = FindActive<Boss1_Controller>();
             Assert.That(boss1, Is.Not.Null);
             Assert.That(boss1.Boss1HP, Has.Count.EqualTo(11));
+            AssertAnimations(boss1.skeletonAnimation1,
+                "idel_60fps", "hit1_60fps", "hit2_60fps",
+                "attack_1_test1_60fps", "attack_2_test1_60fps", "attack_3_test2_60fps",
+                "attack_4_test1_60fps", "attack_6_60fps");
+            AssertAnimations(boss1.skeletonAnimation2, "attack_5_test1_60fps");
 
             var boss1Colors = new HashSet<ColorType>();
             AssertWrongColorDoesNotDamage(boss1);
@@ -48,6 +54,10 @@ namespace ColorTiming.Tests.PlayMode
             var tail = Object.FindObjectsOfType<Boss2_Controller_w>(true).Single();
             Assert.That(boss2, Is.Not.Null);
             Assert.That(boss2.Boss1HP, Has.Count.EqualTo(15));
+            AssertAnimations(boss2.skeletonAnimation1,
+                "idel", "ShouJi", "RuTu", "ChuTu", "attack_1", "attack_2");
+            AssertAnimations(tail.skeletonAnimation,
+                "idel", "RuTu", "ChuTu", "attack_1", "attack_2");
             Assert.That(tail.gameObject.activeSelf, Is.False,
                 "Boss2 tail must start inactive before the 12-to-11 threshold.");
 
@@ -107,6 +117,19 @@ namespace ColorTiming.Tests.PlayMode
             var before = boss.Boss1HP.Count;
             boss.OnDamage(null, new Weapon(wrong, WeaponType.nor), Vector2.zero, "wrong-color");
             Assert.That(boss.Boss1HP, Has.Count.EqualTo(before));
+        }
+
+        static void AssertAnimations(SkeletonAnimation view, params string[] names)
+        {
+            Assert.That(view, Is.Not.Null);
+            Assert.That(view.SkeletonDataAsset, Is.Not.Null);
+            var data = view.SkeletonDataAsset.GetSkeletonData(true);
+            Assert.That(data, Is.Not.Null);
+            foreach (var animationName in names)
+            {
+                Assert.That(data.FindAnimation(animationName), Is.Not.Null,
+                    $"Skeleton '{view.name}' is missing authored animation '{animationName}'.");
+            }
         }
 
         static IEnumerator BootToStartMenu()

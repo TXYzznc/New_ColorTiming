@@ -1,11 +1,12 @@
 {
   "name": "ColorTiming.PlayMode.Tests",
   "rootNamespace": "ColorTiming.Tests.PlayMode",
-  "references": [
+    "references": [
     "Hotfix",
     "Builtin.Runtime",
     "UnityGameFramework.Runtime",
-    "GameFramework"
+    "GameFramework",
+    "spine-unity"
   ],
   "includePlatforms": [],
   "excludePlatforms": [],
