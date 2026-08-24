@@ -29,6 +29,8 @@ Unity 已完成脚本编译且该文件编译错误为 0。由于 8093 当前仍
 
 新增 `WeaponAnimationEventExecutionPlayModeTests`：从正式 `HeroAnimStae.Attack` 接收器进入，覆盖普通攻击、Boss1 三武器×三颜色、Boss2 三武器×四色和剪刀第二段，共 23 条实际事件路径；每条都等待对应 GF.Entity，读取 `Skill_base` 的武器身份、攻击者和炸弹/飞机指针参数。脚本编译错误为 0；执行及最终视觉观察前，`WEAPON-006`/`ANIM-003` 继续保持非完成证据。
 
+新增 `GrassWorldInteractionPlayModeTests`：对正式 Boss1 草地对象调用 Unity 触发器接收路径，验证草地 Animator 合同、环境 rustle cue、HeroSoundManager 覆盖集合、修复后的草地脚步列表以及退出后恢复普通脚步。脚本编译错误为 0；执行和实际听感/动画观察前，`MEDIA-002` 仍保持 `STATIC_MANUAL`。
+
 ## 回到实现/验收的弱证据项
 
 - StartMenu：退出应用、每条加载淡入淡出、设置新测试执行。

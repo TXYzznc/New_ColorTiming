@@ -51,7 +51,7 @@ UI-001,DIRECT,"UpcomingProjectionDoesNotMutateQueue; runtime HUD screenshots","A
 UI-002,PARTIAL,"Weapon presentation mapping audit; runtime HUD screenshots","Cursor/charge transition behavior remains manual"
 UI-003,DIRECT,"Pause/result GF.UI lifecycle tests; runtime screenshots","Defeat presentation remains manual"
 MEDIA-001,PARTIAL,"Framework sound-name tests; group mute/reset runtime test; scene-lifecycle smoke","Every authored cue must be heard manually"
-MEDIA-002,STATIC_MANUAL,"Grass objects and repaired footstep GUID validation","Grass enter/exit animation and audible override remain manual"
+MEDIA-002,STATIC_MANUAL,"Grass objects/GUID validation; compiled trigger/environment/footstep-override execution test","New execution test plus grass animation and audible result remain"
 MEDIA-003,STATIC_MANUAL,"CameraShow component/scene reference audit","Live parallax movement remains manual"
 MEDIA-004,STATIC_MANUAL,"Cinemachine audit and scene screenshots; compiled death-camera execution test","New execution test plus distance/confiner/impulse review remain"
 RENDER-001,DIRECT,"Three-scene shader/material/reference scans; source/target screenshots","Same-state paired frames remain in 10.8"
