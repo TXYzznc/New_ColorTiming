@@ -31,6 +31,8 @@ Unity 已完成脚本编译且该文件编译错误为 0。由于 8093 当前仍
 
 新增 `GrassWorldInteractionPlayModeTests`：对正式 Boss1 草地对象调用 Unity 触发器接收路径，验证草地 Animator 合同、环境 rustle cue、HeroSoundManager 覆盖集合、修复后的草地脚步列表以及退出后恢复普通脚步。脚本编译错误为 0；执行和实际听感/动画观察前，`MEDIA-002` 仍保持 `STATIC_MANUAL`。
 
+新增 `CameraRuntimeExecutionPlayModeTests`：从正式 Boss1 进入，执行 `CameraShow` 的视差位移公式，验证 `HeroCamera_` 在近距、阈值和超距时写入的正交尺寸，并检查 Brain、VirtualCamera、Confiner2D、ImpulseSource 与 ImpulseListener 的运行时装配；死亡相机禁用路径继续由玩家生命周期测试覆盖。脚本编译错误为 0；实际执行和相机手感观察前，`MEDIA-003`/`MEDIA-004` 仍保持 `STATIC_MANUAL`。
+
 ## 回到实现/验收的弱证据项
 
 - StartMenu：退出应用、每条加载淡入淡出、设置新测试执行。
