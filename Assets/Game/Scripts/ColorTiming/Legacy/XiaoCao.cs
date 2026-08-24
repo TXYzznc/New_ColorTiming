@@ -7,6 +7,7 @@ public class XiaoCao : MonoBehaviour, IColorTimingSoundConsumer
 {
     
     Animator animator;
+    bool hasTriggerParameter;
     IColorTimingSoundService soundService;
 
     public void BindSoundService(IColorTimingSoundService service)
@@ -19,8 +20,17 @@ public class XiaoCao : MonoBehaviour, IColorTimingSoundConsumer
     private void Start()
     {
         animator = GetComponent<Animator>();
-        if(animator!= null)
+        if (animator != null)
         {
+            foreach (var parameter in animator.parameters)
+            {
+                if (parameter.name == "Trigger"
+                    && parameter.type == AnimatorControllerParameterType.Trigger)
+                {
+                    hasTriggerParameter = true;
+                    break;
+                }
+            }
         }
     }
 
@@ -30,7 +40,10 @@ public class XiaoCao : MonoBehaviour, IColorTimingSoundConsumer
         //{
         //    animator?.SetTrigger("Trigger");
         //}
-        animator?.SetTrigger("Trigger");
+        if (hasTriggerParameter)
+        {
+            animator.SetTrigger("Trigger");
+        }
 
         if ("Player" == collision.gameObject.tag)
         {

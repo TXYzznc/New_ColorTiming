@@ -29,6 +29,7 @@ namespace ColorTiming.Tests.PlayMode
         [UnityTest]
         public IEnumerator UnityGameTimeAdapter_ComposesAndReleasesRequests()
         {
+            Time.timeScale = 1f;
             var host = new GameObject("Game time test");
             var gameTime = host.AddComponent<UnityGameTimeAdapter>();
             var slow = gameTime.Acquire(0.45f);
@@ -42,7 +43,12 @@ namespace ColorTiming.Tests.PlayMode
 
             gameTime.Pulse(0.2f, 0.02f);
             Assert.That(Time.timeScale, Is.EqualTo(0.2f));
-            yield return new WaitForSecondsRealtime(0.04f);
+            var deadline = Time.realtimeSinceStartup + 1f;
+            while (!Mathf.Approximately(Time.timeScale, 1f)
+                   && Time.realtimeSinceStartup < deadline)
+            {
+                yield return null;
+            }
             Assert.That(Time.timeScale, Is.EqualTo(1f));
 
             Object.Destroy(host);

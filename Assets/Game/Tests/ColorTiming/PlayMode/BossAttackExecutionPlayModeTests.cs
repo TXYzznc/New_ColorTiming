@@ -108,7 +108,7 @@ namespace ColorTiming.Tests.PlayMode
             yield return VerifyAttack(
                 boss,
                 boss.skeletonAnimation2,
-                "attack_5_test1_60fps",
+                "attack_5_test1_60fps2",
                 health,
                 true,
                 presentation.sk5.name);
@@ -165,7 +165,7 @@ namespace ColorTiming.Tests.PlayMode
                 PlayBoss2HeadAnimation,
                 boss.skeletonAnimation1,
                 "attack_2",
-                presentation.sk2.name);
+                presentation.sk2.GetComponent<Skill_Bo2_atk2_s>().b.name);
 
             Boss2HeadCooldown.SetValue(boss, float.PositiveInfinity);
             yield return VerifyHeadBurrow(boss, presentation);
@@ -220,6 +220,12 @@ namespace ColorTiming.Tests.PlayMode
             yield return HideActiveTransientEntities(expectedEntityNames);
             Assert.That(health.IsDamageable, Is.True, $"{animationName} must start damageable.");
 
+            var observedEvents = new List<string>();
+            void RecordEvent(TrackEntry _, Spine.Event spineEvent)
+            {
+                observedEvents.Add($"{spineEvent}:{spineEvent.String}");
+            }
+            view.AnimationState.Event += RecordEvent;
             PlayBoss1Animation.Invoke(boss, new object[] { animationName, false });
             yield return null;
 
@@ -264,11 +270,13 @@ namespace ColorTiming.Tests.PlayMode
 
             Assert.That(completed, Is.True, $"{animationName} did not complete.");
             Assert.That(seenEntities, Is.SupersetOf(expectedEntityNames),
-                $"{animationName} did not dispatch every authored attack entity event.");
+                $"{animationName} did not dispatch every authored attack entity event. " +
+                $"Observed Spine events: [{string.Join(", ", observedEvents)}].");
             Assert.That(sawInvulnerability, Is.EqualTo(expectInvulnerability),
                 $"{animationName} produced an unexpected invulnerability contract.");
             Assert.That(health.IsDamageable, Is.True,
                 $"{animationName} did not restore boss damageability on completion.");
+            view.AnimationState.Event -= RecordEvent;
         }
 
         static IEnumerator HideActiveTransientEntities(params string[] namesThatMustBeAbsent)
@@ -294,6 +302,13 @@ namespace ColorTiming.Tests.PlayMode
             params string[] expectedEntityNames)
         {
             yield return HideActiveTransientEntities(expectedEntityNames);
+            var observedEvents = new List<string>();
+            var observedEntities = new HashSet<string>();
+            void RecordEvent(TrackEntry _, Spine.Event spineEvent)
+            {
+                observedEvents.Add($"{spineEvent}:{spineEvent.String}");
+            }
+            view.AnimationState.Event += RecordEvent;
             playMethod.Invoke(owner, new object[] { animationName, false });
             yield return null;
 
@@ -307,6 +322,10 @@ namespace ColorTiming.Tests.PlayMode
             var deadline = Time.realtimeSinceStartup + AttackTimeout;
             while (Time.realtimeSinceStartup < deadline)
             {
+                foreach (var entity in ActiveTransientEntities())
+                {
+                    observedEntities.Add(entity.gameObject.name);
+                }
                 RecordExpectedEntities(expectedEntityNames, seenEntities);
                 if (completed && expectedEntityNames.All(seenEntities.Contains))
                 {
@@ -317,7 +336,10 @@ namespace ColorTiming.Tests.PlayMode
 
             Assert.That(completed, Is.True, $"{animationName} did not complete.");
             Assert.That(seenEntities, Is.SupersetOf(expectedEntityNames),
-                $"{animationName} did not dispatch every authored attack entity event.");
+                $"{animationName} did not dispatch every authored attack entity event. " +
+                $"Observed Spine events: [{string.Join(", ", observedEvents)}]. " +
+                $"Observed entities: [{string.Join(", ", observedEntities)}].");
+            view.AnimationState.Event -= RecordEvent;
         }
 
         static IEnumerator VerifyHeadBurrow(Boss2_Controller boss, Boss2Anim_s presentation)
@@ -414,11 +436,14 @@ namespace ColorTiming.Tests.PlayMode
         static IEnumerator BootToStartMenu()
         {
             Time.timeScale = 1f;
+            ColorTimingPlayModeBoot.PreserveTestRunnerAcrossFrameworkScenes();
             if (!SceneManager.GetSceneByName("Launch").isLoaded)
             {
                 SceneManager.LoadScene("Launch", LoadSceneMode.Single);
             }
+            yield return ColorTimingPlayModeBoot.EnsureFormalLaunchStartedInBatchMode();
             yield return WaitForScene("StartMenu", BootTimeout);
+            yield return ColorTimingPlayModeBoot.WaitForProductSceneTransitions();
             yield return WaitUntil(() => FindActive<UI_ButtonAction>() != null, 10f,
                 "StartMenu GF.UI form did not become active.");
         }
@@ -439,7 +464,8 @@ namespace ColorTiming.Tests.PlayMode
             {
                 yield return null;
             }
-            Assert.That(condition(), Is.True, failure);
+            Assert.That(condition(), Is.True,
+                $"{failure}\n{ColorTimingPlayModeBoot.DescribeFrameworkState(failure)}");
         }
 
         static T FindActive<T>() where T : Component

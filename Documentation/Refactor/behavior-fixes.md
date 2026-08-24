@@ -20,6 +20,7 @@
 
 - 状态：implemented，待运行态验收
 - 源证据：源 `Boss1_Controller.AnimPlay` 使用 `animName == "animName_Atk5"`，而实际参数值为 `attack_5_test1_60fps`，该分支恒为 false。
+- 运行证据：Spine2 同时包含无事件的 `attack_5_test1_60fps` 草稿和带 4 个 `attack/atk5` 事件的 `attack_5_test1_60fps2`；迁移后选择后者，确保第 5 招的无敌窗口与攻击实体均实际执行。
 - 违反不变量：攻击 5 必须切换到专用 SkeletonAnimation，并在结束后恢复主体、提示与弱点显示。
 - 目标行为：使用 `animName_Atk5` 常量作比较；只对攻击 5 切换专用 Spine 视图，其余攻击保持主体视图。
 - 自动化证据：`Boss1BattleLogicTests` 覆盖攻击 5 的远距选择和禁止连续选择；产品与测试程序集编译为 0 错误。
@@ -158,8 +159,12 @@ The source Boss1 and Boss2 scenes serialized `InputSystemUIInputModule` plus the
 | FIX-013 | 场景 YAML/EventSystem 静态审计、PlayMode 6/6 | 三场景运行态 UI 已观察 | 仅消除重复输入派发 |
 | FIX-014 | Entity 生命周期 PlayMode、EditMode 201/201 | `MANUAL-WEAPON-SPAWN-PICKUP` pending | 不改变生成、拾取和淡出规则 |
 | FIX-015 | listener 对称性审计、EditMode 201/201 | `MANUAL-HERO-CHARGE-TIP-EXIT` pending | 无玩法影响 |
-| FIX-016 | `StartMenuVideo_RendersAndSwitchesFromIntroToLoop`、完整 PlayMode 7/7 | `color-timing-video-rt-fixed-late.png` | 仅恢复原菜单双视频背景 |
-| FIX-017 | Boss 全血条进度 PlayMode、完整 PlayMode 7/7 | `MANUAL-BOSS2-RESULT` pending | 仅确保胜利同帧完成尾部清理 |
+| FIX-016 | `StartMenuVideo_RendersAndSwitchesFromIntroToLoop`、完整 PlayMode 14/14 | `color-timing-video-rt-fixed-late.png` | 仅恢复原菜单双视频背景 |
+| FIX-017 | Boss 全血条进度 PlayMode、完整 PlayMode 14/14 | `MANUAL-BOSS2-RESULT` pending | 仅确保胜利同帧完成尾部清理 |
+| FIX-018 | Boss1 六攻击直接执行、Spine 事件清单、PlayMode 14/14 | `MANUAL-BOSS1-ATK5` pending | 选择 Spine2 中实际带事件的攻击 5 版本 |
+| FIX-019 | GF.Entity 自回收与切场景直接执行、PlayMode 14/14 | `MANUAL-SCENE-ENTITY-EXIT` pending | 仅保证回收前脱离场景父节点 |
+| FIX-020 | 草地触发/音频 PlayMode、Console 无参数警告 | `MANUAL-BOSS1-GRASS-AUDIO` pending | 无 Animator 参数时跳过动画触发，声音/脚步不变 |
+| FIX-021 | 玩家死亡 Animation Event 同场景重载、PlayMode 14/14 | `MANUAL-BOSS1-DEATH-RELOAD` pending | 同资源先卸载完成再加载，并拒绝重复重启请求 |
 
 复核结论：当前已知且可见的迁移差异均对应本文件中的 FIX 条目；未发现未登记的刻意行为变化。所有 `pending` 人工项继续由 6.7、7.10、12.1～12.5 持有，不以本次文档复核替代运行态验收。
 
@@ -169,6 +174,34 @@ The source Boss1 and Boss2 scenes serialized `InputSystemUIInputModule` plus the
 - 源证据：迁移后的尾部控制器只在下一次 `FixedUpdate` 观察头部 `death` 后停止潜地和碰撞；最终结果 Form 在同一胜利调用中立即取得 `timeScale=0` 租约，因此该物理帧不保证发生。
 - 违反不变量：最终胜利必须在显示结果前同步停止头、尾、投射物、标记和重定位，不能依赖暂停之后的帧回调。
 - 目标行为：头部确认最终胜利时直接调用尾部幂等 `StopForBattleEnd`，清除攻击/移动状态、中断潜地流程并关闭碰撞、轨迹提示和出土提示；随后释放全部 GF.Entity 临时实体，再打开结果 Form。
-- 自动化证据：`BossRuntimeProgressionPlayModeTests.FormalFlow_ConsumesEveryBossColor_ActivatesTailAndShowsFinalResult` 验证最终一击同帧 `IsStoppedForBattleEnd=true` 且尾部 Collider 已关闭；持久证据 `playmode-color-timing-latest.log/xml`，完整 PlayMode 7/7 passed。
+- 自动化证据：`BossRuntimeProgressionPlayModeTests.FormalFlow_ConsumesEveryBossColor_ActivatesTailAndShowsFinalResult` 验证最终一击同帧 `IsStoppedForBattleEnd=true` 且尾部 Collider 已关闭；持久证据 `playmode-color-timing-14.log/xml`，完整 PlayMode 14/14 passed。
 - 人工证据：`MANUAL-BOSS2-RESULT` pending。
 - 数值/玩法影响：不改变 Boss2 生命、攻击、阶段阈值或结果时序，仅使已要求的胜利清理确定发生。
+
+## FIX-018 — Boss1 攻击 5 选择了 Spine2 的无事件草稿
+
+- 源证据：Spine2 同时导出 `attack_5_test1_60fps`（无 Event）与 `attack_5_test1_60fps2`（4 个 `attack/atk5` Event）；旧代码的字符串字面量错误又让 Spine2 分支不可达。
+- 目标行为：进入攻击 5 专用 Spine2 视图并播放带事件版本，四次生成攻击环；无敌窗口与弱点恢复仍由原 Event/Complete 合同控制。
+- 自动化证据：`Boss1_AllSixAttacksPlayAndDispatchTheirAuthoredSpineEvents` 与完整 PlayMode 14/14。
+- 数值/玩法影响：不改变伤害、冷却或选择权重，只恢复素材已创作的攻击实体事件。
+
+## FIX-019 — 场景父节点销毁早于 GF.Entity 回收队列
+
+- 故障：瞬态实体为跟随出生点而挂到场景 Transform；实体自回收后已移出活动 ID 集合，但仍在 GF 的下一帧 recycle queue，切场景会先销毁其 `Entity` 组件。
+- 目标行为：`ColorTimingTransientEntity.OnHide` 在进入框架回收队列前移回持久 `GF.Entity` 根节点。
+- 自动化证据：Boss1 攻击 5 大量嵌套实体、自回收、后续攻击与返回菜单连续通过；完整 PlayMode 14/14 无 `MissingReferenceException`。
+- 数值/玩法影响：不改变实体位置、运动和寿命。
+
+## FIX-020 — 部分草地 Animator 没有 Trigger 参数
+
+- 故障：所有草地进入都无条件 `SetTrigger("Trigger")`，没有该参数的控制器持续写 Console 警告。
+- 目标行为：启动时缓存参数合同，仅对确有 Trigger 参数的草地触发摆动；玩家脚步覆盖与环境声仍按原逻辑执行。
+- 自动化证据：`GrassEnterExit_AnimatesAndSwitchesFrameworkFootstepCueSet`、完整 PlayMode 14/14，相关参数警告为 0。
+- 数值/玩法影响：无参数的对象原本就无法播放该 Trigger 动画；声音与移动规则不变。
+
+## FIX-021 — 同场景死亡重载在卸载期间立即加载
+
+- 故障：强制重载当前 Boss1 时，启动流程同帧请求 Unload 与 Load 同一资源，GF 正确抛出“scene is being unloaded”；旧死亡动画对象还可能重复请求。
+- 目标行为：目标资源与当前资源相同时等待 `UnloadSceneSuccess` 后再 Load；`Death_sc_Over` 每个死亡对象只接受一次重启请求。
+- 自动化证据：`SemanticInput_PickupHitDashDeathAndAnimationRestartExecuteInBoss1` 单项与完整 PlayMode 14/14。
+- 数值/玩法影响：不改变死亡动画与重启结果，只使正式 GF 场景时序确定化。

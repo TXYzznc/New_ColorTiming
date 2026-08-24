@@ -14,10 +14,15 @@ namespace ColorTiming.Tests.PlayMode
         public IEnumerator LaunchBootsFrameworkAndLoadsStartMenuOnce()
         {
             Time.timeScale = 1f;
+            ColorTimingPlayModeBoot.PreserveTestRunnerAcrossFrameworkScenes();
             if (!SceneManager.GetSceneByName("Launch").isLoaded)
             {
+                // The controller is moved to DontDestroyOnLoad first, so Launch can
+                // reproduce the formal single-scene boot without ending the test run.
                 SceneManager.LoadScene("Launch", LoadSceneMode.Single);
             }
+
+            yield return ColorTimingPlayModeBoot.EnsureFormalLaunchStartedInBatchMode();
 
             var deadline = Time.realtimeSinceStartup + 30f;
             while (!SceneManager.GetSceneByName("StartMenu").isLoaded && Time.realtimeSinceStartup < deadline)
@@ -27,6 +32,7 @@ namespace ColorTiming.Tests.PlayMode
 
             Assert.That(SceneManager.GetSceneByName("StartMenu").isLoaded, Is.True,
                 "Framework startup did not reach StartMenu within 30 real-time seconds.");
+            yield return ColorTimingPlayModeBoot.WaitForProductSceneTransitions();
             var launchScene = SceneManager.GetSceneByName("Launch");
             Assert.That(launchScene.isLoaded, Is.True,
                 "The framework Launch scene must remain loaded as the persistent bootstrap scene.");

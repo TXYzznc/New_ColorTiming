@@ -13,6 +13,8 @@ namespace ColorTiming.Bootstrap
     {
         private ColorTimingCompositionRoot compositionRoot;
         private ColorTimingSceneId loadingScene;
+        private string loadingSceneAsset;
+        private bool waitingForTargetUnload;
         private bool eventsSubscribed;
 
         protected override void OnEnter(IFsm<IProcedureManager> procedureOwner)
@@ -39,8 +41,10 @@ namespace ColorTiming.Bootstrap
         private void BeginSceneTransition(ColorTimingSceneId scene)
         {
             loadingScene = scene;
+            loadingSceneAsset = UtilityBuiltin.AssetsPath.GetScenePath(scene.ToResourceName());
+            waitingForTargetUnload = GF.Scene.SceneIsUnloading(loadingSceneAsset);
             GFTrace.Info("ColorTiming", "Scene.Load.Begin", null,
-                GFTrace.Data("scene", scene.ToString(), "asset", UtilityBuiltin.AssetsPath.GetScenePath(scene.ToResourceName())));
+                GFTrace.Data("scene", scene.ToString(), "asset", loadingSceneAsset));
 
             GF.Sound.StopAllLoadingSounds();
             GF.Sound.StopAllLoadedSounds();
@@ -50,12 +54,24 @@ namespace ColorTiming.Bootstrap
             string[] loadedScenes = GF.Scene.GetLoadedSceneAssetNames();
             for (int i = 0; i < loadedScenes.Length; i++)
             {
-                GF.Scene.UnloadScene(loadedScenes[i]);
+                if (loadedScenes[i] == loadingSceneAsset)
+                {
+                    waitingForTargetUnload = true;
+                }
+                GF.Scene.UnloadScene(loadedScenes[i], this);
             }
 
             GF.Base.ResetNormalGameSpeed();
             GFBuiltin.BuiltinView?.ShowLoadingProgress(0f);
-            GF.Scene.LoadScene(UtilityBuiltin.AssetsPath.GetScenePath(scene.ToResourceName()), this);
+            if (!waitingForTargetUnload)
+            {
+                LoadPendingScene();
+            }
+        }
+
+        private void LoadPendingScene()
+        {
+            GF.Scene.LoadScene(loadingSceneAsset, this);
         }
 
         private void SubscribeEvents()
@@ -68,6 +84,8 @@ namespace ColorTiming.Bootstrap
             GF.Event.Subscribe(LoadSceneSuccessEventArgs.EventId, OnLoadSceneSuccess);
             GF.Event.Subscribe(LoadSceneFailureEventArgs.EventId, OnLoadSceneFailure);
             GF.Event.Subscribe(LoadSceneUpdateEventArgs.EventId, OnLoadSceneUpdate);
+            GF.Event.Subscribe(UnloadSceneSuccessEventArgs.EventId, OnUnloadSceneSuccess);
+            GF.Event.Subscribe(UnloadSceneFailureEventArgs.EventId, OnUnloadSceneFailure);
             eventsSubscribed = true;
         }
 
@@ -82,6 +100,35 @@ namespace ColorTiming.Bootstrap
             GF.Event.Unsubscribe(LoadSceneSuccessEventArgs.EventId, OnLoadSceneSuccess);
             GF.Event.Unsubscribe(LoadSceneFailureEventArgs.EventId, OnLoadSceneFailure);
             GF.Event.Unsubscribe(LoadSceneUpdateEventArgs.EventId, OnLoadSceneUpdate);
+            GF.Event.Unsubscribe(UnloadSceneSuccessEventArgs.EventId, OnUnloadSceneSuccess);
+            GF.Event.Unsubscribe(UnloadSceneFailureEventArgs.EventId, OnUnloadSceneFailure);
+        }
+
+        private void OnUnloadSceneSuccess(object sender, GameEventArgs eventArgs)
+        {
+            UnloadSceneSuccessEventArgs args = (UnloadSceneSuccessEventArgs)eventArgs;
+            if (!waitingForTargetUnload || args.SceneAssetName != loadingSceneAsset)
+            {
+                return;
+            }
+
+            waitingForTargetUnload = false;
+            LoadPendingScene();
+        }
+
+        private void OnUnloadSceneFailure(object sender, GameEventArgs eventArgs)
+        {
+            UnloadSceneFailureEventArgs args = (UnloadSceneFailureEventArgs)eventArgs;
+            if (!waitingForTargetUnload || args.SceneAssetName != loadingSceneAsset)
+            {
+                return;
+            }
+
+            waitingForTargetUnload = false;
+            const string error = "The current scene could not be unloaded before a same-scene reload.";
+            compositionRoot.FailSceneTransition(loadingScene, error);
+            GFBuiltin.BuiltinView?.HideLoadingProgress();
+            Log.Error("ColorTiming scene '{0}' could not unload for reload.", loadingScene);
         }
 
         private void OnLoadSceneUpdate(object sender, GameEventArgs eventArgs)

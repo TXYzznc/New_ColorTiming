@@ -128,6 +128,16 @@ namespace ColorTiming.Presentation.Entities
                 participant.BindFrameworkRelease(null);
             }
             participants = Array.Empty<IFrameworkEntityParticipant>();
+
+            // A transient effect may be parented under a scene anchor for authored motion.
+            // Move it back to the persistent framework hierarchy before GF queues the
+            // instance for recycling; otherwise a scene unload can destroy the Entity
+            // component while EntityManager still holds it in its recycle queue.
+            if (GFBuiltin.Entity != null && CachedTransform != null)
+            {
+                CachedTransform.SetParent(GFBuiltin.Entity.transform, true);
+            }
+
             released?.Invoke(trackedEntityId);
             released = null;
             trackedEntityId = 0;

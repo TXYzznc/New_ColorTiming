@@ -23,6 +23,7 @@ public class Death_sc_Over : MonoBehaviour, IColorTimingSceneFlowConsumer
     float _st;
 
     float startSize = 8f;
+    bool restartRequested;
     private void Start()
     {
         hideUI.SetActive(false);
@@ -61,14 +62,16 @@ public class Death_sc_Over : MonoBehaviour, IColorTimingSceneFlowConsumer
 
     public void DeathOver(int _e)
     {
-        if(_e > 0)
+        if (_e > 0 && !restartRequested)
         {
+            restartRequested = true;
             if (Enum.TryParse(reStartScene, true, out ColorTimingSceneId scene))
             {
                 sceneFlow?.TryLoad(scene, true);
             }
             else
             {
+                restartRequested = false;
                 Debug.LogError($"Unknown ColorTiming restart scene '{reStartScene}'.", this);
             }
         }

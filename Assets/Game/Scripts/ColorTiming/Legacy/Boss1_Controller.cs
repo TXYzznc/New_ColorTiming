@@ -42,7 +42,8 @@ public class Boss1_Controller : MonoBehaviour, I_Damage, IBattleResultConsumer
     const string animName_Atk2 = "attack_2_test1_60fps";
     const string animName_Atk3 = "attack_3_test2_60fps";
     const string animName_Atk4 = "attack_4_test1_60fps";
-    const string animName_Atk5 = "attack_5_test1_60fps";
+    // Spine2 contains an earlier visual-only draft and the authored event-bearing attack.
+    const string animName_Atk5 = "attack_5_test1_60fps2";
     const string animName_Atk6 = "attack_6_60fps";
 
     List<int> HP_zi = new List<int>();

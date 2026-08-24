@@ -32,7 +32,7 @@ namespace ColorTiming.Tests.PlayMode
                 "idel_60fps", "hit1_60fps", "hit2_60fps",
                 "attack_1_test1_60fps", "attack_2_test1_60fps", "attack_3_test2_60fps",
                 "attack_4_test1_60fps", "attack_6_60fps");
-            AssertAnimations(boss1.skeletonAnimation2, "attack_5_test1_60fps");
+            AssertAnimations(boss1.skeletonAnimation2, "attack_5_test1_60fps2");
 
             var boss1Colors = new HashSet<ColorType>();
             AssertWrongColorDoesNotDamage(boss1);
@@ -135,11 +135,14 @@ namespace ColorTiming.Tests.PlayMode
         static IEnumerator BootToStartMenu()
         {
             Time.timeScale = 1f;
+            ColorTimingPlayModeBoot.PreserveTestRunnerAcrossFrameworkScenes();
             if (!SceneManager.GetSceneByName("Launch").isLoaded)
             {
                 SceneManager.LoadScene("Launch", LoadSceneMode.Single);
             }
+            yield return ColorTimingPlayModeBoot.EnsureFormalLaunchStartedInBatchMode();
             yield return WaitForScene("StartMenu", BootTimeout);
+            yield return ColorTimingPlayModeBoot.WaitForProductSceneTransitions();
             yield return WaitUntil(() => FindActive<UI_ButtonAction>() != null, 10f,
                 "StartMenu GF.UI form did not become active.");
         }

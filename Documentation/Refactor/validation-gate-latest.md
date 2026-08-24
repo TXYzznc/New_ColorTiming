@@ -29,12 +29,12 @@ The duplicate-name entries are authored repeated sprites, images and environment
 
 ## Test evidence after lifecycle fixes
 
-- Full EditMode: 203/203 passed, 0 failed, 0 skipped, 0 inconclusive. Evidence: `editmode-color-timing-203.xml` and `.log`.
-- ColorTiming PlayMode lifecycle/runtime progression: 7/7 passed, 0 failed.
+- Final full EditMode rerun after all runtime fixes: 203/203 passed, 0 failed, 0 skipped, 0 inconclusive (16.478 s). Evidence: `editmode-color-timing-203.xml` and `.log`.
+- Full ColorTiming PlayMode direct-runtime suite: 14/14 passed, 0 failed, 0 skipped, 0 inconclusive (88.613 s). It covers Launch/StartMenu, both Boss scenes, all authored Boss attacks and Spine events, same-scene death reload, player movement/Dash/hit/death, all weapon Animation Events, grass/audio, camera/Cinemachine, UI/settings/pause, video transition, GF.Entity spawn/recycle and final result. Evidence: `playmode-color-timing-14.xml` and `.log`.
 - Formal boss progression PlayMode: Boss1 all 11 segments/three colors, automatic Boss2 transition, Boss2 all 15 segments/four colors, tail threshold and final result passed.
 - Feature traceability row audit: 57/57 reviewed; 30 direct, 19 partial and 8 static/manual-only. All rows remain manual-pending until the full three-scene regression is recorded.
 - Fresh-Library batch import/compile: return code 0, compiler errors 0, package-resolution failures 0.
 - Unity compile/console health immediately after changes: 0 errors, 0 warnings.
-- Latest Test Runner discovery: 63 ColorTiming EditMode and 14 ColorTiming PlayMode tests are all `Runnable`. The full 203-test EditMode suite was subsequently executed in an isolated complete project copy and passed; the expanded PlayMode suite remains unexecuted, so its executed baseline remains 7/7.
+- Latest Test Runner discovery: 63 ColorTiming EditMode and 14 ColorTiming PlayMode tests are all `Runnable`. The complete isolated project copy subsequently executed the full 14-test PlayMode suite with 14/14 passing. The full 203-test EditMode suite was rerun after the final runtime fixes; its final evidence is recorded alongside this gate.
 
 This gate establishes automated integrity and lifecycle evidence. It does not replace the visual/manual acceptance checklist in OpenSpec section 12.

@@ -91,8 +91,8 @@
 
 人工观察之外，最终还需执行 `test-discovery-20260824.md` 中的全部 ColorTiming 测试：
 
-- EditMode：当前发现 63 个 ColorTiming 用例，所在工程全量 `203/203` 已执行通过；若之后修改产品代码则必须重跑；
-- PlayMode：当前发现 14 个 ColorTiming 用例；
+- EditMode：当前发现 63 个 ColorTiming 用例，最终产品修改后所在工程全量 `203/203` 已重跑通过；证据 `editmode-color-timing-203.xml/.log`；
+- PlayMode：当前发现并完整执行 14 个 ColorTiming 用例，`14/14` 通过；证据 `playmode-color-timing-14.xml/.log`；
 - 失败、Skipped、Inconclusive、Other 均需逐项解释，不能只报告 Passed。
 
 只有以下条件同时满足，才可关闭 OpenSpec 12.4 和 12.7：

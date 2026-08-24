@@ -12,7 +12,7 @@
 
 所有 57 行继续保留 `manual pending`，没有用编译通过、静态扫描或单张截图替代完整人工回归。
 
-Unity Test Runner 的最新发现结果单独记录在 `test-discovery-20260824.md`：63 个 ColorTiming EditMode 与 14 个 ColorTiming PlayMode 用例均为 `Runnable`。随后独立完整工程副本执行全量 EditMode `203/203` 通过，因此两项新增 Boss cue 映射已经是直接执行证据；新增 PlayMode 合同仍未执行，不增加其通过数。
+Unity Test Runner 的最新发现与执行结果单独记录在 `test-discovery-20260824.md`：63 个 ColorTiming EditMode 与 14 个 ColorTiming PlayMode 用例均为 `Runnable`。独立完整工程副本随后执行 PlayMode `14/14` 通过，并在最终运行修复后重跑完整 EditMode；新增 Boss、玩家、武器、草地、相机、视频与生命周期合同均已成为直接运行证据。
 
 另以 Roslyn 从 64 个源产品脚本反向扫描方法面；57 个保留/重构脚本的目标路径缺失为 0，21 个存在签名变化的脚本均在 `method-surface-reverse-audit.md` 中逐项落到领域层、框架服务、实体生命周期或有引用证据的不可达入口。该结果补强“无功能遗漏”的静态证据，但不替代人工回归。
 
@@ -27,25 +27,25 @@ Unity Test Runner 的最新发现结果单独记录在 `test-discovery-20260824.
 - 三组按钮状态与持久化值一致；
 - finally 恢复进入测试前的真实设置，避免污染用户配置。
 
-Unity 已完成脚本编译且该文件编译错误为 0。由于 8093 当前仍是 Auto，PlayMode 执行被 UnitySkills 拒绝，因此 `FLOW-004` 与 `SET-003` 保持 `PARTIAL`，不得提前升级为 `DIRECT`。
+该测试已在完整隔离副本中执行通过。`FLOW-004` 与 `SET-003` 仍保持 `PARTIAL`，因为自动状态合同不能替代最终鼠标操作、可见 key-tip 与按钮手感观察。
 
-随后新增 `BossAttackExecutionPlayModeTests`：强制实际播放 Boss1 六攻击并监听各自 Spine Event→GF.Entity，检查攻击 5 无敌窗口及恢复；Boss2 则覆盖头部近战/投射、完整潜地换位出土、12→11 尾部激活、尾部初次潜地和两种尾部攻击。脚本编译错误为 0，但同样因尚未执行而只作为“已准备的直接测试”，相关行仍维持原证据等级。
+随后新增并执行 `BossAttackExecutionPlayModeTests`：强制实际播放 Boss1 六攻击并监听各自 Spine Event→GF.Entity，检查攻击 5 无敌窗口及恢复；Boss2 覆盖头部近战/投射、完整潜地换位出土、12→11 尾部激活、尾部初次潜地和两种尾部攻击。两项均通过；相关行仍保留人工画面/听感缺口。
 
-新增 `PlayerRuntimeExecutionPlayModeTests`：通过 `IGameInput` 语义边界驱动真实 Hero，覆盖双向移动/朝向、武器拾取、受击强制丢弃、受击拒绝窗口、Dash 移动、成功 Dash 回血与 0.45 时间脉冲、连续伤害、死亡镜头及 `DeathOver` Animation Event 强制重开。脚本编译错误为 0；执行前不提升对应证据等级。
+新增并执行 `PlayerRuntimeExecutionPlayModeTests`：通过 `IGameInput` 语义边界驱动真实 Hero，覆盖双向移动/朝向、武器拾取、受击强制丢弃、受击拒绝窗口、Dash 移动、成功 Dash 回血与 0.45 时间脉冲、连续伤害、死亡镜头及 `DeathOver` Animation Event 同场景重开。测试通过；移动手感、受击闪烁和死亡演出仍需人工观察。
 
-新增 `WeaponAnimationEventExecutionPlayModeTests`：从正式 `HeroAnimStae.Attack` 接收器进入，覆盖普通攻击、Boss1 三武器×三颜色、Boss2 三武器×四色和剪刀第二段，共 23 条实际事件路径；每条都等待对应 GF.Entity，读取 `Skill_base` 的武器身份、攻击者和炸弹/飞机指针参数。脚本编译错误为 0；执行及最终视觉观察前，`WEAPON-006`/`ANIM-003` 继续保持非完成证据。
+新增并执行 `WeaponAnimationEventExecutionPlayModeTests`：从正式 `HeroAnimStae.Attack` 接收器进入，覆盖普通攻击、Boss1 三武器×三颜色、Boss2 三武器×四色和剪刀第二段，共 23 条实际事件路径；每条都等待对应 GF.Entity，读取 `Skill_base` 的武器身份、攻击者和炸弹/飞机指针参数。测试通过；`WEAPON-006`/`ANIM-003` 仍保留最终攻击画面与非武器事件的人工/部分缺口。
 
-新增 `GrassWorldInteractionPlayModeTests`：对正式 Boss1 草地对象调用 Unity 触发器接收路径，验证草地 Animator 合同、环境 rustle cue、HeroSoundManager 覆盖集合、修复后的草地脚步列表以及退出后恢复普通脚步。脚本编译错误为 0；执行和实际听感/动画观察前，`MEDIA-002` 仍保持 `STATIC_MANUAL`。
+新增并执行 `GrassWorldInteractionPlayModeTests`：对正式 Boss1 草地对象调用 Unity 触发器接收路径，验证草地 Animator 合同、环境 rustle cue、HeroSoundManager 覆盖集合、修复后的草地脚步列表以及退出后恢复普通脚步。测试通过；实际听感/动画观察仍保留在人工清单。
 
-新增 `CameraRuntimeExecutionPlayModeTests`：从正式 Boss1 进入，执行 `CameraShow` 的视差位移公式，验证 `HeroCamera_` 在近距、阈值和超距时写入的正交尺寸，并检查 Brain、VirtualCamera、Confiner2D、ImpulseSource 与 ImpulseListener 的运行时装配；死亡相机禁用路径继续由玩家生命周期测试覆盖。脚本编译错误为 0；实际执行和相机手感观察前，`MEDIA-003`/`MEDIA-004` 仍保持 `STATIC_MANUAL`。
+新增并执行 `CameraRuntimeExecutionPlayModeTests`：从正式 Boss1 进入，执行 `CameraShow` 的视差位移公式，验证 `HeroCamera_` 在近距、阈值和超距时写入的正交尺寸，并检查 Brain、VirtualCamera、Confiner2D、ImpulseSource 与 ImpulseListener 的运行时装配；死亡相机禁用路径由玩家生命周期测试覆盖。测试通过；相机手感与最终画面对比仍保留在人工清单。
 
 ## 回到实现/验收的弱证据项
 
-- StartMenu：退出应用、每条加载淡入淡出、设置新测试执行。
-- 玩家：真实移动/瞄准、Dash 奖励、受击/强制丢弃、死亡相机与重开。
-- 武器/动画：拾取轮廓与淡出、首次提示、每个 Animation/Spine Event 的实际触发。
-- Boss1：六攻击全量、攻击 5 无敌与弱点变暗、全部事件和声音。
-- Boss2：潜地表现、全部投射物/落点标记、完整头尾协作和声音。
+- StartMenu：退出应用、每条加载淡入淡出、真实鼠标操作与可见设置反馈。
+- 玩家：物理键鼠手感、瞄准、Dash/受击可见反馈与死亡演出。
+- 武器/动画：拾取轮廓与淡出、首次提示、最终攻击画面及未覆盖的非武器 Animation Event。
+- Boss1：六攻击、攻击 5 弱点变暗及全部声音的最终视听确认。
+- Boss2：潜地、投射物/落点标记、完整头尾协作和声音的最终视听确认。
 - 世界/相机/音频：草地、视差、Cinemachine 行为及全部听觉 cue。
 - 渲染：OpenSpec 10.8 要求的源/目标同状态配对帧。
 

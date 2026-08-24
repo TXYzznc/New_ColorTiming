@@ -216,11 +216,14 @@ namespace ColorTiming.Tests.PlayMode
         static IEnumerator BootToStartMenu()
         {
             Time.timeScale = 1f;
+            ColorTimingPlayModeBoot.PreserveTestRunnerAcrossFrameworkScenes();
             if (!SceneManager.GetSceneByName("Launch").isLoaded)
             {
                 SceneManager.LoadScene("Launch", LoadSceneMode.Single);
             }
+            yield return ColorTimingPlayModeBoot.EnsureFormalLaunchStartedInBatchMode();
             yield return WaitForScene("StartMenu", BootTimeout);
+            yield return ColorTimingPlayModeBoot.WaitForProductSceneTransitions();
             yield return WaitUntil(() => FindActive<UI_ButtonAction>() != null, 10f,
                 "StartMenu GF.UI form did not become active.");
         }

@@ -14,7 +14,7 @@
 | EditMode | 203 | 63 | 0 |
 | PlayMode | 14 | 14 | 0 |
 
-上表本身只证明测试程序集成功编译、被 Unity Test Runner 发现且状态为 `Runnable`，不单独证明通过。发现之后已在包含根目录 `Samples~` 的独立完整工程副本中执行全量 EditMode，结果为 `203/203` passed、0 failed、0 skipped、0 inconclusive；PlayMode 的已执行基线仍为新增专项合同之前的 `7/7`。
+上表本身只证明测试程序集成功编译、被 Unity Test Runner 发现且状态为 `Runnable`，不单独证明通过。发现之后已在包含根目录 `Samples~`、`GameData` 与 `AB` 的独立完整工程副本中执行：PlayMode `14/14` passed、0 failed、0 skipped、0 inconclusive；EditMode 在最终运行修复后再次执行，最终结果见 `editmode-color-timing-203.xml/.log`。
 
 ## PlayMode 可运行合同
 
@@ -54,4 +54,4 @@
 - 场景及 Prefab missing script：0；
 - shader compilation error：0。
 
-以上是本次发现后的实时只读检查，不替代 PlayMode 执行结果。
+PlayMode 原始执行证据：`playmode-color-timing-14.xml`、`playmode-color-timing-14.log`。以上健康检查不替代执行结果，也不替代最终人工画面/听感对比。

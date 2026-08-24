@@ -52,6 +52,20 @@ namespace ColorTiming.Tests.PlayMode
             Assert.That(sequence.gameObject.activeSelf, Is.False);
             Assert.That(loop.isLooping, Is.True);
             Assert.That(loop.texture, Is.Not.Null);
+            Assert.That(output.gameObject.layer, Is.EqualTo(sequence.gameObject.layer),
+                "The runtime RawImage must stay on the same UI layer as the authored video objects.");
+
+            var menu = FindActive<UI_ButtonAction>();
+            Assert.That(menu, Is.Not.Null);
+            menu.SettingBtnDwon();
+            yield return new WaitForSecondsRealtime(0.25f);
+
+            Assert.That(menu.SettingButtonBox.activeSelf, Is.True);
+            Assert.That(loop.gameObject.activeInHierarchy, Is.True,
+                "Opening settings must not disable the looping background video.");
+            Assert.That(loop.isPlaying, Is.True,
+                "The looping background video must continue while settings are open.");
+            Assert.That(output.texture, Is.SameAs(loop.targetTexture));
         }
 
         [UnityTest]
@@ -239,6 +253,7 @@ namespace ColorTiming.Tests.PlayMode
         static IEnumerator BootToStartMenu()
         {
             Time.timeScale = 1f;
+            ColorTimingPlayModeBoot.PreserveTestRunnerAcrossFrameworkScenes();
             // Launch is the framework's persistent scene and must boot only once per
             // PlayMode session. Reloading it with Single destroys GameEntry while its
             // static component registry is still live, which is not a supported flow.
@@ -246,7 +261,9 @@ namespace ColorTiming.Tests.PlayMode
             {
                 SceneManager.LoadScene("Launch", LoadSceneMode.Single);
             }
+            yield return ColorTimingPlayModeBoot.EnsureFormalLaunchStartedInBatchMode();
             yield return WaitForScene("StartMenu", BootTimeout);
+            yield return ColorTimingPlayModeBoot.WaitForProductSceneTransitions();
             yield return WaitUntil(() => FindActive<UI_ButtonAction>() != null, 10f,
                 "StartMenu GF.UI form did not become active.");
         }

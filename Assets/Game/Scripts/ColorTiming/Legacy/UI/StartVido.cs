@@ -7,6 +7,8 @@ using UnityEngine.Video;
 
 public class StartVido : MonoBehaviour
 {
+    const float LoopPrepareTimeout = 10f;
+
     VideoPlayer player;
     Coroutine switchRoutine;
     RenderTexture outputTexture;
@@ -45,13 +47,60 @@ public class StartVido : MonoBehaviour
 
     IEnumerator SwitchToLoop()
     {
-        if (loop2 != null)
+        if (loop2 == null)
         {
-            loop2.gameObject.SetActive(true);
-            loop2.isLooping = true;
-            loop2.Play();
+            switchRoutine = null;
+            yield break;
         }
-        yield return new WaitForSecondsRealtime(0.1f);
+
+        loop2.gameObject.SetActive(true);
+        loop2.isLooping = true;
+        loop2.Stop();
+        loop2.time = 0d;
+        loop2.Prepare();
+
+        var prepareDeadline = Time.realtimeSinceStartup + LoopPrepareTimeout;
+        while (!loop2.isPrepared && Time.realtimeSinceStartup < prepareDeadline)
+        {
+            yield return null;
+        }
+
+        if (!loop2.isPrepared)
+        {
+            Debug.LogError("StartMenu loop video did not prepare; keeping the intro output active.", loop2);
+            loop2.gameObject.SetActive(false);
+            switchRoutine = null;
+            yield break;
+        }
+
+        loop2.Play();
+        var playbackDeadline = Time.realtimeSinceStartup + LoopPrepareTimeout;
+        while ((!loop2.isPlaying || loop2.texture == null) && Time.realtimeSinceStartup < playbackDeadline)
+        {
+            yield return null;
+        }
+
+        if (!loop2.isPlaying || loop2.texture == null)
+        {
+            Debug.LogError("StartMenu loop video prepared but did not produce a playable texture; keeping the intro output active.", loop2);
+            loop2.gameObject.SetActive(false);
+            switchRoutine = null;
+            yield break;
+        }
+
+        // Both players share one RenderTexture. Wait until the loop player owns a
+        // rendered frame before disabling the intro player, otherwise disabling
+        // the intro can clear the shared target and leave the settings page black.
+        if (Application.isBatchMode)
+        {
+            // WaitForEndOfFrame is not advanced by Unity's batch player loop.
+            yield return null;
+        }
+        else
+        {
+            yield return new WaitForEndOfFrame();
+        }
+        player.Stop();
         switchRoutine = null;
         gameObject.SetActive(false);
     }
@@ -123,6 +172,7 @@ public class StartVido : MonoBehaviour
             var displayTransform = (RectTransform)displayObject.transform;
             displayTransform.SetParent(transform.parent, false);
             displayTransform.SetSiblingIndex(1);
+            displayObject.layer = gameObject.layer;
             displayTransform.anchorMin = Vector2.zero;
             displayTransform.anchorMax = Vector2.one;
             displayTransform.offsetMin = Vector2.zero;
