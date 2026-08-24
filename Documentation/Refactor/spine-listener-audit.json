@@ -101,70 +101,70 @@
     },
     {
       "file": "Assets/Game/Scripts/ColorTiming/Legacy/Boss2_Controller.cs",
-      "line": 495,
+      "line": 496,
       "event": "Event",
       "operation": "-=",
       "handler": "AnimEvent"
-    },
-    {
-      "file": "Assets/Game/Scripts/ColorTiming/Legacy/Boss2_Controller.cs",
-      "line": 496,
-      "event": "Complete",
-      "operation": "-=",
-      "handler": "Entry_Complete"
     },
     {
       "file": "Assets/Game/Scripts/ColorTiming/Legacy/Boss2_Controller.cs",
       "line": 497,
-      "event": "End",
-      "operation": "-=",
-      "handler": "Entry_End"
-    },
-    {
-      "file": "Assets/Game/Scripts/ColorTiming/Legacy/Boss2_Controller_w.cs",
-      "line": 170,
       "event": "Complete",
-      "operation": "+=",
+      "operation": "-=",
       "handler": "Entry_Complete"
     },
     {
-      "file": "Assets/Game/Scripts/ColorTiming/Legacy/Boss2_Controller_w.cs",
-      "line": 171,
-      "event": "Event",
-      "operation": "+=",
-      "handler": "AnimEvent"
+      "file": "Assets/Game/Scripts/ColorTiming/Legacy/Boss2_Controller.cs",
+      "line": 498,
+      "event": "End",
+      "operation": "-=",
+      "handler": "Entry_End"
     },
     {
       "file": "Assets/Game/Scripts/ColorTiming/Legacy/Boss2_Controller_w.cs",
       "line": 172,
+      "event": "Complete",
+      "operation": "+=",
+      "handler": "Entry_Complete"
+    },
+    {
+      "file": "Assets/Game/Scripts/ColorTiming/Legacy/Boss2_Controller_w.cs",
+      "line": 173,
+      "event": "Event",
+      "operation": "+=",
+      "handler": "AnimEvent"
+    },
+    {
+      "file": "Assets/Game/Scripts/ColorTiming/Legacy/Boss2_Controller_w.cs",
+      "line": 174,
       "event": "End",
       "operation": "+=",
       "handler": "Entry_End"
     },
     {
       "file": "Assets/Game/Scripts/ColorTiming/Legacy/Boss2_Controller_w.cs",
-      "line": 196,
+      "line": 198,
       "event": "Complete",
       "operation": "-=",
       "handler": "Entry_Complete"
     },
     {
       "file": "Assets/Game/Scripts/ColorTiming/Legacy/Boss2_Controller_w.cs",
-      "line": 226,
+      "line": 254,
       "event": "Event",
       "operation": "-=",
       "handler": "AnimEvent"
     },
     {
       "file": "Assets/Game/Scripts/ColorTiming/Legacy/Boss2_Controller_w.cs",
-      "line": 227,
+      "line": 255,
       "event": "Complete",
       "operation": "-=",
       "handler": "Entry_Complete"
     },
     {
       "file": "Assets/Game/Scripts/ColorTiming/Legacy/Boss2_Controller_w.cs",
-      "line": 228,
+      "line": 256,
       "event": "End",
       "operation": "-=",
       "handler": "Entry_End"

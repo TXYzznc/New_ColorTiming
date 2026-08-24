@@ -128,7 +128,7 @@
       },
       {
         "file": "Legacy/Boss2_Controller.cs",
-        "line": 628,
+        "line": 629,
         "text": "OnDamage_Event.RemoveListener(boss2Anim_s.OnHit);"
       },
       {
@@ -285,22 +285,22 @@
       },
       {
         "file": "Legacy/Boss2_Controller_w.cs",
-        "line": 109,
+        "line": 111,
         "text": "moveOkTimeing += Time.fixedDeltaTime;"
       },
       {
         "file": "Legacy/Boss2_Controller_w.cs",
-        "line": 170,
+        "line": 172,
         "text": "entry.Complete += Entry_Complete;"
       },
       {
         "file": "Legacy/Boss2_Controller_w.cs",
-        "line": 171,
+        "line": 173,
         "text": "entry.Event += AnimEvent;"
       },
       {
         "file": "Legacy/Boss2_Controller_w.cs",
-        "line": 172,
+        "line": 174,
         "text": "entry.End += Entry_End;"
       },
       {
@@ -380,7 +380,7 @@
       },
       {
         "file": "Legacy/UI/StartVido.cs",
-        "line": 21,
+        "line": 24,
         "text": "if (player != null) player.loopPointReached += PlayEnd;"
       },
       {
@@ -472,42 +472,42 @@
       },
       {
         "file": "Legacy/Boss2_Controller.cs",
-        "line": 495,
-        "text": "trackEntry.Event -= AnimEvent;"
-      },
-      {
-        "file": "Legacy/Boss2_Controller.cs",
         "line": 496,
-        "text": "trackEntry.Complete -= Entry_Complete;"
+        "text": "trackEntry.Event -= AnimEvent;"
       },
       {
         "file": "Legacy/Boss2_Controller.cs",
         "line": 497,
+        "text": "trackEntry.Complete -= Entry_Complete;"
+      },
+      {
+        "file": "Legacy/Boss2_Controller.cs",
+        "line": 498,
         "text": "trackEntry.End -= Entry_End;"
       },
       {
         "file": "Legacy/Boss2_Controller_w.cs",
-        "line": 72,
+        "line": 79,
         "text": "atkCD -= Time.deltaTime;"
       },
       {
         "file": "Legacy/Boss2_Controller_w.cs",
-        "line": 196,
+        "line": 198,
         "text": "trackEntry.Complete -= Entry_Complete;"
       },
       {
         "file": "Legacy/Boss2_Controller_w.cs",
-        "line": 226,
+        "line": 254,
         "text": "trackEntry.Event -= AnimEvent;"
       },
       {
         "file": "Legacy/Boss2_Controller_w.cs",
-        "line": 227,
+        "line": 255,
         "text": "trackEntry.Complete -= Entry_Complete;"
       },
       {
         "file": "Legacy/Boss2_Controller_w.cs",
-        "line": 228,
+        "line": 256,
         "text": "trackEntry.End -= Entry_End;"
       },
       {
@@ -582,7 +582,7 @@
       },
       {
         "file": "Legacy/UI/StartVido.cs",
-        "line": 26,
+        "line": 30,
         "text": "if (player != null) player.loopPointReached -= PlayEnd;"
       },
       {
@@ -649,12 +649,12 @@
       },
       {
         "file": "Legacy/Boss2_Controller_w.cs",
-        "line": 66,
+        "line": 68,
         "text": "private void Update()"
       },
       {
         "file": "Legacy/Boss2_Controller_w.cs",
-        "line": 80,
+        "line": 87,
         "text": "private void FixedUpdate()"
       },
       {
