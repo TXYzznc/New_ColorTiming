@@ -14,6 +14,8 @@
 
 Unity Test Runner 的最新发现结果单独记录在 `test-discovery-20260824.md`：63 个 ColorTiming EditMode 与 14 个 ColorTiming PlayMode 用例均为 `Runnable`，但新增用例尚未执行，因此不会据此增加通过数。
 
+另以 Roslyn 从 64 个源产品脚本反向扫描方法面；57 个保留/重构脚本的目标路径缺失为 0，21 个存在签名变化的脚本均在 `method-surface-reverse-audit.md` 中逐项落到领域层、框架服务、实体生命周期或有引用证据的不可达入口。该结果补强“无功能遗漏”的静态证据，但不替代人工回归。
+
 ## 本轮补强
 
 新增 `StartMenuNavigation_AndAllSettingsPersistThroughGfSetting` PlayMode 测试，直接覆盖：
