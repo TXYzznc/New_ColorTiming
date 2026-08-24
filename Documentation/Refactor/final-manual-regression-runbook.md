@@ -3,7 +3,7 @@
 日期：2026-08-24  
 适用目标：`D:\unity\UnityProject\ColorTimeing\New\_ColorTiming`
 
-本文只定义最终人工验收步骤和证据要求。未实际执行并保存证据前，不得据此勾选 OpenSpec 6.7、7.10、10.8、12.1～12.4。
+本文定义最终人工验收步骤和证据要求。OpenSpec 10.8 已由 `visual-regression-comparison.md` 中的源/目标静态 Main Camera 配对帧独立完成；未实际执行并保存人工证据前，不得据此勾选 OpenSpec 6.7、7.10、12.1～12.4。
 
 ## 1. 执行前条件
 
@@ -76,6 +76,8 @@
 
 源工程：`D:\unity\UnityProject\ColorTimeing\ColorTimeing`  
 目标工程：`D:\unity\UnityProject\ColorTimeing\New\_ColorTiming`
+
+10.8 的基础视觉检查点已经完成：StartMenu 配对帧、Boss1/Boss2 同相机静态帧、量化差异和运行态补充帧均记录在 `visual-regression-comparison.md`。以下更细的动态同状态清单继续作为 OpenSpec 12.4 的增强人工证据要求，不再重复阻塞 10.8。
 
 每组使用相同分辨率、Game View 缩放、场景状态、角色/Boss 位置、HP 段和 UI 状态；源、目标各保存一张原始 PNG，再保存一张并排图。至少包含：
 

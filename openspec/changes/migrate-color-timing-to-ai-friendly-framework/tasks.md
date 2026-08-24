@@ -120,7 +120,7 @@
 - [x] 10.5 迁移 3 个 Spine/Skeleton Fill 材质并逐项验证填充色、透明度、遮罩和排序
 - [x] 10.6 升级其他 Sprite、粒子与自定义材质到受支持 URP Shader，确保无粉色/Fallback 输出
 - [x] 10.7 固定 StartMenu、Boss1、Boss2 的相同分辨率/相机视觉检查点并生成源基准截图
-- [ ] 10.8 生成目标截图并逐检查点比较角色、Boss、UI、特效、遮罩、颜色和层级，记录差异处理
+- [x] 10.8 生成目标截图并逐检查点比较角色、Boss、UI、特效、遮罩、颜色和层级，记录差异处理
 - [x] 10.9 执行全项目 missing/unsupported shader、missing material 与渲染器引用扫描
 
 ## 11. 自动化验证与工程质量

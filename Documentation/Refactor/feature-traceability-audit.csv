@@ -54,5 +54,5 @@ MEDIA-001,PARTIAL,"Framework sound-name tests; group mute/reset runtime test; sc
 MEDIA-002,STATIC_MANUAL,"Grass objects/GUID validation; executed trigger/environment/footstep-override test","Grass animation and audible result remain"
 MEDIA-003,STATIC_MANUAL,"CameraShow component/scene reference audit; executed parallax formula test","Live visual movement remains"
 MEDIA-004,STATIC_MANUAL,"Cinemachine audit and scene screenshots; executed distance zoom/runtime wiring/death-camera tests","Confiner/impulse feel review remains"
-RENDER-001,DIRECT,"Three-scene shader/material/reference scans; source/target screenshots","Same-state paired frames remain in 10.8"
-RENDER-002,DIRECT,"Eleven-material URP mapping; no unsupported shaders; hit/fill screenshots","Same-state paired appearance remains in 10.8"
+RENDER-001,DIRECT,"Three-scene shader/material/reference scans; source/target same-camera static pairs; runtime screenshots","Dynamic paired sequences remain in 12.4"
+RENDER-002,DIRECT,"Eleven-material URP mapping; no unsupported shaders; same-camera static pairs; hit/fill screenshots","Dynamic hit/effect paired sequences remain in 12.4"
