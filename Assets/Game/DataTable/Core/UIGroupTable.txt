@@ -1,7 +1,7 @@
 #	UIGroup			
 #	ID		Name	Depth
 #	int		string	int
-#			Framework default UI groups	
-	1		Default	1
-	2		Dialog	200
-	3		Overlay	500
+#		备注		每个组的起始Order,用于控制显示顺序
+	1	Default interface	Default	1
+	2	Dialog interface	Dialog	200
+	3	Overlay interface	Overlay	500

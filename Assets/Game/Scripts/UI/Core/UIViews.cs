@@ -4,4 +4,7 @@
 #endif
 public enum UIViews : int
 {
+	Esc = 1001,
+	StartMenu = 1002,
+	BattleResult = 1003
 }

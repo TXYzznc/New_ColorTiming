@@ -1,0 +1,437 @@
+{
+"skeleton": { "hash": "IuViqo2LLzme9V+FTQ75udzRvmk", "spine": "3.8", "fps": 60, "images": "./images2/", "audio": "" },
+"bones": [
+	{ "name": "root" },
+	{ "name": "attack_3_fanwei", "parent": "root", "length": 366.4, "rotation": 90, "x": -3.55, "y": -1172.43 },
+	{ "name": "attack1_fanwei", "parent": "root", "length": 303.54, "rotation": 89.82, "x": -2.85, "y": -497.31 },
+	{ "name": "attack2_fanwei", "parent": "root", "length": 319.25, "rotation": 178.89, "x": -659.71, "y": -1032.04 }
+],
+"slots": [
+	{ "name": "攻击2范围_0000", "bone": "attack2_fanwei" },
+	{ "name": "攻击3范围_0000", "bone": "attack_3_fanwei" },
+	{ "name": "攻击1范围_0000", "bone": "attack1_fanwei" }
+],
+"skins": [
+	{
+		"name": "default",
+		"attachments": {
+			"攻击2范围_0000": {
+				"攻击2范围_0000": { "x": 5, "y": -213.12, "rotation": -178.89, "width": 701, "height": 506 }
+			},
+			"攻击3范围_0000": {
+				"攻击3范围_0000": { "x": 811.38, "y": -3.55, "rotation": -90, "width": 2393, "height": 1738 }
+			},
+			"攻击1范围_0000": {
+				"攻击1范围_0000": { "x": 497.31, "y": -1.25, "rotation": -89.82, "width": 1467, "height": 1045 }
+			}
+		}
+	}
+],
+"events": {
+	"attack": {}
+},
+"animations": {
+	"WuDongZuo": {
+		"bones": {
+			"root": {
+				"rotate": [
+					{ "curve": "stepped" },
+					{ "time": 2 }
+				],
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 2 }
+				],
+				"scale": [
+					{ "curve": "stepped" },
+					{ "time": 2 }
+				],
+				"shear": [
+					{ "curve": "stepped" },
+					{ "time": 2 }
+				]
+			}
+		}
+	},
+	"attack_1_test1_60fps": {
+		"slots": {
+			"攻击1范围_0000": {
+				"color": [
+					{ "color": "ffffff00", "curve": "stepped" },
+					{ "time": 0.3333, "color": "ffffff00" },
+					{ "time": 0.75, "color": "ffffff18", "curve": "stepped" },
+					{ "time": 1.1667, "color": "ffffff18" },
+					{ "time": 1.5, "color": "ffffff00" }
+				],
+				"attachment": [
+					{ "time": 0.3333, "name": "攻击1范围_0000" },
+					{ "time": 1.5, "name": null }
+				]
+			}
+		},
+		"bones": {
+			"root": {
+				"rotate": [
+					{ "curve": "stepped" },
+					{ "time": 2 }
+				],
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 2 }
+				],
+				"scale": [
+					{ "curve": "stepped" },
+					{ "time": 2 }
+				],
+				"shear": [
+					{ "curve": "stepped" },
+					{ "time": 2 }
+				]
+			},
+			"attack1_fanwei": {
+				"translate": [
+					{ "x": 20.64, "y": 36.12 }
+				]
+			}
+		},
+		"events": [
+			{ "time": 0.8333, "name": "attack", "string": "atk1" }
+		]
+	},
+	"attack_2_test1_60fps": {
+		"slots": {
+			"攻击2范围_0000": {
+				"color": [
+					{ "color": "ffffff00", "curve": "stepped" },
+					{ "time": 0.1667, "color": "ffffff00" },
+					{ "time": 0.5, "color": "ffffff18", "curve": "stepped" },
+					{ "time": 1.0833, "color": "ffffff18" },
+					{ "time": 1.3333, "color": "ffffff00" }
+				],
+				"attachment": [
+					{ "time": 0.1667, "name": "攻击2范围_0000" }
+				]
+			}
+		},
+		"bones": {
+			"root": {
+				"rotate": [
+					{ "curve": "stepped" },
+					{ "time": 0.3333, "curve": "stepped" },
+					{ "time": 0.5333, "curve": "stepped" },
+					{ "time": 0.6667, "curve": "stepped" },
+					{ "time": 0.8, "curve": "stepped" },
+					{ "time": 1.3333 }
+				],
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 0.3333, "curve": "stepped" },
+					{ "time": 0.5333, "curve": "stepped" },
+					{ "time": 0.6667, "curve": "stepped" },
+					{ "time": 0.8, "curve": "stepped" },
+					{ "time": 1.3333 }
+				],
+				"scale": [
+					{ "curve": "stepped" },
+					{ "time": 0.3333, "curve": "stepped" },
+					{ "time": 0.5333, "curve": "stepped" },
+					{ "time": 0.6667, "curve": "stepped" },
+					{ "time": 0.8, "curve": "stepped" },
+					{ "time": 1.3333 }
+				],
+				"shear": [
+					{ "curve": "stepped" },
+					{ "time": 0.3333, "curve": "stepped" },
+					{ "time": 0.5333, "curve": "stepped" },
+					{ "time": 0.6667, "curve": "stepped" },
+					{ "time": 0.8, "curve": "stepped" },
+					{ "time": 1.3333 }
+				]
+			},
+			"attack2_fanwei": {
+				"translate": [
+					{ "x": 617.87, "y": 643.19 }
+				]
+			}
+		},
+		"events": [
+			{ "time": 0.75, "name": "attack", "string": "atk2" }
+		]
+	},
+	"attack_3_test2_60fps": {
+		"slots": {
+			"攻击3范围_0000": {
+				"color": [
+					{ "color": "ffffff00", "curve": "stepped" },
+					{ "time": 0.9167, "color": "ffffff00" },
+					{ "time": 1.25, "color": "ffffff18", "curve": "stepped" },
+					{ "time": 2.5, "color": "ffffff18" },
+					{ "time": 2.9167, "color": "ffffff00" }
+				],
+				"attachment": [
+					{ "time": 0.9167, "name": "攻击3范围_0000" }
+				]
+			}
+		},
+		"bones": {
+			"root": {
+				"rotate": [
+					{ "curve": "stepped" },
+					{ "time": 3.8667 }
+				],
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 3.8667 }
+				],
+				"scale": [
+					{ "curve": "stepped" },
+					{ "time": 3.8667 }
+				],
+				"shear": [
+					{ "curve": "stepped" },
+					{ "time": 3.8667 }
+				]
+			},
+			"attack_3_fanwei": {
+				"translate": [
+					{ "x": 117.7, "y": 362.52 }
+				]
+			}
+		},
+		"events": [
+			{ "time": 1.25, "name": "attack", "string": "atk3" }
+		]
+	},
+	"attack_4_test1_60fps": {
+		"slots": {
+			"攻击1范围_0000": {
+				"color": [
+					{ "color": "ffffff00", "curve": "stepped" },
+					{ "time": 0.4167, "color": "ffffff00" },
+					{ "time": 0.8333, "color": "ffffff28", "curve": "stepped" },
+					{ "time": 1.1667, "color": "ffffff28" },
+					{ "time": 1.5, "color": "ffffff00" }
+				],
+				"attachment": [
+					{ "time": 0.4167, "name": "攻击1范围_0000" }
+				]
+			},
+			"攻击3范围_0000": {
+				"color": [
+					{ "color": "ffffff00", "curve": "stepped" },
+					{ "time": 1, "color": "ffffff00" },
+					{ "time": 1.3167, "color": "ffffff18", "curve": "stepped" },
+					{ "time": 3.25, "color": "ffffff18" },
+					{ "time": 3.5, "color": "ffffff00" }
+				],
+				"attachment": [
+					{ "time": 1, "name": "攻击3范围_0000" }
+				]
+			}
+		},
+		"bones": {
+			"root": {
+				"rotate": [
+					{ "curve": "stepped" },
+					{ "time": 4.4167 }
+				],
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 4.4167 }
+				],
+				"scale": [
+					{ "curve": "stepped" },
+					{ "time": 4.4167 }
+				],
+				"shear": [
+					{ "curve": "stepped" },
+					{ "time": 4.4167 }
+				]
+			},
+			"attack_3_fanwei": {
+				"translate": [
+					{ "x": 117.7, "y": 362.52 }
+				]
+			},
+			"attack1_fanwei": {
+				"translate": [
+					{ "x": 20.64, "y": 36.12 }
+				]
+			}
+		},
+		"events": [
+			{ "time": 0.85, "name": "attack", "string": "atk1" },
+			{ "time": 1.3167, "name": "attack", "string": "atk3" }
+		]
+	},
+	"attack_5_test1_60fps": {
+		"bones": {
+			"root": {
+				"rotate": [
+					{ "curve": "stepped" },
+					{ "time": 0.2833, "curve": "stepped" },
+					{ "time": 1.1167, "curve": "stepped" },
+					{ "time": 1.45, "curve": "stepped" },
+					{ "time": 1.7833, "curve": "stepped" },
+					{ "time": 2.1167, "curve": "stepped" },
+					{ "time": 2.45, "curve": "stepped" },
+					{ "time": 2.7833, "curve": "stepped" },
+					{ "time": 3.1167, "curve": "stepped" },
+					{ "time": 3.45, "curve": "stepped" },
+					{ "time": 3.7833, "curve": "stepped" },
+					{ "time": 4.1167, "curve": "stepped" },
+					{ "time": 4.8333 }
+				],
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 0.2833, "curve": "stepped" },
+					{ "time": 1.1167, "curve": "stepped" },
+					{ "time": 1.45, "curve": "stepped" },
+					{ "time": 1.7833, "curve": "stepped" },
+					{ "time": 2.1167, "curve": "stepped" },
+					{ "time": 2.45, "curve": "stepped" },
+					{ "time": 2.7833, "curve": "stepped" },
+					{ "time": 3.1167, "curve": "stepped" },
+					{ "time": 3.45, "curve": "stepped" },
+					{ "time": 3.7833, "curve": "stepped" },
+					{ "time": 4.1167, "curve": "stepped" },
+					{ "time": 4.8333 }
+				],
+				"scale": [
+					{ "curve": "stepped" },
+					{ "time": 0.2833, "curve": "stepped" },
+					{ "time": 1.1167, "curve": "stepped" },
+					{ "time": 1.45, "curve": "stepped" },
+					{ "time": 1.7833, "curve": "stepped" },
+					{ "time": 2.1167, "curve": "stepped" },
+					{ "time": 2.45, "curve": "stepped" },
+					{ "time": 2.7833, "curve": "stepped" },
+					{ "time": 3.1167, "curve": "stepped" },
+					{ "time": 3.45, "curve": "stepped" },
+					{ "time": 3.7833, "curve": "stepped" },
+					{ "time": 4.1167, "curve": "stepped" },
+					{ "time": 4.8333 }
+				],
+				"shear": [
+					{ "curve": "stepped" },
+					{ "time": 0.2833, "curve": "stepped" },
+					{ "time": 1.1167, "curve": "stepped" },
+					{ "time": 1.45, "curve": "stepped" },
+					{ "time": 1.7833, "curve": "stepped" },
+					{ "time": 2.1167, "curve": "stepped" },
+					{ "time": 2.45, "curve": "stepped" },
+					{ "time": 2.7833, "curve": "stepped" },
+					{ "time": 3.1167, "curve": "stepped" },
+					{ "time": 3.45, "curve": "stepped" },
+					{ "time": 3.7833, "curve": "stepped" },
+					{ "time": 4.1167, "curve": "stepped" },
+					{ "time": 4.8333 }
+				]
+			}
+		}
+	},
+	"attack_6_60fps": {
+		"bones": {
+			"root": {
+				"rotate": [
+					{ "curve": "stepped" },
+					{ "time": 0.3333, "curve": "stepped" },
+					{ "time": 0.4833, "curve": "stepped" },
+					{ "time": 0.7167, "curve": "stepped" },
+					{ "time": 1.25 }
+				],
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 0.3333, "curve": "stepped" },
+					{ "time": 0.4833, "curve": "stepped" },
+					{ "time": 0.7167, "curve": "stepped" },
+					{ "time": 1.25 }
+				],
+				"scale": [
+					{ "curve": "stepped" },
+					{ "time": 0.3333, "curve": "stepped" },
+					{ "time": 0.4833, "curve": "stepped" },
+					{ "time": 0.7167, "curve": "stepped" },
+					{ "time": 1.25 }
+				],
+				"shear": [
+					{ "curve": "stepped" },
+					{ "time": 0.3333, "curve": "stepped" },
+					{ "time": 0.4833, "curve": "stepped" },
+					{ "time": 0.7167, "curve": "stepped" },
+					{ "time": 1.25 }
+				]
+			}
+		},
+		"events": [
+			{ "time": 0.2333, "name": "attack", "string": "atk6" }
+		]
+	},
+	"hit1_60fps": {
+		"bones": {
+			"root": {
+				"rotate": [
+					{ "curve": "stepped" },
+					{ "time": 0.9167 }
+				],
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 0.9167 }
+				],
+				"scale": [
+					{ "curve": "stepped" },
+					{ "time": 0.9167 }
+				],
+				"shear": [
+					{ "curve": "stepped" },
+					{ "time": 0.9167 }
+				]
+			}
+		}
+	},
+	"hit2_60fps": {
+		"bones": {
+			"root": {
+				"rotate": [
+					{ "curve": "stepped" },
+					{ "time": 0.9167 }
+				],
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 0.9167 }
+				],
+				"scale": [
+					{ "curve": "stepped" },
+					{ "time": 0.9167 }
+				],
+				"shear": [
+					{ "curve": "stepped" },
+					{ "time": 0.9167 }
+				]
+			}
+		}
+	},
+	"idel_60fps": {
+		"bones": {
+			"root": {
+				"rotate": [
+					{ "curve": "stepped" },
+					{ "time": 4 }
+				],
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 4 }
+				],
+				"scale": [
+					{ "curve": "stepped" },
+					{ "time": 4 }
+				],
+				"shear": [
+					{ "curve": "stepped" },
+					{ "time": 4 }
+				]
+			}
+		}
+	}
+}
+}

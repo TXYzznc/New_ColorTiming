@@ -1,0 +1,503 @@
+
+第二章boss.png
+size: 7804,4951
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+大嘴上巴纸片
+  rotate: true
+  xy: 3957, 2
+  size: 198, 169
+  orig: 198, 173
+  offset: 0, 4
+  index: -1
+大嘴下巴纸片
+  rotate: true
+  xy: 2, 46
+  size: 581, 650
+  orig: 581, 650
+  offset: 0, 0
+  index: -1
+大嘴口腔纸片
+  rotate: true
+  xy: 5584, 232
+  size: 225, 250
+  orig: 225, 256
+  offset: 0, 6
+  index: -1
+大嘴巴上巴
+  rotate: true
+  xy: 6875, 26
+  size: 172, 143
+  orig: 172, 143
+  offset: 0, 0
+  index: -1
+大嘴巴下巴
+  rotate: false
+  xy: 1241, 82
+  size: 513, 545
+  orig: 513, 545
+  offset: 0, 0
+  index: -1
+大嘴巴口腔
+  rotate: false
+  xy: 5329, 2
+  size: 186, 213
+  orig: 186, 213
+  offset: 0, 0
+  index: -1
+小嘴上巴纸片
+  rotate: false
+  xy: 6712, 30
+  size: 161, 168
+  orig: 161, 168
+  offset: 0, 0
+  index: -1
+小嘴下巴纸片
+  rotate: false
+  xy: 7020, 39
+  size: 151, 163
+  orig: 152, 166
+  offset: 1, 3
+  index: -1
+小嘴巴上巴
+  rotate: false
+  xy: 7345, 165
+  size: 149, 136
+  orig: 150, 136
+  offset: 1, 0
+  index: -1
+小嘴巴下巴
+  rotate: false
+  xy: 5183, 17
+  size: 144, 135
+  orig: 149, 135
+  offset: 0, 0
+  index: -1
+小嘴巴口腔
+  rotate: true
+  xy: 5003, 6
+  size: 146, 178
+  orig: 332, 232
+  offset: 48, 1
+  index: -1
+小嘴巴口腔纸片
+  rotate: false
+  xy: 5655, 28
+  size: 162, 202
+  orig: 162, 202
+  offset: 0, 0
+  index: -1
+尖刺1
+  rotate: false
+  xy: 2116, 43
+  size: 298, 113
+  orig: 298, 113
+  offset: 0, 0
+  index: -1
+尖刺1纸片
+  rotate: false
+  xy: 3611, 60
+  size: 344, 152
+  orig: 348, 157
+  offset: 2, 4
+  index: -1
+尖刺2
+  rotate: false
+  xy: 1337, 7
+  size: 140, 73
+  orig: 141, 73
+  offset: 0, 0
+  index: -1
+尖刺2纸片
+  rotate: false
+  xy: 7008, 204
+  size: 175, 96
+  orig: 177, 98
+  offset: 1, 1
+  index: -1
+尖刺3
+  rotate: true
+  xy: 3045, 29
+  size: 110, 263
+  orig: 110, 263
+  offset: 0, 0
+  index: -1
+尖刺3纸片
+  rotate: true
+  xy: 4656, 258
+  size: 145, 362
+  orig: 153, 364
+  offset: 6, 1
+  index: -1
+尖刺4
+  rotate: false
+  xy: 5517, 12
+  size: 136, 203
+  orig: 136, 203
+  offset: 0, 0
+  index: -1
+尖刺4纸片
+  rotate: false
+  xy: 6545, 5
+  size: 165, 251
+  orig: 167, 253
+  offset: 1, 1
+  index: -1
+尖刺5
+  rotate: true
+  xy: 3310, 72
+  size: 67, 257
+  orig: 67, 257
+  offset: 0, 0
+  index: -1
+尖刺5纸片
+  rotate: true
+  xy: 6716, 200
+  size: 100, 290
+  orig: 102, 292
+  offset: 1, 1
+  index: -1
+尖刺6
+  rotate: false
+  xy: 4789, 71
+  size: 212, 185
+  orig: 212, 185
+  offset: 0, 0
+  index: -1
+尖刺6纸片
+  rotate: false
+  xy: 5329, 217
+  size: 253, 240
+  orig: 255, 243
+  offset: 1, 1
+  index: -1
+尖刺7
+  rotate: false
+  xy: 4128, 5
+  size: 250, 195
+  orig: 250, 195
+  offset: 0, 0
+  index: -1
+尖刺7纸片
+  rotate: false
+  xy: 5020, 154
+  size: 307, 249
+  orig: 310, 252
+  offset: 2, 1
+  index: -1
+橙色1
+  rotate: true
+  xy: 1479, 11
+  size: 69, 87
+  orig: 71, 89
+  offset: 1, 1
+  index: -1
+橙色2
+  rotate: false
+  xy: 5819, 56
+  size: 86, 84
+  orig: 89, 86
+  offset: 1, 1
+  index: -1
+橙色3
+  rotate: true
+  xy: 7330, 47
+  size: 116, 133
+  orig: 118, 135
+  offset: 1, 1
+  index: -1
+橙色4
+  rotate: true
+  xy: 3461, 6
+  size: 64, 81
+  orig: 66, 83
+  offset: 1, 1
+  index: -1
+橙色5
+  rotate: false
+  xy: 7620, 141
+  size: 114, 118
+  orig: 116, 120
+  offset: 1, 1
+  index: -1
+破纸1
+  rotate: false
+  xy: 1756, 76
+  size: 358, 80
+  orig: 370, 180
+  offset: 0, 0
+  index: -1
+破纸1纸片
+  rotate: false
+  xy: 4097, 202
+  size: 422, 106
+  orig: 422, 106
+  offset: 0, 0
+  index: -1
+破纸2
+  rotate: false
+  xy: 5291, 459
+  size: 559, 168
+  orig: 559, 169
+  offset: 0, 1
+  index: -1
+破纸2纸片
+  rotate: false
+  xy: 4656, 405
+  size: 633, 222
+  orig: 633, 222
+  offset: 0, 0
+  index: -1
+破纸3
+  rotate: false
+  xy: 1756, 158
+  size: 686, 205
+  orig: 686, 205
+  offset: 0, 0
+  index: -1
+破纸3纸片
+  rotate: false
+  xy: 1756, 365
+  size: 746, 262
+  orig: 746, 292
+  offset: 0, 30
+  index: -1
+第二章场景
+  rotate: false
+  xy: 2, 629
+  size: 7800, 4320
+  orig: 7800, 4320
+  offset: 0, 0
+  index: -1
+紫色1
+  rotate: false
+  xy: 7679, 45
+  size: 85, 94
+  orig: 87, 96
+  offset: 1, 1
+  index: -1
+紫色2
+  rotate: false
+  xy: 7584, 31
+  size: 93, 106
+  orig: 95, 108
+  offset: 1, 1
+  index: -1
+紫色3
+  rotate: false
+  xy: 6073, 183
+  size: 61, 60
+  orig: 65, 62
+  offset: 1, 1
+  index: -1
+紫色4
+  rotate: false
+  xy: 5908, 163
+  size: 84, 80
+  orig: 87, 82
+  offset: 1, 1
+  index: -1
+紫色5
+  rotate: false
+  xy: 7465, 33
+  size: 117, 104
+  orig: 119, 106
+  offset: 1, 1
+  index: -1
+紫色6
+  rotate: false
+  xy: 1568, 9
+  size: 81, 71
+  orig: 83, 77
+  offset: 1, 5
+  index: -1
+红色1
+  rotate: false
+  xy: 2444, 248
+  size: 58, 115
+  orig: 61, 117
+  offset: 2, 1
+  index: -1
+红色2
+  rotate: true
+  xy: 1651, 9
+  size: 71, 80
+  orig: 73, 83
+  offset: 1, 2
+  index: -1
+红色3
+  rotate: false
+  xy: 3392, 2
+  size: 67, 68
+  orig: 69, 71
+  offset: 1, 2
+  index: -1
+红色4
+  rotate: false
+  xy: 7736, 196
+  size: 65, 63
+  orig: 67, 65
+  offset: 1, 1
+  index: -1
+红色5
+  rotate: true
+  xy: 1241, 2
+  size: 78, 94
+  orig: 80, 96
+  offset: 1, 1
+  index: -1
+绿色1
+  rotate: false
+  xy: 3045, 146
+  size: 45, 95
+  orig: 54, 109
+  offset: 1, 13
+  index: -1
+绿色2
+  rotate: false
+  xy: 7173, 40
+  size: 155, 139
+  orig: 157, 141
+  offset: 1, 1
+  index: -1
+绿色3
+  rotate: true
+  xy: 5819, 142
+  size: 88, 87
+  orig: 90, 89
+  offset: 1, 1
+  index: -1
+绿色4
+  rotate: true
+  xy: 3310, 2
+  size: 68, 80
+  orig: 70, 87
+  offset: 1, 5
+  index: -1
+绿色5
+  rotate: false
+  xy: 5994, 163
+  size: 77, 80
+  orig: 79, 82
+  offset: 1, 1
+  index: -1
+绿色6
+  rotate: false
+  xy: 7496, 139
+  size: 122, 120
+  orig: 124, 122
+  offset: 1, 1
+  index: -1
+背部杂物
+  rotate: false
+  xy: 6286, 76
+  size: 257, 180
+  orig: 257, 180
+  offset: 0, 0
+  index: -1
+背部杂物纸片
+  rotate: false
+  xy: 2733, 22
+  size: 310, 219
+  orig: 310, 220
+  offset: 0, 1
+  index: -1
+腹部铅笔
+  rotate: false
+  xy: 7185, 181
+  size: 158, 120
+  orig: 208, 129
+  offset: 0, 9
+  index: -1
+腹部铅笔纸片
+  rotate: true
+  xy: 4380, 12
+  size: 188, 158
+  orig: 190, 165
+  offset: 1, 6
+  index: -1
+身体1
+  rotate: false
+  xy: 7540, 261
+  size: 262, 366
+  orig: 327, 373
+  offset: 0, 0
+  index: -1
+身体1纸片
+  rotate: true
+  xy: 6716, 302
+  size: 325, 416
+  orig: 325, 416
+  offset: 0, 0
+  index: -1
+身体2
+  rotate: false
+  xy: 4097, 310
+  size: 557, 317
+  orig: 557, 351
+  offset: 0, 34
+  index: -1
+身体2——2
+  rotate: false
+  xy: 4540, 53
+  size: 247, 203
+  orig: 247, 232
+  offset: 0, 0
+  index: -1
+身体2——2纸片
+  rotate: false
+  xy: 2444, 2
+  size: 287, 239
+  orig: 294, 239
+  offset: 4, 0
+  index: -1
+身体2纸片
+  rotate: false
+  xy: 2504, 243
+  size: 598, 384
+  orig: 598, 439
+  offset: 0, 55
+  index: -1
+身体3
+  rotate: false
+  xy: 5852, 245
+  size: 432, 382
+  orig: 534, 480
+  offset: 0, 0
+  index: -1
+身体3纸片
+  rotate: false
+  xy: 3611, 214
+  size: 484, 413
+  orig: 506, 413
+  offset: 22, 0
+  index: -1
+身体4
+  rotate: false
+  xy: 3104, 141
+  size: 505, 486
+  orig: 530, 486
+  offset: 25, 0
+  index: -1
+身体4纸片
+  rotate: false
+  xy: 654, 74
+  size: 585, 553
+  orig: 585, 553
+  offset: 0, 0
+  index: -1
+身体5
+  rotate: false
+  xy: 7134, 303
+  size: 404, 324
+  orig: 405, 324
+  offset: 0, 0
+  index: -1
+身体5纸片
+  rotate: false
+  xy: 6286, 258
+  size: 428, 369
+  orig: 428, 373
+  offset: 0, 4
+  index: -1

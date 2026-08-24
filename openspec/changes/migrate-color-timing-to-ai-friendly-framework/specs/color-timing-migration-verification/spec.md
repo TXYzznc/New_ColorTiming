@@ -1,11 +1,11 @@
 ## ADDED Requirements
 
 ### Requirement: Source project remains an immutable comparison baseline
-The migration process MUST NOT modify files under `D:\unity\UnityProject\ColorTimeing\ColorTimeing`; all product implementation and evidence SHALL be stored in the target repository.
+The migration process MUST NOT modify project-authored files or project configuration under `Assets`, `Packages` or `ProjectSettings` in `D:\unity\UnityProject\ColorTimeing\ColorTimeing`; all product implementation and evidence SHALL be stored in the target repository. Generated `Library`, `Temp`, `obj` and IDE files MAY be touched only by read-only comparison builds and SHALL NOT be treated as implementation state.
 
 #### Scenario: Compare source Git and file baseline
 - **WHEN** a migration phase completes
-- **THEN** no implementation change attributable to the migration appears in the source project and the target evidence references the source path read-only
+- **THEN** hashes of all source assets and project settings remain equal to the captured baseline, no authored implementation change appears in the source project and the target evidence references the source path read-only
 
 ### Requirement: Every inventoried feature has traceability
 The project SHALL maintain a feature traceability matrix covering StartMenu, global flow/settings, player, input, combat, weapons, Boss1, Boss2, UI/HUD, audio/video/world/camera and every inventoried animation/Spine event.
@@ -89,4 +89,3 @@ No migration task, capability or overall change SHALL be marked complete solely 
 #### Scenario: Evaluate final completion
 - **WHEN** the team evaluates whether the OpenSpec change can be archived
 - **THEN** every requirement, task, traceability row and validation gate has passing direct evidence and no unresolved required item remains
-

@@ -48,7 +48,9 @@
 
 ### 3. 标准启动链与显式组合根
 
-新增 `ColorTimingStartupProcedure : ProcedureBase, IFrameworkStartupProcedure` 作为产品入口。它由 `FrameworkReadyProcedure` 发现，创建项目级组合根，注册显式服务引用，并通过框架 `ChangeSceneProcedure` 进入 `StartMenu`。
+新增 `ColorTimingStartupProcedure : ProcedureBase, IFrameworkStartupProcedure` 作为产品入口和长期应用 Procedure。它由 `FrameworkReadyProcedure` 发现，创建项目级组合根，注册显式服务引用，并通过 GF.Scene、框架加载事件与 Builtin loading view 进入 `StartMenu` 及处理后续产品场景切换。
+
+现有 `ChangeSceneProcedure` 在加载完成后保持为当前 Procedure，未提供返回产品 Procedure 的通用续接机制，因此只适合一次性终端加载，不适合作为三场景长期导航控制器。产品 Procedure 将复用其资源路径、声音/Entity 清理、卸载、进度与失败处理约定，但不修改框架核心来加入 ColorTiming 专用续接。加载成功后，Procedure 通过已知场景根契约注入组合根上下文，不使用全局 `Find` 或静态 Service Locator。
 
 组合根使用构造参数、序列化引用和窄接口连接已知依赖；跨系统通知使用 C# 事件，只有真正跨模块且需要框架生命周期的广播才使用 Game Framework Event。不会新增 Service Locator 或静态单例替代当前 `GameManager`。
 
@@ -113,7 +115,7 @@ Dash 命中后的慢动作保持 `timeScale = 0.45` 和恢复语义，但由专�
 ## Migration Plan
 
 1. 固化源项目 manifest、功能清单、序列化引用、Animation Event、按钮绑定、包和 ProjectSettings 差异；验证源项目基线零编译错误。
-2. 在目标框架基线上创建产品目录、程序集/测试边界、组合根和启动 Procedure；保持框架 Launch 为唯一启动入口。
+2. 在目标框架基线上创建产品目录、程序集/测试边界、组合根和长期启动/场景流 Procedure；保持框架 Launch 为唯一启动入口。
 3. 按 GUID 安全策略迁移场景、Prefab、动画、Spine、图片、音频、视频和字体，合并 Tag/Layer、物理、分辨率和输入设置；不覆盖框架核心 folder meta。
 4. 先实现输入、战斗领域、弱点队列、生命和状态机测试，再接入玩家、武器、技能和实体生命周期。
 5. 分别迁移 Boss1、Boss2 与 Spine 事件桥，逐 Boss 建立行为/生命段/攻击回归。

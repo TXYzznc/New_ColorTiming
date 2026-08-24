@@ -1,0 +1,583 @@
+[Licensing::Module] Trying to connect to existing licensing client channel...
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-WIN10" at "2026-08-24T09:14:27.237986Z"
+[Licensing::Client] Code 10 while verifying Licensing Client signature (process Id: 6032, path: "D:/unity/Unity Hub/UnityLicensingClient_V1/Unity.Licensing.Client.exe")
+[Licensing::Module] LicensingClient has failed validation; ignoring
+[Licensing::Client] Error: HandshakeResponse reported an error:
+	ResponseCode: 505
+	ResponseStatus: Unsupported protocol version '1.16.2'.
+[Licensing::Module] Error: Failed to handshake to channel: "LicenseClient-WIN10"
+[Licensing::IpcConnector] LicenseClient-WIN10 channel disconnected successfully.
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-WIN10-2022.3.62" at "2026-08-24T09:14:27.2999842Z"
+[Licensing::Client] Code 10 while verifying Licensing Client signature (process Id: 16716, path: "C:/Program Files/Unity/Hub/Editor/2022.3.62f3/Editor/Data/Resources/Licensing/Client/Unity.Licensing.Client.exe")
+[Licensing::Module] LicensingClient has failed validation; ignoring
+[Licensing::Client] Handshaking with LicensingClient:
+  Version:                 1.16.2+bdef8f5
+  Session Id:              cd6c785f76574b6aac8fb918d3e3762c
+  Correlation Id:          32fcc81276828896fcc3479650094061
+  External correlation Id: 1900656871689405586
+  Machine Id:              OfSOB9hlSOHqKDTn/0aysRfJBWw=
+[Licensing::Module] Successfully connected to LicensingClient on channel: "LicenseClient-WIN10-2022.3.62" (connect: 0.00s, validation: 0.01s, handshake: 0.01s)
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-WIN10-2022.3.62-notifications" at "2026-08-24T09:14:27.3184833Z"
+[Licensing::Module] Error: Access token is unavailable; failed to update
+[Licensing::Client] Successfully updated license
+Built from '2022.3/china_unity/release' branch; Version is '2022.3.62f3c1 (1623fc0bbb97) revision 1451004'; Using compiler version '192829333'; Build Type 'Release'
+OS: 'Windows 10  (10.0.19045) 64bit Professional' Language: 'zh' Physical Memory: 65241 MB
+[Licensing::Client] Successfully resolved entitlement details
+[Licensing::Module] Serial number assigned to: "F4-FUFT-MQVB-TJ9V-896H-XXXX"
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 0
+[Licensing::Client] Successfully resolved entitlement details
+
+COMMAND LINE ARGUMENTS:
+C:\Program Files\Unity\Hub\Editor\2022.3.62f3c1\Editor\Unity.exe
+-batchmode
+-nographics
+-projectPath
+D:\unity\UnityProject\ColorTimeing\New\_ColorTiming
+-runTests
+-testPlatform
+EditMode
+-testFilter
+ColorTiming.Tests.EditMode
+-testResults
+D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\Documentation\Refactor\editmode-color-timing-tests.xml
+-logFile
+D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\Documentation\Refactor\editmode-input-integration.log
+Successfully changed project path to: D:\unity\UnityProject\ColorTimeing\New\_ColorTiming
+D:/unity/UnityProject/ColorTimeing/New/_ColorTiming
+[UnityMemory] Configuration Parameters - Can be set up in boot.config
+    "memorysetup-bucket-allocator-granularity=16"
+    "memorysetup-bucket-allocator-bucket-count=8"
+    "memorysetup-bucket-allocator-block-size=33554432"
+    "memorysetup-bucket-allocator-block-count=8"
+    "memorysetup-main-allocator-block-size=16777216"
+    "memorysetup-thread-allocator-block-size=16777216"
+    "memorysetup-gfx-main-allocator-block-size=16777216"
+    "memorysetup-gfx-thread-allocator-block-size=16777216"
+    "memorysetup-cache-allocator-block-size=4194304"
+    "memorysetup-typetree-allocator-block-size=2097152"
+    "memorysetup-profiler-bucket-allocator-granularity=16"
+    "memorysetup-profiler-bucket-allocator-bucket-count=8"
+    "memorysetup-profiler-bucket-allocator-block-size=33554432"
+    "memorysetup-profiler-bucket-allocator-block-count=8"
+    "memorysetup-profiler-allocator-block-size=16777216"
+    "memorysetup-profiler-editor-allocator-block-size=1048576"
+    "memorysetup-temp-allocator-size-main=16777216"
+    "memorysetup-job-temp-allocator-block-size=2097152"
+    "memorysetup-job-temp-allocator-block-size-background=1048576"
+    "memorysetup-job-temp-allocator-reduction-small-platforms=262144"
+    "memorysetup-allocator-temp-initial-block-size-main=262144"
+    "memorysetup-allocator-temp-initial-block-size-worker=262144"
+    "memorysetup-temp-allocator-size-background-worker=32768"
+    "memorysetup-temp-allocator-size-job-worker=262144"
+    "memorysetup-temp-allocator-size-preload-manager=33554432"
+    "memorysetup-temp-allocator-size-nav-mesh-worker=65536"
+    "memorysetup-temp-allocator-size-audio-worker=65536"
+    "memorysetup-temp-allocator-size-cloud-worker=32768"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gfx=262144"
+Player connection [65788]  Target information:
+
+Player connection [65788]  * "[IP] 192.168.3.51 [Port] 55506 [Flags] 2 [Guid] 1401637040 [EditorId] 1401637040 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-7JQ11GM) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+
+Player connection [65788] Host joined multi-casting on [225.0.0.222:54997]...
+Player connection [65788] Host joined alternative multi-casting on [225.0.0.222:34997]...
+Input System module state changed to: Initialized.
+[PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+[Package Manager] UpmClient::Connect -- Connected to IPC stream "Upm-34480" after 0.3 seconds.
+[Package Manager] Restoring resolved packages state from cache
+[Licensing::Client] Successfully resolved entitlement details
+[Package Manager] Registered 73 packages:
+  Packages from [https://npm.cloudsmith.io/jillejr/newtonsoft-json-for-unity]:
+    jillejr.newtonsoft.json-for-unity.converters@1.6.3 (location: D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\Library\PackageCache\jillejr.newtonsoft.json-for-unity.converters@1.6.3)
+  Packages from [https://packages.unity.cn]:
+    com.unity.cinemachine@2.10.3 (location: D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\Library\PackageCache\com.unity.cinemachine@2.10.3)
+    com.unity.collab-proxy@2.12.4 (location: D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\Library\PackageCache\com.unity.collab-proxy@2.12.4)
+    com.unity.collections@2.5.7 (location: D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\Library\PackageCache\com.unity.collections@2.5.7)
+    com.unity.ide.rider@3.0.36 (location: D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\Library\PackageCache\com.unity.ide.rider@3.0.36)
+    com.unity.ide.visualstudio@2.0.22 (location: D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\Library\PackageCache\com.unity.ide.visualstudio@2.0.22)
+    com.unity.ide.vscode@1.2.5 (location: D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\Library\PackageCache\com.unity.ide.vscode@1.2.5)
+    com.unity.jobs@0.70.0-preview.7 (location: D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\Library\PackageCache\com.unity.jobs@0.70.0-preview.7)
+    com.unity.nuget.newtonsoft-json@3.2.1 (location: D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\Library\PackageCache\com.unity.nuget.newtonsoft-json@3.2.1)
+    com.unity.probuilder@5.2.4 (location: D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\Library\PackageCache\com.unity.probuilder@5.2.4)
+    com.unity.searcher@4.9.2 (location: D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\Library\PackageCache\com.unity.searcher@4.9.2)
+    com.unity.textmeshpro@3.0.8 (location: D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\Library\PackageCache\com.unity.textmeshpro@3.0.8)
+    com.unity.timeline@1.7.7 (location: D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\Library\PackageCache\com.unity.timeline@1.7.7)
+    com.unity.visualscripting@1.9.4 (location: D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\Library\PackageCache\com.unity.visualscripting@1.9.4)
+    com.unity.burst@1.8.21 (location: D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\Library\PackageCache\com.unity.burst@1.8.21)
+    com.unity.settings-manager@2.1.0 (location: D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\Library\PackageCache\com.unity.settings-manager@2.1.0)
+    com.unity.2d.animation@9.2.0 (location: D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\Library\PackageCache\com.unity.2d.animation@9.2.0)
+    com.unity.2d.pixel-perfect@5.1.0 (location: D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\Library\PackageCache\com.unity.2d.pixel-perfect@5.1.0)
+    com.unity.2d.psdimporter@8.1.0 (location: D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\Library\PackageCache\com.unity.2d.psdimporter@8.1.0)
+    com.unity.2d.spriteshape@9.1.0 (location: D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\Library\PackageCache\com.unity.2d.spriteshape@9.1.0)
+    com.unity.2d.tilemap.extras@3.1.3 (location: D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\Library\PackageCache\com.unity.2d.tilemap.extras@3.1.3)
+    com.unity.2d.aseprite@1.1.9 (location: D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\Library\PackageCache\com.unity.2d.aseprite@1.1.9)
+    com.unity.mathematics@1.3.2 (location: D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\Library\PackageCache\com.unity.mathematics@1.3.2)
+    com.unity.test-framework@1.4.6 (location: D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\Library\PackageCache\com.unity.test-framework@1.4.6)
+    com.unity.nuget.mono-cecil@1.11.5 (location: D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\Library\PackageCache\com.unity.nuget.mono-cecil@1.11.5)
+    com.unity.test-framework.performance@3.0.3 (location: D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\Library\PackageCache\com.unity.test-framework.performance@3.0.3)
+    com.unity.2d.common@8.1.0 (location: D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\Library\PackageCache\com.unity.2d.common@8.1.0)
+    com.unity.ext.nunit@2.0.3 (location: D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\Library\PackageCache\com.unity.ext.nunit@2.0.3)
+  Built-in packages:
+    com.unity.feature.2d@2.0.1 (location: D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\Library\PackageCache\com.unity.feature.2d@2.0.1)
+    com.unity.render-pipelines.universal@14.0.12 (location: D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\Library\PackageCache\com.unity.render-pipelines.universal@14.0.12)
+    com.unity.ugui@1.0.0 (location: D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\Library\PackageCache\com.unity.ugui@1.0.0)
+    com.unity.modules.ai@1.0.0 (location: D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\Library\PackageCache\com.unity.modules.ai@1.0.0)
+    com.unity.modules.androidjni@1.0.0 (location: D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\Library\PackageCache\com.unity.modules.androidjni@1.0.0)
+    com.unity.modules.animation@1.0.0 (location: D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\Library\PackageCache\com.unity.modules.animation@1.0.0)
+    com.unity.modules.assetbundle@1.0.0 (location: D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\Library\PackageCache\com.unity.modules.assetbundle@1.0.0)
+    com.unity.modules.audio@1.0.0 (location: D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\Library\PackageCache\com.unity.modules.audio@1.0.0)
+    com.unity.modules.cloth@1.0.0 (location: D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\Library\PackageCache\com.unity.modules.cloth@1.0.0)
+    com.unity.modules.director@1.0.0 (location: D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\Library\PackageCache\com.unity.modules.director@1.0.0)
+    com.unity.modules.imageconversion@1.0.0 (location: D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\Library\PackageCache\com.unity.modules.imageconversion@1.0.0)
+    com.unity.modules.imgui@1.0.0 (location: D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\Library\PackageCache\com.unity.modules.imgui@1.0.0)
+    com.unity.modules.jsonserialize@1.0.0 (location: D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\Library\PackageCache\com.unity.modules.jsonserialize@1.0.0)
+    com.unity.modules.particlesystem@1.0.0 (location: D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\Library\PackageCache\com.unity.modules.particlesystem@1.0.0)
+    com.unity.modules.physics@1.0.0 (location: D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\Library\PackageCache\com.unity.modules.physics@1.0.0)
+    com.unity.modules.physics2d@1.0.0 (location: D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\Library\PackageCache\com.unity.modules.physics2d@1.0.0)
+    com.unity.modules.screencapture@1.0.0 (location: D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\Library\PackageCache\com.unity.modules.screencapture@1.0.0)
+    com.unity.modules.terrain@1.0.0 (location: D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\Library\PackageCache\com.unity.modules.terrain@1.0.0)
+    com.unity.modules.terrainphysics@1.0.0 (location: D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\Library\PackageCache\com.unity.modules.terrainphysics@1.0.0)
+    com.unity.modules.tilemap@1.0.0 (location: D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\Library\PackageCache\com.unity.modules.tilemap@1.0.0)
+    com.unity.modules.ui@1.0.0 (location: D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\Library\PackageCache\com.unity.modules.ui@1.0.0)
+    com.unity.modules.uielements@1.0.0 (location: D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\Library\PackageCache\com.unity.modules.uielements@1.0.0)
+    com.unity.modules.umbra@1.0.0 (location: D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\Library\PackageCache\com.unity.modules.umbra@1.0.0)
+    com.unity.modules.unityanalytics@1.0.0 (location: D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\Library\PackageCache\com.unity.modules.unityanalytics@1.0.0)
+    com.unity.modules.unitywebrequest@1.0.0 (location: D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\Library\PackageCache\com.unity.modules.unitywebrequest@1.0.0)
+    com.unity.modules.unitywebrequestassetbundle@1.0.0 (location: D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\Library\PackageCache\com.unity.modules.unitywebrequestassetbundle@1.0.0)
+    com.unity.modules.unitywebrequestaudio@1.0.0 (location: D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\Library\PackageCache\com.unity.modules.unitywebrequestaudio@1.0.0)
+    com.unity.modules.unitywebrequesttexture@1.0.0 (location: D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\Library\PackageCache\com.unity.modules.unitywebrequesttexture@1.0.0)
+    com.unity.modules.unitywebrequestwww@1.0.0 (location: D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\Library\PackageCache\com.unity.modules.unitywebrequestwww@1.0.0)
+    com.unity.modules.vehicles@1.0.0 (location: D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\Library\PackageCache\com.unity.modules.vehicles@1.0.0)
+    com.unity.modules.video@1.0.0 (location: D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\Library\PackageCache\com.unity.modules.video@1.0.0)
+    com.unity.modules.vr@1.0.0 (location: D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\Library\PackageCache\com.unity.modules.vr@1.0.0)
+    com.unity.modules.wind@1.0.0 (location: D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\Library\PackageCache\com.unity.modules.wind@1.0.0)
+    com.unity.modules.xr@1.0.0 (location: D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\Library\PackageCache\com.unity.modules.xr@1.0.0)
+    com.unity.modules.subsystems@1.0.0 (location: D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\Library\PackageCache\com.unity.modules.subsystems@1.0.0)
+    com.unity.render-pipelines.core@14.0.12 (location: D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\Library\PackageCache\com.unity.render-pipelines.core@14.0.12)
+    com.unity.shadergraph@14.0.12 (location: D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\Library\PackageCache\com.unity.shadergraph@14.0.12)
+    com.unity.render-pipelines.universal-config@14.0.10 (location: D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\Library\PackageCache\com.unity.render-pipelines.universal-config@14.0.10)
+    com.unity.2d.sprite@1.0.0 (location: D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\Library\PackageCache\com.unity.2d.sprite@1.0.0)
+    com.unity.2d.tilemap@1.0.0 (location: D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\Library\PackageCache\com.unity.2d.tilemap@1.0.0)
+  Local packages:
+    com.handzlikchris.fastscriptreload@file:D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\LocalPackages\FastScriptReload\Assets (location: D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\LocalPackages\FastScriptReload\Assets)
+  Git packages:
+    com.besty.unity-skills@https://github.com/Besty0728/Unity-Skills.git?path=/SkillsForUnity#v2.1.0 (location: D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\Library\PackageCache\com.besty.unity-skills@f6f09e6bb0)
+    com.code-philosophy.hybridclr@https://gitee.com/focus-creative-games/hybridclr_unity.git (location: D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\Library\PackageCache\com.code-philosophy.hybridclr@e4def761d6)
+    com.code-philosophy.obfuz@https://gitee.com/focus-creative-games/obfuz.git (location: D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\Library\PackageCache\com.code-philosophy.obfuz@977779c8b7)
+    com.code-philosophy.obfuz4hybridclr@https://gitee.com/focus-creative-games/obfuz4hybridclr.git (location: D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\Library\PackageCache\com.code-philosophy.obfuz4hybridclr@40c8b6c1a8)
+[Subsystems] No new subsystems found in resolved package list.
+Package Manager log level set to [2]
+[Package Manager] Done registering packages in 0.10 seconds
+Refreshing native plugins compatible for Editor in 17.33 ms, found 5 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Initialize engine version: 2022.3.62f3c1 (1623fc0bbb97)
+[Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path D:/unity/UnityProject/ColorTimeing/New/_ColorTiming/Assets
+Forcing GfxDevice: Null
+GfxDevice: creating device client; threaded=0; jobified=0
+NullGfxDevice:
+    Version:  NULL 1.0 [1.0]
+    Renderer: Null Device
+    Vendor:   Unity Technologies
+[Licensing::Client] Successfully resolved entitlement details
+Initialize mono
+Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed'
+Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
+Mono config path = 'C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56480
+Using cacheserver namespaces - metadata:defaultmetadata, artifacts:defaultartifacts
+Using cacheserver namespaces - metadata:defaultmetadata, artifacts:defaultartifacts
+ImportWorker Server TCP listen port: 0
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.003949 seconds.
+- Loaded All Assemblies, in  0.212 seconds
+Native extension for WindowsStandalone target not found
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.162 seconds
+Domain Reload Profiling: 373ms
+	BeginReloadAssembly (66ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (0ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (1ms)
+	RebuildCommonClasses (20ms)
+	RebuildNativeTypeToScriptingClass (6ms)
+	initialDomainReloadingComplete (34ms)
+	LoadAllAssembliesAndSetupDomain (84ms)
+		LoadAssemblies (65ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (83ms)
+			TypeCache.Refresh (82ms)
+				TypeCache.ScanAssembly (73ms)
+			ScanForSourceGeneratedMonoScriptInfo (0ms)
+			ResolveRequiredComponents (0ms)
+	FinalizeReload (162ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (133ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (6ms)
+			SetLoadedEditorAssemblies (5ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (1ms)
+			ProcessInitializeOnLoadAttributes (85ms)
+			ProcessInitializeOnLoadMethodAttributes (36ms)
+			AfterProcessingInitializeOnLoad (0ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (0ms)
+[Licensing::Client] Successfully resolved entitlement details
+Application.AssetDatabase Initial Refresh Start
+[ScriptCompilation] Requested script compilation because: Assetdatabase observed changes in script compilation related files
+Duplicate assembly 'Mono.Cecil.Pdb.dll' with different versions detected, using 'Packages/com.handzlikchris.fastscriptreload/Plugins/Harmony/net48/Mono.Cecil.Pdb.dll, AssemblyName=Mono.Cecil.Pdb, Version=0.11.6.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e' and ignoring 'Packages/com.unity.nuget.mono-cecil/Mono.Cecil.Pdb.dll, AssemblyName=Mono.Cecil.Pdb, Version=0.11.5.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e'.Duplicate assembly 'System.Collections.Immutable.dll' with different versions detected, using 'Assets/Plugins/Protobuf/System.Collections.Immutable.dll, AssemblyName=System.Collections.Immutable, Version=7.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' and ignoring 'Packages/com.handzlikchris.fastscriptreload/Plugins/Roslyn/2021+/System.Collections.Immutable.dll, AssemblyName=System.Collections.Immutable, Version=1.2.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.Duplicate assembly 'Mono.Cecil.Rocks.dll' with different versions detected, using 'Packages/com.handzlikchris.fastscriptreload/Plugins/Harmony/net48/Mono.Cecil.Rocks.dll, AssemblyName=Mono.Cecil.Rocks, Version=0.11.6.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e' and ignoring 'Packages/com.unity.nuget.mono-cecil/Mono.Cecil.Rocks.dll, AssemblyName=Mono.Cecil.Rocks, Version=0.11.5.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e'.Duplicate assembly 'Mono.Cecil.Mdb.dll' with different versions detected, using 'Packages/com.handzlikchris.fastscriptreload/Plugins/Harmony/net48/Mono.Cecil.Mdb.dll, AssemblyName=Mono.Cecil.Mdb, Version=0.11.6.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e' and ignoring 'Packages/com.unity.nuget.mono-cecil/Mono.Cecil.Mdb.dll, AssemblyName=Mono.Cecil.Mdb, Version=0.11.5.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e'.Duplicate assembly 'Mono.Cecil.dll' with different versions detected, using 'Packages/com.handzlikchris.fastscriptreload/Plugins/Harmony/net48/Mono.Cecil.dll, AssemblyName=Mono.Cecil, Version=0.11.6.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e' and ignoring 'Packages/com.unity.nuget.mono-cecil/Mono.Cecil.dll, AssemblyName=Mono.Cecil, Version=0.11.5.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e'.Assembly for Assembly Definition File 'Assets/Game/Tests/ColorTiming/PlayMode/ColorTiming.PlayMode.Tests.asmdef' will not be compiled, because it has no scripts associated with it.
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:LogFormat (UnityEngine.LogType,string,object[])
+UnityEngine.Debug:LogWarningFormat (string,object[])
+UnityEditor.Scripting.ScriptCompilation.EditorCompilation:WarnIfThereAreAssembliesWithoutAnyScripts (UnityEditor.Scripting.ScriptCompilation.ScriptAssemblySettings,UnityEditor.Scripting.ScriptCompilation.ScriptAssembly[])
+UnityEditor.Scripting.ScriptCompilation.EditorCompilation:CompileScriptsWithSettings (UnityEditor.Scripting.ScriptCompilation.ScriptAssemblySettings)
+UnityEditor.Scripting.ScriptCompilation.EditorCompilation:CompileScripts (UnityEditor.Scripting.ScriptCompilation.EditorScriptCompilationOptions,UnityEditor.BuildTargetGroup,UnityEditor.BuildTarget,int,string[])
+UnityEditor.Scripting.ScriptCompilation.EditorCompilationInterface/<>c__DisplayClass21_0:<CompileScripts>b__0 ()
+UnityEditor.Scripting.ScriptCompilation.EditorCompilationInterface:EmitExceptionAsError<UnityEditor.Scripting.ScriptCompilation.EditorCompilation/CompileStatus> (System.Func`1<UnityEditor.Scripting.ScriptCompilation.EditorCompilation/CompileStatus>,UnityEditor.Scripting.ScriptCompilation.EditorCompilation/CompileStatus)
+UnityEditor.Scripting.ScriptCompilation.EditorCompilationInterface:CompileScripts (UnityEditor.Scripting.ScriptCompilation.EditorScriptCompilationOptions,UnityEditor.BuildTargetGroup,UnityEditor.BuildTarget,int,string[])
+
+Starting: C:\Program Files\Unity\Hub\Editor\2022.3.62f3c1\Editor\Data\bee_backend.exe --ipc --defer-dag-verification --dagfile="Library/Bee/1900b0aEDbg.dag" --continue-on-failure --profile="Library/Bee/backend1.traceevents" ScriptAssemblies
+WorkingDir: D:/unity/UnityProject/ColorTimeing/New/_ColorTiming
+DisplayProgressbar: Compiling Scripts
+Starting: C:\Program Files\Unity\Hub\Editor\2022.3.62f3c1\Editor\Data\Tools\netcorerun\netcorerun.exe "C:\Program Files\Unity\Hub\Editor\2022.3.62f3c1\Editor\Data\Tools\BuildPipeline\ScriptCompilationBuildProgram.exe" "Library/Bee/1900b0aEDbg.dag.json" "Library/Bee/1900b0aEDbg-inputdata.json" "Library\Bee\buildprogram0.traceevents"
+WorkingDir: D:/unity/UnityProject/ColorTimeing/New/_ColorTiming
+ExitCode: 4 Duration: 0s758ms
+Rebuilding DAG because FileSignature timestamp changed: Library/Bee/1900b0aEDbg-inputdata.json
+[ 924/1233  0s] ILPP-Configuration Library/ilpp-configuration.nevergeneratedoutput
+*** Tundra requires additional run (0.71 seconds), 2 items updated, 923 evaluated
+ExitCode: 0 Duration: 0s631ms
+Starting: C:\Program Files\Unity\Hub\Editor\2022.3.62f3c1\Editor\Data\bee_backend.exe --ipc --defer-dag-verification --dagfile="Library/Bee/1900b0aEDbg.dag" --continue-on-failure --dagfilejson="Library\Bee\1900b0aEDbg.dag.json" --profile="Library/Bee/backend2.traceevents" ScriptAssemblies
+WorkingDir: D:/unity/UnityProject/ColorTimeing/New/_ColorTiming
+ExitCode: 0 Duration: 1s407ms
+Finished compiling graph: 1237 nodes, 19303 flattened edges (15137 ToBuild, 218 ToUse), maximum node priority 1400
+[ 640/1233  0s] WriteText Library/Bee/artifacts/1900b0aEDbg.dag/Hotfix.rsp
+[ 924/1233  0s] ILPP-Configuration Library/ilpp-configuration.nevergeneratedoutput
+[1213/1233  0s] Csc Library/Bee/artifacts/1900b0aEDbg.dag/Hotfix.dll (+2 others)
+Assets\Game\Scripts\ColorTiming\Legacy\HeroController.cs(30,17): warning CS0108: 'HeroController.rigidbody2D' hides inherited member 'Component.rigidbody2D'. Use the new keyword if hiding was intended.
+
+Assets\Game\Scripts\ColorTiming\Legacy\Boss1_Controller.cs(44,9): warning CS0414: The field 'Boss1_Controller.selectedAtk' is assigned but its value is never used
+
+Assets\Game\Scripts\ColorTiming\Legacy\UI\UI_WeaponTip.cs(19,11): warning CS0414: The field 'UI_WeaponTip.showTime' is assigned but its value is never used
+
+Assets\Game\Scripts\ColorTiming\Legacy\Boss2_Controller.cs(52,9): warning CS0414: The field 'Boss2_Controller.selectedAtk' is assigned but its value is never used
+[1214/1233  0s] Csc Library/Bee/artifacts/1900b0aEDbg.dag/ColorTiming.EditMode.Tests.dll (+2 others)
+[1215/1233  0s] ILPostProcess Library/Bee/artifacts/1900b0aEDbg.dag/post-processed/ColorTiming.EditMode.Tests.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aEDbg.dag/ColorTiming.EditMode.Tests.dll, with 119 defines and 217 references
+
+processors: Unity.Jobs.CodeGen.JobsILPostProcessor, zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running Unity.Jobs.CodeGen.JobsILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[1216/1233  0s] CopyFiles Library/ScriptAssemblies/ColorTiming.EditMode.Tests.pdb
+[1217/1233  0s] CopyFiles Library/ScriptAssemblies/ColorTiming.EditMode.Tests.dll
+[1218/1233  0s] ILPostProcess Library/Bee/artifacts/1900b0aEDbg.dag/post-processed/Hotfix.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aEDbg.dag/Hotfix.dll, with 121 defines and 255 references
+
+processors: Unity.Jobs.CodeGen.JobsILPostProcessor, zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running Unity.Jobs.CodeGen.JobsILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[1219/1233  0s] CopyFiles Library/ScriptAssemblies/Hotfix.dll
+[1220/1233  0s] CopyFiles Library/ScriptAssemblies/Hotfix.pdb
+[1221/1233  0s] Csc Library/Bee/artifacts/1900b0aEDbg.dag/Builtin.Editor.dll (+2 others)
+[1223/1233  0s] ILPostProcess Library/Bee/artifacts/1900b0aEDbg.dag/post-processed/Builtin.Editor.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aEDbg.dag/Builtin.Editor.dll, with 119 defines and 268 references
+
+processors: Unity.Jobs.CodeGen.JobsILPostProcessor, zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running Unity.Jobs.CodeGen.JobsILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[1224/1233  0s] ILPostProcess Library/Bee/artifacts/1900b0aEDbg.dag/post-processed/ColorTiming.Migration.Editor.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aEDbg.dag/ColorTiming.Migration.Editor.dll, with 119 defines and 250 references
+
+processors: Unity.Jobs.CodeGen.JobsILPostProcessor, zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running Unity.Jobs.CodeGen.JobsILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[1227/1233  0s] CopyFiles Library/ScriptAssemblies/Builtin.Editor.pdb
+[1228/1233  0s] CopyFiles Library/ScriptAssemblies/Builtin.Editor.dll
+[1229/1233  0s] Csc Library/Bee/artifacts/1900b0aEDbg.dag/Builtin.Editor.Tests.dll (+2 others)
+[1230/1233  0s] ILPostProcess Library/Bee/artifacts/1900b0aEDbg.dag/post-processed/Builtin.Editor.Tests.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aEDbg.dag/Builtin.Editor.Tests.dll, with 119 defines and 218 references
+
+processors: Unity.Jobs.CodeGen.JobsILPostProcessor, zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running Unity.Jobs.CodeGen.JobsILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[1231/1233  0s] CopyFiles Library/ScriptAssemblies/Builtin.Editor.Tests.dll
+[1232/1233  0s] CopyFiles Library/ScriptAssemblies/Builtin.Editor.Tests.pdb
+*** Tundra build success (1.37 seconds), 19 items updated, 1233 evaluated
+Assets\Game\Scripts\ColorTiming\Legacy\HeroController.cs(30,17): warning CS0108: 'HeroController.rigidbody2D' hides inherited member 'Component.rigidbody2D'. Use the new keyword if hiding was intended.
+Assets\Game\Scripts\ColorTiming\Legacy\Boss1_Controller.cs(44,9): warning CS0414: The field 'Boss1_Controller.selectedAtk' is assigned but its value is never used
+Assets\Game\Scripts\ColorTiming\Legacy\UI\UI_WeaponTip.cs(19,11): warning CS0414: The field 'UI_WeaponTip.showTime' is assigned but its value is never used
+Assets\Game\Scripts\ColorTiming\Legacy\Boss2_Controller.cs(52,9): warning CS0414: The field 'Boss2_Controller.selectedAtk' is assigned but its value is never used
+AssetDatabase: script compilation time: 3.344111s
+Begin MonoManager ReloadAssembly
+Duplicate assembly 'Mono.Cecil.Pdb.dll' with different versions detected, using 'Packages/com.handzlikchris.fastscriptreload/Plugins/Harmony/net48/Mono.Cecil.Pdb.dll, AssemblyName=Mono.Cecil.Pdb, Version=0.11.6.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e' and ignoring 'Packages/com.unity.nuget.mono-cecil/Mono.Cecil.Pdb.dll, AssemblyName=Mono.Cecil.Pdb, Version=0.11.5.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e'.Duplicate assembly 'System.Collections.Immutable.dll' with different versions detected, using 'Assets/Plugins/Protobuf/System.Collections.Immutable.dll, AssemblyName=System.Collections.Immutable, Version=7.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' and ignoring 'Packages/com.handzlikchris.fastscriptreload/Plugins/Roslyn/2021+/System.Collections.Immutable.dll, AssemblyName=System.Collections.Immutable, Version=1.2.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.Duplicate assembly 'Mono.Cecil.Rocks.dll' with different versions detected, using 'Packages/com.handzlikchris.fastscriptreload/Plugins/Harmony/net48/Mono.Cecil.Rocks.dll, AssemblyName=Mono.Cecil.Rocks, Version=0.11.6.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e' and ignoring 'Packages/com.unity.nuget.mono-cecil/Mono.Cecil.Rocks.dll, AssemblyName=Mono.Cecil.Rocks, Version=0.11.5.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e'.Duplicate assembly 'Mono.Cecil.Mdb.dll' with different versions detected, using 'Packages/com.handzlikchris.fastscriptreload/Plugins/Harmony/net48/Mono.Cecil.Mdb.dll, AssemblyName=Mono.Cecil.Mdb, Version=0.11.6.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e' and ignoring 'Packages/com.unity.nuget.mono-cecil/Mono.Cecil.Mdb.dll, AssemblyName=Mono.Cecil.Mdb, Version=0.11.5.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e'.Duplicate assembly 'Mono.Cecil.dll' with different versions detected, using 'Packages/com.handzlikchris.fastscriptreload/Plugins/Harmony/net48/Mono.Cecil.dll, AssemblyName=Mono.Cecil, Version=0.11.6.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e' and ignoring 'Packages/com.unity.nuget.mono-cecil/Mono.Cecil.dll, AssemblyName=Mono.Cecil, Version=0.11.5.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e'.- Loaded All Assemblies, in  0.793 seconds
+Refreshing native plugins compatible for Editor in 5.98 ms, found 5 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Start importing Assets/Game/Scripts/ColorTiming/Legacy/UI/UI_HeroInfo.cs using Guid(10b5e2d63d3a11d4ab1a741699aa88d1) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+ -> (artifact id: 'e65749cb5f21043ff9fdb1b4ca09cfdf') in 0.007841 seconds
+Start importing Assets/Game/Scripts/ColorTiming/Input/IGameInputConsumer.cs using Guid(0286b9d2225723c45a99bea6847fda9a) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+ -> (artifact id: '25b62d785eb4180518740c4072ec3f91') in 0.002755 seconds
+Start importing Assets/Game/Scripts/ColorTiming/Legacy/HeroController.cs using Guid(c59be35578941854f8aaab72c7879167) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+ -> (artifact id: 'fbe321e55498c911db973a0e14dc1de4') in 0.001533 seconds
+Start importing Assets/Game/Scripts/ColorTiming/Bootstrap/ColorTimingCompositionRoot.cs using Guid(e574d078d87245eeb0f7e45cf4666f65) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+ -> (artifact id: '3a17c8dfd4f3976d6e81c692e63a0a7f') in 0.001449 seconds
+Start importing Assets/Game/Scripts/ColorTiming/Legacy/HeroFrireSystem.cs using Guid(a8c9f128efb2ed74b94c88c785b7fa64) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+ -> (artifact id: 'fc693c090ee322ce8904453a6c6892fd') in 0.001461 seconds
+Start importing Assets/Game/Scripts/ColorTiming/Legacy/HeroAnimStae.cs using Guid(3cad2f9b09db5af44a1688002911be4c) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+ -> (artifact id: '7b1f7cabe161651780b422dd262fd044') in 0.001719 seconds
+Start importing Assets/Game/Scripts/ColorTiming/Legacy/UI/UI_Game.cs using Guid(4c7052e4a9a8c5c4ca5d17fad91bc032) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+ -> (artifact id: 'a170ad52a86ceba0007c6f0a38bbef4f') in 0.001727 seconds
+Start importing Assets/Game/Scripts/ColorTiming/Bootstrap/ColorTimingStartupProcedure.cs using Guid(7c7f5a6ace4a403c848cba87fb93a48b) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+ -> (artifact id: '2ac5094cc3164ca78cb7da82769f5492') in 0.001864 seconds
+Start importing Assets/Game/Scripts/ColorTiming/Legacy/UI/UI_WeaponTip.cs using Guid(dcf9a85d2ea01e94ba8ac3d360389559) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+ -> (artifact id: '1c1d23c19d3cf624711fc0daf08189b9') in 0.001626 seconds
+Start importing Assets/Game/Scripts/ColorTiming/Input/ColorTimingSceneInputBinder.cs using Guid(4ea3bdce4cd67294ea71737a7517ebb8) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+ -> (artifact id: '41509fd1016c826975ad3e1f7a975a32') in 0.002187 seconds
+Refreshing native plugins compatible for Editor in 6.02 ms, found 5 plugins.
+Native extension for WindowsStandalone target not found
+Duplicate assembly 'Mono.Cecil.Pdb.dll' with different versions detected, using 'Packages/com.handzlikchris.fastscriptreload/Plugins/Harmony/net48/Mono.Cecil.Pdb.dll, AssemblyName=Mono.Cecil.Pdb, Version=0.11.6.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e' and ignoring 'Packages/com.unity.nuget.mono-cecil/Mono.Cecil.Pdb.dll, AssemblyName=Mono.Cecil.Pdb, Version=0.11.5.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e'.Duplicate assembly 'System.Collections.Immutable.dll' with different versions detected, using 'Assets/Plugins/Protobuf/System.Collections.Immutable.dll, AssemblyName=System.Collections.Immutable, Version=7.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' and ignoring 'Packages/com.handzlikchris.fastscriptreload/Plugins/Roslyn/2021+/System.Collections.Immutable.dll, AssemblyName=System.Collections.Immutable, Version=1.2.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.Duplicate assembly 'Mono.Cecil.Rocks.dll' with different versions detected, using 'Packages/com.handzlikchris.fastscriptreload/Plugins/Harmony/net48/Mono.Cecil.Rocks.dll, AssemblyName=Mono.Cecil.Rocks, Version=0.11.6.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e' and ignoring 'Packages/com.unity.nuget.mono-cecil/Mono.Cecil.Rocks.dll, AssemblyName=Mono.Cecil.Rocks, Version=0.11.5.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e'.Duplicate assembly 'Mono.Cecil.Mdb.dll' with different versions detected, using 'Packages/com.handzlikchris.fastscriptreload/Plugins/Harmony/net48/Mono.Cecil.Mdb.dll, AssemblyName=Mono.Cecil.Mdb, Version=0.11.6.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e' and ignoring 'Packages/com.unity.nuget.mono-cecil/Mono.Cecil.Mdb.dll, AssemblyName=Mono.Cecil.Mdb, Version=0.11.5.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e'.Duplicate assembly 'Mono.Cecil.dll' with different versions detected, using 'Packages/com.handzlikchris.fastscriptreload/Plugins/Harmony/net48/Mono.Cecil.dll, AssemblyName=Mono.Cecil, Version=0.11.6.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e' and ignoring 'Packages/com.unity.nuget.mono-cecil/Mono.Cecil.dll, AssemblyName=Mono.Cecil, Version=0.11.5.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e'.Skip optional Config Excel watcher because directory does not exist: D:/unity/UnityProject/ColorTimeing/New/_ColorTiming/GameData/Configs
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+UGF.EditorTools.DataTableUpdater:CreateExcelWatcher (string,System.IO.NotifyFilters,System.IO.FileSystemEventHandler,string) (at Assets/Game/ScriptsBuiltin/Editor/DataTableUpdater.cs:64)
+UGF.EditorTools.DataTableUpdater:Init () (at Assets/Game/ScriptsBuiltin/Editor/DataTableUpdater.cs:36)
+System.Reflection.RuntimeMethodInfo:Invoke (object,System.Reflection.BindingFlags,System.Reflection.Binder,object[],System.Globalization.CultureInfo)
+System.Reflection.MethodBase:Invoke (object,object[])
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadMethodAttributes ()
+
+(Filename: Assets/Game/ScriptsBuiltin/Editor/DataTableUpdater.cs Line: 64)
+
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  4.374 seconds
+Domain Reload Profiling: 5165ms
+	BeginReloadAssembly (101ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (3ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (23ms)
+	RebuildCommonClasses (18ms)
+	RebuildNativeTypeToScriptingClass (5ms)
+	initialDomainReloadingComplete (40ms)
+	LoadAllAssembliesAndSetupDomain (627ms)
+		LoadAssemblies (381ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (297ms)
+			TypeCache.Refresh (257ms)
+				TypeCache.ScanAssembly (240ms)
+			ScanForSourceGeneratedMonoScriptInfo (28ms)
+			ResolveRequiredComponents (9ms)
+	FinalizeReload (4375ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (4219ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (3ms)
+			SetLoadedEditorAssemblies (5ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (87ms)
+			ProcessInitializeOnLoadAttributes (3689ms)
+			ProcessInitializeOnLoadMethodAttributes (430ms)
+			AfterProcessingInitializeOnLoad (4ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (9ms)
+Refreshing native plugins compatible for Editor in 5.93 ms, found 5 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=7a0f28ed996ad0c478ae239803874f59): Total: 10.448 seconds - Initiated by InitialRefreshV2(ForceSynchronousImport)
+	Summary:
+		Imports: total=1702 (actual=10, local cache=1692, cache server=0)
+		Asset DB Process Time: managed=4 ms, native=1449 ms
+		Asset DB Callback time: managed=279 ms, native=9 ms
+		Scripting: domain reloads=1, domain reload time=5276 ms, compile time=3345 ms, other=83 ms
+		Project Asset Count: scripts=10396, non-scripts=6287
+		Asset File Changes: new=2, changed=10, moved=0, deleted=0
+		Scan Filter Count: 0
+	InvokeBeforeRefreshCallbacks: 0.339ms
+	ApplyChangesToAssetFolders: 0.049ms
+	Scan: 164.083ms
+	OnSourceAssetsModified: 1.623ms
+	GetAllGuidsForCategorization: 1.365ms
+	CategorizeAssets: 223.468ms
+	ImportOutOfDateAssets: 4474.583ms (1052.696ms without children)
+		ImportManagerImport: 36.489ms (9.821ms without children)
+			ImportInProcess: 26.573ms
+			UpdateCategorizedAssets: 0.094ms
+		CompileScripts: 3345.241ms
+		ReloadNativeAssets: 0.019ms
+		UnloadImportedAssets: 33.592ms
+		ReloadImportedAssets: 1.457ms
+		EnsureUptoDateAssetsAreRegisteredWithGuidPM: 3.186ms
+		InitializingProgressBar: 0.000ms
+		PostProcessAllAssetNotificationsAddChangedAssets: 0.000ms
+		OnDemandSchedulerStart: 1.901ms
+	PostProcessAllAssets: 279.639ms
+	Hotreload: 7.007ms
+	GatherAllCurrentPrimaryArtifactRevisions: 0.000ms
+	UnloadStreamsBegin: 0.171ms
+	PersistCurrentRevisions: 0.597ms
+	UnloadStreamsEnd: 0.080ms
+	GenerateScriptTypeHashes: 19.702ms
+	Untracked: 5295.214ms
+Application.AssetDatabase Initial Refresh End
+Shader Hidden/ProbeVolume/VoxelizeScene is not supported: GPU does not support conservative rasterization
+Shader Hidden/ProbeVolume/VoxelizeScene is not supported: GPU does not support conservative rasterization
+Scanning for USB devices : 4.629ms
+Initializing Unity extensions:
+[MODES] ModeService[none].Initialize
+[MODES] ModeService[none].LoadModes
+[MODES] Loading mode Default (0) for mode-current-id-GameDesinger
+[PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+ProgressiveSceneManager::Cancel()
+Unloading 119 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 428 unused Assets / (9.5 MB). Loaded Objects now: 9117.
+Memory consumption went from 236.4 MB to 226.9 MB.
+Total: 8.899500 ms (FindLiveObjects: 0.458200 ms CreateObjectMapping: 0.388300 ms MarkObjects: 4.612700 ms  DeleteObjects: 3.439000 ms)
+
+Microsoft Media Foundation video decoding to texture disabled: graphics device is Null, only Direct3D 11 and Direct3D 12 (only on desktop) are supported for hardware-accelerated video decoding.
+[Project] Loading completed in 14.262 seconds
+	Project init time: 				11.952 seconds
+		Template init time: 		0.000 seconds
+		Package Manager init time: 		0.260 seconds
+		Asset Database init time: 		0.186 seconds
+		Global illumination init time: 	0.004 seconds
+		Assemblies load time: 			0.385 seconds
+		Unity extensions init time: 	0.006 seconds
+		Asset Database refresh time: 	0.000 seconds
+	Scene opening time: 			0.539 seconds
+##utp:{"type":"ProjectInfo","version":2,"phase":"Immediate","time":1787562880543,"processId":34480,"projectLoad":14.262213500000002,"projectInit":11.951608,"templateInit":0.0,"packageManagerInit":0.2601242,"assetDatabaseInit":0.1861367,"globalIlluminationInit":0.0041747,"assembliesLoad":0.3845281,"unityExtensionsInit":0.0057913,"assetDatabaseRefresh":0.0,"sceneOpening":0.538962}
+##utp:{"type":"EditorInfo","version":2,"phase":"Immediate","time":1787562880543,"processId":34480,"editorVersion":"2022.3.62f3c1 (1623fc0bbb97)","branch":"2022.3/china_unity/release","buildType":"Release","platform":"Windows"}
+Running tests for ExecutionSettings with details:
+targetPlatform = 
+playerHeartbeatTimeout = 600
+filters[0] = 
+   Filter with settings:
+   testMode = EditMode
+   targetPlatform = 
+   testNames = null
+   groupNames = ColorTiming.Tests.EditMode
+   categoryNames = null
+   assemblyNames = null
+ignoreTests = {}
+featureFlags = null
+
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+UnityEditor.TestTools.TestRunner.CommandLineTest.Executer:InitializeAndExecuteRun (string[]) (at ./Library/PackageCache/com.unity.test-framework@1.4.6/UnityEditor.TestRunner/CommandLineTest/Executer.cs:53)
+UnityEditor.TestTools.TestRunner.CommandLineTest.TestStarter:InitializeAndExecuteRun () (at ./Library/PackageCache/com.unity.test-framework@1.4.6/UnityEditor.TestRunner/CommandLineTest/TestStarter.cs:64)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions ()
+
+(Filename: ./Library/PackageCache/com.unity.test-framework@1.4.6/UnityEditor.TestRunner/CommandLineTest/Executer.cs Line: 53)
+
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.05 seconds
+Texture '第二章boss' with size 8192x4096 was too large for graphics device maximum supported texture size (4096x4096). Falling back to a dummy texture. Generate mip maps to provide lower size fallback.
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+Spine.Unity.MaterialChecks:IsPMAMaterial (UnityEngine.Material) (at Assets/Plugins/Spine/Runtime/spine-unity/Utility/MaterialChecks.cs:258)
+Spine.Unity.MaterialChecks:IsTextureSetupProblematic (UnityEngine.Material,UnityEngine.ColorSpace,bool,bool,bool,string,string,string&) (at Assets/Plugins/Spine/Runtime/spine-unity/Utility/MaterialChecks.cs:199)
+Spine.Unity.Editor.SpineEditorUtilities:IssueWarningsForUnrecommendedTextureSettings (string) (at Assets/Plugins/Spine/Editor/spine-unity/Editor/Utility/SpineEditorUtilities.cs:267)
+Spine.Unity.Editor.SpineEditorUtilities:IssueWarningsForUnrecommendedTextureSettings () (at Assets/Plugins/Spine/Editor/spine-unity/Editor/Utility/SpineEditorUtilities.cs:185)
+Spine.Unity.Editor.SpineEditorUtilities:Initialize () (at Assets/Plugins/Spine/Editor/spine-unity/Editor/Utility/SpineEditorUtilities.cs:164)
+UnityEditor.EditorApplication:Internal_CallDelayFunctions ()
+
+[Assets/Plugins/Spine/Editor/spine-unity/Editor/Utility/SpineEditorUtilities.cs line 267]
+
+Texture '第二章boss' with size 8192x4096 was too large for graphics device maximum supported texture size (4096x4096). Falling back to a dummy texture. Generate mip maps to provide lower size fallback.
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+Spine.Unity.MaterialChecks:IsPMAMaterial (UnityEngine.Material) (at Assets/Plugins/Spine/Runtime/spine-unity/Utility/MaterialChecks.cs:258)
+Spine.Unity.MaterialChecks:IsTextureSetupProblematic (UnityEngine.Material,UnityEngine.ColorSpace,bool,bool,bool,string,string,string&) (at Assets/Plugins/Spine/Runtime/spine-unity/Utility/MaterialChecks.cs:199)
+Spine.Unity.Editor.SpineEditorUtilities:IssueWarningsForUnrecommendedTextureSettings (string) (at Assets/Plugins/Spine/Editor/spine-unity/Editor/Utility/SpineEditorUtilities.cs:267)
+Spine.Unity.Editor.SpineEditorUtilities:IssueWarningsForUnrecommendedTextureSettings () (at Assets/Plugins/Spine/Editor/spine-unity/Editor/Utility/SpineEditorUtilities.cs:185)
+Spine.Unity.Editor.SpineEditorUtilities:Initialize () (at Assets/Plugins/Spine/Editor/spine-unity/Editor/Utility/SpineEditorUtilities.cs:164)
+UnityEditor.EditorApplication:Internal_CallDelayFunctions ()
+
+[Assets/Plugins/Spine/Editor/spine-unity/Editor/Utility/SpineEditorUtilities.cs line 267]
+
+Request Asset Garbage Collect because used heap size increased from 226.9 MB to 489.3 MB, exceeding the threshold of 256.0 MB.
+[UnityConnectServicesConfig] config is NOT valid, switching to default
+Created GICache directory at C:/Users/WIN10/AppData/LocalLow/Unity/Caches/GiCache. Took: 0.015s, timestamps: [14.270 - 14.285]
+gi::BakeBackendSwitch: switching bake backend from 3 to 1.
+GfxDevice renderer is null. Unity cannot update the Ambient Probe and Reflection Probes that the SkyManager generates. Run the Editor without the -nographics argument or generate lighting for your scene.
+Unloading 77 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 46 unused Assets / (28.4 KB). Loaded Objects now: 9163.
+Memory consumption went from 488.7 MB to 488.7 MB.
+Total: 6.543200 ms (FindLiveObjects: 0.437200 ms CreateObjectMapping: 0.231600 ms MarkObjects: 5.756800 ms  DeleteObjects: 0.116500 ms)
+
+[PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 0 unused Assets / (0 B). Loaded Objects now: 9168.
+Memory consumption went from 488.7 MB to 488.7 MB.
+Total: 16.214200 ms (FindLiveObjects: 0.482100 ms CreateObjectMapping: 0.346100 ms MarkObjects: 15.366200 ms  DeleteObjects: 0.018500 ms)
+
+GfxDevice renderer is null. Unity cannot update the Ambient Probe and Reflection Probes that the SkyManager generates. Run the Editor without the -nographics argument or generate lighting for your scene.
+Executing IPrebuildSetup for: Unity.PerformanceTesting.Editor.TestRunBuilder.
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+UnityEditor.TestTools.TestRunner.TestRun.Tasks.BuildActionTaskBase`1/<ExecuteMethods>d__8<UnityEngine.TestTools.IPrebuildSetup>:MoveNext () (at ./Library/PackageCache/com.unity.test-framework@1.4.6/UnityEditor.TestRunner/TestRun/Tasks/BuildActionTaskBase.cs:51)
+UnityEditor.TestTools.TestRunner.TestRun.Tasks.BuildActionTaskBase`1/<Execute>d__7<UnityEngine.TestTools.IPrebuildSetup>:MoveNext () (at ./Library/PackageCache/com.unity.test-framework@1.4.6/UnityEditor.TestRunner/TestRun/Tasks/BuildActionTaskBase.cs:35)
+UnityEditor.TestTools.TestRunner.TestRun.TestJobRunner:ExecuteStep () (at ./Library/PackageCache/com.unity.test-framework@1.4.6/UnityEditor.TestRunner/TestRun/TestJobRunner.cs:173)
+UnityEditor.TestTools.TestRunner.TestRun.TestJobRunner:ExecuteCallback () (at ./Library/PackageCache/com.unity.test-framework@1.4.6/UnityEditor.TestRunner/TestRun/TestJobRunner.cs:108)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions ()
+
+(Filename: ./Library/PackageCache/com.unity.test-framework@1.4.6/UnityEditor.TestRunner/TestRun/Tasks/BuildActionTaskBase.cs Line: 51)
+
+Saving results to: C:/Users/WIN10/AppData/LocalLow/DefaultCompany/GameDesinger\TestResults.xml
+Saving results to: D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\Documentation\Refactor\editmode-color-timing-tests.xml
+Executing IPostBuildCleanup for: Unity.PerformanceTesting.Editor.TestRunBuilder.
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+UnityEditor.TestTools.TestRunner.TestRun.Tasks.BuildActionTaskBase`1/<ExecuteMethods>d__8<UnityEngine.TestTools.IPostBuildCleanup>:MoveNext () (at ./Library/PackageCache/com.unity.test-framework@1.4.6/UnityEditor.TestRunner/TestRun/Tasks/BuildActionTaskBase.cs:51)
+UnityEditor.TestTools.TestRunner.TestRun.Tasks.BuildActionTaskBase`1/<Execute>d__7<UnityEngine.TestTools.IPostBuildCleanup>:MoveNext () (at ./Library/PackageCache/com.unity.test-framework@1.4.6/UnityEditor.TestRunner/TestRun/Tasks/BuildActionTaskBase.cs:35)
+UnityEditor.TestTools.TestRunner.TestRun.TestJobRunner:ExecuteStep () (at ./Library/PackageCache/com.unity.test-framework@1.4.6/UnityEditor.TestRunner/TestRun/TestJobRunner.cs:173)
+UnityEditor.TestTools.TestRunner.TestRun.TestJobRunner:ExecuteCallback () (at ./Library/PackageCache/com.unity.test-framework@1.4.6/UnityEditor.TestRunner/TestRun/TestJobRunner.cs:108)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions ()
+
+(Filename: ./Library/PackageCache/com.unity.test-framework@1.4.6/UnityEditor.TestRunner/TestRun/Tasks/BuildActionTaskBase.cs Line: 51)
+
+Asset Pipeline Refresh (id=14517f81e8784474084f009f1d56c2ac): Total: 0.041 seconds - Initiated by RefreshV2(NoUpdateAssetOptions)
+[PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 0 unused Assets / (0 B). Loaded Objects now: 9169.
+Memory consumption went from 204.0 MB to 204.0 MB.
+Total: 7.064800 ms (FindLiveObjects: 0.350800 ms CreateObjectMapping: 0.251100 ms MarkObjects: 6.441500 ms  DeleteObjects: 0.020200 ms)
+
+DisplayProgressbar: Undo
+Test run completed. Exiting with code 0 (Ok). Run completed.
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+UnityEditor.TestTools.TestRunner.CommandLineTest.Executer:ExitApplication (UnityEditor.TestTools.TestRunner.CommandLineTest.Executer/ReturnCodes,string) (at ./Library/PackageCache/com.unity.test-framework@1.4.6/UnityEditor.TestRunner/CommandLineTest/Executer.cs:81)
+UnityEditor.TestTools.TestRunner.CommandLineTest.Executer:ExitIfRunIsCompleted () (at ./Library/PackageCache/com.unity.test-framework@1.4.6/UnityEditor.TestRunner/CommandLineTest/Executer.cs:74)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions ()
+
+(Filename: ./Library/PackageCache/com.unity.test-framework@1.4.6/UnityEditor.TestRunner/CommandLineTest/Executer.cs Line: 81)
+
+[PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+Input System module state changed to: ShutdownInProgress.
+Input System polling thread exited.
+Input System module state changed to: Shutdown.
+[Licensing::IpcConnector] LicenseClient-WIN10-2022.3.62-notifications channel disconnected successfully.
+[Licensing::IpcConnector] LicenseClient-WIN10-2022.3.62 channel disconnected successfully.

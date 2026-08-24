@@ -1,0 +1,163 @@
+
+using UnityEngine;
+using UnityEngine.Audio;
+using System;
+using ColorTiming.Bootstrap.Flow;
+using ColorTiming.Settings;
+using GameFramework;
+using UnityGameFramework.Runtime;
+
+public class UI_ButtonAction : UIFormBase, IColorTimingSceneFlowConsumer, IColorTimingSettingsConsumer,
+    ColorTiming.Presentation.UI.IColorTimingStartMenuForm
+{
+    IColorTimingSceneFlow sceneFlow;
+    IColorTimingSettings settings;
+    StartVido videoSequence;
+
+    public void BindSceneFlow(IColorTimingSceneFlow flow)
+    {
+        sceneFlow = flow ?? throw new ArgumentNullException(nameof(flow));
+    }
+
+    public void BindSettings(IColorTimingSettings projectSettings)
+    {
+        settings = projectSettings ?? throw new ArgumentNullException(nameof(projectSettings));
+        RefreshSettingsView();
+    }
+
+    public void BindRuntime(IColorTimingSceneFlow flow, IColorTimingSettings projectSettings)
+    {
+        BindSceneFlow(flow);
+        BindSettings(projectSettings);
+    }
+
+    public GameObject StartBtnBox;
+    public GameObject GoButtonBox;
+    public GameObject SettingButtonBox;
+
+    public AudioMixer AudioMixer;
+
+    public GameObject BGMBtn_Open;
+    public GameObject BGMBtn_Off;
+
+    public GameObject SFXBtn_Open;
+    public GameObject SFXBtn_Off;
+
+    public GameObject offTipButton;
+    public GameObject openTipButton;
+
+    protected override void OnOpen(object userData)
+    {
+        // GF.UI pools forms, so authored navigation state must be restored on every open.
+        if (StartBtnBox != null) StartBtnBox.SetActive(true);
+        if (GoButtonBox != null) GoButtonBox.SetActive(false);
+        if (SettingButtonBox != null) SettingButtonBox.SetActive(false);
+        base.OnOpen(userData);
+        videoSequence ??= GetComponentInChildren<StartVido>(true);
+        videoSequence?.RestartSequence();
+    }
+
+    protected override void OnClose(bool isShutdown, object userData)
+    {
+        videoSequence?.StopSequence();
+        base.OnClose(isShutdown, userData);
+    }
+
+    public void StartGameBtnDown()
+    {
+
+        StartBtnBox.SetActive(false);
+        GoButtonBox.SetActive(true);
+    }
+
+    public void BackStartBtnDown()
+    {
+        StartBtnBox.SetActive(true);
+        GoButtonBox.SetActive(false);
+    }
+
+    public void SettingBtnDwon()
+    {
+        SettingButtonBox.SetActive(true);
+        StartBtnBox.SetActive(false);
+    }
+
+    public void BackSettingBtnDwon()
+    {
+        StartBtnBox.SetActive(true);
+        SettingButtonBox.SetActive(false);
+    }
+
+    public void GoTest1()
+    {
+        sceneFlow?.TryLoad(ColorTimingSceneId.Boss1);
+    }
+
+
+    public void GoTest2()
+    {
+        sceneFlow?.TryLoad(ColorTimingSceneId.Boss2);
+    }
+
+    public void ExitGameBtn()
+    {
+        GameEntry.Shutdown(ShutdownType.Quit);
+    }
+
+
+    public void ShowSystemSetUP()
+    {
+
+    }
+
+    public void SetBGM(bool open)
+    {
+        if (settings != null)
+        {
+            settings.BgmEnabled = open;
+        }
+        SetToggleView(BGMBtn_Open, BGMBtn_Off, open);
+    }
+
+    public void SetSFX(bool open)
+    {
+        if (settings != null)
+        {
+            settings.SfxEnabled = open;
+        }
+        SetToggleView(SFXBtn_Open, SFXBtn_Off, open);
+    }
+
+    public void OffKeyTip()
+    {
+        if (settings != null) settings.KeyTipsDisabled = true;
+        SetOffTip(true);
+
+    }
+
+    public void OpenKeyTip()
+    {
+        if (settings != null) settings.KeyTipsDisabled = false;
+        SetOffTip(false);
+    }
+
+    void SetOffTip(bool off)
+    {
+        offTipButton.SetActive(!off);
+        openTipButton.SetActive(off);
+    }
+
+    void RefreshSettingsView()
+    {
+        if (settings == null) return;
+        SetToggleView(BGMBtn_Open, BGMBtn_Off, settings.BgmEnabled);
+        SetToggleView(SFXBtn_Open, SFXBtn_Off, settings.SfxEnabled);
+        SetOffTip(settings.KeyTipsDisabled);
+    }
+
+    static void SetToggleView(GameObject openButton, GameObject offButton, bool enabled)
+    {
+        if (openButton != null) openButton.SetActive(!enabled);
+        if (offButton != null) offButton.SetActive(enabled);
+    }
+}

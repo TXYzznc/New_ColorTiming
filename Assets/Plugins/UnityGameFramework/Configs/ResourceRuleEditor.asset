@@ -24,6 +24,16 @@ MonoBehaviour:
     filterType: 0
     searchPatterns: '*.*'
   - valid: 1
+    name: World
+    variant: 
+    fileSystem: 
+    groups: 
+    assetsDirectoryPath: Assets/Game/Prefabs/World
+    loadType: 0
+    packed: 0
+    filterType: 0
+    searchPatterns: '*.*'
+  - valid: 1
     name: Core
     variant: 
     fileSystem: 
@@ -93,6 +103,16 @@ MonoBehaviour:
     packed: 0
     filterType: 0
     searchPatterns: '*.unity'
+  - valid: 1
+    name: Sound
+    variant: 
+    fileSystem: 
+    groups: 
+    assetsDirectoryPath: Assets/Game/Audio
+    loadType: 0
+    packed: 0
+    filterType: 0
+    searchPatterns: '*.*'
   - valid: 1
     name: ScriptableAssets
     variant: 

@@ -1,0 +1,771 @@
+{
+  "status": "pass",
+  "runtimeRoot": "Assets/Game/Scripts/ColorTiming",
+  "forbiddenApiOccurrences": [],
+  "removedDebugHotkeyOccurrences": [],
+  "unapprovedMutableStatics": [],
+  "approvedMutableStatics": [
+    {
+      "file": "Legacy/UI/LoadScenes.cs",
+      "line": 12,
+      "text": "static LoadScenes persistentView;",
+      "rationale": "Bounded pooled loading-view identity; cleared by OnDestroy and not used as a service locator."
+    }
+  ],
+  "lifecycleInventory": {
+    "addListener": [
+      {
+        "file": "Legacy/Boss1_Controller.cs",
+        "line": 262,
+        "text": "OnDamage_Event.AddListener(boss1Anim.OnHit);"
+      },
+      {
+        "file": "Legacy/Boss2_Controller.cs",
+        "line": 427,
+        "text": "OnDamage_Event.AddListener(boss2Anim_s.OnHit);"
+      },
+      {
+        "file": "Legacy/Hero_XuliTip.cs",
+        "line": 17,
+        "text": "controller.OnSwitchWeapon.AddListener(SwitchWeapon);"
+      },
+      {
+        "file": "Legacy/Hero_XuliTip.cs",
+        "line": 18,
+        "text": "controller.OnAnimState.AddListener(OnAnimState);"
+      },
+      {
+        "file": "Legacy/HeroController.cs",
+        "line": 100,
+        "text": "heroAnimState.OnDashEnd.AddListener(DashEnd);"
+      },
+      {
+        "file": "Legacy/HeroController.cs",
+        "line": 101,
+        "text": "heroAnimState.OnDashWD.AddListener(OnDashInvulnerability);"
+      },
+      {
+        "file": "Legacy/HeroController.cs",
+        "line": 102,
+        "text": "heroAnimState.OnAttack.AddListener(Attack);"
+      },
+      {
+        "file": "Legacy/HeroController.cs",
+        "line": 103,
+        "text": "heroAnimState.OnHit.AddListener(OnHit_Anim);"
+      },
+      {
+        "file": "Legacy/HeroController.cs",
+        "line": 104,
+        "text": "heroAnimState.OnSkillMove.AddListener(ONSkillMove);"
+      },
+      {
+        "file": "Legacy/HeroController.cs",
+        "line": 105,
+        "text": "heroAnimState.OnWudi.AddListener(ONWudi);"
+      },
+      {
+        "file": "Legacy/HeroController.cs",
+        "line": 108,
+        "text": "OnSwitchWeapon.AddListener(heroAnimState.ShowWeaponColor);"
+      },
+      {
+        "file": "Legacy/HeroController.cs",
+        "line": 111,
+        "text": "OnAnimStateEnter.AddListener(OnAnimStateEnterF);"
+      },
+      {
+        "file": "Legacy/Pickup_Weapon.cs",
+        "line": 122,
+        "text": "hero.OnPickUPWeapon.AddListener(TryPickup);"
+      },
+      {
+        "file": "Legacy/UI/BtnSound.cs",
+        "line": 25,
+        "text": "button.onClick.AddListener(BtnClick);"
+      },
+      {
+        "file": "Legacy/UI/UI_BossHPController.cs",
+        "line": 13,
+        "text": "boss1_Controller?.OnDamage_Event.AddListener(SetHPBox);"
+      },
+      {
+        "file": "Legacy/UI/UI_BossHPController2.cs",
+        "line": 14,
+        "text": "boss1_Controller?.OnDamage_Event.AddListener(SetHPBox);"
+      },
+      {
+        "file": "Legacy/UI/UI_HeroHPBox.cs",
+        "line": 14,
+        "text": "controller?.OnSetHP_Event.AddListener(OnDamage);"
+      },
+      {
+        "file": "Legacy/UI/UI_HeroInfo.cs",
+        "line": 42,
+        "text": "controller?.OnSwitchWeapon.AddListener(SwitchWapon);"
+      },
+      {
+        "file": "Legacy/UI/UI_WeaponTip.cs",
+        "line": 44,
+        "text": "controller?.OnSwitchWeapon.AddListener(OnSwitchWeapon);"
+      },
+      {
+        "file": "Legacy/WeaponControSystem.cs",
+        "line": 30,
+        "text": "boss?.OnDamage_Event.AddListener(OnBossDamaged);"
+      },
+      {
+        "file": "Legacy/WeaponControSystem_2.cs",
+        "line": 30,
+        "text": "boss?.OnDamage_Event.AddListener(OnBossDamaged);"
+      }
+    ],
+    "removeListener": [
+      {
+        "file": "Legacy/Boss1_Controller.cs",
+        "line": 425,
+        "text": "OnDamage_Event.RemoveListener(boss1Anim.OnHit);"
+      },
+      {
+        "file": "Legacy/Boss2_Controller.cs",
+        "line": 628,
+        "text": "OnDamage_Event.RemoveListener(boss2Anim_s.OnHit);"
+      },
+      {
+        "file": "Legacy/Hero_XuliTip.cs",
+        "line": 29,
+        "text": "controller.OnSwitchWeapon.RemoveListener(SwitchWeapon);"
+      },
+      {
+        "file": "Legacy/Hero_XuliTip.cs",
+        "line": 30,
+        "text": "controller.OnAnimState.RemoveListener(OnAnimState);"
+      },
+      {
+        "file": "Legacy/HeroController.cs",
+        "line": 528,
+        "text": "OnAnimStateEnter.RemoveListener(OnAnimStateEnterF);"
+      },
+      {
+        "file": "Legacy/HeroController.cs",
+        "line": 531,
+        "text": "heroAnimState.OnDashEnd.RemoveListener(DashEnd);"
+      },
+      {
+        "file": "Legacy/HeroController.cs",
+        "line": 532,
+        "text": "heroAnimState.OnDashWD.RemoveListener(OnDashInvulnerability);"
+      },
+      {
+        "file": "Legacy/HeroController.cs",
+        "line": 533,
+        "text": "heroAnimState.OnAttack.RemoveListener(Attack);"
+      },
+      {
+        "file": "Legacy/HeroController.cs",
+        "line": 534,
+        "text": "heroAnimState.OnHit.RemoveListener(OnHit_Anim);"
+      },
+      {
+        "file": "Legacy/HeroController.cs",
+        "line": 535,
+        "text": "heroAnimState.OnSkillMove.RemoveListener(ONSkillMove);"
+      },
+      {
+        "file": "Legacy/HeroController.cs",
+        "line": 536,
+        "text": "heroAnimState.OnWudi.RemoveListener(ONWudi);"
+      },
+      {
+        "file": "Legacy/HeroController.cs",
+        "line": 537,
+        "text": "OnSwitchWeapon.RemoveListener(heroAnimState.ShowWeaponColor);"
+      },
+      {
+        "file": "Legacy/Pickup_Weapon.cs",
+        "line": 200,
+        "text": "hero.OnPickUPWeapon.RemoveListener(TryPickup);"
+      },
+      {
+        "file": "Legacy/UI/BtnSound.cs",
+        "line": 44,
+        "text": "button?.onClick.RemoveListener(BtnClick);"
+      },
+      {
+        "file": "Legacy/UI/UI_BossHPController.cs",
+        "line": 60,
+        "text": "boss1_Controller?.OnDamage_Event.RemoveListener(SetHPBox);"
+      },
+      {
+        "file": "Legacy/UI/UI_BossHPController2.cs",
+        "line": 58,
+        "text": "boss1_Controller?.OnDamage_Event.RemoveListener(SetHPBox);"
+      },
+      {
+        "file": "Legacy/UI/UI_HeroHPBox.cs",
+        "line": 55,
+        "text": "controller?.OnSetHP_Event.RemoveListener(OnDamage);"
+      },
+      {
+        "file": "Legacy/UI/UI_HeroInfo.cs",
+        "line": 118,
+        "text": "controller?.OnSwitchWeapon.RemoveListener(SwitchWapon);"
+      },
+      {
+        "file": "Legacy/UI/UI_WeaponTip.cs",
+        "line": 88,
+        "text": "controller?.OnSwitchWeapon.RemoveListener(OnSwitchWeapon);"
+      },
+      {
+        "file": "Legacy/WeaponControSystem.cs",
+        "line": 35,
+        "text": "boss?.OnDamage_Event.RemoveListener(OnBossDamaged);"
+      },
+      {
+        "file": "Legacy/WeaponControSystem_2.cs",
+        "line": 35,
+        "text": "boss?.OnDamage_Event.RemoveListener(OnBossDamaged);"
+      }
+    ],
+    "eventSubscribe": [
+      {
+        "file": "Bootstrap/ColorTimingCompositionRoot.cs",
+        "line": 59,
+        "text": "sceneFlow.TransitionStarted += OnTransitionStarted;"
+      },
+      {
+        "file": "Combat/UnityGameTimeAdapter.cs",
+        "line": 22,
+        "text": "coordinator.Changed += ApplyScale;"
+      },
+      {
+        "file": "Legacy/Anim/Xuli.cs",
+        "line": 17,
+        "text": "ft += Time.deltaTime;"
+      },
+      {
+        "file": "Legacy/Boss1_Controller.cs",
+        "line": 157,
+        "text": "entry.Complete += Entry_Complete;"
+      },
+      {
+        "file": "Legacy/Boss1_Controller.cs",
+        "line": 158,
+        "text": "entry.Event += AnimEvent;"
+      },
+      {
+        "file": "Legacy/Boss1_Controller.cs",
+        "line": 159,
+        "text": "entry.End += Entry_End;"
+      },
+      {
+        "file": "Legacy/Boss1Anim.cs",
+        "line": 184,
+        "text": "_it += (Time.deltaTime * lerpSpeed * _sp);"
+      },
+      {
+        "file": "Legacy/Boss2_Controller.cs",
+        "line": 149,
+        "text": "moveOkTimeing += Time.fixedDeltaTime;"
+      },
+      {
+        "file": "Legacy/Boss2_Controller.cs",
+        "line": 263,
+        "text": "entry.Complete += Entry_Complete;"
+      },
+      {
+        "file": "Legacy/Boss2_Controller.cs",
+        "line": 264,
+        "text": "entry.Event += AnimEvent;"
+      },
+      {
+        "file": "Legacy/Boss2_Controller.cs",
+        "line": 265,
+        "text": "entry.End += Entry_End;"
+      },
+      {
+        "file": "Legacy/Boss2_Controller_w.cs",
+        "line": 109,
+        "text": "moveOkTimeing += Time.fixedDeltaTime;"
+      },
+      {
+        "file": "Legacy/Boss2_Controller_w.cs",
+        "line": 170,
+        "text": "entry.Complete += Entry_Complete;"
+      },
+      {
+        "file": "Legacy/Boss2_Controller_w.cs",
+        "line": 171,
+        "text": "entry.Event += AnimEvent;"
+      },
+      {
+        "file": "Legacy/Boss2_Controller_w.cs",
+        "line": 172,
+        "text": "entry.End += Entry_End;"
+      },
+      {
+        "file": "Legacy/Boss2Anim_s.cs",
+        "line": 148,
+        "text": "_it += (Time.deltaTime * lerpSpeed * _sp);"
+      },
+      {
+        "file": "Legacy/HeroAnimStae.cs",
+        "line": 64,
+        "text": "_it += (Time.deltaTime * lerpSpeed * _sp);"
+      },
+      {
+        "file": "Legacy/HeroAnimStae.cs",
+        "line": 95,
+        "text": "_it += (Time.deltaTime * (1 / switchTime));"
+      },
+      {
+        "file": "Legacy/HeroController.cs",
+        "line": 472,
+        "text": "transform.position += af;"
+      },
+      {
+        "file": "Legacy/HeroFrireSystem.cs",
+        "line": 105,
+        "text": "pos += transform.position;"
+      },
+      {
+        "file": "Legacy/Skill/Sk_Bo2_dundi.cs",
+        "line": 37,
+        "text": "currentEntry.Complete += Entry_Complete;"
+      },
+      {
+        "file": "Legacy/Skill/sk_bo2_luodian.cs",
+        "line": 62,
+        "text": "fTime += Time.deltaTime * _f * tf * 5;"
+      },
+      {
+        "file": "Legacy/Skill/Skill_Bo2_Atk2.cs",
+        "line": 133,
+        "text": "pao.transform.localPosition += aix * Time.fixedDeltaTime * fg * speed * 0.25f;"
+      },
+      {
+        "file": "Legacy/Skill/Skill_Bo2_Atk2.cs",
+        "line": 145,
+        "text": "pao.transform.localPosition += aix * Time.fixedDeltaTime  * fg * (speed * 0.5f);"
+      },
+      {
+        "file": "Legacy/Skill/Skill_Bo2_atk2_s.cs",
+        "line": 30,
+        "text": "_p += stPos;"
+      },
+      {
+        "file": "Legacy/Skill/Skill_Zhadan.cs",
+        "line": 118,
+        "text": "animator.gameObject.transform.localPosition += aix * speed * fg * Time.fixedDeltaTime;"
+      },
+      {
+        "file": "Legacy/UI/LoadScenes.cs",
+        "line": 44,
+        "text": "sceneFlow.TransitionStarted += OnTransitionStarted;"
+      },
+      {
+        "file": "Legacy/UI/LoadScenes.cs",
+        "line": 45,
+        "text": "sceneFlow.TransitionProgress += OnTransitionProgress;"
+      },
+      {
+        "file": "Legacy/UI/LoadScenes.cs",
+        "line": 46,
+        "text": "sceneFlow.SceneChanged += OnSceneChanged;"
+      },
+      {
+        "file": "Legacy/UI/LoadScenes.cs",
+        "line": 47,
+        "text": "sceneFlow.TransitionFailed += OnTransitionFailed;"
+      },
+      {
+        "file": "Legacy/UI/StartVido.cs",
+        "line": 21,
+        "text": "if (player != null) player.loopPointReached += PlayEnd;"
+      },
+      {
+        "file": "Legacy/UI/U_HeroHit.cs",
+        "line": 16,
+        "text": "damageSignal.Damaged += ShowHit;"
+      },
+      {
+        "file": "Legacy/UI/UI_BossHP_Item.cs",
+        "line": 129,
+        "text": "_it += (Time.deltaTime * lerpSpeed * _sp);"
+      },
+      {
+        "file": "Player/PlayerAttackInputGate.cs",
+        "line": 24,
+        "text": "activeTime += deltaTime;"
+      },
+      {
+        "file": "Player/WeaponSpawnPolicy.cs",
+        "line": 42,
+        "text": "remaining += interval;"
+      },
+      {
+        "file": "Presentation/Audio/GfColorTimingSoundService.cs",
+        "line": 23,
+        "text": "gameTime.ScaleChanged += OnScaleChanged;"
+      },
+      {
+        "file": "Presentation/UI/GfColorTimingUiService.cs",
+        "line": 35,
+        "text": "this.sceneFlow.TransitionStarted += OnTransitionStarted;"
+      }
+    ],
+    "eventUnsubscribe": [
+      {
+        "file": "Bootstrap/ColorTimingCompositionRoot.cs",
+        "line": 106,
+        "text": "sceneFlow.TransitionStarted -= OnTransitionStarted;"
+      },
+      {
+        "file": "Combat/UnityGameTimeAdapter.cs",
+        "line": 32,
+        "text": "request.Remaining -= deltaTime;"
+      },
+      {
+        "file": "Combat/UnityGameTimeAdapter.cs",
+        "line": 45,
+        "text": "coordinator.Changed -= ApplyScale;"
+      },
+      {
+        "file": "Legacy/Boss1_Controller.cs",
+        "line": 215,
+        "text": "trackEntry.Event -= AnimEvent;"
+      },
+      {
+        "file": "Legacy/Boss1_Controller.cs",
+        "line": 216,
+        "text": "trackEntry.Complete -= Entry_Complete;"
+      },
+      {
+        "file": "Legacy/Boss1_Controller.cs",
+        "line": 217,
+        "text": "trackEntry.End -= Entry_End;"
+      },
+      {
+        "file": "Legacy/Boss1Anim.cs",
+        "line": 61,
+        "text": "_showTime -= Time.deltaTime;"
+      },
+      {
+        "file": "Legacy/Boss2_Controller.cs",
+        "line": 102,
+        "text": "atkCD -= Time.deltaTime;"
+      },
+      {
+        "file": "Legacy/Boss2_Controller.cs",
+        "line": 150,
+        "text": "dundiTime -= Time.fixedDeltaTime;"
+      },
+      {
+        "file": "Legacy/Boss2_Controller.cs",
+        "line": 304,
+        "text": "trackEntry.Complete -= Entry_Complete;"
+      },
+      {
+        "file": "Legacy/Boss2_Controller.cs",
+        "line": 318,
+        "text": "trackEntry.Complete -= Entry_Complete;"
+      },
+      {
+        "file": "Legacy/Boss2_Controller.cs",
+        "line": 495,
+        "text": "trackEntry.Event -= AnimEvent;"
+      },
+      {
+        "file": "Legacy/Boss2_Controller.cs",
+        "line": 496,
+        "text": "trackEntry.Complete -= Entry_Complete;"
+      },
+      {
+        "file": "Legacy/Boss2_Controller.cs",
+        "line": 497,
+        "text": "trackEntry.End -= Entry_End;"
+      },
+      {
+        "file": "Legacy/Boss2_Controller_w.cs",
+        "line": 72,
+        "text": "atkCD -= Time.deltaTime;"
+      },
+      {
+        "file": "Legacy/Boss2_Controller_w.cs",
+        "line": 196,
+        "text": "trackEntry.Complete -= Entry_Complete;"
+      },
+      {
+        "file": "Legacy/Boss2_Controller_w.cs",
+        "line": 226,
+        "text": "trackEntry.Event -= AnimEvent;"
+      },
+      {
+        "file": "Legacy/Boss2_Controller_w.cs",
+        "line": 227,
+        "text": "trackEntry.Complete -= Entry_Complete;"
+      },
+      {
+        "file": "Legacy/Boss2_Controller_w.cs",
+        "line": 228,
+        "text": "trackEntry.End -= Entry_End;"
+      },
+      {
+        "file": "Legacy/Boss2Anim_s.cs",
+        "line": 43,
+        "text": "_showTime -= Time.deltaTime;"
+      },
+      {
+        "file": "Legacy/Death_sc_Over.cs",
+        "line": 44,
+        "text": "_st -= Time.deltaTime;"
+      },
+      {
+        "file": "Legacy/HeroAnimStae.cs",
+        "line": 39,
+        "text": "_showTime -= Time.deltaTime;"
+      },
+      {
+        "file": "Legacy/HeroAnimStae.cs",
+        "line": 51,
+        "text": "_showColor -= Time.deltaTime;"
+      },
+      {
+        "file": "Legacy/Skill/Sk_Bo2_dundi.cs",
+        "line": 42,
+        "text": "trackEntry.Complete -= Entry_Complete;"
+      },
+      {
+        "file": "Legacy/Skill/Sk_Bo2_dundi.cs",
+        "line": 87,
+        "text": "currentEntry.Complete -= Entry_Complete;"
+      },
+      {
+        "file": "Legacy/Skill/sk_bo2_luodian.cs",
+        "line": 31,
+        "text": "releaseDelay -= Time.deltaTime;"
+      },
+      {
+        "file": "Legacy/Skill/sk_bo2_luodian.cs",
+        "line": 46,
+        "text": "tf -= count * 0.05f;"
+      },
+      {
+        "file": "Legacy/Skill/Skill_base.cs",
+        "line": 56,
+        "text": "life -= Time.deltaTime;"
+      },
+      {
+        "file": "Legacy/Skill/Skill_Bo2_Atk2.cs",
+        "line": 88,
+        "text": "endDelay -= Time.fixedDeltaTime;"
+      },
+      {
+        "file": "Legacy/UI/LoadScenes.cs",
+        "line": 126,
+        "text": "sceneFlow.TransitionStarted -= OnTransitionStarted;"
+      },
+      {
+        "file": "Legacy/UI/LoadScenes.cs",
+        "line": 127,
+        "text": "sceneFlow.TransitionProgress -= OnTransitionProgress;"
+      },
+      {
+        "file": "Legacy/UI/LoadScenes.cs",
+        "line": 128,
+        "text": "sceneFlow.SceneChanged -= OnSceneChanged;"
+      },
+      {
+        "file": "Legacy/UI/LoadScenes.cs",
+        "line": 129,
+        "text": "sceneFlow.TransitionFailed -= OnTransitionFailed;"
+      },
+      {
+        "file": "Legacy/UI/StartVido.cs",
+        "line": 26,
+        "text": "if (player != null) player.loopPointReached -= PlayEnd;"
+      },
+      {
+        "file": "Legacy/UI/U_HeroHit.cs",
+        "line": 14,
+        "text": "if (damageSignal != null) damageSignal.Damaged -= ShowHit;"
+      },
+      {
+        "file": "Legacy/UI/U_HeroHit.cs",
+        "line": 42,
+        "text": "if (damageSignal != null) damageSignal.Damaged -= ShowHit;"
+      },
+      {
+        "file": "Player/WeaponSpawnPolicy.cs",
+        "line": 33,
+        "text": "remaining -= deltaTime;"
+      },
+      {
+        "file": "Presentation/Audio/GfColorTimingSoundService.cs",
+        "line": 21,
+        "text": "if (gameTime != null) gameTime.ScaleChanged -= OnScaleChanged;"
+      },
+      {
+        "file": "Presentation/Audio/GfColorTimingSoundService.cs",
+        "line": 142,
+        "text": "if (gameTime != null) gameTime.ScaleChanged -= OnScaleChanged;"
+      },
+      {
+        "file": "Presentation/UI/GfColorTimingUiService.cs",
+        "line": 203,
+        "text": "sceneFlow.TransitionStarted -= OnTransitionStarted;"
+      }
+    ],
+    "updateMethods": [
+      {
+        "file": "Combat/UnityGameTimeAdapter.cs",
+        "line": 26,
+        "text": "private void Update()"
+      },
+      {
+        "file": "Input/Adapters/LegacyGameInputAdapter.cs",
+        "line": 20,
+        "text": "private void Update()"
+      },
+      {
+        "file": "Legacy/Boss1_Controller.cs",
+        "line": 76,
+        "text": "void Update()"
+      },
+      {
+        "file": "Legacy/Boss1Anim.cs",
+        "line": 56,
+        "text": "private void Update()"
+      },
+      {
+        "file": "Legacy/Boss2_Controller.cs",
+        "line": 93,
+        "text": "void Update()"
+      },
+      {
+        "file": "Legacy/Boss2_Controller.cs",
+        "line": 124,
+        "text": "private void FixedUpdate()"
+      },
+      {
+        "file": "Legacy/Boss2_Controller_w.cs",
+        "line": 66,
+        "text": "private void Update()"
+      },
+      {
+        "file": "Legacy/Boss2_Controller_w.cs",
+        "line": 80,
+        "text": "private void FixedUpdate()"
+      },
+      {
+        "file": "Legacy/Boss2Anim_s.cs",
+        "line": 38,
+        "text": "private void Update()"
+      },
+      {
+        "file": "Legacy/CameraShow.cs",
+        "line": 23,
+        "text": "private void Update()"
+      },
+      {
+        "file": "Legacy/Death_sc_Over.cs",
+        "line": 40,
+        "text": "private void Update()"
+      },
+      {
+        "file": "Legacy/HeroAnimStae.cs",
+        "line": 34,
+        "text": "private void Update()"
+      },
+      {
+        "file": "Legacy/HeroCamera_.cs",
+        "line": 16,
+        "text": "private void Update()"
+      },
+      {
+        "file": "Legacy/HeroController.cs",
+        "line": 145,
+        "text": "void Update()"
+      },
+      {
+        "file": "Legacy/HeroController.cs",
+        "line": 205,
+        "text": "private void FixedUpdate()"
+      },
+      {
+        "file": "Legacy/Pickup_Weapon.cs",
+        "line": 65,
+        "text": "private void Update()"
+      },
+      {
+        "file": "Legacy/Skill/sk_bo2_luodian.cs",
+        "line": 27,
+        "text": "void Update()"
+      },
+      {
+        "file": "Legacy/Skill/Skill_base.cs",
+        "line": 49,
+        "text": "private void Update()"
+      },
+      {
+        "file": "Legacy/Skill/Skill_Bo1_Atk5.cs",
+        "line": 14,
+        "text": "void Update()"
+      },
+      {
+        "file": "Legacy/Skill/Skill_Bo2_Atk2.cs",
+        "line": 84,
+        "text": "private void FixedUpdate()"
+      },
+      {
+        "file": "Legacy/Skill/Skill_Zhadan.cs",
+        "line": 79,
+        "text": "private void FixedUpdate()"
+      },
+      {
+        "file": "Legacy/UI/LoadScenes.cs",
+        "line": 55,
+        "text": "private void Update()"
+      },
+      {
+        "file": "Legacy/UI/UI_BattleResultForm.cs",
+        "line": 38,
+        "text": "void Update()"
+      },
+      {
+        "file": "Legacy/UI/UI_BossHP_Item.cs",
+        "line": 124,
+        "text": "private void Update()"
+      },
+      {
+        "file": "Legacy/UI/UI_Game.cs",
+        "line": 36,
+        "text": "private void Update()"
+      },
+      {
+        "file": "Legacy/UI/UI_HeroInfo.cs",
+        "line": 47,
+        "text": "private void Update()"
+      },
+      {
+        "file": "Legacy/UI/UI_WeaponTip.cs",
+        "line": 68,
+        "text": "private void Update()"
+      },
+      {
+        "file": "Legacy/WeaponSpawnerView.cs",
+        "line": 58,
+        "text": "protected virtual void Update()"
+      },
+      {
+        "file": "Presentation/Audio/GfColorTimingSoundService.cs",
+        "line": 84,
+        "text": "private void Update()"
+      }
+    ]
+  },
+  "notes": [
+    "Lifecycle inventories are review inputs, not a proof based on raw counts.",
+    "Update allocation and subscription symmetry conclusions are recorded in runtime-risk-and-lifecycle-audit.md."
+  ]
+}

@@ -1,0 +1,37 @@
+{
+    "unityVersion": "2022.3.62f3c1",
+    "generatedAtUtc": "2026-08-24T08:58:42.9326853Z",
+    "scenes": [
+        {
+            "path": "Assets/Game/Scene/StartMenu.unity",
+            "gameObjects": 52,
+            "components": 163,
+            "missingScripts": 0
+        },
+        {
+            "path": "Assets/Game/Scene/Boss1.unity",
+            "gameObjects": 231,
+            "components": 665,
+            "missingScripts": 0
+        },
+        {
+            "path": "Assets/Game/Scene/Boss2.unity",
+            "gameObjects": 237,
+            "components": 491,
+            "missingScripts": 0
+        }
+    ],
+    "scannedSerializedAssets": 250,
+    "scannedGuidReferences": 9600,
+    "missingScriptObjects": [],
+    "unresolvedGuidReferences": [],
+    "sourceBaselineUnresolvedGuidReferences": [
+        "Assets/Game/ColorTiming/Art/Image/Hero/Anim/Hero Animator Controller.controller:2b1e9356cb2d5ee4e8406c3fd664c52b",
+        "Assets/Game/Scene/Boss1.unity:03c9da642a0b3bd439aacc38e58cd06d",
+        "Assets/Game/Scene/Boss1.unity:8bd8297382c57c641a66af972eca98f4",
+        "Assets/Game/Scene/Boss1.unity:bdacb22ff60676743887395ad9d4a6f2",
+        "Assets/Game/Scene/Boss1.unity:fdf644124e717f24d87a043e47365b93"
+    ],
+    "loadFailures": [],
+    "passed": true
+}

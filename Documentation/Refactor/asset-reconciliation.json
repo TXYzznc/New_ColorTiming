@@ -1,0 +1,65 @@
+{
+  "status": "PASS",
+  "generatedAtUtc": "2026-08-24T12:05:06.239257+00:00",
+  "sourceAssetCount": 3575,
+  "dispositionCount": 3575,
+  "migratedCount": 3568,
+  "removedCount": 7,
+  "migrationRecordCount": 7295,
+  "targetGuidCount": 5225,
+  "duplicateMappingTargets": [],
+  "duplicateTargetGuids": {},
+  "removedGuidLeaks": [],
+  "failures": [],
+  "removedAssets": [
+    {
+      "source": "Assets/Game/Scripts/Anim/AnimStateMachine_DMD.cs",
+      "guid": "450f828c072c4c045a93df23b198fe33",
+      "disposition": "removed",
+      "target": "",
+      "reason": "unreferenced animation prototype"
+    },
+    {
+      "source": "Assets/Game/Scripts/Anim/PlayAnimation.cs",
+      "guid": "c298c5f60eeea844cb47bebbbe1acfe8",
+      "disposition": "removed",
+      "target": "",
+      "reason": "unreferenced no-op prototype"
+    },
+    {
+      "source": "Assets/Game/Scripts/GameManager.cs",
+      "guid": "a09252d9f50b87c4dbf26119d710562c",
+      "disposition": "removed",
+      "target": "",
+      "reason": "replaced by persistent IColorTimingSettings/GF.Setting"
+    },
+    {
+      "source": "Assets/Game/Scripts/PlayerInput.cs",
+      "guid": "6f3bd58963b700548a6bfc9ecea94002",
+      "disposition": "removed",
+      "target": "",
+      "reason": "empty prototype; replaced by IGameInput"
+    },
+    {
+      "source": "Assets/Game/Scripts/Skill/Skill_Jiandao.cs",
+      "guid": "217873a8fbd96194ea721418e802587e",
+      "disposition": "removed",
+      "target": "",
+      "reason": "empty prototype; formal attack path retained elsewhere"
+    },
+    {
+      "source": "Assets/Game/Scripts/Weapon_Hero.cs",
+      "guid": "54d1bc41ac524bb4b9cc08ddb6cd211a",
+      "disposition": "removed",
+      "target": "",
+      "reason": "empty prototype"
+    },
+    {
+      "source": "Assets/Game/Scripts/ZZZZZZZZZZ.cs",
+      "guid": "749b72cac92083d409e0acf370df5a45",
+      "disposition": "removed",
+      "target": "",
+      "reason": "unreferenced Spine bone debug probe"
+    }
+  ]
+}

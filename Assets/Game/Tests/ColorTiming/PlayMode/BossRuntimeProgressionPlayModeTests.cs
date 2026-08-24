@@ -1,0 +1,157 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using NUnit.Framework;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.TestTools;
+
+namespace ColorTiming.Tests.PlayMode
+{
+    public sealed class BossRuntimeProgressionPlayModeTests
+    {
+        const float BootTimeout = 30f;
+        const float TransitionTimeout = 20f;
+
+        [UnityTest]
+        [Timeout(120000)]
+        public IEnumerator FormalFlow_ConsumesEveryBossColor_ActivatesTailAndShowsFinalResult()
+        {
+            yield return BootToStartMenu();
+
+            var menu = FindActive<UI_ButtonAction>();
+            Assert.That(menu, Is.Not.Null);
+            menu.GoTest1();
+            yield return WaitForScene("Boss1", TransitionTimeout);
+
+            var boss1 = FindActive<Boss1_Controller>();
+            Assert.That(boss1, Is.Not.Null);
+            Assert.That(boss1.Boss1HP, Has.Count.EqualTo(11));
+
+            var boss1Colors = new HashSet<ColorType>();
+            AssertWrongColorDoesNotDamage(boss1);
+            while (boss1.Boss1HP.Count > 0)
+            {
+                var before = boss1.Boss1HP.Count;
+                var color = boss1.Boss1HP[0];
+                boss1Colors.Add(color);
+                boss1.OnDamage(null, new Weapon(color, WeaponType.nor), Vector2.zero, "playmode-regression");
+                Assert.That(boss1.Boss1HP, Has.Count.EqualTo(before - 1));
+                yield return null;
+            }
+
+            Assert.That(boss1Colors.SetEquals(new[] { ColorType.hong, ColorType.lv, ColorType.zi }), Is.True,
+                "Boss1 runtime queue must exercise all three authored colors.");
+            yield return WaitForScene("Boss2", TransitionTimeout);
+
+            var boss2 = FindActive<Boss2_Controller>();
+            var tail = Object.FindObjectsOfType<Boss2_Controller_w>(true).Single();
+            Assert.That(boss2, Is.Not.Null);
+            Assert.That(boss2.Boss1HP, Has.Count.EqualTo(15));
+            Assert.That(tail.gameObject.activeSelf, Is.False,
+                "Boss2 tail must start inactive before the 12-to-11 threshold.");
+
+            var boss2Colors = new HashSet<ColorType>();
+            AssertWrongColorDoesNotDamage(boss2);
+            while (boss2.Boss1HP.Count > 0)
+            {
+                var before = boss2.Boss1HP.Count;
+                var color = boss2.Boss1HP[0];
+                boss2Colors.Add(color);
+                boss2.OnDamage(null, new Weapon(color, WeaponType.nor), Vector2.zero, "playmode-regression");
+                Assert.That(boss2.Boss1HP, Has.Count.EqualTo(before - 1));
+                if (boss2.Boss1HP.Count == 11)
+                {
+                    Assert.That(tail.gameObject.activeSelf, Is.True,
+                        "Boss2 tail must activate exactly on the 12-to-11 transition.");
+                }
+                yield return null;
+            }
+
+            Assert.That(boss2Colors.SetEquals(
+                new[] { ColorType.hong, ColorType.lv, ColorType.zi, ColorType.chen }), Is.True,
+                "Boss2 runtime queue must exercise all four authored colors.");
+            Assert.That(boss2.death, Is.True);
+            Assert.That(tail.IsStoppedForBattleEnd, Is.True,
+                "Final victory must synchronously stop the tail before result UI pauses game time.");
+            Assert.That(tail.GetComponent<Collider2D>().enabled, Is.False);
+
+            yield return WaitUntil(() => FindActive<UI_BattleResultForm>() != null, 10f,
+                "Final victory did not open the GF.UI battle-result form.");
+            Assert.That(Time.timeScale, Is.EqualTo(0f));
+
+            var hud = FindActive<UI_HeroInfo>();
+            Assert.That(hud, Is.Not.Null);
+            hud.TogglePause();
+            yield return WaitUntil(() => FindActive<UI_ESC>() != null, 10f,
+                "Cleanup pause form did not open after the final-result assertion.");
+            FindActive<UI_ESC>().BackMenu();
+            yield return WaitForScene("StartMenu", TransitionTimeout);
+            Assert.That(Time.timeScale, Is.EqualTo(1f));
+        }
+
+        static void AssertWrongColorDoesNotDamage(Boss1_Controller boss)
+        {
+            var current = boss.Boss1HP[0];
+            var wrong = new[] { ColorType.hong, ColorType.lv, ColorType.zi }.First(color => color != current);
+            var before = boss.Boss1HP.Count;
+            boss.OnDamage(null, new Weapon(wrong, WeaponType.nor), Vector2.zero, "wrong-color");
+            Assert.That(boss.Boss1HP, Has.Count.EqualTo(before));
+        }
+
+        static void AssertWrongColorDoesNotDamage(Boss2_Controller boss)
+        {
+            var current = boss.Boss1HP[0];
+            var wrong = new[] { ColorType.hong, ColorType.lv, ColorType.zi, ColorType.chen }
+                .First(color => color != current);
+            var before = boss.Boss1HP.Count;
+            boss.OnDamage(null, new Weapon(wrong, WeaponType.nor), Vector2.zero, "wrong-color");
+            Assert.That(boss.Boss1HP, Has.Count.EqualTo(before));
+        }
+
+        static IEnumerator BootToStartMenu()
+        {
+            Time.timeScale = 1f;
+            if (!SceneManager.GetSceneByName("Launch").isLoaded)
+            {
+                SceneManager.LoadScene("Launch", LoadSceneMode.Single);
+            }
+            yield return WaitForScene("StartMenu", BootTimeout);
+            yield return WaitUntil(() => FindActive<UI_ButtonAction>() != null, 10f,
+                "StartMenu GF.UI form did not become active.");
+        }
+
+        static IEnumerator WaitForScene(string sceneName, float timeout)
+        {
+            yield return WaitUntil(
+                () => SceneManager.GetSceneByName(sceneName).isLoaded
+                      && SceneManager.GetActiveScene().name == sceneName,
+                timeout,
+                $"Scene '{sceneName}' did not become the active product scene.");
+        }
+
+        static IEnumerator WaitUntil(System.Func<bool> condition, float timeout, string failure)
+        {
+            var deadline = Time.realtimeSinceStartup + timeout;
+            while (!condition() && Time.realtimeSinceStartup < deadline)
+            {
+                yield return null;
+            }
+
+            Assert.That(condition(), Is.True, failure);
+        }
+
+        static T FindActive<T>() where T : Component
+        {
+            foreach (var candidate in Object.FindObjectsOfType<T>(true))
+            {
+                if (candidate.gameObject.activeInHierarchy)
+                {
+                    return candidate;
+                }
+            }
+
+            return null;
+        }
+    }
+}

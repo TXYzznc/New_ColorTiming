@@ -29,7 +29,7 @@ public class SoundGroupTable : DataRowBase
     }
 
         /// <summary>
-        /// Framework default sound groups
+        /// 
         /// </summary>
         public string Name
         {

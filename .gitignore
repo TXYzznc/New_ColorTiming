@@ -159,3 +159,8 @@ Assets/Game/Font/Common/SIMHEI SDF.asset
 !/Samples~/**
 # Local one-time framework export archive
 .framework-baseline.zip
+
+# Local Codex artifact-tool workspaces and exported verification copies.
+/.codex-tmp/
+/outputs/
+*.inspect.ndjson

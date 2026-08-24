@@ -5,7 +5,7 @@
 ## What Changes
 
 - 在独立目标目录中建立 AI-Friendly-Project 基线，源项目保持只读并作为功能、资源和行为对照。
-- 将 `StartMenu`、`Boss1`、`Boss2` 接入框架启动 Procedure 与统一场景流，保留加载进度、淡入淡出、暂停、重开、前后关卡及返回菜单流程。
+- 将 `StartMenu`、`Boss1`、`Boss2` 接入框架启动 Procedure、GF.Scene 生命周期与统一产品场景流，保留加载进度、淡入淡出、暂停、重开、前后关卡及返回菜单流程。
 - 引入语义化游戏输入边界，完整覆盖移动、冲刺、攻击、蓄力、丢弃、暂停、指针、教程确认与结果确认，业务代码不再直接读取 Unity `Input`。
 - 将颜色弱点、武器、伤害、生命、时间减速、治疗、胜负与 Boss 阶段规则拆分为可测试的纯 C# 领域逻辑；MonoBehaviour、Animator、Spine 和 Cinemachine 只承担 Unity 适配与表现。
 - 重构玩家、七类武器、技能、投射物、拾取/丢弃、生成保证逻辑，以及 Boss1、Boss2（含尾部与阶段行为）的全部运行时功能。

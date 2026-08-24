@@ -16,7 +16,7 @@ The system SHALL preserve the playable route `StartMenu → Boss1 → Boss2 → 
 
 #### Scenario: Start normal game
 - **WHEN** the player presses the main Start button
-- **THEN** the system transitions from `StartMenu` to `Boss1` through the framework scene-change procedure
+- **THEN** the long-lived product procedure transitions from `StartMenu` to `Boss1` through GF.Scene and the framework loading lifecycle
 
 #### Scenario: Select a test level
 - **WHEN** the player selects the existing Boss1 or Boss2 test-level button
@@ -62,4 +62,3 @@ The key-tip, BGM and SFX settings SHALL remain effective across `StartMenu`, `Bo
 #### Scenario: Toggle audio groups
 - **WHEN** the player disables BGM or SFX
 - **THEN** the corresponding framework sound group is muted without muting the other group, and its state persists across scene changes
-

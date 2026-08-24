@@ -161,13 +161,12 @@ public class PreloadProcedure : ProcedureBase
 
 
         //初始化音效
-        var musicGroup = GetRequiredSoundGroup(defaultSoundGroupData, Const.SoundGroup.Music);
-        var soundGroup = GetRequiredSoundGroup(defaultSoundGroupData, Const.SoundGroup.Sound);
-        GF.Setting.SetMediaMute(Const.SoundGroup.Music, GF.Setting.GetMediaMute(Const.SoundGroup.Music, musicGroup.Mute));
-        GF.Setting.SetMediaMute(Const.SoundGroup.Sound, GF.Setting.GetMediaMute(Const.SoundGroup.Sound, soundGroup.Mute));
-
-        GF.Setting.SetMediaVolume(Const.SoundGroup.Music, GF.Setting.GetMediaVolume(Const.SoundGroup.Music, musicGroup.Volume));
-        GF.Setting.SetMediaVolume(Const.SoundGroup.Sound, GF.Setting.GetMediaVolume(Const.SoundGroup.Sound, soundGroup.Volume));
+        foreach (Const.SoundGroup groupId in Enum.GetValues(typeof(Const.SoundGroup)))
+        {
+            var defaults = GetRequiredSoundGroup(defaultSoundGroupData, groupId);
+            GF.Setting.SetMediaMute(groupId, GF.Setting.GetMediaMute(groupId, defaults.Mute));
+            GF.Setting.SetMediaVolume(groupId, GF.Setting.GetMediaVolume(groupId, defaults.Volume));
+        }
     }
 
     private SoundGroupTable GetRequiredSoundGroup(Dictionary<string, SoundGroupTable> soundGroups, Const.SoundGroup group)

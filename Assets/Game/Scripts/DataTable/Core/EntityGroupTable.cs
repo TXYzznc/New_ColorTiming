@@ -29,7 +29,7 @@ public class EntityGroupTable : DataRowBase
     }
 
         /// <summary>
-        /// Framework default entity groups
+        /// 
         /// </summary>
         public string Name
         {

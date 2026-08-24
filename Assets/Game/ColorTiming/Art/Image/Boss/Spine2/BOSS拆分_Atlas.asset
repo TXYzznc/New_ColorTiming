@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6b194f808b1af6499c93410e504af42, type: 3}
+  m_Name: "BOSS\u62C6\u5206_Atlas"
+  m_EditorClassIdentifier: 
+  atlasFile: {fileID: 4900000, guid: 7d09382f74b979f4a93d1b205003029a, type: 3}
+  materials:
+  - {fileID: 2100000, guid: 074bfed9c6e13274b96da100303a4840, type: 2}
+  - {fileID: 2100000, guid: 5c48b75d3e6a5c2409b275d7d38e43e6, type: 2}

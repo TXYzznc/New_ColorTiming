@@ -29,7 +29,7 @@ namespace UGF.EditorTools
         public const string UIGroupTableExcel = "Core/UIGroupTable.xlsx";
         public static string UIGroupTableExcelFullPath => UtilityBuiltin.AssetsPath.GetCombinePath(DataTableExcelPath, UIGroupTableExcel);
 
-        public const string ConstGroupScriptFileFullName = "Assets/Game/Scripts/Common/Core/Const.Groups.cs";
+        public const string ConstGroupScriptFileFullName = "Assets/Game/Scripts/Common/Const.Groups.cs";
 
         public static readonly string PrefabsPath = "Assets/Game/Prefabs";
         public static readonly string ScenePath = "Assets/Game/Scene";

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="1" result="Failed(Child)" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-08-24 09:16:37Z" end-time="2026-08-24 09:17:07Z" duration="30.0533705">
+  <test-suite type="TestSuite" id="1009" name="GameDesinger" fullname="GameDesinger" runstate="Runnable" testcasecount="1" result="Failed" site="Child" start-time="2026-08-24 09:16:37Z" end-time="2026-08-24 09:17:07Z" duration="30.053371" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="PlayMode" />
+    </properties>
+    <failure>
+      <message><![CDATA[One or more child tests had errors]]></message>
+    </failure>
+    <test-suite type="Assembly" id="1003" name="ColorTiming.PlayMode.Tests.dll" fullname="D:/unity/UnityProject/ColorTimeing/New/_ColorTiming/Library/ScriptAssemblies/ColorTiming.PlayMode.Tests.dll" runstate="Runnable" testcasecount="1" result="Failed" site="Child" start-time="2026-08-24 09:16:37Z" end-time="2026-08-24 09:17:07Z" duration="30.047518" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="75376" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+        <property name="EditorOnly" value="False" />
+      </properties>
+      <failure>
+        <message><![CDATA[One or more child tests had errors]]></message>
+      </failure>
+      <test-suite type="TestSuite" id="1004" name="ColorTiming" fullname="ColorTiming" runstate="Runnable" testcasecount="1" result="Failed" site="Child" start-time="2026-08-24 09:16:37Z" end-time="2026-08-24 09:17:07Z" duration="30.045887" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <failure>
+          <message><![CDATA[One or more child tests had errors]]></message>
+        </failure>
+        <test-suite type="TestSuite" id="1005" name="Tests" fullname="ColorTiming.Tests" runstate="Runnable" testcasecount="1" result="Failed" site="Child" start-time="2026-08-24 09:16:37Z" end-time="2026-08-24 09:17:07Z" duration="30.044636" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <failure>
+            <message><![CDATA[One or more child tests had errors]]></message>
+          </failure>
+          <test-suite type="TestSuite" id="1006" name="PlayMode" fullname="ColorTiming.Tests.PlayMode" runstate="Runnable" testcasecount="1" result="Failed" site="Child" start-time="2026-08-24 09:16:37Z" end-time="2026-08-24 09:17:07Z" duration="30.043376" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <failure>
+              <message><![CDATA[One or more child tests had errors]]></message>
+            </failure>
+            <test-suite type="TestFixture" id="1001" name="StartupFlowPlayModeTests" fullname="ColorTiming.Tests.PlayMode.StartupFlowPlayModeTests" classname="ColorTiming.Tests.PlayMode.StartupFlowPlayModeTests" runstate="Runnable" testcasecount="1" result="Failed" site="Child" start-time="2026-08-24 09:16:37Z" end-time="2026-08-24 09:17:07Z" duration="30.041532" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <failure>
+                <message><![CDATA[One or more child tests had errors]]></message>
+              </failure>
+              <test-case id="1002" name="LaunchBootsFrameworkAndLoadsStartMenuOnce" fullname="ColorTiming.Tests.PlayMode.StartupFlowPlayModeTests.LaunchBootsFrameworkAndLoadsStartMenuOnce" methodname="LaunchBootsFrameworkAndLoadsStartMenuOnce" classname="ColorTiming.Tests.PlayMode.StartupFlowPlayModeTests" runstate="Runnable" seed="390239935" result="Failed" start-time="2026-08-24 09:16:37Z" end-time="2026-08-24 09:17:07Z" duration="30.031501" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="Timeout" value="60000" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <failure>
+                  <message><![CDATA[  Framework startup did not reach StartMenu within 30 real-time seconds.
+  Expected: True
+  But was:  False
+]]></message>
+                  <stack-trace><![CDATA[at ColorTiming.Tests.PlayMode.StartupFlowPlayModeTests+<LaunchBootsFrameworkAndLoadsStartMenuOnce>d__0.MoveNext () [0x0008b] in D:\unity\UnityProject\ColorTimeing\New\_ColorTiming\Assets\Game\Tests\ColorTiming\PlayMode\StartupFlowPlayModeTests.cs:25
+at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0004e] in .\Library\PackageCache\com.unity.test-framework@1.4.6\UnityEngine.TestRunner\NUnitExtensions\Attributes\TestEnumerator.cs:44
+]]></stack-trace>
+                </failure>
+                <output><![CDATA[<color=#2BD988>------------Set ResourceMode:Package------------</color>
+<color=#2BD988>----------UI Match:0----------</color>
+Saving results to: C:/Users/WIN10/AppData/LocalLow/DefaultCompany/GameDesinger\TestResults.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Audit that the repository is a domain-neutral, sample-free framework."""
+"""Audit that framework foundations stay clean inside this product repository."""
 
 from __future__ import annotations
 
@@ -136,6 +136,16 @@ FORBIDDEN_PATHS = {
     "artifacts",
     "tools/ai_index",
     "tools/playtest",
+}
+
+# ColorTiming is an installed product, not the domain-neutral framework template.
+# GF's EditorResourceComponent loads scenes through SceneManager in Editor mode, so
+# every product scene reached from the formal Launch flow must remain enabled.
+ALLOWED_BUILD_SCENES = {
+    "Assets/Game/Scene/Launch.unity",
+    "Assets/Game/Scene/StartMenu.unity",
+    "Assets/Game/Scene/Boss1.unity",
+    "Assets/Game/Scene/Boss2.unity",
 }
 
 SAMPLE_DIRECTORY_NAMES = {"demo", "demos", "example", "examples", "sample", "samples"}
@@ -434,14 +444,14 @@ def audit(root: Path) -> list[Finding]:
         unsupported_scenes = [
             path.strip()
             for path in enabled_scenes
-            if path.strip() != "Assets/Game/Scene/Launch.unity"
+            if path.strip() not in ALLOWED_BUILD_SCENES
         ]
         if unsupported_scenes:
             findings.append(
                 Finding(
                     "build-settings",
                     relative(build_settings, root),
-                    "only the framework Launch scene may be enabled: "
+                    "scene is not part of the formal ColorTiming Launch flow: "
                     + ", ".join(unsupported_scenes),
                 )
             )

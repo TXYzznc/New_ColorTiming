@@ -1,0 +1,444 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<test-suite type="TestSuite" id="1018" name="GameDesinger" fullname="GameDesinger" runstate="Runnable" testcasecount="7" result="Passed" start-time="2026-08-24 12:32:33Z" end-time="2026-08-24 12:32:44Z" duration="11.155523" total="7" passed="7" failed="0" inconclusive="0" skipped="0" asserts="0">
+  <properties>
+    <property name="platform" value="PlayMode" />
+  </properties>
+  <test-suite type="Assembly" id="1012" name="ColorTiming.PlayMode.Tests.dll" fullname="D:/unity/UnityProject/ColorTimeing/New/_ColorTiming/Library/ScriptAssemblies/ColorTiming.PlayMode.Tests.dll" runstate="Runnable" testcasecount="7" result="Passed" start-time="2026-08-24 12:32:33Z" end-time="2026-08-24 12:32:44Z" duration="11.149043" total="7" passed="7" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="_PID" value="14424" />
+      <property name="_APPDOMAIN" value="Unity Child Domain" />
+      <property name="platform" value="PlayMode" />
+      <property name="EditorOnly" value="False" />
+    </properties>
+    <test-suite type="TestSuite" id="1013" name="ColorTiming" fullname="ColorTiming" runstate="Runnable" testcasecount="7" result="Passed" start-time="2026-08-24 12:32:33Z" end-time="2026-08-24 12:32:44Z" duration="11.135616" total="7" passed="7" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties />
+      <test-suite type="TestSuite" id="1014" name="Tests" fullname="ColorTiming.Tests" runstate="Runnable" testcasecount="7" result="Passed" start-time="2026-08-24 12:32:33Z" end-time="2026-08-24 12:32:44Z" duration="11.118917" total="7" passed="7" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1015" name="PlayMode" fullname="ColorTiming.Tests.PlayMode" runstate="Runnable" testcasecount="7" result="Passed" start-time="2026-08-24 12:32:33Z" end-time="2026-08-24 12:32:44Z" duration="11.067078" total="7" passed="7" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestFixture" id="1001" name="BossRuntimeProgressionPlayModeTests" fullname="ColorTiming.Tests.PlayMode.BossRuntimeProgressionPlayModeTests" classname="ColorTiming.Tests.PlayMode.BossRuntimeProgressionPlayModeTests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-08-24 12:32:33Z" end-time="2026-08-24 12:32:38Z" duration="4.568217" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1002" name="FormalFlow_ConsumesEveryBossColor_ActivatesTailAndShowsFinalResult" fullname="ColorTiming.Tests.PlayMode.BossRuntimeProgressionPlayModeTests.FormalFlow_ConsumesEveryBossColor_ActivatesTailAndShowsFinalResult" methodname="FormalFlow_ConsumesEveryBossColor_ActivatesTailAndShowsFinalResult" classname="ColorTiming.Tests.PlayMode.BossRuntimeProgressionPlayModeTests" runstate="Runnable" seed="564375253" result="Passed" start-time="2026-08-24 12:32:33Z" end-time="2026-08-24 12:32:38Z" duration="4.547451" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="Timeout" value="120000" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[<color=#2BD988>------------Set ResourceMode:Package------------</color>
+<color=#2BD988>----------UI Match:0----------</color>
+<color=#2BD988>进入HybridCLR热更流程! 预加载游戏数据...</color>
+<color=#2BD988>初始化游戏设置. 游戏语言:English,系统语言:ChineseSimplified</color>
+[UnitySkills] [Self-Test] Starting (ProcessJobQueue ticks=197, listener=True)
+<color=#2BD988>Framework preload completed. Entering the generic ready state.</color>
+There can be only one active Event System.
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+已初始化BOSS血量:11
+颜色不同，不造成伤害
+BOSS 已经死亡，不再处理伤害
+已初始化BOSS血量:15
+颜色不同，不造成伤害
+BOSS 已经死亡，不再处理伤害
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+]]></output>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1003" name="ColorTimingUiAndSoundLifecyclePlayModeTests" fullname="ColorTiming.Tests.PlayMode.ColorTimingUiAndSoundLifecyclePlayModeTests" classname="ColorTiming.Tests.PlayMode.ColorTimingUiAndSoundLifecyclePlayModeTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-08-24 12:32:38Z" end-time="2026-08-24 12:32:44Z" duration="6.278792" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <output><![CDATA[There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+]]></output>
+            <test-case id="1005" name="PauseForm_ReopensAndSceneExitReleasesPauseLease" fullname="ColorTiming.Tests.PlayMode.ColorTimingUiAndSoundLifecyclePlayModeTests.PauseForm_ReopensAndSceneExitReleasesPauseLease" methodname="PauseForm_ReopensAndSceneExitReleasesPauseLease" classname="ColorTiming.Tests.PlayMode.ColorTimingUiAndSoundLifecyclePlayModeTests" runstate="Runnable" seed="1803681185" result="Passed" start-time="2026-08-24 12:32:38Z" end-time="2026-08-24 12:32:39Z" duration="1.122008" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="Timeout" value="90000" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+已初始化BOSS血量:11
+已初始化BOSS血量:15
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+]]></output>
+            </test-case>
+            <test-case id="1006" name="SoundGroups_PersistMutePolicyAndResetTrackedSceneSounds" fullname="ColorTiming.Tests.PlayMode.ColorTimingUiAndSoundLifecyclePlayModeTests.SoundGroups_PersistMutePolicyAndResetTrackedSceneSounds" methodname="SoundGroups_PersistMutePolicyAndResetTrackedSceneSounds" classname="ColorTiming.Tests.PlayMode.ColorTimingUiAndSoundLifecyclePlayModeTests" runstate="Runnable" seed="1825249679" result="Passed" start-time="2026-08-24 12:32:39Z" end-time="2026-08-24 12:32:39Z" duration="0.100392" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="Timeout" value="90000" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+]]></output>
+            </test-case>
+            <test-case id="1004" name="StartMenuVideo_RendersAndSwitchesFromIntroToLoop" fullname="ColorTiming.Tests.PlayMode.ColorTimingUiAndSoundLifecyclePlayModeTests.StartMenuVideo_RendersAndSwitchesFromIntroToLoop" methodname="StartMenuVideo_RendersAndSwitchesFromIntroToLoop" classname="ColorTiming.Tests.PlayMode.ColorTimingUiAndSoundLifecyclePlayModeTests" runstate="Runnable" seed="1639592720" result="Passed" start-time="2026-08-24 12:32:39Z" end-time="2026-08-24 12:32:44Z" duration="5.036360" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="Timeout" value="90000" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+]]></output>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1007" name="PlayerEntityLifecyclePlayModeTests" fullname="ColorTiming.Tests.PlayMode.PlayerEntityLifecyclePlayModeTests" classname="ColorTiming.Tests.PlayMode.PlayerEntityLifecyclePlayModeTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-08-24 12:32:44Z" end-time="2026-08-24 12:32:44Z" duration="0.166487" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <output><![CDATA[There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+]]></output>
+            <test-case id="1008" name="SkillAnimationEnd_ReleasesFrameworkEntityExactlyOnce" fullname="ColorTiming.Tests.PlayMode.PlayerEntityLifecyclePlayModeTests.SkillAnimationEnd_ReleasesFrameworkEntityExactlyOnce" methodname="SkillAnimationEnd_ReleasesFrameworkEntityExactlyOnce" classname="ColorTiming.Tests.PlayMode.PlayerEntityLifecyclePlayModeTests" runstate="Runnable" seed="1083097919" result="Passed" start-time="2026-08-24 12:32:44Z" end-time="2026-08-24 12:32:44Z" duration="0.048931" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+]]></output>
+            </test-case>
+            <test-case id="1009" name="UnityGameTimeAdapter_ComposesAndReleasesRequests" fullname="ColorTiming.Tests.PlayMode.PlayerEntityLifecyclePlayModeTests.UnityGameTimeAdapter_ComposesAndReleasesRequests" methodname="UnityGameTimeAdapter_ComposesAndReleasesRequests" classname="ColorTiming.Tests.PlayMode.PlayerEntityLifecyclePlayModeTests" runstate="Runnable" seed="1534569790" result="Passed" start-time="2026-08-24 12:32:44Z" end-time="2026-08-24 12:32:44Z" duration="0.100579" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+]]></output>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1010" name="StartupFlowPlayModeTests" fullname="ColorTiming.Tests.PlayMode.StartupFlowPlayModeTests" classname="ColorTiming.Tests.PlayMode.StartupFlowPlayModeTests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-08-24 12:32:44Z" end-time="2026-08-24 12:32:44Z" duration="0.050314" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <output><![CDATA[There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+]]></output>
+            <test-case id="1011" name="LaunchBootsFrameworkAndLoadsStartMenuOnce" fullname="ColorTiming.Tests.PlayMode.StartupFlowPlayModeTests.LaunchBootsFrameworkAndLoadsStartMenuOnce" methodname="LaunchBootsFrameworkAndLoadsStartMenuOnce" classname="ColorTiming.Tests.PlayMode.StartupFlowPlayModeTests" runstate="Runnable" seed="330996741" result="Passed" start-time="2026-08-24 12:32:44Z" end-time="2026-08-24 12:32:44Z" duration="0.033107" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="Timeout" value="60000" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+Saving results to: C:/Users/WIN10/AppData/LocalLow/DefaultCompany/GameDesinger\TestResults.xml
+]]></output>
+            </test-case>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-suite>

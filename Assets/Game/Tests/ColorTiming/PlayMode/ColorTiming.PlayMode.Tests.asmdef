@@ -1,0 +1,22 @@
+{
+  "name": "ColorTiming.PlayMode.Tests",
+  "rootNamespace": "ColorTiming.Tests.PlayMode",
+  "references": [
+    "Hotfix",
+    "Builtin.Runtime",
+    "UnityGameFramework.Runtime",
+    "GameFramework"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": false,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false,
+  "optionalUnityReferences": [
+    "TestAssemblies"
+  ]
+}

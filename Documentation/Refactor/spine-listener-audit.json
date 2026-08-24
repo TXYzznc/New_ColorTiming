@@ -1,0 +1,195 @@
+{
+  "status": "pass",
+  "subscriptionPairs": [
+    {
+      "event": "Complete",
+      "handler": "Entry_Complete",
+      "addSites": 4,
+      "removeSites": 8
+    },
+    {
+      "event": "End",
+      "handler": "Entry_End",
+      "addSites": 3,
+      "removeSites": 3
+    },
+    {
+      "event": "Event",
+      "handler": "AnimEvent",
+      "addSites": 3,
+      "removeSites": 3
+    }
+  ],
+  "missingRemovalPaths": [],
+  "occurrences": [
+    {
+      "file": "Assets/Game/Scripts/ColorTiming/Legacy/Boss1_Controller.cs",
+      "line": 157,
+      "event": "Complete",
+      "operation": "+=",
+      "handler": "Entry_Complete"
+    },
+    {
+      "file": "Assets/Game/Scripts/ColorTiming/Legacy/Boss1_Controller.cs",
+      "line": 158,
+      "event": "Event",
+      "operation": "+=",
+      "handler": "AnimEvent"
+    },
+    {
+      "file": "Assets/Game/Scripts/ColorTiming/Legacy/Boss1_Controller.cs",
+      "line": 159,
+      "event": "End",
+      "operation": "+=",
+      "handler": "Entry_End"
+    },
+    {
+      "file": "Assets/Game/Scripts/ColorTiming/Legacy/Boss1_Controller.cs",
+      "line": 215,
+      "event": "Event",
+      "operation": "-=",
+      "handler": "AnimEvent"
+    },
+    {
+      "file": "Assets/Game/Scripts/ColorTiming/Legacy/Boss1_Controller.cs",
+      "line": 216,
+      "event": "Complete",
+      "operation": "-=",
+      "handler": "Entry_Complete"
+    },
+    {
+      "file": "Assets/Game/Scripts/ColorTiming/Legacy/Boss1_Controller.cs",
+      "line": 217,
+      "event": "End",
+      "operation": "-=",
+      "handler": "Entry_End"
+    },
+    {
+      "file": "Assets/Game/Scripts/ColorTiming/Legacy/Boss2_Controller.cs",
+      "line": 263,
+      "event": "Complete",
+      "operation": "+=",
+      "handler": "Entry_Complete"
+    },
+    {
+      "file": "Assets/Game/Scripts/ColorTiming/Legacy/Boss2_Controller.cs",
+      "line": 264,
+      "event": "Event",
+      "operation": "+=",
+      "handler": "AnimEvent"
+    },
+    {
+      "file": "Assets/Game/Scripts/ColorTiming/Legacy/Boss2_Controller.cs",
+      "line": 265,
+      "event": "End",
+      "operation": "+=",
+      "handler": "Entry_End"
+    },
+    {
+      "file": "Assets/Game/Scripts/ColorTiming/Legacy/Boss2_Controller.cs",
+      "line": 304,
+      "event": "Complete",
+      "operation": "-=",
+      "handler": "Entry_Complete"
+    },
+    {
+      "file": "Assets/Game/Scripts/ColorTiming/Legacy/Boss2_Controller.cs",
+      "line": 318,
+      "event": "Complete",
+      "operation": "-=",
+      "handler": "Entry_Complete"
+    },
+    {
+      "file": "Assets/Game/Scripts/ColorTiming/Legacy/Boss2_Controller.cs",
+      "line": 495,
+      "event": "Event",
+      "operation": "-=",
+      "handler": "AnimEvent"
+    },
+    {
+      "file": "Assets/Game/Scripts/ColorTiming/Legacy/Boss2_Controller.cs",
+      "line": 496,
+      "event": "Complete",
+      "operation": "-=",
+      "handler": "Entry_Complete"
+    },
+    {
+      "file": "Assets/Game/Scripts/ColorTiming/Legacy/Boss2_Controller.cs",
+      "line": 497,
+      "event": "End",
+      "operation": "-=",
+      "handler": "Entry_End"
+    },
+    {
+      "file": "Assets/Game/Scripts/ColorTiming/Legacy/Boss2_Controller_w.cs",
+      "line": 170,
+      "event": "Complete",
+      "operation": "+=",
+      "handler": "Entry_Complete"
+    },
+    {
+      "file": "Assets/Game/Scripts/ColorTiming/Legacy/Boss2_Controller_w.cs",
+      "line": 171,
+      "event": "Event",
+      "operation": "+=",
+      "handler": "AnimEvent"
+    },
+    {
+      "file": "Assets/Game/Scripts/ColorTiming/Legacy/Boss2_Controller_w.cs",
+      "line": 172,
+      "event": "End",
+      "operation": "+=",
+      "handler": "Entry_End"
+    },
+    {
+      "file": "Assets/Game/Scripts/ColorTiming/Legacy/Boss2_Controller_w.cs",
+      "line": 196,
+      "event": "Complete",
+      "operation": "-=",
+      "handler": "Entry_Complete"
+    },
+    {
+      "file": "Assets/Game/Scripts/ColorTiming/Legacy/Boss2_Controller_w.cs",
+      "line": 226,
+      "event": "Event",
+      "operation": "-=",
+      "handler": "AnimEvent"
+    },
+    {
+      "file": "Assets/Game/Scripts/ColorTiming/Legacy/Boss2_Controller_w.cs",
+      "line": 227,
+      "event": "Complete",
+      "operation": "-=",
+      "handler": "Entry_Complete"
+    },
+    {
+      "file": "Assets/Game/Scripts/ColorTiming/Legacy/Boss2_Controller_w.cs",
+      "line": 228,
+      "event": "End",
+      "operation": "-=",
+      "handler": "Entry_End"
+    },
+    {
+      "file": "Assets/Game/Scripts/ColorTiming/Legacy/Skill/Sk_Bo2_dundi.cs",
+      "line": 37,
+      "event": "Complete",
+      "operation": "+=",
+      "handler": "Entry_Complete"
+    },
+    {
+      "file": "Assets/Game/Scripts/ColorTiming/Legacy/Skill/Sk_Bo2_dundi.cs",
+      "line": 42,
+      "event": "Complete",
+      "operation": "-=",
+      "handler": "Entry_Complete"
+    },
+    {
+      "file": "Assets/Game/Scripts/ColorTiming/Legacy/Skill/Sk_Bo2_dundi.cs",
+      "line": 87,
+      "event": "Complete",
+      "operation": "-=",
+      "handler": "Entry_Complete"
+    }
+  ],
+  "note": "Counts are source sites, not runtime invocation counts; each removal path is also covered by lifecycle source review."
+}

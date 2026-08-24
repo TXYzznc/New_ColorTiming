@@ -1,26 +1,35 @@
-﻿/// <summary>
-/// Framework-level default groups. Projects may extend this partial class with
-/// their own groups without modifying framework code.
-/// </summary>
+//此代码由工具自动生成, 请勿手动修改
 public static partial class Const
 {
-    public enum EntityGroup
-    {
-        Default,
-        Effect,
-        Persistent
-    }
-
-    public enum UIGroup
-    {
-        Default,
-        Dialog,
-        Overlay
-    }
-
-    public enum SoundGroup
-    {
-        Music,
-        Sound
-    }
+#if ENABLE_OBFUZ
+	[Obfuz.ObfuzIgnore]
+#endif
+	public enum EntityGroup
+	{
+		Default,
+		Effect,
+		Persistent
+	}
+#if ENABLE_OBFUZ
+	[Obfuz.ObfuzIgnore]
+#endif
+	public enum UIGroup
+	{
+		Default,
+		Dialog,
+		Overlay
+	}
+#if ENABLE_OBFUZ
+	[Obfuz.ObfuzIgnore]
+#endif
+	public enum SoundGroup
+	{
+		Music,
+		Sound,
+		BGM,
+		UI,
+		Player,
+		Boss,
+		Environment
+	}
 }

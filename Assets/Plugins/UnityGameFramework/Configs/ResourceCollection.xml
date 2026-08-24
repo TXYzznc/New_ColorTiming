@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <UnityGameFramework>
   <ResourceCollection>
     <Resources>
@@ -11,8 +11,136 @@
       <Resource Name="Scene" LoadType="0" Packed="False" />
       <Resource Name="ScriptableAssets" LoadType="0" Packed="False" />
       <Resource Name="SharedAssets" LoadType="2" Packed="False" />
+      <Resource Name="Sound" LoadType="0" Packed="False" />
       <Resource Name="UI" LoadType="0" Packed="False" />
+      <Resource Name="World" LoadType="0" Packed="False" />
     </Resources>
-    <Assets />
+    <Assets>
+      <Asset Guid="02baf1454287a2c429ef9114365214f5" ResourceName="Sound" />
+      <Asset Guid="0386f9fa4a0f85d4b862a3ca95b39e03" ResourceName="Sound" />
+      <Asset Guid="05a87c31cd7780347ba4cfe4a75ea5cc" ResourceName="Sound" />
+      <Asset Guid="07512f1f1bcd03c4f9560a59e32365fb" ResourceName="Language" />
+      <Asset Guid="081740c171d941142911f0a601e89ade" ResourceName="World" />
+      <Asset Guid="0905b820f3e520a48a43f33c0126de8c" ResourceName="World" />
+      <Asset Guid="0ed3c844a4ca4884c8e28f2c7d8c690e" ResourceName="UI" />
+      <Asset Guid="13664d229ed10964f85e3b510f015670" ResourceName="UI" />
+      <Asset Guid="13b0b1255d7d6cf44a4d1987723460ef" ResourceName="ScriptableAssets" />
+      <Asset Guid="14f97305f69d61a4ba1e8ca3a49ff27e" ResourceName="Sound" />
+      <Asset Guid="15a25945c4af9f34ea76aae912aa5bd4" ResourceName="Scene" />
+      <Asset Guid="161f10e7463ba4949bb13f06664990cf" ResourceName="World" />
+      <Asset Guid="1809030ba6d5cc74189571df8b1d3891" ResourceName="Sound" />
+      <Asset Guid="18868d941a71f02498051516873367ce" ResourceName="Scene" />
+      <Asset Guid="1892c8154fd2bc74d9ffffac6ca469fb" ResourceName="Sound" />
+      <Asset Guid="1b920e64eb554ad46847088e6f8bbda2" ResourceName="Entity" />
+      <Asset Guid="1bd33cda4a98c2f4c8ea94fd669e51e1" ResourceName="World" />
+      <Asset Guid="1fd7e4c9711fa5741bd7bd4603dfe5be" ResourceName="Sound" />
+      <Asset Guid="240dc3d69c29b4d458c65fd9b6a5099e" ResourceName="Sound" />
+      <Asset Guid="2547335fee2327d41a26bfa9764b5a98" ResourceName="Sound" />
+      <Asset Guid="259a7f9fc439387438d51f353831c030" ResourceName="Sound" />
+      <Asset Guid="2b9f984835d99724e808695b0f84e99b" ResourceName="Entity" />
+      <Asset Guid="2c3a42ebbcc7513408005bf89f9b0769" ResourceName="Sound" />
+      <Asset Guid="2cb9cd5ebb708a5479560f0897fdb918" ResourceName="Sound" />
+      <Asset Guid="2cda990e2423bbf4892e6590ba056729" ResourceName="Scene" />
+      <Asset Guid="2d13793d7c0be864cbcfb040d17b8109" ResourceName="Entity" />
+      <Asset Guid="3074f0b2a4dff8943b03ca138c1d2a32" ResourceName="Sound" />
+      <Asset Guid="31aa451bd3108ac4aaa4137ea6d28ee3" ResourceName="Sound" />
+      <Asset Guid="37e03459e3626434788e2e23c2bbb472" ResourceName="World" />
+      <Asset Guid="38efe82db51958744940fac70789563e" ResourceName="Entity" />
+      <Asset Guid="3912175a804bf4342ad070c194c2073f" ResourceName="Entity" />
+      <Asset Guid="39ee721438e9d34439b1c19d382a9c02" ResourceName="Entity" />
+      <Asset Guid="3d13f726bc402f54898a62823c4279f1" ResourceName="Sound" />
+      <Asset Guid="3d93e4018410bd44f91dac055bdadf1a" ResourceName="World" />
+      <Asset Guid="3dc615ccc43d030499f571baf8a6c77c" ResourceName="Sound" />
+      <Asset Guid="3ddb0341e5110ab42a6b2180ea2af056" ResourceName="Sound" />
+      <Asset Guid="3ffb43680699741488f07ad4be5d7e5d" ResourceName="Sound" />
+      <Asset Guid="409b6ac718d7ecf40865073cca936368" ResourceName="Sound" />
+      <Asset Guid="40e6ed8e7a2f33c4fa1f591bf62b9ed7" ResourceName="Entity" />
+      <Asset Guid="4273320bec291cd4b8df778264046f13" ResourceName="Entity" />
+      <Asset Guid="45ed9ae823ebfd341a5d8567c36a52b5" ResourceName="Entity" />
+      <Asset Guid="45fe4e7ce0ca09d48ac01e9ed7117766" ResourceName="World" />
+      <Asset Guid="4b3301dc62f5c1244bf58d87e2d00806" ResourceName="Entity" />
+      <Asset Guid="4ba500a3fe44cbc458f2da7e142f3433" ResourceName="Entity" />
+      <Asset Guid="4cd639ea518618747b09baa9d20f7fa7" ResourceName="Entity" />
+      <Asset Guid="4eacaa439b3bd0d4495ae387df2c5899" ResourceName="Sound" />
+      <Asset Guid="52f749ae6d31fc94288dfe1f9f8896f6" ResourceName="DataTable" />
+      <Asset Guid="564e06e2a382952489502831e618a485" ResourceName="Sound" />
+      <Asset Guid="5851a838a080da7489caee79a6d2b907" ResourceName="Sound" />
+      <Asset Guid="5d0a2d2ba945c7244af738376bba749d" ResourceName="World" />
+      <Asset Guid="5dc08a4ea3d06ef488eff5fd76a6cea6" ResourceName="Sound" />
+      <Asset Guid="5e4ef1ac3755e9b4195cb262af8dabc2" ResourceName="Sound" />
+      <Asset Guid="60088dd3b0214654ba9150c7fdda1a8d" ResourceName="DataTable" />
+      <Asset Guid="65d49653bbe5c2843870559d71e8b7cb" ResourceName="Sound" />
+      <Asset Guid="673cacd7b9c8c3947820b9c74368a50c" ResourceName="Entity" />
+      <Asset Guid="67b2bac95d9c4d34782068cf03f21362" ResourceName="World" />
+      <Asset Guid="686456cc6899825459468e0677013f52" ResourceName="Scene" />
+      <Asset Guid="716ef5a1baa617f4db2ae7ed258190db" ResourceName="Sound" />
+      <Asset Guid="75a8a2e1d614adc4eb1d22162f5b2d89" ResourceName="Sound" />
+      <Asset Guid="763389bc2b264ab43a7432cf05fe843e" ResourceName="Sound" />
+      <Asset Guid="78296e3ca121bba49a2fa878a2e3609c" ResourceName="Entity" />
+      <Asset Guid="83d20121a166bdc49b53a1236e0882d7" ResourceName="Sound" />
+      <Asset Guid="8709ffb86642ac843a89e352e583d075" ResourceName="Sound" />
+      <Asset Guid="87b2710771729e241a1e0a357be1cc22" ResourceName="Sound" />
+      <Asset Guid="8c457e326f1190446856b044de32fe74" ResourceName="Sound" />
+      <Asset Guid="8d6f186ed06a35f489c5616730521970" ResourceName="World" />
+      <Asset Guid="8f595677328e338479a569cb4c660e93" ResourceName="Entity" />
+      <Asset Guid="90f625db7e09a384280138acf53228f9" ResourceName="Entity" />
+      <Asset Guid="91affeed33253cf4da866a46bc8f1187" ResourceName="Sound" />
+      <Asset Guid="9520f3fab2ce66c45823fa6e24bd77e9" ResourceName="Sound" />
+      <Asset Guid="952688bf1044f60428b5e631fdb156fe" ResourceName="Sound" />
+      <Asset Guid="98662c21c0b96bc48a6440a4fe486556" ResourceName="DataTable" />
+      <Asset Guid="988c54f336018f24c92edd68bf25ae2b" ResourceName="Sound" />
+      <Asset Guid="99dbd14ff4c05be4881280eaf9597d36" ResourceName="Entity" />
+      <Asset Guid="9ba8dc4bf943702409512a6e209059e7" ResourceName="World" />
+      <Asset Guid="9c2f7380048b33440a91019279d90856" ResourceName="Sound" />
+      <Asset Guid="9c755b92ded5bb1468147ef347907cf5" ResourceName="Sound" />
+      <Asset Guid="9c8012765f0cdbc43a12e2f722fcf606" ResourceName="Sound" />
+      <Asset Guid="9cf9bae941787f14d9961d2bd90b2e3d" ResourceName="Sound" />
+      <Asset Guid="9e28da48e9c0a26439176c5f1286ae63" ResourceName="Sound" />
+      <Asset Guid="a1106b18ded8885498cf8641450648ce" ResourceName="World" />
+      <Asset Guid="a1607db391e754e4e8e3319b90db656d" ResourceName="Entity" />
+      <Asset Guid="a5814dc472eac324b853d28980d29579" ResourceName="Entity" />
+      <Asset Guid="a6ae8dacade27d94093736c6f6df8dce" ResourceName="Sound" />
+      <Asset Guid="a7636cbdb4db60f45b2dd88f34381bd6" ResourceName="Sound" />
+      <Asset Guid="a8667e4ea29972f459e432a914998d9b" ResourceName="Sound" />
+      <Asset Guid="a90cea4f9855bbc489445cb4797c4085" ResourceName="Sound" />
+      <Asset Guid="a9f702410607128408fabf4fbb0faf24" ResourceName="Sound" />
+      <Asset Guid="ac74008eaf09910488da819441a9cfce" ResourceName="Sound" />
+      <Asset Guid="ac99dfdc98aef27419b5675b5a6092f7" ResourceName="Sound" />
+      <Asset Guid="ad1c0585c2ab21245b913f2f85d23539" ResourceName="Entity" />
+      <Asset Guid="ad2500fad06f85241bf40920301de191" ResourceName="Entity" />
+      <Asset Guid="ad4e1c1d08ebbec4e93653269f8831ef" ResourceName="UI" />
+      <Asset Guid="ad706de0dccd7b24cbad86493c3dc46e" ResourceName="UI" />
+      <Asset Guid="af72c36d38d11794e80eac9d4bf6c3d5" ResourceName="Sound" />
+      <Asset Guid="afff925e288e38841bb6105e8ed8499f" ResourceName="Entity" />
+      <Asset Guid="b7729262205358948bd3f2555d19348f" ResourceName="Sound" />
+      <Asset Guid="b9aee10578d983646852faa2b72a7331" ResourceName="Sound" />
+      <Asset Guid="bb87197a5c35da44298d46bbaf29fa4a" ResourceName="Sound" />
+      <Asset Guid="bc860c387b6c4c4409c0174ec41fa159" ResourceName="Entity" />
+      <Asset Guid="bd615949e46d94f44b1c51a9174c82b8" ResourceName="Sound" />
+      <Asset Guid="c4e839cf3d001e0499336fb7f53c0310" ResourceName="DataTable" />
+      <Asset Guid="c694ce547e095bb4abc40682226a3f78" ResourceName="World" />
+      <Asset Guid="c8c0b3a3db980c646a33564aa709f75a" ResourceName="Sound" />
+      <Asset Guid="cb2a2f7cc3a77b947a0821f3160e613c" ResourceName="World" />
+      <Asset Guid="cd0ad3263f8f21744840ab955f14139b" ResourceName="Sound" />
+      <Asset Guid="d5094f8a8d1245143a643aebb76c6332" ResourceName="Sound" />
+      <Asset Guid="d54a010ab7cbd7943bf101dc0dd7c3c6" ResourceName="World" />
+      <Asset Guid="d56c90ac0e97bce47817fdd04d51e2dc" ResourceName="Entity" />
+      <Asset Guid="d78171ffa5904b245a4eb538e8892e15" ResourceName="Sound" />
+      <Asset Guid="d79f7a0830fc4164cacd7b063dac72d8" ResourceName="Entity" />
+      <Asset Guid="d9fb331ddd3c05c4583cc1e837536c36" ResourceName="Entity" />
+      <Asset Guid="da6ca57157335d14fb22302a7fb608df" ResourceName="Sound" />
+      <Asset Guid="dfeaf94a6aa79bb45b4df7c64e28ab4e" ResourceName="Sound" />
+      <Asset Guid="e01f1b8b095e5dd478697f0dcf49fbba" ResourceName="Sound" />
+      <Asset Guid="e1a613ebd6f1d6f4a825d14981f3e88d" ResourceName="DataTable" />
+      <Asset Guid="e56eb890b284b234f8209f4ebac28586" ResourceName="Entity" />
+      <Asset Guid="e80a0bb8827b90d4e8707e54412072ec" ResourceName="Sound" />
+      <Asset Guid="ed0ac412c27c0bf4d95a4bb91f95b305" ResourceName="UI" />
+      <Asset Guid="efecf147d82a934408ac6c5dccd75192" ResourceName="World" />
+      <Asset Guid="f2061209a0cd4f0429d9a9f8a15c433a" ResourceName="Sound" />
+      <Asset Guid="f270746db49914543bb6de358ea0a2cf" ResourceName="Entity" />
+      <Asset Guid="f301ca6b77c0eb946841ca75b0a2ef1f" ResourceName="Entity" />
+      <Asset Guid="f89eac0d5705a784889ad71fb5a0f049" ResourceName="Sound" />
+      <Asset Guid="fd8805db5f5720e4a83c12674f055fd6" ResourceName="Sound" />
+    </Assets>
   </ResourceCollection>
 </UnityGameFramework>

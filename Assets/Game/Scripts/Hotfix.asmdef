@@ -4,6 +4,7 @@
     "references": [
         "Unity.TextMeshPro",
         "Cinemachine",
+        "spine-unity",
         "UnityGameFramework.Runtime",
         "Unity.RenderPipelines.Universal.Runtime",
         "Builtin.Runtime",

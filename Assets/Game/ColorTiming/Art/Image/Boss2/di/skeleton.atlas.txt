@@ -1,0 +1,83 @@
+
+skeleton.png
+size: 393,2043
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+遁地_0001
+  rotate: true
+  xy: 214, 1618
+  size: 423, 175
+  orig: 506, 266
+  offset: 45, 36
+  index: -1
+遁地_0002
+  rotate: true
+  xy: 214, 1202
+  size: 414, 165
+  orig: 506, 266
+  offset: 53, 39
+  index: -1
+遁地_0003
+  rotate: true
+  xy: 205, 375
+  size: 416, 159
+  orig: 506, 266
+  offset: 52, 40
+  index: -1
+遁地_0004
+  rotate: true
+  xy: 206, 793
+  size: 407, 166
+  orig: 506, 266
+  offset: 54, 38
+  index: -1
+遁地尖刺1_0001
+  rotate: false
+  xy: 200, 179
+  size: 191, 194
+  orig: 506, 266
+  offset: 17, 72
+  index: -1
+遁地尖刺2_0001
+  rotate: false
+  xy: 186, 2
+  size: 185, 175
+  orig: 506, 266
+  offset: 209, 79
+  index: -1
+遁地尖刺3_0001
+  rotate: true
+  xy: 2, 26
+  size: 178, 182
+  orig: 506, 266
+  offset: 327, 66
+  index: -1
+遁地纸片_0001
+  rotate: true
+  xy: 2, 1582
+  size: 459, 210
+  orig: 506, 266
+  offset: 25, 23
+  index: -1
+遁地纸片_0002
+  rotate: true
+  xy: 2, 1121
+  size: 459, 202
+  orig: 506, 266
+  offset: 26, 21
+  index: -1
+遁地纸片_0003
+  rotate: true
+  xy: 2, 206
+  size: 456, 196
+  orig: 506, 266
+  offset: 28, 22
+  index: -1
+遁地纸片_0004
+  rotate: true
+  xy: 2, 664
+  size: 455, 201
+  orig: 506, 266
+  offset: 29, 26
+  index: -1
