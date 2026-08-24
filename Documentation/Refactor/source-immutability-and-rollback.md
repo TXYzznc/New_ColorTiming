@@ -18,6 +18,7 @@
 - 目标分支：`codex/color-timing-framework-migration`
 - 迁移前框架提交：`0abebfe05f947718e5b1dcd34c303cd25591e3ec`
 - 迁移实现检查点：`503f23a26eeee97a7144239cfb73c6333eaf83a5`（`refactor: migrate ColorTiming onto AI-friendly framework`）
+- 证据补强提交：`7804e48`（`test: verify authored boss animation contracts`）
 - 回滚原则：保留 `0abebfe05f947718e5b1dcd34c303cd25591e3ec` 作为迁移前只读回滚点；`503f23a26eeee97a7144239cfb73c6333eaf83a5` 是完整迁移成果的首个可运行检查点。
 
 OpenSpec 12.6 已由源哈希复核、目标分支记录和上述提交序列共同证明。
