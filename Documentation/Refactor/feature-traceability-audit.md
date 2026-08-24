@@ -12,7 +12,7 @@
 
 所有 57 行继续保留 `manual pending`，没有用编译通过、静态扫描或单张截图替代完整人工回归。
 
-Unity Test Runner 的最新发现结果单独记录在 `test-discovery-20260824.md`：63 个 ColorTiming EditMode 与 14 个 ColorTiming PlayMode 用例均为 `Runnable`，但新增用例尚未执行，因此不会据此增加通过数。
+Unity Test Runner 的最新发现结果单独记录在 `test-discovery-20260824.md`：63 个 ColorTiming EditMode 与 14 个 ColorTiming PlayMode 用例均为 `Runnable`。随后独立完整工程副本执行全量 EditMode `203/203` 通过，因此两项新增 Boss cue 映射已经是直接执行证据；新增 PlayMode 合同仍未执行，不增加其通过数。
 
 另以 Roslyn 从 64 个源产品脚本反向扫描方法面；57 个保留/重构脚本的目标路径缺失为 0，21 个存在签名变化的脚本均在 `method-surface-reverse-audit.md` 中逐项落到领域层、框架服务、实体生命周期或有引用证据的不可达入口。该结果补强“无功能遗漏”的静态证据，但不替代人工回归。
 

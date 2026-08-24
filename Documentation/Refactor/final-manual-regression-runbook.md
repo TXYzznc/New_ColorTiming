@@ -91,7 +91,7 @@
 
 人工观察之外，最终还需执行 `test-discovery-20260824.md` 中的全部 ColorTiming 测试：
 
-- EditMode：当前发现 63 个 ColorTiming 用例；
+- EditMode：当前发现 63 个 ColorTiming 用例，所在工程全量 `203/203` 已执行通过；若之后修改产品代码则必须重跑；
 - PlayMode：当前发现 14 个 ColorTiming 用例；
 - 失败、Skipped、Inconclusive、Other 均需逐项解释，不能只报告 Passed。
 

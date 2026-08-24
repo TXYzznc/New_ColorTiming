@@ -14,7 +14,7 @@
 | EditMode | 203 | 63 | 0 |
 | PlayMode | 14 | 14 | 0 |
 
-这份证据只证明测试程序集成功编译、被 Unity Test Runner 发现且状态为 `Runnable`；它不证明测试已经执行或通过。此前保存的执行基线仍是新增专项合同之前的 EditMode `201/201`、PlayMode `7/7`，不得用本次发现数量改写通过数量。
+上表本身只证明测试程序集成功编译、被 Unity Test Runner 发现且状态为 `Runnable`，不单独证明通过。发现之后已在包含根目录 `Samples~` 的独立完整工程副本中执行全量 EditMode，结果为 `203/203` passed、0 failed、0 skipped、0 inconclusive；PlayMode 的已执行基线仍为新增专项合同之前的 `7/7`。
 
 ## PlayMode 可运行合同
 
@@ -40,7 +40,12 @@
 - `Boss1_MapsEveryAuthoredCueToBossSoundChannel`
 - `Boss2_MapsEveryAuthoredCueToBossSoundChannel`
 
-它们同样只完成发现，尚未计入通过数。
+随后执行的完整 EditMode 结果已包含这两项，二者现已计入 `203/203` 通过数。原始证据：
+
+- `editmode-color-timing-203.xml`
+- `editmode-color-timing-203.log`
+
+首次临时副本未复制仓库根目录 `Samples~`，因此框架的两个“可选包可发现”用例按预期失败；补齐完整仓库结构后的重跑为上述有效结果。首次运行不作为产品失败或通过证据。
 
 ## 同时复核的编辑器健康状态
 

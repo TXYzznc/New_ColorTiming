@@ -29,12 +29,12 @@ The duplicate-name entries are authored repeated sprites, images and environment
 
 ## Test evidence after lifecycle fixes
 
-- Full EditMode: 201/201 passed, 0 failed.
+- Full EditMode: 203/203 passed, 0 failed, 0 skipped, 0 inconclusive. Evidence: `editmode-color-timing-203.xml` and `.log`.
 - ColorTiming PlayMode lifecycle/runtime progression: 7/7 passed, 0 failed.
 - Formal boss progression PlayMode: Boss1 all 11 segments/three colors, automatic Boss2 transition, Boss2 all 15 segments/four colors, tail threshold and final result passed.
 - Feature traceability row audit: 57/57 reviewed; 30 direct, 19 partial and 8 static/manual-only. All rows remain manual-pending until the full three-scene regression is recorded.
 - Fresh-Library batch import/compile: return code 0, compiler errors 0, package-resolution failures 0.
 - Unity compile/console health immediately after changes: 0 errors, 0 warnings.
-- Latest Test Runner discovery: 63 ColorTiming EditMode and 14 ColorTiming PlayMode tests are all `Runnable`; this is discovery evidence only and does not change the executed 201/201 and 7/7 baselines above.
+- Latest Test Runner discovery: 63 ColorTiming EditMode and 14 ColorTiming PlayMode tests are all `Runnable`. The full 203-test EditMode suite was subsequently executed in an isolated complete project copy and passed; the expanded PlayMode suite remains unexecuted, so its executed baseline remains 7/7.
 
 This gate establishes automated integrity and lifecycle evidence. It does not replace the visual/manual acceptance checklist in OpenSpec section 12.

@@ -51,7 +51,7 @@ The product runtime does not create `CancellationTokenSource` instances. Its asy
 ## Runtime evidence
 
 - Unity compile health after lifecycle fixes: 0 errors, 0 warnings.
-- Full EditMode run: 201/201 passed.
+- Full EditMode run: 203/203 passed after the final sound-mapping additions.
 - ColorTiming PlayMode lifecycle run: 5/5 passed, covering Launch, StartMenu, Boss1, Boss2, pause reopen/scene exit, GF.UI forms, GF.Entity reset and GF.Sound persistence/reset.
 - `scene-lifecycle-smoke.md` records repeated Boss1/Boss2/menu transitions with no retained forms, transient entities or console errors.
 
