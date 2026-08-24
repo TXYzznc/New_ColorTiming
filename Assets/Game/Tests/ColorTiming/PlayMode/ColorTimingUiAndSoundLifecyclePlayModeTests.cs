@@ -110,6 +110,77 @@ namespace ColorTiming.Tests.PlayMode
 
         [UnityTest]
         [Timeout(90000)]
+        public IEnumerator StartMenuNavigation_AndAllSettingsPersistThroughGfSetting()
+        {
+            yield return BootToStartMenu();
+
+            var menu = FindActive<UI_ButtonAction>();
+            Assert.That(menu, Is.Not.Null);
+            Assert.That(menu.StartBtnBox.activeSelf, Is.True);
+            Assert.That(menu.GoButtonBox.activeSelf, Is.False);
+            Assert.That(menu.SettingButtonBox.activeSelf, Is.False);
+
+            menu.StartGameBtnDown();
+            Assert.That(menu.StartBtnBox.activeSelf, Is.False);
+            Assert.That(menu.GoButtonBox.activeSelf, Is.True);
+            menu.BackStartBtnDown();
+            Assert.That(menu.StartBtnBox.activeSelf, Is.True);
+            Assert.That(menu.GoButtonBox.activeSelf, Is.False);
+
+            menu.SettingBtnDwon();
+            Assert.That(menu.StartBtnBox.activeSelf, Is.False);
+            Assert.That(menu.SettingButtonBox.activeSelf, Is.True);
+            menu.BackSettingBtnDwon();
+            Assert.That(menu.StartBtnBox.activeSelf, Is.True);
+            Assert.That(menu.SettingButtonBox.activeSelf, Is.False);
+
+            var settings = new GfColorTimingSettings();
+            var originalBgm = settings.BgmEnabled;
+            var originalSfx = settings.SfxEnabled;
+            var originalKeyTips = settings.KeyTipsDisabled;
+            try
+            {
+                menu.SetBGM(false);
+                menu.SetSFX(false);
+                menu.OffKeyTip();
+
+                var disabled = new GfColorTimingSettings();
+                Assert.That(disabled.BgmEnabled, Is.False);
+                Assert.That(disabled.SfxEnabled, Is.False);
+                Assert.That(disabled.KeyTipsDisabled, Is.True);
+                Assert.That(menu.BGMBtn_Open.activeSelf, Is.True);
+                Assert.That(menu.BGMBtn_Off.activeSelf, Is.False);
+                Assert.That(menu.SFXBtn_Open.activeSelf, Is.True);
+                Assert.That(menu.SFXBtn_Off.activeSelf, Is.False);
+                Assert.That(menu.offTipButton.activeSelf, Is.False);
+                Assert.That(menu.openTipButton.activeSelf, Is.True);
+
+                menu.SetBGM(true);
+                menu.SetSFX(true);
+                menu.OpenKeyTip();
+
+                var enabled = new GfColorTimingSettings();
+                Assert.That(enabled.BgmEnabled, Is.True);
+                Assert.That(enabled.SfxEnabled, Is.True);
+                Assert.That(enabled.KeyTipsDisabled, Is.False);
+                Assert.That(menu.BGMBtn_Open.activeSelf, Is.False);
+                Assert.That(menu.BGMBtn_Off.activeSelf, Is.True);
+                Assert.That(menu.SFXBtn_Open.activeSelf, Is.False);
+                Assert.That(menu.SFXBtn_Off.activeSelf, Is.True);
+                Assert.That(menu.offTipButton.activeSelf, Is.True);
+                Assert.That(menu.openTipButton.activeSelf, Is.False);
+            }
+            finally
+            {
+                settings.BgmEnabled = originalBgm;
+                settings.SfxEnabled = originalSfx;
+                settings.KeyTipsDisabled = originalKeyTips;
+                menu.BindSettings(settings);
+            }
+        }
+
+        [UnityTest]
+        [Timeout(90000)]
         public IEnumerator SoundGroups_PersistMutePolicyAndResetTrackedSceneSounds()
         {
             yield return BootToStartMenu();

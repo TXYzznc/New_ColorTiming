@@ -30,6 +30,7 @@ The duplicate-name entries are authored repeated sprites, images and environment
 - Full EditMode: 201/201 passed, 0 failed.
 - ColorTiming PlayMode lifecycle/runtime progression: 7/7 passed, 0 failed.
 - Formal boss progression PlayMode: Boss1 all 11 segments/three colors, automatic Boss2 transition, Boss2 all 15 segments/four colors, tail threshold and final result passed.
+- Feature traceability row audit: 57/57 reviewed; 30 direct, 19 partial and 8 static/manual-only. All rows remain manual-pending until the full three-scene regression is recorded.
 - Fresh-Library batch import/compile: return code 0, compiler errors 0, package-resolution failures 0.
 - Unity compile/console health immediately after changes: 0 errors, 0 warnings.
 
