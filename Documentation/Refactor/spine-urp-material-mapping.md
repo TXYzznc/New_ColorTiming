@@ -46,4 +46,4 @@ All source texture GUIDs and serialized Stencil values remain unchanged.
   - `Assets/Screenshots/color-timing-urp-boss2-stacked.png`
   - `Assets/Screenshots/color-timing-urp-boss2-onhit.png`
 
-The source repository contains no pre-migration screenshots, so the still-image source-baseline checkbox remains open. Visual parity is instead anchored to identical migrated scene/texture/atlas GUIDs and the live target checkpoints above; a separately captured source run is still required to close tasks 10.7–10.8 strictly.
+The source repository contained no authored pre-migration screenshots. A read-only isolated source copy was therefore used to capture 1920×1080 StartMenu, Boss1, and Boss2 baselines; see `visual-regression-comparison.md` and `VisualBaseline/Source/`. This closes the source-baseline requirement while target/source same-state pairing remains explicitly open under task 10.8.

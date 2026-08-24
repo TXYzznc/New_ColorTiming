@@ -2,7 +2,7 @@
 
 Scan root: `D:\unity\UnityProject\ColorTimeing\New\_ColorTiming`
 
-Generated/local directories `Library`, `Temp`, `Logs`, and `.git` are excluded. Total: **43 files**.
+Generated/local directories `Library`, `Temp`, `Logs`, and all nested `.git` directories are excluded. Total: **51 files**.
 
 | MiB | Relative path |
 |---:|---|
@@ -23,6 +23,7 @@ Generated/local directories `Library`, `Temp`, `Logs`, and `.git` are excluded. 
 | 6.82 | `Assets/Game/ColorTiming/Art/Image/Scene/B1/地板.png` |
 | 6.51 | `LocalPackages/FastScriptReload/Assets/Plugins/Roslyn/2021+/Microsoft.CodeAnalysis.CSharp.dll` |
 | 5.96 | `Assets/Game/ColorTiming/Art/Image/System/tongguan.png` |
+| 5.75 | `Documentation/Refactor/fresh-library-import-20260824.log` |
 | 5.22 | `Assets/Game/ColorTiming/Art/Image/Scene/B2/层级3.png` |
 | 4.99 | `Assets/Game/Font/Common/AlibabaSansKR.ttf` |
 | 4.86 | `Assets/Game/ColorTiming/Art/Image/Scene/B1/背景第一层.png` |
@@ -33,19 +34,26 @@ Generated/local directories `Library`, `Temp`, `Logs`, and `.git` are excluded. 
 | 4.12 | `Assets/Game/Font/Common/AlibabaSansJP.ttf` |
 | 4.11 | `Assets/Game/Font/Common/AlibabaPuHuiTi-3-85-Bold SDF.asset` |
 | 3.76 | `LocalPackages/FastScriptReload/_github~/fast-script-reload-workflow.gif` |
+| 3.58 | `Documentation/Refactor/source-visual-capture-20260824.log` |
 | 3.20 | `Assets/Game/ColorTiming/Art/Image/Scene/B1/黑底.png` |
 | 3.14 | `Assets/Game/ColorTiming/Art/Image/Boss/Spine/BOSS拆分.png` |
 | 3.08 | `Assets/Plugins/ForEditor/EPPlus.6.2/EPPlus.dll` |
 | 2.83 | `Assets/Game/ColorTiming/Art/Image/Boss/Spine/BOSS拆分3.png` |
 | 2.68 | `Assets/Game/ColorTiming/Art/Image/Scene/B2/第二关效果图.jpg` |
 | 2.59 | `LocalPackages/FastScriptReload/Assets/Plugins/Roslyn/2019+/Microsoft.CodeAnalysis.FSR.dll` |
+| 2.59 | `Documentation/Refactor/VisualBaseline/Source/source-boss2.png` |
 | 2.58 | `Assets/Game/ColorTiming/Art/Image/Loding/加载时背景图.png` |
 | 2.57 | `Assets/Game/ColorTiming/Art/Image/Scene/B2/第二关.jpg` |
+| 2.51 | `Documentation/Refactor/VisualBaseline/Source/source-boss1.png` |
 | 2.33 | `Assets/Game/ColorTiming/Art/Image/Scene/B1/jianci/摆放图（注意前后）.png` |
 | 2.33 | `Assets/Game/ColorTiming/Art/Image/Scene/B1/摆放图（注意前后）.png` |
 | 2.32 | `Assets/Game/ColorTiming/Art/Image/Scene/B1/背景第二层.png` |
 | 2.30 | `Assets/Game/ColorTiming/Art/Image/Scene/B1/草丛摆放图.png` |
+| 2.26 | `Assets/Screenshots/color-timing-urp-boss2-stacked.png` |
+| 2.21 | `Assets/Screenshots/color-timing-urp-boss2-onhit.png` |
+| 2.17 | `Assets/Screenshots/color-timing-urp-boss1-stacked.png` |
 | 2.15 | `Assets/TextMesh Pro/Resources/Fonts & Materials/LiberationSans SDF.asset` |
+| 2.12 | `Assets/Screenshots/color-timing-urp-boss1-fillphase1.png` |
 | 2.07 | `Documentation/Refactor/Baseline/migrated-assets.csv` |
 | 2.04 | `Assets/Game/Font/Common/AlibabaSansKR SDF.asset` |
 | 2.01 | `Assets/Game/Font/Common/AlibabaSansJP SDF.asset` |
