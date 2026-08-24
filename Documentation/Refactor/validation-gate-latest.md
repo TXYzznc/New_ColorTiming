@@ -25,6 +25,7 @@ The duplicate-name entries are authored repeated sprites, images and environment
 - Input boundary: PASS. Product gameplay input enters through the framework adapter; removed debug injection hotkeys do not occur.
 - Runtime risk/lifecycle audit: PASS. Forbidden lookup/resource APIs 0, unapproved mutable statics 0, cleanup symmetry reviewed.
 - Source-method reverse audit: PASS. 64 source product scripts have a disposition; 57 retained/refactored scripts have 0 missing target paths, and all method-signature changes in 21 scripts have an explicit framework/domain/dead-code disposition.
+- Serialized-field reverse audit: PASS. 54 source Unity component classes expose 241 inherited field contracts; missing target classes 0, missing field names 0, serialized field type changes 0.
 
 ## Test evidence after lifecycle fixes
 

@@ -16,6 +16,8 @@ Unity Test Runner 的最新发现结果单独记录在 `test-discovery-20260824.
 
 另以 Roslyn 从 64 个源产品脚本反向扫描方法面；57 个保留/重构脚本的目标路径缺失为 0，21 个存在签名变化的脚本均在 `method-surface-reverse-audit.md` 中逐项落到领域层、框架服务、实体生命周期或有引用证据的不可达入口。该结果补强“无功能遗漏”的静态证据，但不替代人工回归。
 
+同一反向策略也应用于 Unity 序列化字段：54 个源组件类展开为 241 个含继承字段合同，目标组件缺失、字段名缺失和字段类型变化均为 0；详见 `serialized-field-surface-reverse-audit.md`。这排除了“代码能编译但场景/Prefab 因字段改名静默丢值”的一类迁移风险。
+
 ## 本轮补强
 
 新增 `StartMenuNavigation_AndAllSettingsPersistThroughGfSetting` PlayMode 测试，直接覆盖：
