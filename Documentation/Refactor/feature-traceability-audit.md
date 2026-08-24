@@ -12,6 +12,8 @@
 
 所有 57 行继续保留 `manual pending`，没有用编译通过、静态扫描或单张截图替代完整人工回归。
 
+Unity Test Runner 的最新发现结果单独记录在 `test-discovery-20260824.md`：63 个 ColorTiming EditMode 与 14 个 ColorTiming PlayMode 用例均为 `Runnable`，但新增用例尚未执行，因此不会据此增加通过数。
+
 ## 本轮补强
 
 新增 `StartMenuNavigation_AndAllSettingsPersistThroughGfSetting` PlayMode 测试，直接覆盖：
