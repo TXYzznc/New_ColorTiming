@@ -23,6 +23,8 @@
 
 Unity 已完成脚本编译且该文件编译错误为 0。由于 8093 当前仍是 Auto，PlayMode 执行被 UnitySkills 拒绝，因此 `FLOW-004` 与 `SET-003` 保持 `PARTIAL`，不得提前升级为 `DIRECT`。
 
+随后新增 `BossAttackExecutionPlayModeTests`：强制实际播放 Boss1 六攻击并监听各自 Spine Event→GF.Entity，检查攻击 5 无敌窗口及恢复；Boss2 则覆盖头部近战/投射、完整潜地换位出土、12→11 尾部激活、尾部初次潜地和两种尾部攻击。脚本编译错误为 0，但同样因尚未执行而只作为“已准备的直接测试”，相关行仍维持原证据等级。
+
 ## 回到实现/验收的弱证据项
 
 - StartMenu：退出应用、每条加载淡入淡出、设置新测试执行。
