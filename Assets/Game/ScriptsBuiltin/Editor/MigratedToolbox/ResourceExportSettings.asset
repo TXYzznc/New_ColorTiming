@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d4d1f9a9d9e4a9d8f7c6b5a4e3d2c1b, type: 3}
+  m_Name: ResourceExportSettings
+  m_EditorClassIdentifier: 
+  groups:
+  - name: "\u7F8E\u672F\u8D44\u6E90"
+    selected: 1
+    assetPaths:
+    - Assets/Game/Animations
+    - Assets/Game/Audio
+    - Assets/Game/Sprites
+    - Assets/Game/Video
