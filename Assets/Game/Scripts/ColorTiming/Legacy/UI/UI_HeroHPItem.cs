@@ -1,26 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class UI_HeroHPItem : MonoBehaviour
 {
 
-    public void SetHeroHPItem(int idx)
+    public void SetHeroHPItem(int idx, float spacing, float alternateRowOffset)
     {
-        //print("wanjia hp + " + idx);
-        Image image = GetComponentInChildren<Image>();
-        if (image == null ) {return ;}
-        if (idx % 2 == 0)
-        {
-
-        }
-        else 
-        {
-            image.rectTransform.localPosition = new Vector3(0, -33, 0);
-
-        }
-
-
+        var rectTransform = transform as RectTransform;
+        if (rectTransform == null) return;
+        rectTransform.anchoredPosition = new Vector2(
+            idx * spacing,
+            idx % 2 == 0 ? 0f : alternateRowOffset);
     }
 }

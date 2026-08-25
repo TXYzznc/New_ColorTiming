@@ -5,14 +5,25 @@ using UnityEngine;
 
 public class UI_HeroHPBox : MonoBehaviour
 {
+    const float ItemSpacing = 35f;
+    const float AlternateRowOffset = -33f;
+
     public HeroController controller;
 
     public GameObject hpItem;
 
     private void Awake()
     {
+    }
+
+    public void Bind(HeroController heroController)
+    {
+        if (controller == heroController && items.Count > 0) return;
+        controller?.OnSetHP_Event.RemoveListener(OnDamage);
+        controller = heroController;
         controller?.OnSetHP_Event.AddListener(OnDamage);
         EnsureItems(controller != null ? controller.heroMaxHP : 5);
+        SetHP();
     }
 
     private void Start()
@@ -32,7 +43,7 @@ public class UI_HeroHPBox : MonoBehaviour
         {
             var active = i < controller.heroHP;
             items[i].gameObject.SetActive(active);
-            if (active) items[i].SetHeroHPItem(i);
+            items[i].SetHeroHPItem(i, ItemSpacing, AlternateRowOffset);
         }
     }
 
@@ -40,6 +51,7 @@ public class UI_HeroHPBox : MonoBehaviour
 
     void EnsureItems(int count)
     {
+        if (hpItem == null) throw new MissingReferenceException("Hero HP item prefab is required.");
         while (items.Count < count)
         {
             var instance = Instantiate(hpItem, transform);

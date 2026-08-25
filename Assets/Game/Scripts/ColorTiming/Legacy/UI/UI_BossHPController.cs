@@ -10,13 +10,27 @@ public class UI_BossHPController : MonoBehaviour
 
     private void Awake()
     {
+    }
+
+    public void Bind(Boss1_Controller bossController)
+    {
+        if (boss1_Controller == bossController && items.Count > 0) return;
+        boss1_Controller?.OnDamage_Event.RemoveListener(SetHPBox);
+        boss1_Controller = bossController;
         boss1_Controller?.OnDamage_Event.AddListener(SetHPBox);
+        if (boss1_Controller == null)
+        {
+            for (int i = 0; i < items.Count; i++) items[i].gameObject.SetActive(false);
+            return;
+        }
         EnsureItems(7);
+        SetHPBox();
     }
 
     int cCount;
     void SetHPBox()
     {
+        if (boss1_Controller == null || boss1_Controller.Boss1HP == null) return;
         //transform.childs
         //清理所有子项
 
@@ -45,6 +59,7 @@ public class UI_BossHPController : MonoBehaviour
 
     void EnsureItems(int count)
     {
+        if (HPItem == null) throw new MissingReferenceException("Boss HP item prefab is required.");
         while (items.Count < count)
         {
             var instance = Instantiate(HPItem, transform);

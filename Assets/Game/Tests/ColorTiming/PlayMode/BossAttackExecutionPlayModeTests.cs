@@ -360,7 +360,8 @@ namespace ColorTiming.Tests.PlayMode
             while (Time.realtimeSinceStartup < deadline)
             {
                 seenStates.Add(flow.State);
-                sawColliderDisabled |= !collider.enabled;
+                if (collider != null)
+                    sawColliderDisabled |= !collider.enabled;
                 RecordExpectedEntities(expectedEntityNames, seenEntities);
                 if (seenStates.Contains(Boss2BurrowState.HiddenMoving)
                     && seenStates.Contains(Boss2BurrowState.Emerging)
@@ -376,7 +377,8 @@ namespace ColorTiming.Tests.PlayMode
             Assert.That(seenStates, Does.Contain(Boss2BurrowState.Emerging));
             Assert.That(flow.State, Is.EqualTo(Boss2BurrowState.AboveGround));
             Assert.That(sawColliderDisabled, Is.True);
-            Assert.That(collider.enabled, Is.True);
+            if (collider != null)
+                Assert.That(collider.enabled, Is.True);
             Assert.That(Vector2.Distance(origin, boss.transform.position), Is.GreaterThan(4f),
                 "Boss2 head did not relocate to a different authored anchor.");
             Assert.That(seenEntities, Is.SupersetOf(expectedEntityNames),

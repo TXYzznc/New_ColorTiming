@@ -40,7 +40,6 @@ public class UI_HeroInfo : MonoBehaviour, IGameInputConsumer, IColorTimingUiCons
     private void Start()
     {
         controller?.OnSwitchWeapon.AddListener(SwitchWapon);
-        ESC?.SetActive(false);
         SetCursor(WeaponPresentationState.NormalCursorIndex);
     }
 
