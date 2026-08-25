@@ -46,4 +46,4 @@ All source texture GUIDs and serialized Stencil values remain unchanged.
   - `Assets/Screenshots/color-timing-urp-boss2-stacked.png`
   - `Assets/Screenshots/color-timing-urp-boss2-onhit.png`
 
-The source repository contained no authored pre-migration screenshots. A read-only isolated source copy was therefore used to capture 1920×1080 StartMenu, Boss1, and Boss2 baselines; see `visual-regression-comparison.md` and `VisualBaseline/Source/`. This closes the source-baseline requirement while target/source same-state pairing remains explicitly open under task 10.8.
+The source repository contained no authored pre-migration screenshots. A read-only isolated source copy was therefore used to capture 1920×1080 StartMenu, Boss1, and Boss2 baselines; see `visual-regression-comparison.md` and `VisualBaseline/Source/`. Paired target/source same-state visual checkpoints are complete and OpenSpec 10.8 is closed. Dynamic attacks, hits, media timing, input feel, and complete manual paths remain explicitly open under OpenSpec 12.1–12.4.

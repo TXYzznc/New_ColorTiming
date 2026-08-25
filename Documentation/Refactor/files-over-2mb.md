@@ -2,7 +2,7 @@
 
 Scan root: `D:\unity\UnityProject\ColorTimeing\New\_ColorTiming`
 
-Generated/local directories `Library`, `Temp`, `Logs`, and all nested `.git` directories are excluded. Total: **51 files**.
+Generated/local directories `Library`, `Temp`, `Logs`, and all nested `.git` directories are excluded. Total: **54 files**.
 
 | MiB | Relative path |
 |---:|---|
@@ -24,6 +24,7 @@ Generated/local directories `Library`, `Temp`, `Logs`, and all nested `.git` dir
 | 6.51 | `LocalPackages/FastScriptReload/Assets/Plugins/Roslyn/2021+/Microsoft.CodeAnalysis.CSharp.dll` |
 | 5.96 | `Assets/Game/ColorTiming/Art/Image/System/tongguan.png` |
 | 5.75 | `Documentation/Refactor/fresh-library-import-20260824.log` |
+| 5.66 | `Documentation/Refactor/target-static-visual-capture-20260824.log` |
 | 5.22 | `Assets/Game/ColorTiming/Art/Image/Scene/B2/层级3.png` |
 | 4.99 | `Assets/Game/Font/Common/AlibabaSansKR.ttf` |
 | 4.86 | `Assets/Game/ColorTiming/Art/Image/Scene/B1/背景第一层.png` |
@@ -40,11 +41,13 @@ Generated/local directories `Library`, `Temp`, `Logs`, and all nested `.git` dir
 | 3.08 | `Assets/Plugins/ForEditor/EPPlus.6.2/EPPlus.dll` |
 | 2.83 | `Assets/Game/ColorTiming/Art/Image/Boss/Spine/BOSS拆分3.png` |
 | 2.68 | `Assets/Game/ColorTiming/Art/Image/Scene/B2/第二关效果图.jpg` |
+| 2.63 | `Documentation/Refactor/VisualBaseline/Target/target-boss2-static.png` |
 | 2.59 | `LocalPackages/FastScriptReload/Assets/Plugins/Roslyn/2019+/Microsoft.CodeAnalysis.FSR.dll` |
 | 2.59 | `Documentation/Refactor/VisualBaseline/Source/source-boss2.png` |
 | 2.58 | `Assets/Game/ColorTiming/Art/Image/Loding/加载时背景图.png` |
 | 2.57 | `Assets/Game/ColorTiming/Art/Image/Scene/B2/第二关.jpg` |
 | 2.51 | `Documentation/Refactor/VisualBaseline/Source/source-boss1.png` |
+| 2.47 | `Documentation/Refactor/VisualBaseline/Target/target-boss1-static.png` |
 | 2.33 | `Assets/Game/ColorTiming/Art/Image/Scene/B1/jianci/摆放图（注意前后）.png` |
 | 2.33 | `Assets/Game/ColorTiming/Art/Image/Scene/B1/摆放图（注意前后）.png` |
 | 2.32 | `Assets/Game/ColorTiming/Art/Image/Scene/B1/背景第二层.png` |
