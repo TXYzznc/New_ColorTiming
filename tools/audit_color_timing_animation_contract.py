@@ -40,15 +40,15 @@ RECEIVERS = {
 BEHAVIOURS = {
     "EnterAnimStateEvent": (
         "Assets/Game/Scripts/ColorTiming/Legacy/Anim/EnterAnimStateEvent.cs.meta",
-        "Assets/Game/ColorTiming/Art/Image/Hero/Anim/Hero Animator Controller.controller",
+        "Assets/Game/Sprites/ColorTiming/Hero/Anim/Hero Animator Controller.controller",
     ),
     "RestXuli": (
         "Assets/Game/Scripts/ColorTiming/Legacy/Anim/RestXuli.cs.meta",
-        "Assets/Game/ColorTiming/Art/Image/Hero/Anim/HeroTest.controller",
+        "Assets/Game/Sprites/ColorTiming/Hero/Anim/HeroTest.controller",
     ),
     "Xuli": (
         "Assets/Game/Scripts/ColorTiming/Legacy/Anim/Xuli.cs.meta",
-        "Assets/Game/ColorTiming/Art/Image/Hero/Anim/HeroTest.controller",
+        "Assets/Game/Sprites/ColorTiming/Hero/Anim/HeroTest.controller",
     ),
 }
 
@@ -65,7 +65,7 @@ def main() -> int:
     root = args.root.resolve()
     failures: list[str] = []
 
-    controller_path = root / "Assets/Game/ColorTiming/Art/Image/Hero/Anim/Hero Animator Controller.controller"
+    controller_path = root / "Assets/Game/Sprites/ColorTiming/Hero/Anim/Hero Animator Controller.controller"
     controller = read(controller_path)
     parameters = set(re.findall(r"^\s*- m_Name: (\S+)\s*$", controller, re.MULTILINE))
     missing_parameters = sorted(REQUIRED_PARAMETERS - parameters)
@@ -96,7 +96,7 @@ def main() -> int:
             failures.append(f"{name} is not referenced by {controller_relative}")
 
     event_counts: dict[str, int] = {}
-    for animation in (root / "Assets/Game/ColorTiming").rglob("*.anim"):
+    for animation in (root / "Assets/Game").rglob("*.anim"):
         for event_name in re.findall(r"^\s*functionName: (\S+)\s*$", read(animation), re.MULTILINE):
             event_counts[event_name] = event_counts.get(event_name, 0) + 1
 

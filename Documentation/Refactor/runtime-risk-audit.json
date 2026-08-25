@@ -16,7 +16,7 @@
     "addListener": [
       {
         "file": "Legacy/Boss1_Controller.cs",
-        "line": 262,
+        "line": 263,
         "text": "OnDamage_Event.AddListener(boss1Anim.OnHit);"
       },
       {
@@ -123,7 +123,7 @@
     "removeListener": [
       {
         "file": "Legacy/Boss1_Controller.cs",
-        "line": 425,
+        "line": 426,
         "text": "OnDamage_Event.RemoveListener(boss1Anim.OnHit);"
       },
       {
@@ -245,17 +245,17 @@
       },
       {
         "file": "Legacy/Boss1_Controller.cs",
-        "line": 157,
+        "line": 158,
         "text": "entry.Complete += Entry_Complete;"
       },
       {
         "file": "Legacy/Boss1_Controller.cs",
-        "line": 158,
+        "line": 159,
         "text": "entry.Event += AnimEvent;"
       },
       {
         "file": "Legacy/Boss1_Controller.cs",
-        "line": 159,
+        "line": 160,
         "text": "entry.End += Entry_End;"
       },
       {
@@ -380,7 +380,7 @@
       },
       {
         "file": "Legacy/UI/StartVido.cs",
-        "line": 24,
+        "line": 26,
         "text": "if (player != null) player.loopPointReached += PlayEnd;"
       },
       {
@@ -432,17 +432,17 @@
       },
       {
         "file": "Legacy/Boss1_Controller.cs",
-        "line": 215,
+        "line": 216,
         "text": "trackEntry.Event -= AnimEvent;"
       },
       {
         "file": "Legacy/Boss1_Controller.cs",
-        "line": 216,
+        "line": 217,
         "text": "trackEntry.Complete -= Entry_Complete;"
       },
       {
         "file": "Legacy/Boss1_Controller.cs",
-        "line": 217,
+        "line": 218,
         "text": "trackEntry.End -= Entry_End;"
       },
       {
@@ -517,7 +517,7 @@
       },
       {
         "file": "Legacy/Death_sc_Over.cs",
-        "line": 44,
+        "line": 45,
         "text": "_st -= Time.deltaTime;"
       },
       {
@@ -582,7 +582,7 @@
       },
       {
         "file": "Legacy/UI/StartVido.cs",
-        "line": 30,
+        "line": 32,
         "text": "if (player != null) player.loopPointReached -= PlayEnd;"
       },
       {
@@ -629,7 +629,7 @@
       },
       {
         "file": "Legacy/Boss1_Controller.cs",
-        "line": 76,
+        "line": 77,
         "text": "void Update()"
       },
       {
@@ -669,7 +669,7 @@
       },
       {
         "file": "Legacy/Death_sc_Over.cs",
-        "line": 40,
+        "line": 41,
         "text": "private void Update()"
       },
       {

@@ -1,7 +1,7 @@
 {
   "status": "PASS",
   "animator": {
-    "controller": "Assets/Game/ColorTiming/Art/Image/Hero/Anim/Hero Animator Controller.controller",
+    "controller": "Assets/Game/Sprites/ColorTiming/Hero/Anim/Hero Animator Controller.controller",
     "required_parameters": [
       "Atk",
       "Atk_x",
@@ -21,17 +21,17 @@
   "state_machine_behaviours": {
     "EnterAnimStateEvent": {
       "guid": "a248c9c6fd6d4ee45949c4a43ad8e435",
-      "controller": "Assets/Game/ColorTiming/Art/Image/Hero/Anim/Hero Animator Controller.controller",
+      "controller": "Assets/Game/Sprites/ColorTiming/Hero/Anim/Hero Animator Controller.controller",
       "reference_count": 176
     },
     "RestXuli": {
       "guid": "44e3d664aefcbba4f943010e24ad223c",
-      "controller": "Assets/Game/ColorTiming/Art/Image/Hero/Anim/HeroTest.controller",
+      "controller": "Assets/Game/Sprites/ColorTiming/Hero/Anim/HeroTest.controller",
       "reference_count": 2
     },
     "Xuli": {
       "guid": "d9cfba8ee690c104ab4a238702dae4c5",
-      "controller": "Assets/Game/ColorTiming/Art/Image/Hero/Anim/HeroTest.controller",
+      "controller": "Assets/Game/Sprites/ColorTiming/Hero/Anim/HeroTest.controller",
       "reference_count": 2
     }
   },

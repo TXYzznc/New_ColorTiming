@@ -24,42 +24,42 @@
   "occurrences": [
     {
       "file": "Assets/Game/Scripts/ColorTiming/Legacy/Boss1_Controller.cs",
-      "line": 157,
+      "line": 158,
       "event": "Complete",
       "operation": "+=",
       "handler": "Entry_Complete"
     },
     {
       "file": "Assets/Game/Scripts/ColorTiming/Legacy/Boss1_Controller.cs",
-      "line": 158,
+      "line": 159,
       "event": "Event",
       "operation": "+=",
       "handler": "AnimEvent"
     },
     {
       "file": "Assets/Game/Scripts/ColorTiming/Legacy/Boss1_Controller.cs",
-      "line": 159,
+      "line": 160,
       "event": "End",
       "operation": "+=",
       "handler": "Entry_End"
     },
     {
       "file": "Assets/Game/Scripts/ColorTiming/Legacy/Boss1_Controller.cs",
-      "line": 215,
+      "line": 216,
       "event": "Event",
       "operation": "-=",
       "handler": "AnimEvent"
     },
     {
       "file": "Assets/Game/Scripts/ColorTiming/Legacy/Boss1_Controller.cs",
-      "line": 216,
+      "line": 217,
       "event": "Complete",
       "operation": "-=",
       "handler": "Entry_Complete"
     },
     {
       "file": "Assets/Game/Scripts/ColorTiming/Legacy/Boss1_Controller.cs",
-      "line": 217,
+      "line": 218,
       "event": "End",
       "operation": "-=",
       "handler": "Entry_End"

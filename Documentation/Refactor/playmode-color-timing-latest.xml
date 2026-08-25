@@ -1,37 +1,78 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<test-suite type="TestSuite" id="1018" name="GameDesinger" fullname="GameDesinger" runstate="Runnable" testcasecount="7" result="Passed" start-time="2026-08-24 12:42:35Z" end-time="2026-08-24 12:42:47Z" duration="11.480075" total="7" passed="7" failed="0" inconclusive="0" skipped="0" asserts="0">
+<test-suite type="TestSuite" id="1030" name="GameDesinger" fullname="GameDesinger" runstate="Runnable" testcasecount="14" result="Passed" start-time="2026-08-25 08:04:27Z" end-time="2026-08-25 08:05:40Z" duration="72.206123" total="14" passed="14" failed="0" inconclusive="0" skipped="0" asserts="0">
   <properties>
     <property name="platform" value="PlayMode" />
   </properties>
-  <test-suite type="Assembly" id="1012" name="ColorTiming.PlayMode.Tests.dll" fullname="D:/unity/UnityProject/ColorTimeing/New/_ColorTiming/Library/ScriptAssemblies/ColorTiming.PlayMode.Tests.dll" runstate="Runnable" testcasecount="7" result="Passed" start-time="2026-08-24 12:42:35Z" end-time="2026-08-24 12:42:47Z" duration="11.473276" total="7" passed="7" failed="0" inconclusive="0" skipped="0" asserts="0">
+  <test-suite type="Assembly" id="1024" name="ColorTiming.PlayMode.Tests.dll" fullname="D:/unity/UnityProject/ColorTimeing/New/_ColorTiming/Library/ScriptAssemblies/ColorTiming.PlayMode.Tests.dll" runstate="Runnable" testcasecount="14" result="Passed" start-time="2026-08-25 08:04:27Z" end-time="2026-08-25 08:05:40Z" duration="72.158098" total="14" passed="14" failed="0" inconclusive="0" skipped="0" asserts="0">
     <properties>
       <property name="_PID" value="14424" />
       <property name="_APPDOMAIN" value="Unity Child Domain" />
       <property name="platform" value="PlayMode" />
       <property name="EditorOnly" value="False" />
     </properties>
-    <test-suite type="TestSuite" id="1013" name="ColorTiming" fullname="ColorTiming" runstate="Runnable" testcasecount="7" result="Passed" start-time="2026-08-24 12:42:35Z" end-time="2026-08-24 12:42:47Z" duration="11.459293" total="7" passed="7" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <test-suite type="TestSuite" id="1025" name="ColorTiming" fullname="ColorTiming" runstate="Runnable" testcasecount="14" result="Passed" start-time="2026-08-25 08:04:27Z" end-time="2026-08-25 08:05:40Z" duration="72.154338" total="14" passed="14" failed="0" inconclusive="0" skipped="0" asserts="0">
       <properties />
-      <test-suite type="TestSuite" id="1014" name="Tests" fullname="ColorTiming.Tests" runstate="Runnable" testcasecount="7" result="Passed" start-time="2026-08-24 12:42:35Z" end-time="2026-08-24 12:42:47Z" duration="11.443702" total="7" passed="7" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <test-suite type="TestSuite" id="1026" name="Tests" fullname="ColorTiming.Tests" runstate="Runnable" testcasecount="14" result="Passed" start-time="2026-08-25 08:04:27Z" end-time="2026-08-25 08:05:40Z" duration="72.139265" total="14" passed="14" failed="0" inconclusive="0" skipped="0" asserts="0">
         <properties />
-        <test-suite type="TestSuite" id="1015" name="PlayMode" fullname="ColorTiming.Tests.PlayMode" runstate="Runnable" testcasecount="7" result="Passed" start-time="2026-08-24 12:42:35Z" end-time="2026-08-24 12:42:47Z" duration="11.425545" total="7" passed="7" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <test-suite type="TestSuite" id="1027" name="PlayMode" fullname="ColorTiming.Tests.PlayMode" runstate="Runnable" testcasecount="14" result="Passed" start-time="2026-08-25 08:04:27Z" end-time="2026-08-25 08:05:40Z" duration="72.123025" total="14" passed="14" failed="0" inconclusive="0" skipped="0" asserts="0">
           <properties />
-          <test-suite type="TestFixture" id="1001" name="BossRuntimeProgressionPlayModeTests" fullname="ColorTiming.Tests.PlayMode.BossRuntimeProgressionPlayModeTests" classname="ColorTiming.Tests.PlayMode.BossRuntimeProgressionPlayModeTests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-08-24 12:42:36Z" end-time="2026-08-24 12:42:40Z" duration="4.746672" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <test-suite type="TestFixture" id="1001" name="BossAttackExecutionPlayModeTests" fullname="ColorTiming.Tests.PlayMode.BossAttackExecutionPlayModeTests" classname="ColorTiming.Tests.PlayMode.BossAttackExecutionPlayModeTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-08-25 08:04:27Z" end-time="2026-08-25 08:05:17Z" duration="49.616641" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
             <properties />
-            <test-case id="1002" name="FormalFlow_ConsumesEveryBossColor_ActivatesTailAndShowsFinalResult" fullname="ColorTiming.Tests.PlayMode.BossRuntimeProgressionPlayModeTests.FormalFlow_ConsumesEveryBossColor_ActivatesTailAndShowsFinalResult" methodname="FormalFlow_ConsumesEveryBossColor_ActivatesTailAndShowsFinalResult" classname="ColorTiming.Tests.PlayMode.BossRuntimeProgressionPlayModeTests" runstate="Runnable" seed="742530613" result="Passed" start-time="2026-08-24 12:42:36Z" end-time="2026-08-24 12:42:40Z" duration="4.731198" asserts="0">
+            <test-case id="1002" name="Boss1_AllSixAttacksPlayAndDispatchTheirAuthoredSpineEvents" fullname="ColorTiming.Tests.PlayMode.BossAttackExecutionPlayModeTests.Boss1_AllSixAttacksPlayAndDispatchTheirAuthoredSpineEvents" methodname="Boss1_AllSixAttacksPlayAndDispatchTheirAuthoredSpineEvents" classname="ColorTiming.Tests.PlayMode.BossAttackExecutionPlayModeTests" runstate="Runnable" seed="1722179539" result="Passed" start-time="2026-08-25 08:04:27Z" end-time="2026-08-25 08:04:53Z" duration="25.174383" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="Timeout" value="180000" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[<color=#2BD988>------------Set ResourceMode:Package------------</color>
+<color=#2BD988>----------UI Match:0----------</color>
+[UnitySkills] [Self-Test] Starting (ProcessJobQueue ticks=46, listener=True)
+<color=#2BD988>进入HybridCLR热更流程! 预加载游戏数据...</color>
+<color=#2BD988>初始化游戏设置. 游戏语言:English,系统语言:ChineseSimplified</color>
+<color=#2BD988>Framework preload completed. Entering the generic ready state.</color>
+There can be only one active Event System.
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+已初始化BOSS血量:11
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+]]></output>
+            </test-case>
+            <test-case id="1003" name="Boss2_HeadTailBurrowAndAttackEventsExecuteThroughFrameworkEntities" fullname="ColorTiming.Tests.PlayMode.BossAttackExecutionPlayModeTests.Boss2_HeadTailBurrowAndAttackEventsExecuteThroughFrameworkEntities" methodname="Boss2_HeadTailBurrowAndAttackEventsExecuteThroughFrameworkEntities" classname="ColorTiming.Tests.PlayMode.BossAttackExecutionPlayModeTests" runstate="Runnable" seed="102223863" result="Passed" start-time="2026-08-25 08:04:53Z" end-time="2026-08-25 08:05:17Z" duration="24.414069" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="Timeout" value="240000" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+已初始化BOSS血量:15
+未正确创建技能:
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+]]></output>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1004" name="BossRuntimeProgressionPlayModeTests" fullname="ColorTiming.Tests.PlayMode.BossRuntimeProgressionPlayModeTests" classname="ColorTiming.Tests.PlayMode.BossRuntimeProgressionPlayModeTests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-08-25 08:05:17Z" end-time="2026-08-25 08:05:20Z" duration="2.684507" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <output><![CDATA[There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+]]></output>
+            <test-case id="1005" name="FormalFlow_ConsumesEveryBossColor_ActivatesTailAndShowsFinalResult" fullname="ColorTiming.Tests.PlayMode.BossRuntimeProgressionPlayModeTests.FormalFlow_ConsumesEveryBossColor_ActivatesTailAndShowsFinalResult" methodname="FormalFlow_ConsumesEveryBossColor_ActivatesTailAndShowsFinalResult" classname="ColorTiming.Tests.PlayMode.BossRuntimeProgressionPlayModeTests" runstate="Runnable" seed="280300107" result="Passed" start-time="2026-08-25 08:05:17Z" end-time="2026-08-25 08:05:20Z" duration="2.658516" asserts="0">
               <properties>
                 <property name="_JOINTYPE" value="UnityCombinatorial" />
                 <property name="Timeout" value="120000" />
                 <property name="retryIteration" value="0" />
                 <property name="repeatIteration" value="0" />
               </properties>
-              <output><![CDATA[<color=#2BD988>------------Set ResourceMode:Package------------</color>
-<color=#2BD988>----------UI Match:0----------</color>
-<color=#2BD988>进入HybridCLR热更流程! 预加载游戏数据...</color>
-<color=#2BD988>初始化游戏设置. 游戏语言:English,系统语言:ChineseSimplified</color>
-[UnitySkills] [Self-Test] Starting (ProcessJobQueue ticks=191, listener=True)
-<color=#2BD988>Framework preload completed. Entering the generic ready state.</color>
-There can be only one active Event System.
+              <output><![CDATA[There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
 There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
 There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
 已初始化BOSS血量:11
@@ -44,11 +85,11 @@ There are 2 event systems in the scene. Please ensure there is always exactly on
 ]]></output>
             </test-case>
           </test-suite>
-          <test-suite type="TestFixture" id="1003" name="ColorTimingUiAndSoundLifecyclePlayModeTests" fullname="ColorTiming.Tests.PlayMode.ColorTimingUiAndSoundLifecyclePlayModeTests" classname="ColorTiming.Tests.PlayMode.ColorTimingUiAndSoundLifecyclePlayModeTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-08-24 12:42:40Z" end-time="2026-08-24 12:42:47Z" duration="6.443186" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <test-suite type="TestFixture" id="1006" name="CameraRuntimeExecutionPlayModeTests" fullname="ColorTiming.Tests.PlayMode.CameraRuntimeExecutionPlayModeTests" classname="ColorTiming.Tests.PlayMode.CameraRuntimeExecutionPlayModeTests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-08-25 08:05:20Z" end-time="2026-08-25 08:05:20Z" duration="0.463892" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
             <properties />
             <output><![CDATA[There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
 ]]></output>
-            <test-case id="1005" name="PauseForm_ReopensAndSceneExitReleasesPauseLease" fullname="ColorTiming.Tests.PlayMode.ColorTimingUiAndSoundLifecyclePlayModeTests.PauseForm_ReopensAndSceneExitReleasesPauseLease" methodname="PauseForm_ReopensAndSceneExitReleasesPauseLease" classname="ColorTiming.Tests.PlayMode.ColorTimingUiAndSoundLifecyclePlayModeTests" runstate="Runnable" seed="1762076538" result="Passed" start-time="2026-08-24 12:42:40Z" end-time="2026-08-24 12:42:42Z" duration="1.264138" asserts="0">
+            <test-case id="1007" name="Boss1_ParallaxDistanceZoomAndCinemachineRuntimeWiringExecute" fullname="ColorTiming.Tests.PlayMode.CameraRuntimeExecutionPlayModeTests.Boss1_ParallaxDistanceZoomAndCinemachineRuntimeWiringExecute" methodname="Boss1_ParallaxDistanceZoomAndCinemachineRuntimeWiringExecute" classname="ColorTiming.Tests.PlayMode.CameraRuntimeExecutionPlayModeTests" runstate="Runnable" seed="2097215896" result="Passed" start-time="2026-08-25 08:05:20Z" end-time="2026-08-25 08:05:20Z" duration="0.433612" asserts="0">
               <properties>
                 <property name="_JOINTYPE" value="UnityCombinatorial" />
                 <property name="Timeout" value="90000" />
@@ -56,6 +97,30 @@ There are 2 event systems in the scene. Please ensure there is always exactly on
                 <property name="repeatIteration" value="0" />
               </properties>
               <output><![CDATA[There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+已初始化BOSS血量:11
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+]]></output>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1008" name="ColorTimingUiAndSoundLifecyclePlayModeTests" fullname="ColorTiming.Tests.PlayMode.ColorTimingUiAndSoundLifecyclePlayModeTests" classname="ColorTiming.Tests.PlayMode.ColorTimingUiAndSoundLifecyclePlayModeTests" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-08-25 08:05:20Z" end-time="2026-08-25 08:05:27Z" duration="6.560190" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <output><![CDATA[There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+]]></output>
+            <test-case id="1010" name="PauseForm_ReopensAndSceneExitReleasesPauseLease" fullname="ColorTiming.Tests.PlayMode.ColorTimingUiAndSoundLifecyclePlayModeTests.PauseForm_ReopensAndSceneExitReleasesPauseLease" methodname="PauseForm_ReopensAndSceneExitReleasesPauseLease" classname="ColorTiming.Tests.PlayMode.ColorTimingUiAndSoundLifecyclePlayModeTests" runstate="Runnable" seed="656577303" result="Passed" start-time="2026-08-25 08:05:20Z" end-time="2026-08-25 08:05:21Z" duration="0.942227" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="Timeout" value="90000" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
 There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
 There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
 There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
@@ -64,7 +129,7 @@ There are 2 event systems in the scene. Please ensure there is always exactly on
 There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
 ]]></output>
             </test-case>
-            <test-case id="1006" name="SoundGroups_PersistMutePolicyAndResetTrackedSceneSounds" fullname="ColorTiming.Tests.PlayMode.ColorTimingUiAndSoundLifecyclePlayModeTests.SoundGroups_PersistMutePolicyAndResetTrackedSceneSounds" methodname="SoundGroups_PersistMutePolicyAndResetTrackedSceneSounds" classname="ColorTiming.Tests.PlayMode.ColorTimingUiAndSoundLifecyclePlayModeTests" runstate="Runnable" seed="59448217" result="Passed" start-time="2026-08-24 12:42:42Z" end-time="2026-08-24 12:42:42Z" duration="0.123461" asserts="0">
+            <test-case id="1012" name="SoundGroups_PersistMutePolicyAndResetTrackedSceneSounds" fullname="ColorTiming.Tests.PlayMode.ColorTimingUiAndSoundLifecyclePlayModeTests.SoundGroups_PersistMutePolicyAndResetTrackedSceneSounds" methodname="SoundGroups_PersistMutePolicyAndResetTrackedSceneSounds" classname="ColorTiming.Tests.PlayMode.ColorTimingUiAndSoundLifecyclePlayModeTests" runstate="Runnable" seed="243871951" result="Passed" start-time="2026-08-25 08:05:21Z" end-time="2026-08-25 08:05:21Z" duration="0.135274" asserts="0">
               <properties>
                 <property name="_JOINTYPE" value="UnityCombinatorial" />
                 <property name="Timeout" value="90000" />
@@ -72,13 +137,15 @@ There are 2 event systems in the scene. Please ensure there is always exactly on
                 <property name="repeatIteration" value="0" />
               </properties>
               <output><![CDATA[There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
 There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
 There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
 There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
 There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
 ]]></output>
             </test-case>
-            <test-case id="1004" name="StartMenuVideo_RendersAndSwitchesFromIntroToLoop" fullname="ColorTiming.Tests.PlayMode.ColorTimingUiAndSoundLifecyclePlayModeTests.StartMenuVideo_RendersAndSwitchesFromIntroToLoop" methodname="StartMenuVideo_RendersAndSwitchesFromIntroToLoop" classname="ColorTiming.Tests.PlayMode.ColorTimingUiAndSoundLifecyclePlayModeTests" runstate="Runnable" seed="1981008441" result="Passed" start-time="2026-08-24 12:42:42Z" end-time="2026-08-24 12:42:47Z" duration="5.025202" asserts="0">
+            <test-case id="1011" name="StartMenuNavigation_AndAllSettingsPersistThroughGfSetting" fullname="ColorTiming.Tests.PlayMode.ColorTimingUiAndSoundLifecyclePlayModeTests.StartMenuNavigation_AndAllSettingsPersistThroughGfSetting" methodname="StartMenuNavigation_AndAllSettingsPersistThroughGfSetting" classname="ColorTiming.Tests.PlayMode.ColorTimingUiAndSoundLifecyclePlayModeTests" runstate="Runnable" seed="178183479" result="Passed" start-time="2026-08-25 08:05:21Z" end-time="2026-08-25 08:05:21Z" duration="0.105303" asserts="0">
               <properties>
                 <property name="_JOINTYPE" value="UnityCombinatorial" />
                 <property name="Timeout" value="90000" />
@@ -86,6 +153,37 @@ There are 2 event systems in the scene. Please ensure there is always exactly on
                 <property name="repeatIteration" value="0" />
               </properties>
               <output><![CDATA[There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+]]></output>
+            </test-case>
+            <test-case id="1009" name="StartMenuVideo_RendersAndSwitchesFromIntroToLoop" fullname="ColorTiming.Tests.PlayMode.ColorTimingUiAndSoundLifecyclePlayModeTests.StartMenuVideo_RendersAndSwitchesFromIntroToLoop" methodname="StartMenuVideo_RendersAndSwitchesFromIntroToLoop" classname="ColorTiming.Tests.PlayMode.ColorTimingUiAndSoundLifecyclePlayModeTests" runstate="Runnable" seed="2085522421" result="Passed" start-time="2026-08-25 08:05:21Z" end-time="2026-08-25 08:05:27Z" duration="5.365448" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="Timeout" value="90000" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
 There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
 There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
 There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
@@ -390,11 +488,33 @@ There are 2 event systems in the scene. Please ensure there is always exactly on
 ]]></output>
             </test-case>
           </test-suite>
-          <test-suite type="TestFixture" id="1007" name="PlayerEntityLifecyclePlayModeTests" fullname="ColorTiming.Tests.PlayMode.PlayerEntityLifecyclePlayModeTests" classname="ColorTiming.Tests.PlayMode.PlayerEntityLifecyclePlayModeTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-08-24 12:42:47Z" end-time="2026-08-24 12:42:47Z" duration="0.166010" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <test-suite type="TestFixture" id="1013" name="GrassWorldInteractionPlayModeTests" fullname="ColorTiming.Tests.PlayMode.GrassWorldInteractionPlayModeTests" classname="ColorTiming.Tests.PlayMode.GrassWorldInteractionPlayModeTests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-08-25 08:05:27Z" end-time="2026-08-25 08:05:27Z" duration="0.388467" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
             <properties />
             <output><![CDATA[There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
 ]]></output>
-            <test-case id="1008" name="SkillAnimationEnd_ReleasesFrameworkEntityExactlyOnce" fullname="ColorTiming.Tests.PlayMode.PlayerEntityLifecyclePlayModeTests.SkillAnimationEnd_ReleasesFrameworkEntityExactlyOnce" methodname="SkillAnimationEnd_ReleasesFrameworkEntityExactlyOnce" classname="ColorTiming.Tests.PlayMode.PlayerEntityLifecyclePlayModeTests" runstate="Runnable" seed="1421840541" result="Passed" start-time="2026-08-24 12:42:47Z" end-time="2026-08-24 12:42:47Z" duration="0.050025" asserts="0">
+            <test-case id="1014" name="GrassEnterExit_AnimatesAndSwitchesFrameworkFootstepCueSet" fullname="ColorTiming.Tests.PlayMode.GrassWorldInteractionPlayModeTests.GrassEnterExit_AnimatesAndSwitchesFrameworkFootstepCueSet" methodname="GrassEnterExit_AnimatesAndSwitchesFrameworkFootstepCueSet" classname="ColorTiming.Tests.PlayMode.GrassWorldInteractionPlayModeTests" runstate="Runnable" seed="1440746705" result="Passed" start-time="2026-08-25 08:05:27Z" end-time="2026-08-25 08:05:27Z" duration="0.372544" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="Timeout" value="90000" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+已初始化BOSS血量:11
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+]]></output>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1015" name="PlayerEntityLifecyclePlayModeTests" fullname="ColorTiming.Tests.PlayMode.PlayerEntityLifecyclePlayModeTests" classname="ColorTiming.Tests.PlayMode.PlayerEntityLifecyclePlayModeTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-08-25 08:05:27Z" end-time="2026-08-25 08:05:27Z" duration="0.179978" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <output><![CDATA[There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+]]></output>
+            <test-case id="1016" name="SkillAnimationEnd_ReleasesFrameworkEntityExactlyOnce" fullname="ColorTiming.Tests.PlayMode.PlayerEntityLifecyclePlayModeTests.SkillAnimationEnd_ReleasesFrameworkEntityExactlyOnce" methodname="SkillAnimationEnd_ReleasesFrameworkEntityExactlyOnce" classname="ColorTiming.Tests.PlayMode.PlayerEntityLifecyclePlayModeTests" runstate="Runnable" seed="1401318087" result="Passed" start-time="2026-08-25 08:05:27Z" end-time="2026-08-25 08:05:27Z" duration="0.047786" asserts="0">
               <properties>
                 <property name="_JOINTYPE" value="UnityCombinatorial" />
                 <property name="retryIteration" value="0" />
@@ -405,14 +525,13 @@ There are 2 event systems in the scene. Please ensure there is always exactly on
 There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
 ]]></output>
             </test-case>
-            <test-case id="1009" name="UnityGameTimeAdapter_ComposesAndReleasesRequests" fullname="ColorTiming.Tests.PlayMode.PlayerEntityLifecyclePlayModeTests.UnityGameTimeAdapter_ComposesAndReleasesRequests" methodname="UnityGameTimeAdapter_ComposesAndReleasesRequests" classname="ColorTiming.Tests.PlayMode.PlayerEntityLifecyclePlayModeTests" runstate="Runnable" seed="1032863866" result="Passed" start-time="2026-08-24 12:42:47Z" end-time="2026-08-24 12:42:47Z" duration="0.097644" asserts="0">
+            <test-case id="1017" name="UnityGameTimeAdapter_ComposesAndReleasesRequests" fullname="ColorTiming.Tests.PlayMode.PlayerEntityLifecyclePlayModeTests.UnityGameTimeAdapter_ComposesAndReleasesRequests" methodname="UnityGameTimeAdapter_ComposesAndReleasesRequests" classname="ColorTiming.Tests.PlayMode.PlayerEntityLifecyclePlayModeTests" runstate="Runnable" seed="1413113378" result="Passed" start-time="2026-08-25 08:05:27Z" end-time="2026-08-25 08:05:27Z" duration="0.120389" asserts="0">
               <properties>
                 <property name="_JOINTYPE" value="UnityCombinatorial" />
                 <property name="retryIteration" value="0" />
                 <property name="repeatIteration" value="0" />
               </properties>
               <output><![CDATA[There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
-There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
 There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
 There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
 There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
@@ -420,11 +539,34 @@ There are 2 event systems in the scene. Please ensure there is always exactly on
 ]]></output>
             </test-case>
           </test-suite>
-          <test-suite type="TestFixture" id="1010" name="StartupFlowPlayModeTests" fullname="ColorTiming.Tests.PlayMode.StartupFlowPlayModeTests" classname="ColorTiming.Tests.PlayMode.StartupFlowPlayModeTests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-08-24 12:42:47Z" end-time="2026-08-24 12:42:47Z" duration="0.051413" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <test-suite type="TestFixture" id="1018" name="PlayerRuntimeExecutionPlayModeTests" fullname="ColorTiming.Tests.PlayMode.PlayerRuntimeExecutionPlayModeTests" classname="ColorTiming.Tests.PlayMode.PlayerRuntimeExecutionPlayModeTests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-08-25 08:05:27Z" end-time="2026-08-25 08:05:37Z" duration="9.913580" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
             <properties />
             <output><![CDATA[There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
 ]]></output>
-            <test-case id="1011" name="LaunchBootsFrameworkAndLoadsStartMenuOnce" fullname="ColorTiming.Tests.PlayMode.StartupFlowPlayModeTests.LaunchBootsFrameworkAndLoadsStartMenuOnce" methodname="LaunchBootsFrameworkAndLoadsStartMenuOnce" classname="ColorTiming.Tests.PlayMode.StartupFlowPlayModeTests" runstate="Runnable" seed="1265686806" result="Passed" start-time="2026-08-24 12:42:47Z" end-time="2026-08-24 12:42:47Z" duration="0.033173" asserts="0">
+            <test-case id="1019" name="SemanticInput_PickupHitDashDeathAndAnimationRestartExecuteInBoss1" fullname="ColorTiming.Tests.PlayMode.PlayerRuntimeExecutionPlayModeTests.SemanticInput_PickupHitDashDeathAndAnimationRestartExecuteInBoss1" methodname="SemanticInput_PickupHitDashDeathAndAnimationRestartExecuteInBoss1" classname="ColorTiming.Tests.PlayMode.PlayerRuntimeExecutionPlayModeTests" runstate="Runnable" seed="859137989" result="Passed" start-time="2026-08-25 08:05:27Z" end-time="2026-08-25 08:05:37Z" duration="9.899504" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="Timeout" value="180000" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+已初始化BOSS血量:11
+已初始化BOSS血量:11
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+]]></output>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1020" name="StartupFlowPlayModeTests" fullname="ColorTiming.Tests.PlayMode.StartupFlowPlayModeTests" classname="ColorTiming.Tests.PlayMode.StartupFlowPlayModeTests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-08-25 08:05:37Z" end-time="2026-08-25 08:05:37Z" duration="0.079961" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <output><![CDATA[There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+]]></output>
+            <test-case id="1021" name="LaunchBootsFrameworkAndLoadsStartMenuOnce" fullname="ColorTiming.Tests.PlayMode.StartupFlowPlayModeTests.LaunchBootsFrameworkAndLoadsStartMenuOnce" methodname="LaunchBootsFrameworkAndLoadsStartMenuOnce" classname="ColorTiming.Tests.PlayMode.StartupFlowPlayModeTests" runstate="Runnable" seed="203161535" result="Passed" start-time="2026-08-25 08:05:37Z" end-time="2026-08-25 08:05:37Z" duration="0.065827" asserts="0">
               <properties>
                 <property name="_JOINTYPE" value="UnityCombinatorial" />
                 <property name="Timeout" value="60000" />
@@ -432,6 +574,38 @@ There are 2 event systems in the scene. Please ensure there is always exactly on
                 <property name="repeatIteration" value="0" />
               </properties>
               <output><![CDATA[There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+]]></output>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1022" name="WeaponAnimationEventExecutionPlayModeTests" fullname="ColorTiming.Tests.PlayMode.WeaponAnimationEventExecutionPlayModeTests" classname="ColorTiming.Tests.PlayMode.WeaponAnimationEventExecutionPlayModeTests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-08-25 08:05:37Z" end-time="2026-08-25 08:05:40Z" duration="2.216965" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <output><![CDATA[There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+]]></output>
+            <test-case id="1023" name="EveryAuthoredWeaponColorExecutesAnimationEventThroughGfEntity" fullname="ColorTiming.Tests.PlayMode.WeaponAnimationEventExecutionPlayModeTests.EveryAuthoredWeaponColorExecutesAnimationEventThroughGfEntity" methodname="EveryAuthoredWeaponColorExecutesAnimationEventThroughGfEntity" classname="ColorTiming.Tests.PlayMode.WeaponAnimationEventExecutionPlayModeTests" runstate="Runnable" seed="938524890" result="Passed" start-time="2026-08-25 08:05:37Z" end-time="2026-08-25 08:05:40Z" duration="2.200844" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="Timeout" value="300000" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+已初始化BOSS血量:11
+看看角度:::::79.2591563505457
+看看角度:::::79.2591563505457
+看看角度:::::79.2591563505457
+已初始化BOSS血量:15
+看看角度:::::78.6416214505796
+看看角度:::::78.6416214505796
+看看角度:::::78.6416214505796
+看看角度:::::78.6416214505796
 There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
 Saving results to: C:/Users/WIN10/AppData/LocalLow/DefaultCompany/GameDesinger\TestResults.xml
 ]]></output>

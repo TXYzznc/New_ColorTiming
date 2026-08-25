@@ -3,6 +3,7 @@ using GameFramework;
 using GameFramework.Procedure;
 using System;
 using UnityEngine;
+using UnityGameFramework.Runtime;
 
 namespace ColorTiming.Tests.PlayMode
 {
@@ -31,18 +32,70 @@ namespace ColorTiming.Tests.PlayMode
                 yield break;
             }
 
-            // UGF's ProcedureComponent waits for WaitForEndOfFrame before starting
-            // its entrance procedure. Unity does not advance that yield instruction
-            // in batch mode, so headless tests complete the same formal start after
-            // one ordinary frame. Editor and Player runtime paths remain unchanged.
             yield return null;
             var manager = GameFrameworkEntry.GetModule<IProcedureManager>();
-            if (manager != null
-                && manager.CurrentProcedure == null
-                && manager.HasProcedure<LaunchProcedure>())
+            var initDeadline = Time.realtimeSinceStartup + 10f;
+            while (Time.realtimeSinceStartup < initDeadline)
             {
-                manager.StartProcedure<LaunchProcedure>();
-                GFTrace.Info("Test", "BatchMode.LaunchProcedure.Started");
+                manager = GameFrameworkEntry.GetModule<IProcedureManager>();
+                if (TryHasProcedure<LaunchProcedure>(manager))
+                {
+                    break;
+                }
+
+                yield return null;
+            }
+
+            if (manager != null
+                && TryHasProcedure<LaunchProcedure>(manager))
+            {
+                var shouldStart = true;
+                if (TryGetCurrentProcedure(manager, out var current))
+                {
+                    shouldStart = current == null || current.GetType() != typeof(LaunchProcedure);
+                }
+
+                if (shouldStart)
+                {
+                    manager.StartProcedure<LaunchProcedure>();
+                    GFTrace.Info("Test", "BatchMode.LaunchProcedure.Started");
+                }
+            }
+        }
+
+        static bool TryGetCurrentProcedure(IProcedureManager manager, out ProcedureBase current)
+        {
+            current = null;
+            if (manager == null)
+            {
+                return false;
+            }
+
+            try
+            {
+                current = manager.CurrentProcedure;
+                return true;
+            }
+            catch (GameFrameworkException)
+            {
+                return false;
+            }
+        }
+
+        static bool TryHasProcedure<T>(IProcedureManager manager) where T : ProcedureBase
+        {
+            if (manager == null)
+            {
+                return false;
+            }
+
+            try
+            {
+                return manager.HasProcedure<T>();
+            }
+            catch (GameFrameworkException)
+            {
+                return false;
             }
         }
 

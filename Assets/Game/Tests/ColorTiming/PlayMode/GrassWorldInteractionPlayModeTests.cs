@@ -37,12 +37,17 @@ namespace ColorTiming.Tests.PlayMode
                 .FirstOrDefault(candidate => candidate.CompareTag("Player"));
             var heroSound = hero.GetComponentInChildren<HeroSoundManager>(true);
             var grass = UnityEngine.Object.FindObjectsOfType<XiaoCao>(true)
-                .First(candidate => candidate.gameObject.activeInHierarchy);
-            var animator = grass.GetComponent<Animator>();
+                .FirstOrDefault(candidate => candidate.gameObject.activeInHierarchy
+                                             && candidate.audioClips != null
+                                             && candidate.audioClips.Count > 0
+                                             && candidate.audioClips.All(clip => clip != null));
             var sound = new RecordingSoundService();
 
             Assert.That(heroCollider, Is.Not.Null);
             Assert.That(heroSound, Is.Not.Null);
+            Assert.That(grass, Is.Not.Null,
+                "Boss1 must contain an active XiaoCao instance with non-empty grass rustle clips.");
+            var animator = grass.GetComponent<Animator>();
             Assert.That(grass.audioClips, Is.Not.Empty.And.All.Not.Null,
                 "Grass rustle clips must have no missing references.");
             Assert.That(heroSound.rMoveAudio, Is.Not.Empty.And.All.Not.Null);
