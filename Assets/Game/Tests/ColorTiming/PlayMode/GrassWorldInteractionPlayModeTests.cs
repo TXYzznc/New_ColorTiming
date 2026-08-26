@@ -149,6 +149,10 @@ namespace ColorTiming.Tests.PlayMode
                 Reset();
             }
 
+            public void Stop(int serialId)
+            {
+            }
+
             public void Reset()
             {
                 Calls.Clear();

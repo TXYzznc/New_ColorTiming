@@ -47,7 +47,7 @@ namespace ColorTiming.Bootstrap
                 return;
             }
 
-            inputHost = new GameObject("[ColorTiming] Input");
+            inputHost = new GameObject("[ColorTiming] Input (Clone)");
             UnityEngine.Object.DontDestroyOnLoad(inputHost);
             gameInput = inputHost.AddComponent<LegacyGameInputAdapter>();
             gameTime = inputHost.AddComponent<UnityGameTimeAdapter>();
@@ -55,7 +55,7 @@ namespace ColorTiming.Bootstrap
             soundService.Initialize(gameTime);
             transientEntities = new GfTransientEntityService(soundService);
             settings = new GfColorTimingSettings();
-            uiService = new GfColorTimingUiService(gameTime, sceneFlow, settings, gameInput);
+            uiService = new GfColorTimingUiService(gameTime, sceneFlow, settings, gameInput, soundService);
             sceneFlow.TransitionStarted += OnTransitionStarted;
             initialized = true;
         }

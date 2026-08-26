@@ -12,6 +12,8 @@ using TMPro;
 public class BuiltinViewComponent : GameFrameworkComponent
 {
     [Header("Loading Progress:")]
+    [Tooltip("Keep disabled until this project has a framework-level startup presentation requirement.")]
+    [SerializeField] private bool enableLoadingProgress = false;
     [SerializeField] GameObject loadingProgressNode = null;
     [SerializeField] private TextMeshProUGUI loadSliderText;
     [SerializeField] private Slider loadSlider;
@@ -27,15 +29,26 @@ public class BuiltinViewComponent : GameFrameworkComponent
     
     private void Start()
     {
-        ShowLoadingProgress();
+        if (enableLoadingProgress)
+        {
+            ShowLoadingProgress();
+        }
     }
     public void ShowLoadingProgress(float defaultProgress = 0)
     {
+        if (!enableLoadingProgress || loadingProgressNode == null)
+        {
+            return;
+        }
         loadingProgressNode.SetActive(true);
         SetLoadingProgress(defaultProgress);
     }
     public void SetLoadingProgress(float progress)
     {
+        if (!enableLoadingProgress || loadSlider == null || loadSliderText == null)
+        {
+            return;
+        }
         loadSlider.value = progress;
         string percent = Utility.Text.Format("{0:N0}%", loadSlider.value * 100);
         loadSliderText.text = string.IsNullOrEmpty(loadingStage) ? percent : $"{loadingStage}\n{percent}";
@@ -43,12 +56,20 @@ public class BuiltinViewComponent : GameFrameworkComponent
 
     public void SetLoadingStage(string stage)
     {
+        if (!enableLoadingProgress)
+        {
+            return;
+        }
         loadingStage = stage ?? string.Empty;
         SetLoadingProgress(loadSlider.value);
     }
 
     public void HideLoadingProgress()
     {
+        if (!enableLoadingProgress || loadingProgressNode == null)
+        {
+            return;
+        }
         loadingProgressNode.SetActive(false);
         loadingStage = string.Empty;
     }

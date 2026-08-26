@@ -108,6 +108,7 @@ public class UIFormBase : UIFormLogic, ISerializeFieldTool
     protected override void OnOpen(object userData)
     {
         base.OnOpen(userData);
+        RuntimeObjectNaming.EnsureCloneSuffix(gameObject);
         Params = userData as UIParams;
         var cvs = GetComponent<Canvas>();
         cvs.overrideSorting = true;
@@ -244,6 +245,7 @@ public class UIFormBase : UIFormLogic, ISerializeFieldTool
         if (spawn == null)
         {
             var itemInstance = Instantiate(itemTemple, instanceRoot);
+            RuntimeObjectNaming.EnsureCloneSuffix(itemInstance);
             spawn = UIItemObject.Create<T>(itemInstance);
             pool.Register(spawn, true);
         }

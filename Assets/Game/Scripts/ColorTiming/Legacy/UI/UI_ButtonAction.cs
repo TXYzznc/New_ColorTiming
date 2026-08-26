@@ -4,15 +4,18 @@ using UnityEngine.Audio;
 using System;
 using ColorTiming.Bootstrap.Flow;
 using ColorTiming.Settings;
+using ColorTiming.Presentation.Audio;
 using GameFramework;
 using UnityGameFramework.Runtime;
 
-public class UI_ButtonAction : UIFormBase, IColorTimingSceneFlowConsumer, IColorTimingSettingsConsumer,
+public class UI_ButtonAction : UIFormBase, IColorTimingSceneFlowConsumer, IColorTimingSettingsConsumer, IColorTimingSoundConsumer,
     ColorTiming.Presentation.UI.IColorTimingStartMenuForm
 {
     IColorTimingSceneFlow sceneFlow;
     IColorTimingSettings settings;
+    IColorTimingSoundService soundService;
     StartVido videoSequence;
+    int bgmSoundId;
 
     public void BindSceneFlow(IColorTimingSceneFlow flow)
     {
@@ -25,10 +28,20 @@ public class UI_ButtonAction : UIFormBase, IColorTimingSceneFlowConsumer, IColor
         RefreshSettingsView();
     }
 
-    public void BindRuntime(IColorTimingSceneFlow flow, IColorTimingSettings projectSettings)
+    public void BindRuntime(
+        IColorTimingSceneFlow flow,
+        IColorTimingSettings projectSettings,
+        IColorTimingSoundService projectSoundService)
     {
         BindSceneFlow(flow);
         BindSettings(projectSettings);
+        BindSoundService(projectSoundService);
+    }
+
+    public void BindSoundService(IColorTimingSoundService projectSoundService)
+    {
+        soundService = projectSoundService ?? throw new ArgumentNullException(nameof(projectSoundService));
+        RefreshBgmPlayback();
     }
 
     public GameObject StartBtnBox;
@@ -36,6 +49,7 @@ public class UI_ButtonAction : UIFormBase, IColorTimingSceneFlowConsumer, IColor
     public GameObject SettingButtonBox;
 
     public AudioMixer AudioMixer;
+    [SerializeField] AudioClip bgm;
 
     public GameObject BGMBtn_Open;
     public GameObject BGMBtn_Off;
@@ -55,11 +69,13 @@ public class UI_ButtonAction : UIFormBase, IColorTimingSceneFlowConsumer, IColor
         base.OnOpen(userData);
         videoSequence ??= GetComponentInChildren<StartVido>(true);
         videoSequence?.RestartSequence();
+        RefreshBgmPlayback();
     }
 
     protected override void OnClose(bool isShutdown, object userData)
     {
         videoSequence?.StopSequence();
+        StopBgmPlayback();
         base.OnClose(isShutdown, userData);
     }
 
@@ -117,6 +133,7 @@ public class UI_ButtonAction : UIFormBase, IColorTimingSceneFlowConsumer, IColor
             settings.BgmEnabled = open;
         }
         SetToggleView(BGMBtn_Open, BGMBtn_Off, open);
+        RefreshBgmPlayback();
     }
 
     public void SetSFX(bool open)
@@ -153,6 +170,30 @@ public class UI_ButtonAction : UIFormBase, IColorTimingSceneFlowConsumer, IColor
         SetToggleView(BGMBtn_Open, BGMBtn_Off, settings.BgmEnabled);
         SetToggleView(SFXBtn_Open, SFXBtn_Off, settings.SfxEnabled);
         SetOffTip(settings.KeyTipsDisabled);
+        RefreshBgmPlayback();
+    }
+
+    void RefreshBgmPlayback()
+    {
+        if (!isActiveAndEnabled || soundService == null || settings == null || !settings.BgmEnabled || bgm == null)
+        {
+            StopBgmPlayback();
+            return;
+        }
+        if (bgmSoundId <= 0)
+        {
+            bgmSoundId = soundService.Play(bgm, ColorTimingSoundChannel.BGM, transform.position, true);
+        }
+    }
+
+    void StopBgmPlayback()
+    {
+        if (bgmSoundId <= 0)
+        {
+            return;
+        }
+        soundService?.Stop(bgmSoundId);
+        bgmSoundId = 0;
     }
 
     static void SetToggleView(GameObject openButton, GameObject offButton, bool enabled)

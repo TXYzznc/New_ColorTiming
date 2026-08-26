@@ -32,6 +32,7 @@ public class EntityBase : EntityLogic
     protected override void OnShow(object userData)
     {
         base.OnShow(userData);
+        RuntimeObjectNaming.EnsureCloneSuffix(gameObject);
         Id = this.Entity.Id;
         if (userData == null)
         {

@@ -2,6 +2,7 @@ using System;
 using ColorTiming.Bootstrap.Flow;
 using ColorTiming.Combat;
 using ColorTiming.Input;
+using ColorTiming.Presentation.Audio;
 using ColorTiming.Settings;
 using UnityGameFramework.Runtime;
 
@@ -14,25 +15,35 @@ namespace ColorTiming.Presentation.UI
         readonly IColorTimingSceneFlow sceneFlow;
         readonly IColorTimingSettings settings;
         readonly IGameInput gameInput;
+        readonly IColorTimingSoundService soundService;
         IDisposable pauseMenuLease;
         IDisposable resultPauseLease;
         int pauseFormId = -1;
         int startMenuFormId = -1;
         int resultFormId = -1;
+        int loadingFormId = -1;
         BattlePresentationResult pendingResult;
+        IColorTimingLoadingForm loadingForm;
+        float loadingProgress;
+        bool loadingCompletionRequested;
         bool disposed;
 
         public GfColorTimingUiService(
             IGameTime gameTime,
             IColorTimingSceneFlow sceneFlow,
             IColorTimingSettings settings,
-            IGameInput gameInput)
+            IGameInput gameInput,
+            IColorTimingSoundService soundService)
         {
             this.gameTime = gameTime ?? throw new ArgumentNullException(nameof(gameTime));
             this.sceneFlow = sceneFlow ?? throw new ArgumentNullException(nameof(sceneFlow));
             this.settings = settings ?? throw new ArgumentNullException(nameof(settings));
             this.gameInput = gameInput ?? throw new ArgumentNullException(nameof(gameInput));
+            this.soundService = soundService ?? throw new ArgumentNullException(nameof(soundService));
             this.sceneFlow.TransitionStarted += OnTransitionStarted;
+            this.sceneFlow.TransitionProgress += OnTransitionProgress;
+            this.sceneFlow.SceneChanged += OnSceneChanged;
+            this.sceneFlow.TransitionFailed += OnTransitionFailed;
         }
 
         public bool IsPauseOpen => pauseFormId >= 0;
@@ -62,7 +73,7 @@ namespace ColorTiming.Presentation.UI
         public void PresentScene(ColorTimingSceneId scene)
         {
             ThrowIfDisposed();
-            CloseTrackedForms();
+            CloseTrackedGameplayForms();
             if (scene != ColorTimingSceneId.StartMenu)
             {
                 return;
@@ -71,7 +82,7 @@ namespace ColorTiming.Presentation.UI
             var parameters = UIParams.Create(false);
             parameters.OpenCallback = OnStartMenuOpened;
             parameters.CloseCallback = _ => startMenuFormId = -1;
-            startMenuFormId = GF.UI.OpenUIForm(UIViews.StartMenu, parameters);
+            startMenuFormId = GF.UI.OpenUIForm(UIViews.MainMenu, parameters);
             if (startMenuFormId < 0)
             {
                 UnityEngine.Debug.LogError("Failed to open the ColorTiming start-menu GF.UI form.");
@@ -111,7 +122,7 @@ namespace ColorTiming.Presentation.UI
         {
             if (logic is IColorTimingStartMenuForm form)
             {
-                form.BindRuntime(sceneFlow, settings);
+                form.BindRuntime(sceneFlow, settings, soundService);
                 return;
             }
 
@@ -184,9 +195,65 @@ namespace ColorTiming.Presentation.UI
 
         void CloseTrackedForms()
         {
+            CloseTrackedGameplayForms();
+            CloseLoading();
+        }
+
+        void CloseTrackedGameplayForms()
+        {
             ClosePause();
             CloseStartMenu();
             CloseBattleResult();
+        }
+
+        void BeginLoading()
+        {
+            CloseLoading();
+            loadingProgress = 0f;
+            loadingCompletionRequested = false;
+            var parameters = UIParams.Create(false);
+            parameters.OpenCallback = OnLoadingOpened;
+            parameters.CloseCallback = _ => ResetLoadingState();
+            loadingFormId = GF.UI.OpenUIForm(UIViews.Loading, parameters);
+            if (loadingFormId < 0)
+            {
+                UnityEngine.Debug.LogError("Failed to open the ColorTiming loading GF.UI form.");
+            }
+        }
+
+        void OnLoadingOpened(UIFormLogic logic)
+        {
+            if (logic is not IColorTimingLoadingForm form)
+            {
+                UnityEngine.Debug.LogError("ColorTiming loading prefab must implement IColorTimingLoadingForm.");
+                CloseLoading();
+                return;
+            }
+
+            loadingForm = form;
+            loadingForm.SetProgress(loadingProgress);
+            if (loadingCompletionRequested)
+            {
+                loadingForm.CompleteAndClose();
+            }
+        }
+
+        void CloseLoading()
+        {
+            var serialId = loadingFormId;
+            ResetLoadingState();
+            if (serialId >= 0 && GF.UI != null)
+            {
+                GF.UI.CloseUIForm(serialId);
+            }
+        }
+
+        void ResetLoadingState()
+        {
+            loadingFormId = -1;
+            loadingForm = null;
+            loadingProgress = 0f;
+            loadingCompletionRequested = false;
         }
 
         void ReleasePause()
@@ -201,12 +268,35 @@ namespace ColorTiming.Presentation.UI
             if (disposed) return;
             Reset();
             sceneFlow.TransitionStarted -= OnTransitionStarted;
+            sceneFlow.TransitionProgress -= OnTransitionProgress;
+            sceneFlow.SceneChanged -= OnSceneChanged;
+            sceneFlow.TransitionFailed -= OnTransitionFailed;
             disposed = true;
         }
 
         void OnTransitionStarted(ColorTimingSceneId scene)
         {
-            Reset();
+            CloseTrackedGameplayForms();
+            BeginLoading();
+        }
+
+        void OnTransitionProgress(float progress)
+        {
+            loadingProgress = progress;
+            loadingForm?.SetProgress(progress);
+        }
+
+        void OnSceneChanged(ColorTimingSceneId scene)
+        {
+            loadingProgress = 1f;
+            loadingCompletionRequested = true;
+            loadingForm?.SetProgress(loadingProgress);
+            loadingForm?.CompleteAndClose();
+        }
+
+        void OnTransitionFailed(ColorTimingSceneId scene, string error)
+        {
+            CloseLoading();
         }
 
         void ThrowIfDisposed()

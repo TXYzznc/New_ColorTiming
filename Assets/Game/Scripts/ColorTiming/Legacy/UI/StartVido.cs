@@ -165,7 +165,7 @@ public class StartVido : MonoBehaviour
         if (videoDisplay == null)
         {
             var displayObject = new GameObject(
-                "VideoOutput",
+                "VideoOutput (Clone)",
                 typeof(RectTransform),
                 typeof(CanvasRenderer),
                 typeof(RawImage));

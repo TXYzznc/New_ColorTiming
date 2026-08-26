@@ -14,6 +14,7 @@ namespace ColorTiming.Presentation.Audio
     public interface IColorTimingSoundService
     {
         int Play(AudioClip clip, ColorTimingSoundChannel channel, Vector3 position, bool loop = false);
+        void Stop(int serialId);
         void ResetTrackedSounds();
     }
 

@@ -66,6 +66,18 @@ namespace ColorTiming.Presentation.Audio
             gameplaySounds.Clear();
         }
 
+        public void Stop(int serialId)
+        {
+            if (serialId <= 0)
+            {
+                return;
+            }
+
+            GF.Sound?.StopSound(serialId);
+            sceneSounds.Remove(serialId);
+            gameplaySounds.Remove(serialId);
+        }
+
         public static string BuildRelativeName(string clipName, ColorTimingSoundChannel channel)
         {
             if (string.IsNullOrWhiteSpace(clipName))

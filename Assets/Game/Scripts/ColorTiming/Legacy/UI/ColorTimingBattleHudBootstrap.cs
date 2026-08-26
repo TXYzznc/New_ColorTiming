@@ -24,7 +24,7 @@ public sealed class ColorTimingBattleHudBootstrap : MonoBehaviour
         }
 
         instance = Instantiate(hudPrefab, transform);
-        instance.name = hudPrefab.name;
+        RuntimeObjectNaming.EnsureCloneSuffix(instance);
         Debug.Log(
             $"[ColorTiming HUD] instantiated hud={instance.name} active={instance.activeInHierarchy} " +
             $"parent={instance.transform.parent.name} scale={instance.transform.lossyScale}",

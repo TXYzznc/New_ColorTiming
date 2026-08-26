@@ -5,6 +5,7 @@
 public enum UIViews : int
 {
 	Esc = 1001,
-	StartMenu = 1002,
-	BattleResult = 1003
+	MainMenu = 1002,
+	BattleResult = 1003,
+	Loading = 1004
 }

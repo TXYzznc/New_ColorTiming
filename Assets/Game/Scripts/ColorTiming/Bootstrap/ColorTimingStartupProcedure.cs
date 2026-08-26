@@ -62,7 +62,6 @@ namespace ColorTiming.Bootstrap
             }
 
             GF.Base.ResetNormalGameSpeed();
-            GFBuiltin.BuiltinView?.ShowLoadingProgress(0f);
             if (!waitingForTargetUnload)
             {
                 LoadPendingScene();
@@ -127,7 +126,6 @@ namespace ColorTiming.Bootstrap
             waitingForTargetUnload = false;
             const string error = "The current scene could not be unloaded before a same-scene reload.";
             compositionRoot.FailSceneTransition(loadingScene, error);
-            GFBuiltin.BuiltinView?.HideLoadingProgress();
             Log.Error("ColorTiming scene '{0}' could not unload for reload.", loadingScene);
         }
 
@@ -140,7 +138,6 @@ namespace ColorTiming.Bootstrap
             }
 
             compositionRoot.ReportSceneTransitionProgress(args.Progress);
-            GFBuiltin.BuiltinView?.SetLoadingProgress(args.Progress);
         }
 
         private void OnLoadSceneSuccess(object sender, GameEventArgs eventArgs)
@@ -154,7 +151,6 @@ namespace ColorTiming.Bootstrap
             Scene loadedScene = SceneManager.GetSceneByPath(args.SceneAssetName);
             compositionRoot.BindScene(loadedScene, loadingScene);
             compositionRoot.CompleteSceneTransition(loadingScene);
-            GFBuiltin.BuiltinView?.HideLoadingProgress();
             GFTrace.Success("ColorTiming", "Scene.Load.Success", null,
                 GFTrace.Data("scene", loadingScene.ToString(), "asset", args.SceneAssetName));
         }

@@ -24,7 +24,16 @@ namespace ColorTiming.Presentation.UI
 
     public interface IColorTimingStartMenuForm
     {
-        void BindRuntime(IColorTimingSceneFlow sceneFlow, IColorTimingSettings settings);
+        void BindRuntime(
+            IColorTimingSceneFlow sceneFlow,
+            IColorTimingSettings settings,
+            ColorTiming.Presentation.Audio.IColorTimingSoundService soundService);
+    }
+
+    public interface IColorTimingLoadingForm
+    {
+        void SetProgress(float progress);
+        void CompleteAndClose();
     }
 
     public interface IColorTimingBattleResultForm

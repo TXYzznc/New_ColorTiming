@@ -2,6 +2,9 @@
     "name": "ColorTiming.Migration.Editor",
     "rootNamespace": "ColorTiming.Editor",
     "references": [
+        "Hotfix",
+        "UnityGameFramework.Runtime",
+        "GameFramework",
         "Unity.UGUI",
         "Builtin.Editor",
         "UnityEditor.TestRunner"

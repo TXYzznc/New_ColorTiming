@@ -5,3 +5,4 @@
 	1001	ColorTiming pause menu	0	ColorTiming/Game/Esc	False	2	False
 	1002	ColorTiming main menu	0	ColorTiming/Game/MainMenu	False	1	False
 	1003	ColorTiming battle result	0	ColorTiming/Game/BattleResult	False	2	False
+	1004	ColorTiming loading overlay	0	ColorTiming/Game/Loading	False	3	False
