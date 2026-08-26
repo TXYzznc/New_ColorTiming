@@ -21,11 +21,11 @@ namespace ColorTiming.Tests.PlayMode
             Assert.That(menu, Is.Not.Null);
             menu.GoTest1();
             yield return WaitForScene("Boss1", TransitionTimeout);
-            yield return WaitForHud("BattleHud_Boss1", TransitionTimeout);
+            yield return WaitForHud(TransitionTimeout);
 
             var boss1Hud = Object.FindObjectOfType<ColorTimingBattleHudBootstrap>(true);
             Assert.That(boss1Hud, Is.Not.Null);
-            AssertHudRoot(boss1Hud, "BattleHud_Boss1");
+            AssertHudRoot(boss1Hud);
             AssertBoss1Hud(boss1Hud);
 
             var boss1 = FindActive<Boss1_Controller>();
@@ -38,10 +38,10 @@ namespace ColorTiming.Tests.PlayMode
             }
 
             yield return WaitForScene("Boss2", TransitionTimeout);
-            yield return WaitForHud("BattleHud_Boss2", TransitionTimeout);
+            yield return WaitForHud(TransitionTimeout);
             var boss2Hud = Object.FindObjectOfType<ColorTimingBattleHudBootstrap>(true);
             Assert.That(boss2Hud, Is.Not.Null);
-            AssertHudRoot(boss2Hud, "BattleHud_Boss2");
+            AssertHudRoot(boss2Hud);
             AssertBoss2Hud(boss2Hud);
 
             var heroHud = FindActive<UI_HeroInfo>();
@@ -55,9 +55,9 @@ namespace ColorTiming.Tests.PlayMode
             Debug.Log("[ColorTiming HUD] test-result unique-runtime-hud-and-player-layout=PASS");
         }
 
-        static void AssertHudRoot(ColorTimingBattleHudBootstrap bootstrap, string expectedName)
+        static void AssertHudRoot(ColorTimingBattleHudBootstrap bootstrap)
         {
-            var hud = bootstrap.transform.Find(expectedName);
+            var hud = bootstrap.transform.Find("BattleHud");
             Assert.That(hud, Is.Not.Null, "The battle HUD must be instantiated under the bootstrap.");
             Assert.That(hud.GetComponent<RectTransform>(), Is.Not.Null,
                 "The runtime HUD root must be a RectTransform when parented under Canvas UI.");
@@ -66,36 +66,42 @@ namespace ColorTiming.Tests.PlayMode
 
         static void AssertBoss1Hud(ColorTimingBattleHudBootstrap bootstrap)
         {
-            var hud = bootstrap.transform.Find("BattleHud_Boss1");
+            var hud = bootstrap.transform.Find("BattleHud");
             var heroBoxes = Object.FindObjectsOfType<UI_HeroHPBox>(true);
             var bossControllers = Object.FindObjectsOfType<UI_BossHPController>(true);
             var bossControllers2 = Object.FindObjectsOfType<UI_BossHPController2>(true);
             Assert.That(heroBoxes, Has.Length.EqualTo(1));
             Assert.That(bossControllers, Has.Length.EqualTo(1));
-            Assert.That(bossControllers2, Has.Length.EqualTo(0));
+            Assert.That(bossControllers2, Has.Length.EqualTo(1));
             Assert.That(heroBoxes[0].transform.IsChildOf(hud), Is.True);
             Assert.That(bossControllers[0].transform.IsChildOf(hud), Is.True);
+            Assert.That(bossControllers2[0].transform.IsChildOf(hud), Is.True);
+            Assert.That(bossControllers[0].enabled, Is.True);
+            Assert.That(bossControllers2[0].enabled, Is.False);
 
             AssertHeroLayout(heroBoxes[0]);
             Assert.That(bossControllers[0].transform.childCount, Is.EqualTo(7));
-            Debug.Log("[ColorTiming HUD] test scene=Boss1 controllers=hero:1 boss1:1 boss2:0 staticOutsideHud:0");
+            Debug.Log("[ColorTiming HUD] test scene=Boss1 controllers=hero:1 boss1:enabled boss2:disabled staticOutsideHud:0");
         }
 
         static void AssertBoss2Hud(ColorTimingBattleHudBootstrap bootstrap)
         {
-            var hud = bootstrap.transform.Find("BattleHud_Boss2");
+            var hud = bootstrap.transform.Find("BattleHud");
             var heroBoxes = Object.FindObjectsOfType<UI_HeroHPBox>(true);
             var bossControllers = Object.FindObjectsOfType<UI_BossHPController>(true);
             var bossControllers2 = Object.FindObjectsOfType<UI_BossHPController2>(true);
             Assert.That(heroBoxes, Has.Length.EqualTo(1));
-            Assert.That(bossControllers, Has.Length.EqualTo(0));
+            Assert.That(bossControllers, Has.Length.EqualTo(1));
             Assert.That(bossControllers2, Has.Length.EqualTo(1));
             Assert.That(heroBoxes[0].transform.IsChildOf(hud), Is.True);
+            Assert.That(bossControllers[0].transform.IsChildOf(hud), Is.True);
             Assert.That(bossControllers2[0].transform.IsChildOf(hud), Is.True);
+            Assert.That(bossControllers[0].enabled, Is.False);
+            Assert.That(bossControllers2[0].enabled, Is.True);
 
             AssertHeroLayout(heroBoxes[0]);
             Assert.That(bossControllers2[0].transform.childCount, Is.EqualTo(7));
-            Debug.Log("[ColorTiming HUD] test scene=Boss2 controllers=hero:1 boss1:0 boss2:1 staticOutsideHud:0");
+            Debug.Log("[ColorTiming HUD] test scene=Boss2 controllers=hero:1 boss1:disabled boss2:enabled staticOutsideHud:0");
         }
 
         static void AssertHeroLayout(UI_HeroHPBox heroBox)
@@ -128,14 +134,14 @@ namespace ColorTiming.Tests.PlayMode
                 "StartMenu GF.UI form did not become active.");
         }
 
-        static IEnumerator WaitForHud(string hudName, float timeout)
+        static IEnumerator WaitForHud(float timeout)
         {
             yield return WaitUntil(() =>
             {
                 var bootstrap = Object.FindObjectOfType<ColorTimingBattleHudBootstrap>(true);
-                return bootstrap != null && bootstrap.transform.Find(hudName) != null
-                    && bootstrap.transform.Find(hudName).GetComponentInChildren<UI_HeroHPBox>(true)?.controller != null;
-            }, timeout, $"Runtime HUD '{hudName}' did not finish binding.");
+                return bootstrap != null && bootstrap.transform.Find("BattleHud") != null
+                    && bootstrap.transform.Find("BattleHud").GetComponentInChildren<UI_HeroHPBox>(true)?.controller != null;
+            }, timeout, "Shared runtime BattleHud did not finish binding.");
         }
 
         static IEnumerator WaitForScene(string sceneName, float timeout)

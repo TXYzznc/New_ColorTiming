@@ -16,6 +16,7 @@ namespace ColorTiming.Editor
         const string HeroBox = "Assets/Game/Prefabs/UI/ColorTiming/P_HPBox.prefab";
         const string BossItem = "Assets/Game/Prefabs/UI/ColorTiming/BossHP_Item.prefab";
         const string PrefabFolder = "Assets/Game/Prefabs/UI/ColorTiming/Game";
+        const string BattleHud = "BattleHud.prefab";
 
         [MenuItem("Game Framework/GameTools/Migrate ColorTiming Battle HUD", false, 1004)]
         public static void Migrate()
@@ -25,12 +26,15 @@ namespace ColorTiming.Editor
                 AssetDatabase.Refresh();
                 Directory.CreateDirectory(Path.Combine(Application.dataPath, "Game/Prefabs/UI/ColorTiming/Game"));
                 Directory.CreateDirectory(Path.Combine(Application.dataPath, "Game/Prefabs/UI/ColorTiming"));
-                MigrateScene(Boss1Scene, "BattleHud_Boss1.prefab");
-                MigrateScene(Boss2Scene, "BattleHud_Boss2.prefab");
+                CreateSharedBattleHud();
+                MigrateScene(Boss1Scene);
+                MigrateScene(Boss2Scene);
                 NormalizeHeroBoxPrefabs();
+                AssetDatabase.DeleteAsset($"{PrefabFolder}/BattleHud_Boss1.prefab");
+                AssetDatabase.DeleteAsset($"{PrefabFolder}/BattleHud_Boss2.prefab");
                 AssetDatabase.SaveAssets();
                 AssetDatabase.Refresh();
-                Debug.Log("[ColorTiming HUD] migration completed for Boss1 and Boss2.");
+                Debug.Log("[ColorTiming HUD] migration completed with shared BattleHud.prefab.");
             }
             catch (System.Exception exception)
             {
@@ -42,7 +46,7 @@ namespace ColorTiming.Editor
         static void NormalizeHeroBoxPrefabs()
         {
             var heroBoxPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(HeroBox);
-            foreach (var hudName in new[] { "BattleHud_Boss1.prefab", "BattleHud_Boss2.prefab" })
+            foreach (var hudName in new[] { BattleHud })
             {
                 var hudPath = $"{PrefabFolder}/{hudName}";
                 var hudRoot = PrefabUtility.LoadPrefabContents(hudPath);
@@ -93,35 +97,48 @@ namespace ColorTiming.Editor
             AssetDatabase.Refresh();
         }
 
-        static void MigrateScene(string scenePath, string prefabName)
+        static void CreateSharedBattleHud()
+        {
+            var sharedPath = $"{PrefabFolder}/{BattleHud}";
+            var sourcePath = $"{PrefabFolder}/BattleHud_Boss1.prefab";
+            var sharedHud = AssetDatabase.LoadAssetAtPath<GameObject>(sharedPath);
+            if (sharedHud == null)
+            {
+                var sourceHud = AssetDatabase.LoadAssetAtPath<GameObject>(sourcePath);
+                if (sourceHud == null) throw new InvalidOperationException($"Battle HUD source not found: {sourcePath}.");
+                sharedHud = PrefabUtility.SaveAsPrefabAsset(sourceHud, sharedPath);
+                if (sharedHud == null) throw new InvalidOperationException($"Could not create {sharedPath}.");
+            }
+
+            var root = PrefabUtility.LoadPrefabContents(sharedPath);
+            try
+            {
+                root.name = "BattleHud";
+                var bossBox = FindDirectChild(root.transform, "HPBox");
+                ConfigureBossBox(bossBox, false);
+                var boss2 = FindComponent(bossBox, "UI_BossHPController2");
+                if (boss2 == null) boss2 = AddComponentByName(bossBox.gameObject, "UI_BossHPController2");
+                SetComponentReferences(bossBox, "UI_BossHPController2", "boss1_Controller", "HPItem", BossItem);
+                ((Behaviour)boss2).enabled = false;
+                PrefabUtility.SaveAsPrefabAsset(root, sharedPath);
+            }
+            finally
+            {
+                PrefabUtility.UnloadPrefabContents(root);
+            }
+        }
+
+        static void MigrateScene(string scenePath)
         {
             var scene = EditorSceneManager.OpenScene(scenePath, OpenSceneMode.Single);
             var uiRoot = FindByName(scene, "UI_BasePanel (1)") ?? FindByName(scene, "UI_BasePanel");
             if (uiRoot == null) throw new InvalidOperationException($"UI base panel not found in {scenePath}.");
 
-            var prefabPath = $"{PrefabFolder}/{prefabName}";
+            var prefabPath = $"{PrefabFolder}/{BattleHud}";
             var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(prefabPath);
             var playerInfo = FindDirectChild(uiRoot.transform, "PlayerInfo");
             var bossInfo = FindDirectChild(uiRoot.transform, "BossInfo");
-            if (prefab == null)
-            {
-                if (playerInfo == null || bossInfo == null)
-                    throw new InvalidOperationException($"Battle HUD roots not found in {scenePath}, and {prefabPath} does not exist.");
-
-                var staging = new GameObject("__ColorTimingBattleHudStaging");
-                SceneManager.MoveGameObjectToScene(staging, scene);
-                var playerCopy = UnityEngine.Object.Instantiate(playerInfo, staging.transform);
-                var bossCopy = UnityEngine.Object.Instantiate(bossInfo, staging.transform);
-                playerCopy.name = "PlayerInfo";
-                bossCopy.name = "BossInfo";
-
-                ConfigureHeroBox(playerCopy.transform.Find("P_HPBox"));
-                ConfigureBossBox(bossCopy.transform.Find("HPBox"), scenePath.EndsWith("Boss2.unity", StringComparison.Ordinal));
-
-                prefab = PrefabUtility.SaveAsPrefabAsset(staging, prefabPath);
-                if (prefab == null) throw new InvalidOperationException($"Could not create {prefabPath}.");
-                UnityEngine.Object.DestroyImmediate(staging);
-            }
+            if (prefab == null) throw new InvalidOperationException($"Shared battle HUD not found: {prefabPath}.");
 
             if (playerInfo != null) UnityEngine.Object.DestroyImmediate(playerInfo.gameObject);
             if (bossInfo != null) UnityEngine.Object.DestroyImmediate(bossInfo.gameObject);
@@ -141,7 +158,7 @@ namespace ColorTiming.Editor
             EditorUtility.SetDirty(bootstrapObject);
             EditorSceneManager.MarkSceneDirty(scene);
             EditorSceneManager.SaveScene(scene);
-            Debug.Log($"[ColorTiming HUD] migrated {scenePath} -> {prefabPath}.");
+            Debug.Log($"[ColorTiming HUD] migrated {scenePath} -> shared {prefabPath}.");
         }
 
         static System.Type ResolveType(MonoScript script)
@@ -197,6 +214,26 @@ namespace ColorTiming.Editor
             serialized.FindProperty(prefabReference).objectReferenceValue = AssetDatabase.LoadAssetAtPath<GameObject>(prefabPath);
             serialized.ApplyModifiedPropertiesWithoutUndo();
             EditorUtility.SetDirty(target);
+        }
+
+        static Component FindComponent(Transform target, string typeName)
+        {
+            foreach (var component in target.GetComponents<Component>())
+            {
+                if (component != null && component.GetType().Name == typeName) return component;
+            }
+            return null;
+        }
+
+        static Component AddComponentByName(GameObject target, string typeName)
+        {
+            foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+            {
+                var type = assembly.GetType(typeName, false);
+                if (type == null || !typeof(MonoBehaviour).IsAssignableFrom(type)) continue;
+                return target.AddComponent(type);
+            }
+            throw new InvalidOperationException($"Could not resolve component type {typeName}.");
         }
 
         static void ClearChildren(Transform parent)

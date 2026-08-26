@@ -39,9 +39,28 @@ public sealed class ColorTimingBattleHudBootstrap : MonoBehaviour
         var heroHp = instance.GetComponentInChildren<UI_HeroHPBox>(true);
         if (heroHp != null) heroHp.Bind(hero);
         var bossHp = instance.GetComponentInChildren<UI_BossHPController>(true);
-        if (bossHp != null) bossHp.Bind(boss1);
         var bossHp2 = instance.GetComponentInChildren<UI_BossHPController2>(true);
-        if (bossHp2 != null) bossHp2.Bind(boss2);
+
+        var hasBoss1 = boss1 != null;
+        var hasBoss2 = boss2 != null;
+        if (hasBoss1 == hasBoss2)
+        {
+            Debug.LogError(
+                $"[ColorTiming HUD] bind-failed scene={UnityEngine.SceneManagement.SceneManager.GetActiveScene().name} " +
+                $"boss1={hasBoss1} boss2={hasBoss2}. A battle HUD requires exactly one supported boss.", this);
+            yield break;
+        }
+
+        if (bossHp != null)
+        {
+            bossHp.enabled = hasBoss1;
+            if (hasBoss1) bossHp.Bind(boss1);
+        }
+        if (bossHp2 != null)
+        {
+            bossHp2.enabled = hasBoss2;
+            if (hasBoss2) bossHp2.Bind(boss2);
+        }
 
         LogHudState(heroHp, bossHp, bossHp2);
     }
