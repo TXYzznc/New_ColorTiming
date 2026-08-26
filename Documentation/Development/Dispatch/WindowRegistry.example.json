@@ -10,6 +10,13 @@
       "projectId": "<saved-project-id>",
       "projectPath": "<project-path>"
     },
+    "git-integration": {
+      "title": "<project-name>｜Git 集成",
+      "threadId": null,
+      "hostId": "<host-id>",
+      "projectId": "<saved-project-id>",
+      "projectPath": "<project-path>"
+    },
     "<role-key>": {
       "title": "<project-name>｜<role-title>",
       "threadId": null,

@@ -32,6 +32,7 @@ frontmatter 中登记的 SKILL；需要其它能力时必须交回主对话。
 | `client-ta` | impl | `unity-shaders-rendering`, `unity-lighting-vfx`, `shader-effects`, `agency-unity-shader-graph-artist` |
 | `client-unity` | impl | `unity-foundations`, `unity-ui`, `unity-input-correctness`, `save-serialization`, `state-machine`, `physics-collision`, `localization-i18n`, `unity-skills`, `unity-rect-transform` |
 | `devops-engineer` | impl | `devops-deployment`, `github-actions-docs`, `mobile-cicd`, `secrets-management`, `deploy-checklist`, `feature-flags` |
+| `git-integration` | impl | 无；只执行受控 Git 请求，不承担专业方案或实现 |
 | `net-backend` | impl | `arch-api`, `jwt-auth`, `oauth-implementation`, `backend-testing` |
 | `net-db` | system | `database-schema-design`, `redis-best-practices` |
 | `net-lead` | lead | `arch-api`, `game-networking`, `grill-me`, `openspec` |

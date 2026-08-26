@@ -118,6 +118,7 @@ ALLOWED_AGENTS = {
     "client-ta",
     "client-unity",
     "devops-engineer",
+    "git-integration",
     "net-backend",
     "net-db",
     "net-lead",
@@ -160,7 +161,8 @@ PROHIBITED_PATTERNS = {
         r"\b(BusinessEntity|ProductHud|ProductManager)\b",
         re.IGNORECASE,
     ),
-    "sample launch identifier": re.compile(r"(MainMenu|SampleScene)", re.IGNORECASE),
+    # ColorTiming 的正式菜单 UI 标识为 MainMenu；仅 SampleScene 属于禁止的示例场景标识。
+    "sample launch identifier": re.compile(r"SampleScene", re.IGNORECASE),
     "removed convenience API": re.compile(
         r"(ShowRewardEffect|ShowPopText|ShowPopEmoji)", re.IGNORECASE
     ),
@@ -174,6 +176,7 @@ COLLABORATION_REQUIRED_FILES = (
     "Documentation/Development/Dispatch/ActiveAssignments.template.md",
     "Documentation/Development/Dispatch/PauseAndRecovery.md",
     "Documentation/Development/Dispatch/WindowAutomation.md",
+    "Documentation/Development/Dispatch/GitIntegration.md",
     "Documentation/Development/Dispatch/WindowRegistry.example.json",
     "Documentation/Development/Dispatch/DecisionArchiveTemplate.md",
     "Documentation/Development/Dispatch/OpenSpecBatching.md",
@@ -238,7 +241,7 @@ def relative(path: Path, root: Path) -> str:
 
 
 def frontmatter(path: Path) -> dict:
-    text = path.read_text(encoding="utf-8")
+    text = path.read_text(encoding="utf-8-sig")
     match = re.match(r"^---\s*\n(.*?)\n---", text, re.DOTALL)
     if not match:
         raise ValueError("missing YAML frontmatter")
@@ -269,7 +272,7 @@ def audit_collaboration(root: Path) -> list[Finding]:
 
     gitignore = root / ".gitignore"
     if not gitignore.is_file() or ".ai/dispatch/" not in gitignore.read_text(
-        encoding="utf-8", errors="replace"
+        encoding="utf-8-sig", errors="replace"
     ):
         findings.append(
             Finding("collaboration-registry", ".gitignore", "missing .ai/dispatch/ ignore rule")
@@ -279,7 +282,7 @@ def audit_collaboration(root: Path) -> list[Finding]:
         path = root / relative_name
         if not path.is_file():
             continue
-        text = path.read_text(encoding="utf-8", errors="replace")
+        text = path.read_text(encoding="utf-8-sig", errors="replace")
         if expected_link not in text:
             findings.append(
                 Finding("collaboration-entry", relative_name, f"missing link: {expected_link}")
@@ -289,7 +292,7 @@ def audit_collaboration(root: Path) -> list[Finding]:
         path = root / relative_name
         if not path.is_file():
             continue
-        text = path.read_text(encoding="utf-8", errors="replace")
+        text = path.read_text(encoding="utf-8-sig", errors="replace")
         for label, pattern in COLLABORATION_PROHIBITED_PATTERNS.items():
             if pattern.search(text):
                 findings.append(Finding("collaboration-product-content", relative_name, label))
@@ -368,7 +371,7 @@ def audit(root: Path) -> list[Finding]:
 
     index_path = skills_root / "SKILLS_INDEX.md"
     if index_path.is_file():
-        index_text = index_path.read_text(encoding="utf-8")
+        index_text = index_path.read_text(encoding="utf-8-sig")
         current_section = index_text.split("## 当前 SKILL", 1)
         indexed = set(re.findall(r"`([a-z0-9][a-z0-9-]*)`", current_section[-1]))
         missing = sorted(actual_skills - indexed)
@@ -427,7 +430,7 @@ def audit(root: Path) -> list[Finding]:
 
     for path in iter_text_files(root):
         try:
-            text = path.read_text(encoding="utf-8")
+            text = path.read_text(encoding="utf-8-sig")
         except (OSError, UnicodeError):
             continue
         for label, pattern in PROHIBITED_PATTERNS.items():
@@ -437,7 +440,7 @@ def audit(root: Path) -> list[Finding]:
 
     build_settings = root / "ProjectSettings" / "EditorBuildSettings.asset"
     if build_settings.is_file():
-        text = build_settings.read_text(encoding="utf-8", errors="replace")
+        text = build_settings.read_text(encoding="utf-8-sig", errors="replace")
         enabled_scenes = re.findall(
             r"enabled:\s*1\s*\n\s*path:\s*([^\r\n]+)", text
         )

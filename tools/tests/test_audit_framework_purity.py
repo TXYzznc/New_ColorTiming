@@ -156,6 +156,16 @@ class FrameworkPurityAuditTests(unittest.TestCase):
             any(item.rule == "collaboration-product-content" for item in audit_module.audit(root))
         )
 
+    def test_utf8_bom_skill_frontmatter_is_accepted(self):
+        root = self.make_root()
+        path = root / ".claude/skills/core-skill/SKILL.md"
+        path.write_text(
+            "\ufeff---\nname: core-skill\ndescription: Generic workflow.\n---\n\n# Core\n",
+            encoding="utf-8",
+        )
+
+        self.assertEqual([], audit_module.audit(root))
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -35,6 +35,8 @@
 
 默认多窗口协作规范和新项目配置步骤见 [Dispatch](../Documentation/Development/Dispatch/README.md) 与[初始化指南](../Documentation/Development/AI-Team-Collaboration-Initialization.md)。长期工作窗口可使用当前环境能力，显式委派的子 agent 才受 agent↔SKILL 白名单限制；真实窗口注册和活动占用属于项目/本机状态，不得进入框架基线。
 
+长期专业窗口在派发边界内高自治：直接与用户收敛、记录决定、点对点同步受影响窗口、实施、验证和增量归档。普通进度、单项决定、测试通过、归档和独立提交不通知制作人。所有常规 Git 暂存/提交由 `git-integration` 窗口按 [Git 集成工作流](../Documentation/Development/Dispatch/GitIntegration.md) 执行；制作人只处理异常、冲突、范围/依赖变化和整个批次验收。
+
 ## Unity/GF_X 约束
 
 - 代码落地必须按 Unity 2022.3.62f3 校验。

@@ -46,11 +46,14 @@ Claude Code 的等价入口为 [.claude/CLAUDE.md](./.claude/CLAUDE.md)。
 
 默认协作规范、模板与项目初始化见 [Documentation/Development/Dispatch/README.md](./Documentation/Development/Dispatch/README.md) 和 [初始化指南](./Documentation/Development/AI-Team-Collaboration-Initialization.md)。长期用户可见工作窗口按职能优先选择能力，但只有显式委派的子 agent 受 agent↔SKILL 白名单约束；活动派发、真实占用、窗口 ID、端口、项目路径与权威计划属于项目/本机状态，不得提交到框架基线。
 
+专业窗口在已派发任务、可写路径、已确认方案和验收边界内高自治：可直接询问用户、记录决定、点对点同步受影响窗口、自主实施验证与增量归档。普通进度、单项决定、测试通过、归档和独立提交不通知制作人。所有常规暂存和提交由 `git-integration` 窗口按 [Git 集成工作流](./Documentation/Development/Dispatch/GitIntegration.md) 执行；制作人只处理强制升级事件和整个批次验收。
+
 ## 路由
 
 | 任务 | Agent |
 |---|---|
 | 范围、计划、排期、风险、研究 | `producer` |
+| 共享工作区常规暂存、提交与提交边界复核 | `git-integration` |
 | Unity 架构、模块边界、性能预算 | `client-lead` |
 | Unity C#、输入、序列化、物理、UI 技术接入 | `client-unity` |
 | Shader、渲染、光照和 TA | `client-ta` |
