@@ -55,7 +55,7 @@
 | `<Unity/DCC/external-tool>` | `<configured-instance>` | `<role-window>` | `<condition>` |
 
 - 专业窗口不得暂存或提交；所有请求发送给 `<git-integration-window>` 并遵守 [GitIntegration.md](./GitIntegration.md)。
-- 请求必须提供派发/OpenSpec ID、精确路径、验证证据、中文提交说明、排除项、资源状态和授权依据。
+- 请求必须提供派发/OpenSpec ID、任务目标、允许范围、验证要求、中文提交说明、排除项、资源状态和授权依据；Git 集成窗口自行盘点精确路径。
 - Git 集成窗口只能显式暂存请求路径，禁止夹带其他窗口或用户改动、推送和改写历史。
 
 ## 5. 回传、暂停与恢复
