@@ -2,7 +2,7 @@ param(
     [string]$SourceProject = 'D:/unity/UnityProject/ColorTimeing/ColorTimeing',
     [string]$TargetProject = (Split-Path -Parent $PSScriptRoot),
     [string]$RoslynRoot = '',
-    [string]$OutputPath = 'Documentation/Refactor/serialized-field-surface-audit.json'
+    [string]$OutputPath = 'openspec/changes/migrate-color-timing-to-ai-friendly-framework/evidence/serialized-field-surface-audit.json'
 )
 
 $ErrorActionPreference = 'Stop'

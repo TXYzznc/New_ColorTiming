@@ -178,7 +178,7 @@ if ($mappedPrefabs -ne 48) {
 }
 
 if (-not $DryRun) {
-    $manifest = Join-Path $TargetProject 'Documentation\Refactor\Baseline\migrated-assets.csv'
+    $manifest = Join-Path $TargetProject 'openspec\changes\migrate-color-timing-to-ai-friendly-framework\evidence\inputs\migrated-assets.csv'
     $records | Sort-Object Target | Export-Csv -LiteralPath $manifest -NoTypeInformation -Encoding utf8
 }
 

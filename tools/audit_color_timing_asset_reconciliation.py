@@ -143,16 +143,16 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--source-manifest", type=Path,
-        default=Path("Documentation/Refactor/Baseline/source-assets.csv"),
+        default=Path("openspec/changes/migrate-color-timing-to-ai-friendly-framework/evidence/inputs/source-assets.csv"),
     )
     parser.add_argument(
         "--migration-manifest", type=Path,
-        default=Path("Documentation/Refactor/Baseline/migrated-assets.csv"),
+        default=Path("openspec/changes/migrate-color-timing-to-ai-friendly-framework/evidence/inputs/migrated-assets.csv"),
     )
     parser.add_argument("--target", type=Path, default=Path("."))
     parser.add_argument(
         "--output", type=Path,
-        default=Path("Documentation/Refactor/asset-reconciliation.json"),
+        default=Path("openspec/changes/migrate-color-timing-to-ai-friendly-framework/evidence/asset-reconciliation.json"),
     )
     args = parser.parse_args()
 

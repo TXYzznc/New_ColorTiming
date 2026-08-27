@@ -10,7 +10,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 RUNTIME = ROOT / "Assets/Game/Scripts/ColorTiming"
-OUTPUT = ROOT / "Documentation/Refactor/runtime-risk-audit.json"
+OUTPUT = ROOT / "openspec/changes/migrate-color-timing-to-ai-friendly-framework/evidence/runtime-risk-audit.json"
 
 FORBIDDEN_PATTERNS = {
     "GameObject.Find": re.compile(r"\bGameObject\s*\.\s*Find\s*\("),

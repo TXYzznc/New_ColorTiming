@@ -10,7 +10,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = Path(r"D:\unity\UnityProject\ColorTimeing\ColorTimeing")
-OUTPUT = ROOT / "Documentation/Refactor/cinemachine-audit.json"
+OUTPUT = ROOT / "openspec/changes/migrate-color-timing-to-ai-friendly-framework/evidence/cinemachine-audit.json"
 GUIDS = {
     "VirtualCamera": "45e653bab7fb20e499bda25e1b646fea",
     "Confiner2D": "f453f694addf4275988fac205bc91968",

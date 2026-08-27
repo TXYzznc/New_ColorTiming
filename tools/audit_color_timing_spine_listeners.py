@@ -11,7 +11,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 RUNTIME = ROOT / "Assets/Game/Scripts/ColorTiming"
-OUTPUT = ROOT / "Documentation/Refactor/spine-listener-audit.json"
+OUTPUT = ROOT / "openspec/changes/migrate-color-timing-to-ai-friendly-framework/evidence/spine-listener-audit.json"
 PATTERN = re.compile(r"\b\w+\.(Event|Complete|End)\s*([+-]=)\s*(\w+)")
 
 

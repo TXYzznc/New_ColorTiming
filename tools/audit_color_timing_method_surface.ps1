@@ -2,7 +2,7 @@ param(
     [string]$SourceProject = 'D:/unity/UnityProject/ColorTimeing/ColorTimeing',
     [string]$TargetProject = (Split-Path -Parent $PSScriptRoot),
     [string]$RoslynRoot = '',
-    [string]$OutputPath = 'Documentation/Refactor/method-surface-audit.json'
+    [string]$OutputPath = 'openspec/changes/migrate-color-timing-to-ai-friendly-framework/evidence/method-surface-audit.json'
 )
 
 $ErrorActionPreference = 'Stop'
