@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<test-suite type="TestSuite" id="1032" name="GameDesinger" fullname="GameDesinger" runstate="Runnable" testcasecount="15" result="Passed" start-time="2026-08-27 07:15:54Z" end-time="2026-08-27 07:16:04Z" duration="9.636027" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+  <properties>
+    <property name="platform" value="PlayMode" />
+  </properties>
+  <test-suite type="Assembly" id="1026" name="ColorTiming.PlayMode.Tests.dll" fullname="D:/unity/UnityProject/ColorTimeing/New/_ColorTiming/Library/ScriptAssemblies/ColorTiming.PlayMode.Tests.dll" runstate="Runnable" testcasecount="15" result="Passed" start-time="2026-08-27 07:15:54Z" end-time="2026-08-27 07:16:04Z" duration="9.629635" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="_PID" value="107688" />
+      <property name="_APPDOMAIN" value="Unity Child Domain" />
+      <property name="platform" value="PlayMode" />
+      <property name="EditorOnly" value="False" />
+    </properties>
+    <test-suite type="TestSuite" id="1027" name="ColorTiming" fullname="ColorTiming" runstate="Runnable" testcasecount="15" result="Passed" start-time="2026-08-27 07:15:54Z" end-time="2026-08-27 07:16:04Z" duration="9.627515" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties />
+      <test-suite type="TestSuite" id="1028" name="Tests" fullname="ColorTiming.Tests" runstate="Runnable" testcasecount="15" result="Passed" start-time="2026-08-27 07:15:54Z" end-time="2026-08-27 07:16:04Z" duration="9.625670" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1029" name="PlayMode" fullname="ColorTiming.Tests.PlayMode" runstate="Runnable" testcasecount="15" result="Passed" start-time="2026-08-27 07:15:54Z" end-time="2026-08-27 07:16:04Z" duration="9.623833" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestFixture" id="1010" name="ColorTimingUiAndSoundLifecyclePlayModeTests" fullname="ColorTiming.Tests.PlayMode.ColorTimingUiAndSoundLifecyclePlayModeTests" classname="ColorTiming.Tests.PlayMode.ColorTimingUiAndSoundLifecyclePlayModeTests" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-08-27 07:15:54Z" end-time="2026-08-27 07:16:04Z" duration="9.620602" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1012" name="PauseForm_ReopensAndSceneExitReleasesPauseLease" fullname="ColorTiming.Tests.PlayMode.ColorTimingUiAndSoundLifecyclePlayModeTests.PauseForm_ReopensAndSceneExitReleasesPauseLease" methodname="PauseForm_ReopensAndSceneExitReleasesPauseLease" classname="ColorTiming.Tests.PlayMode.ColorTimingUiAndSoundLifecyclePlayModeTests" runstate="Runnable" seed="952308555" result="Passed" start-time="2026-08-27 07:15:54Z" end-time="2026-08-27 07:16:04Z" duration="9.608297" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="Timeout" value="90000" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[<color=#2BD988>------------Set ResourceMode:Package------------</color>
+<color=#2BD988>----------UI Match:0----------</color>
+<color=#2BD988>进入HybridCLR热更流程! 预加载游戏数据...</color>
+<color=#2BD988>初始化游戏设置. 游戏语言:English,系统语言:ChineseSimplified</color>
+<color=#2BD988>Framework preload completed. Entering the generic ready state.</color>
+已初始化BOSS血量:11
+[ColorTiming HUD] bootstrap-start scene=Launch active=True parent=UI_BasePanel (1) parentScale=(1.00, 1.00, 1.00) canvas=UI_BasePanel (1)
+[ColorTiming HUD] instantiated hud=BattleHud(Clone) active=True parent=BattleHudBootstrap scale=(1.00, 1.00, 1.00)
+[ColorTiming HUD] state scene=Boss1 hud=BattleHud(Clone) active=True runtimeHud=True rootType=RectTransform rootRect=True rootPath=UI_BasePanel (1)/BattleHudBootstrap/BattleHud(Clone) heroBoxes=1 boss1Controllers=1 boss2Controllers=1 staticOutsideHud=0 heroItems=5 boss1Items=7 boss2Items=7 heroPath=UI_BasePanel (1)/BattleHudBootstrap/BattleHud(Clone)/PlayerInfo/P_HPBox boss1Path=UI_BasePanel (1)/BattleHudBootstrap/BattleHud(Clone)/BossInfo/HPBox boss2Path=UI_BasePanel (1)/BattleHudBootstrap/BattleHud(Clone)/BossInfo/HPBox
+[ColorTiming HUD] hero scene=Boss1 path=UI_BasePanel (1)/BattleHudBootstrap/BattleHud(Clone)/PlayerInfo/P_HPBox childCount=5 heroMaxHP=5 heroHP=5 itemCount=5
+[ColorTiming HUD] hero-item scene=Boss1 index=0 path=UI_BasePanel (1)/BattleHudBootstrap/BattleHud(Clone)/PlayerInfo/P_HPBox/HeroHP_Item(Clone) active=True anchored=(0.00, 0.00)
+[ColorTiming HUD] hero-item scene=Boss1 index=1 path=UI_BasePanel (1)/BattleHudBootstrap/BattleHud(Clone)/PlayerInfo/P_HPBox/HeroHP_Item(Clone) active=True anchored=(35.00, -33.00)
+[ColorTiming HUD] hero-item scene=Boss1 index=2 path=UI_BasePanel (1)/BattleHudBootstrap/BattleHud(Clone)/PlayerInfo/P_HPBox/HeroHP_Item(Clone) active=True anchored=(70.00, 0.00)
+[ColorTiming HUD] hero-item scene=Boss1 index=3 path=UI_BasePanel (1)/BattleHudBootstrap/BattleHud(Clone)/PlayerInfo/P_HPBox/HeroHP_Item(Clone) active=True anchored=(105.00, -33.00)
+[ColorTiming HUD] hero-item scene=Boss1 index=4 path=UI_BasePanel (1)/BattleHudBootstrap/BattleHud(Clone)/PlayerInfo/P_HPBox/HeroHP_Item(Clone) active=True anchored=(140.00, 0.00)
+[ColorTiming HUD] boss1 path=UI_BasePanel (1)/BattleHudBootstrap/BattleHud(Clone)/BossInfo/HPBox childCount=7 itemCount=7
+[ColorTiming HUD] boss1-item scene=Boss1 index=0 path=UI_BasePanel (1)/BattleHudBootstrap/BattleHud(Clone)/BossInfo/HPBox/BossHP_Item(Clone) active=True
+[ColorTiming HUD] boss1-item scene=Boss1 index=1 path=UI_BasePanel (1)/BattleHudBootstrap/BattleHud(Clone)/BossInfo/HPBox/BossHP_Item(Clone) active=True
+[ColorTiming HUD] boss1-item scene=Boss1 index=2 path=UI_BasePanel (1)/BattleHudBootstrap/BattleHud(Clone)/BossInfo/HPBox/BossHP_Item(Clone) active=True
+[ColorTiming HUD] boss1-item scene=Boss1 index=3 path=UI_BasePanel (1)/BattleHudBootstrap/BattleHud(Clone)/BossInfo/HPBox/BossHP_Item(Clone) active=True
+[ColorTiming HUD] boss1-item scene=Boss1 index=4 path=UI_BasePanel (1)/BattleHudBootstrap/BattleHud(Clone)/BossInfo/HPBox/BossHP_Item(Clone) active=True
+[ColorTiming HUD] boss1-item scene=Boss1 index=5 path=UI_BasePanel (1)/BattleHudBootstrap/BattleHud(Clone)/BossInfo/HPBox/BossHP_Item(Clone) active=True
+[ColorTiming HUD] boss1-item scene=Boss1 index=6 path=UI_BasePanel (1)/BattleHudBootstrap/BattleHud(Clone)/BossInfo/HPBox/BossHP_Item(Clone) active=True
+[ColorTiming HUD] boss2 path=UI_BasePanel (1)/BattleHudBootstrap/BattleHud(Clone)/BossInfo/HPBox childCount=7 itemCount=7
+[ColorTiming HUD] boss2-item scene=Boss1 index=0 path=UI_BasePanel (1)/BattleHudBootstrap/BattleHud(Clone)/BossInfo/HPBox/BossHP_Item(Clone) active=True
+[ColorTiming HUD] boss2-item scene=Boss1 index=1 path=UI_BasePanel (1)/BattleHudBootstrap/BattleHud(Clone)/BossInfo/HPBox/BossHP_Item(Clone) active=True
+[ColorTiming HUD] boss2-item scene=Boss1 index=2 path=UI_BasePanel (1)/BattleHudBootstrap/BattleHud(Clone)/BossInfo/HPBox/BossHP_Item(Clone) active=True
+[ColorTiming HUD] boss2-item scene=Boss1 index=3 path=UI_BasePanel (1)/BattleHudBootstrap/BattleHud(Clone)/BossInfo/HPBox/BossHP_Item(Clone) active=True
+[ColorTiming HUD] boss2-item scene=Boss1 index=4 path=UI_BasePanel (1)/BattleHudBootstrap/BattleHud(Clone)/BossInfo/HPBox/BossHP_Item(Clone) active=True
+[ColorTiming HUD] boss2-item scene=Boss1 index=5 path=UI_BasePanel (1)/BattleHudBootstrap/BattleHud(Clone)/BossInfo/HPBox/BossHP_Item(Clone) active=True
+[ColorTiming HUD] boss2-item scene=Boss1 index=6 path=UI_BasePanel (1)/BattleHudBootstrap/BattleHud(Clone)/BossInfo/HPBox/BossHP_Item(Clone) active=True
+已初始化BOSS血量:15
+[ColorTiming HUD] bootstrap-start scene=Launch active=True parent=UI_BasePanel parentScale=(1.00, 1.00, 1.00) canvas=UI_BasePanel
+[ColorTiming HUD] instantiated hud=BattleHud(Clone) active=True parent=BattleHudBootstrap scale=(1.00, 1.00, 1.00)
+[ColorTiming HUD] state scene=Boss2 hud=BattleHud(Clone) active=True runtimeHud=True rootType=RectTransform rootRect=True rootPath=UI_BasePanel/BattleHudBootstrap/BattleHud(Clone) heroBoxes=1 boss1Controllers=1 boss2Controllers=1 staticOutsideHud=0 heroItems=5 boss1Items=7 boss2Items=7 heroPath=UI_BasePanel/BattleHudBootstrap/BattleHud(Clone)/PlayerInfo/P_HPBox boss1Path=UI_BasePanel/BattleHudBootstrap/BattleHud(Clone)/BossInfo/HPBox boss2Path=UI_BasePanel/BattleHudBootstrap/BattleHud(Clone)/BossInfo/HPBox
+[ColorTiming HUD] hero scene=Boss2 path=UI_BasePanel/BattleHudBootstrap/BattleHud(Clone)/PlayerInfo/P_HPBox childCount=5 heroMaxHP=5 heroHP=5 itemCount=5
+[ColorTiming HUD] hero-item scene=Boss2 index=0 path=UI_BasePanel/BattleHudBootstrap/BattleHud(Clone)/PlayerInfo/P_HPBox/HeroHP_Item(Clone) active=True anchored=(0.00, 0.00)
+[ColorTiming HUD] hero-item scene=Boss2 index=1 path=UI_BasePanel/BattleHudBootstrap/BattleHud(Clone)/PlayerInfo/P_HPBox/HeroHP_Item(Clone) active=True anchored=(35.00, -33.00)
+[ColorTiming HUD] hero-item scene=Boss2 index=2 path=UI_BasePanel/BattleHudBootstrap/BattleHud(Clone)/PlayerInfo/P_HPBox/HeroHP_Item(Clone) active=True anchored=(70.00, 0.00)
+[ColorTiming HUD] hero-item scene=Boss2 index=3 path=UI_BasePanel/BattleHudBootstrap/BattleHud(Clone)/PlayerInfo/P_HPBox/HeroHP_Item(Clone) active=True anchored=(105.00, -33.00)
+[ColorTiming HUD] hero-item scene=Boss2 index=4 path=UI_BasePanel/BattleHudBootstrap/BattleHud(Clone)/PlayerInfo/P_HPBox/HeroHP_Item(Clone) active=True anchored=(140.00, 0.00)
+[ColorTiming HUD] boss1 path=UI_BasePanel/BattleHudBootstrap/BattleHud(Clone)/BossInfo/HPBox childCount=7 itemCount=7
+[ColorTiming HUD] boss1-item scene=Boss2 index=0 path=UI_BasePanel/BattleHudBootstrap/BattleHud(Clone)/BossInfo/HPBox/BossHP_Item(Clone) active=True
+[ColorTiming HUD] boss1-item scene=Boss2 index=1 path=UI_BasePanel/BattleHudBootstrap/BattleHud(Clone)/BossInfo/HPBox/BossHP_Item(Clone) active=True
+[ColorTiming HUD] boss1-item scene=Boss2 index=2 path=UI_BasePanel/BattleHudBootstrap/BattleHud(Clone)/BossInfo/HPBox/BossHP_Item(Clone) active=True
+[ColorTiming HUD] boss1-item scene=Boss2 index=3 path=UI_BasePanel/BattleHudBootstrap/BattleHud(Clone)/BossInfo/HPBox/BossHP_Item(Clone) active=True
+[ColorTiming HUD] boss1-item scene=Boss2 index=4 path=UI_BasePanel/BattleHudBootstrap/BattleHud(Clone)/BossInfo/HPBox/BossHP_Item(Clone) active=True
+[ColorTiming HUD] boss1-item scene=Boss2 index=5 path=UI_BasePanel/BattleHudBootstrap/BattleHud(Clone)/BossInfo/HPBox/BossHP_Item(Clone) active=True
+[ColorTiming HUD] boss1-item scene=Boss2 index=6 path=UI_BasePanel/BattleHudBootstrap/BattleHud(Clone)/BossInfo/HPBox/BossHP_Item(Clone) active=True
+[ColorTiming HUD] boss2 path=UI_BasePanel/BattleHudBootstrap/BattleHud(Clone)/BossInfo/HPBox childCount=7 itemCount=7
+[ColorTiming HUD] boss2-item scene=Boss2 index=0 path=UI_BasePanel/BattleHudBootstrap/BattleHud(Clone)/BossInfo/HPBox/BossHP_Item(Clone) active=True
+[ColorTiming HUD] boss2-item scene=Boss2 index=1 path=UI_BasePanel/BattleHudBootstrap/BattleHud(Clone)/BossInfo/HPBox/BossHP_Item(Clone) active=True
+[ColorTiming HUD] boss2-item scene=Boss2 index=2 path=UI_BasePanel/BattleHudBootstrap/BattleHud(Clone)/BossInfo/HPBox/BossHP_Item(Clone) active=True
+[ColorTiming HUD] boss2-item scene=Boss2 index=3 path=UI_BasePanel/BattleHudBootstrap/BattleHud(Clone)/BossInfo/HPBox/BossHP_Item(Clone) active=True
+[ColorTiming HUD] boss2-item scene=Boss2 index=4 path=UI_BasePanel/BattleHudBootstrap/BattleHud(Clone)/BossInfo/HPBox/BossHP_Item(Clone) active=True
+[ColorTiming HUD] boss2-item scene=Boss2 index=5 path=UI_BasePanel/BattleHudBootstrap/BattleHud(Clone)/BossInfo/HPBox/BossHP_Item(Clone) active=True
+[ColorTiming HUD] boss2-item scene=Boss2 index=6 path=UI_BasePanel/BattleHudBootstrap/BattleHud(Clone)/BossInfo/HPBox/BossHP_Item(Clone) active=True
+Saving results to: C:/Users/WIN10/AppData/LocalLow/DefaultCompany/GameDesinger\TestResults.xml
+]]></output>
+            </test-case>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-suite>
