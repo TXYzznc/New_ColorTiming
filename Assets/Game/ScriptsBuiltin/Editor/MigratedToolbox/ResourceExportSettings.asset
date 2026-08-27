@@ -14,9 +14,47 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   groups:
   - name: "\u7F8E\u672F\u8D44\u6E90"
-    selected: 1
+    selected: 0
     assetPaths:
     - Assets/Game/Animations
     - Assets/Game/Audio
     - Assets/Game/Sprites
     - Assets/Game/Video
+  - name: "\u5176\u4ED6\u6587\u4EF6"
+    selected: 0
+    assetPaths:
+    - Assets/Plugins
+    - Assets/Game/Font
+    - Assets/Game/DataTable
+    - Assets/Game/Language
+    - Assets/Game/Scripts/DataTable
+    - Assets/Game/Tests
+  - name: "\u9879\u76EE\u8865\u5145\u8D44\u6E90_\u975E\u5DF2\u5BFC\u51FA\u7F8E\u672F"
+    selected: 1
+    assetPaths:
+    - Assets/Editor
+    - Assets/Game/Editor
+    - Assets/Game/Materials
+    - Assets/Game/Models
+    - Assets/Game/Prefabs
+    - Assets/Game/Scene
+    - Assets/Game/ScriptableAssets
+    - Assets/Game/Scripts/ColorTiming
+    - Assets/Game/Scripts/Common
+    - Assets/Game/Scripts/Entity
+    - Assets/Game/Scripts/EventArgs
+    - Assets/Game/Scripts/Extension
+    - Assets/Game/Scripts/Network
+    - Assets/Game/Scripts/Procedures
+    - Assets/Game/Scripts/ScriptableObject
+    - Assets/Game/Scripts/UI
+    - Assets/Game/ScriptsBuiltin
+    - Assets/Game/Shaders
+    - Assets/Game/Textures
+    - Assets/Game/Timeline
+    - Assets/Game/VFX
+    - Assets/ProBuilder Data
+    - Assets/Resources
+    - Assets/Screenshots
+    - Assets/Settings
+    - Assets/TextMesh Pro
