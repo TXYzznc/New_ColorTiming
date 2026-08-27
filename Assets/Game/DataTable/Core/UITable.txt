@@ -1,4 +1,4 @@
-#	UI table						
+#	UI table
 #	Id		SortOrder	UIPrefab	PauseCoveredUI	UIGroupId	EscapeClose
 #	int		int	string	bool	int	bool
 #		Note	Display order relative to group	UI prefab name	Hide covered UI in the same group	UI group id	Allow close by back input
@@ -7,3 +7,4 @@
 	1003	ColorTiming battle result	0	ColorTiming/Game/BattleResult	False	2	False
 	1004	ColorTiming loading overlay	0	ColorTiming/Game/Loading	False	3	False
 	1005	ColorTiming battle HUD	0	ColorTiming/Game/BattleHud	False	1	False
+	1006	ColorTiming battle tutorial	0	ColorTiming/Game/BattleTutorial	False	2	False

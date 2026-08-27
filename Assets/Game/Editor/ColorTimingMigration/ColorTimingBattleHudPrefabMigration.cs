@@ -30,11 +30,6 @@ namespace ColorTiming.Editor
                 MigrateReusableItemPrefabs();
                 RenamePauseMenuPrefab();
                 MigrateGameFormPrefabNames();
-                foreach (var scenePath in BattleScenePaths)
-                {
-                    MigrateBattleScene(scenePath);
-                }
-
                 UGF.EditorTools.GameDataGenerator.GenerateDataTables();
                 DeleteDeprecatedHeroHealthContainer();
                 AssetDatabase.SaveAssets();
@@ -53,11 +48,6 @@ namespace ColorTiming.Editor
         public static void Validate()
         {
             ValidateBattleHudPrefab();
-            foreach (var scenePath in BattleScenePaths)
-            {
-                ValidateBattleScene(scenePath);
-            }
-
             Debug.Log("[ColorTiming HUD] GF.UI structure validated.");
         }
 
@@ -121,6 +111,9 @@ namespace ColorTiming.Editor
                 var boss2Health = root.GetComponentInChildren<UI_BossHPController2>(true);
                 Assert(heroInfo != null && heroHealth != null && boss1Health != null && boss2Health != null,
                     "Battle HUD must contain each serialized presentation component.");
+                SeparateBossHealthSlots(ref boss1Health, ref boss2Health);
+                RemoveAuthoredBossHealthItems(boss1Health.transform);
+                RemoveAuthoredBossHealthItems(boss2Health.transform);
                 var serializedForm = new SerializedObject(form);
                 serializedForm.FindProperty("heroInfo").objectReferenceValue = heroInfo;
                 serializedForm.FindProperty("heroHealth").objectReferenceValue = heroHealth;
@@ -134,30 +127,6 @@ namespace ColorTiming.Editor
             {
                 PrefabUtility.UnloadPrefabContents(root);
             }
-        }
-
-        private static void MigrateBattleScene(string scenePath)
-        {
-            var scene = EditorSceneManager.OpenScene(scenePath, OpenSceneMode.Single);
-            var context = scene.GetRootGameObjects()
-                .SelectMany(root => root.GetComponentsInChildren<ColorTimingBattleHudBootstrap>(true))
-                .SingleOrDefault();
-            Assert(context != null, $"{scenePath} requires exactly one BattleHudContext.");
-            context.gameObject.name = "BattleHudContext";
-
-            var serializedContext = new SerializedObject(context);
-            var hero = scene.GetRootGameObjects().SelectMany(root => root.GetComponentsInChildren<HeroController>(true)).SingleOrDefault();
-            var boss1 = scene.GetRootGameObjects().SelectMany(root => root.GetComponentsInChildren<Boss1_Controller>(true)).SingleOrDefault();
-            var boss2 = scene.GetRootGameObjects().SelectMany(root => root.GetComponentsInChildren<Boss2_Controller>(true)).SingleOrDefault();
-            Assert(hero != null && ((boss1 == null) != (boss2 == null)),
-                $"{scenePath} must have one hero and exactly one supported boss.");
-            serializedContext.FindProperty("hero").objectReferenceValue = hero;
-            serializedContext.FindProperty("boss1").objectReferenceValue = boss1;
-            serializedContext.FindProperty("boss2").objectReferenceValue = boss2;
-            serializedContext.ApplyModifiedPropertiesWithoutUndo();
-            EditorUtility.SetDirty(context);
-            EditorSceneManager.MarkSceneDirty(scene);
-            EditorSceneManager.SaveScene(scene);
         }
 
         private static void ValidateBattleHudPrefab()
@@ -178,7 +147,7 @@ namespace ColorTiming.Editor
                     "BattleHud semantic panel names are incomplete.");
                 Assert(Find(root.transform, "Img_CharacterPortrait") != null && Find(root.transform, "Img_WeaponHint") != null
                     && Find(root.transform, "Img_ChargeWeaponHint") != null && Find(root.transform, "Slot_HeroHP") != null
-                    && Find(root.transform, "Slot_BossHP") != null,
+                    && Find(root.transform, "Slot_Boss1HP") != null && Find(root.transform, "Slot_Boss2HP") != null,
                     "BattleHud semantic content names are incomplete.");
                 var serializedForm = new SerializedObject(form);
                 Assert(serializedForm.FindProperty("heroInfo").objectReferenceValue != null
@@ -186,6 +155,14 @@ namespace ColorTiming.Editor
                     && serializedForm.FindProperty("boss1Health").objectReferenceValue != null
                     && serializedForm.FindProperty("boss2Health").objectReferenceValue != null,
                     "BattleHudForm references are incomplete.");
+                var boss1Health = root.GetComponentInChildren<UI_BossHPController>(true);
+                var boss2Health = root.GetComponentInChildren<UI_BossHPController2>(true);
+                Assert(boss1Health != null && boss2Health != null
+                    && boss1Health.transform != boss2Health.transform
+                    && boss1Health.transform.name == "Slot_Boss1HP"
+                    && boss2Health.transform.name == "Slot_Boss2HP"
+                    && boss1Health.transform.childCount == 0 && boss2Health.transform.childCount == 0,
+                    "BattleHud must not serialize Boss HP items; controllers create them at runtime.");
             }
             finally
             {
@@ -322,22 +299,6 @@ namespace ColorTiming.Editor
             }
         }
 
-        private static void ValidateBattleScene(string scenePath)
-        {
-            var scene = EditorSceneManager.OpenScene(scenePath, OpenSceneMode.Single);
-            var contexts = scene.GetRootGameObjects()
-                .SelectMany(root => root.GetComponentsInChildren<ColorTimingBattleHudBootstrap>(true))
-                .ToArray();
-            Assert(contexts.Length == 1 && contexts[0].gameObject.name == "BattleHudContext",
-                $"{scenePath} requires one explicitly named BattleHudContext.");
-            var serializedContext = new SerializedObject(contexts[0]);
-            Assert(serializedContext.FindProperty("hero").objectReferenceValue != null,
-                $"{scenePath} BattleHudContext hero reference is missing.");
-            var hasBoss1 = serializedContext.FindProperty("boss1").objectReferenceValue != null;
-            var hasBoss2 = serializedContext.FindProperty("boss2").objectReferenceValue != null;
-            Assert(hasBoss1 != hasBoss2, $"{scenePath} BattleHudContext requires exactly one boss reference.");
-        }
-
         private static void Rename(Transform root, string oldName, string newName)
         {
             var target = Find(root, oldName);
@@ -345,6 +306,49 @@ namespace ColorTiming.Editor
             {
                 target.name = newName;
             }
+        }
+
+        private static void RemoveAuthoredBossHealthItems(Transform container)
+        {
+            for (var index = container.childCount - 1; index >= 0; index--)
+            {
+                UnityEngine.Object.DestroyImmediate(container.GetChild(index).gameObject);
+            }
+        }
+
+        private static void SeparateBossHealthSlots(
+            ref UI_BossHPController boss1Health,
+            ref UI_BossHPController2 boss2Health)
+        {
+            if (boss1Health.transform != boss2Health.transform)
+            {
+                boss1Health.name = "Slot_Boss1HP";
+                boss2Health.name = "Slot_Boss2HP";
+                return;
+            }
+
+            var boss1Slot = (RectTransform)boss1Health.transform;
+            boss1Slot.name = "Slot_Boss1HP";
+            var boss2SlotObject = new GameObject("Slot_Boss2HP", typeof(RectTransform));
+            boss2SlotObject.layer = boss1Slot.gameObject.layer;
+            var boss2Slot = (RectTransform)boss2SlotObject.transform;
+            boss2Slot.SetParent(boss1Slot.parent, false);
+            CopyRectTransform(boss1Slot, boss2Slot);
+            var replacement = boss2SlotObject.AddComponent<UI_BossHPController2>();
+            replacement.HPItem = boss2Health.HPItem;
+            UnityEngine.Object.DestroyImmediate(boss2Health);
+            boss2Health = replacement;
+        }
+
+        private static void CopyRectTransform(RectTransform source, RectTransform destination)
+        {
+            destination.anchorMin = source.anchorMin;
+            destination.anchorMax = source.anchorMax;
+            destination.anchoredPosition = source.anchoredPosition;
+            destination.sizeDelta = source.sizeDelta;
+            destination.pivot = source.pivot;
+            destination.localRotation = source.localRotation;
+            destination.localScale = source.localScale;
         }
 
         private static void RenamePath(Transform root, string path, string newName)

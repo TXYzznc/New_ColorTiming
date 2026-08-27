@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using NUnit.Framework;
+using System.Linq;
 using ColorTiming.Presentation.UI;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
 using UnityEngine.UI;
@@ -29,6 +31,7 @@ namespace ColorTiming.Tests.PlayMode
             Assert.That(boss1Hud, Is.Not.Null);
             AssertHudRoot(boss1Hud);
             AssertBoss1Hud(boss1Hud);
+            AssertDynamicBattlePresentation("Boss1");
 
             var boss1 = FindActive<Boss1_Controller>();
             Assert.That(boss1, Is.Not.Null);
@@ -45,6 +48,7 @@ namespace ColorTiming.Tests.PlayMode
             Assert.That(boss2Hud, Is.Not.Null);
             AssertHudRoot(boss2Hud);
             AssertBoss2Hud(boss2Hud);
+            AssertDynamicBattlePresentation("Boss2");
 
             var heroHud = FindActive<UI_HeroInfo>();
             Assert.That(heroHud, Is.Not.Null);
@@ -101,6 +105,21 @@ namespace ColorTiming.Tests.PlayMode
             AssertHeroLayout(heroBoxes[0]);
             Assert.That(bossControllers2[0].transform.childCount, Is.EqualTo(7));
             Debug.Log("[ColorTiming HUD] test scene=Boss2 controllers=hero:1 boss1:disabled boss2:enabled staticOutsideHud:0");
+        }
+
+        static void AssertDynamicBattlePresentation(string sceneName)
+        {
+            Assert.That(FindActive<BattlePresentationInstaller>(), Is.Not.Null,
+                $"{sceneName} must create its runtime battle presentation installer.");
+            Assert.That(Object.FindObjectOfType<BattleTutorialForm>(true), Is.Not.Null,
+                $"{sceneName} must open the runtime battle tutorial form.");
+            var scene = SceneManager.GetSceneByName(sceneName);
+            Assert.That(scene.GetRootGameObjects()
+                .SelectMany(root => root.GetComponentsInChildren<Canvas>(true)), Is.Empty,
+                $"{sceneName} must not retain an authored Canvas UI root.");
+            Assert.That(scene.GetRootGameObjects()
+                .SelectMany(root => root.GetComponentsInChildren<EventSystem>(true)), Is.Empty,
+                $"{sceneName} must not retain an authored EventSystem.");
         }
 
         static void AssertHeroLayout(UI_HeroHPBox heroBox)

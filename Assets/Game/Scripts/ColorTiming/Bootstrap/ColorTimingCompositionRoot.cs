@@ -71,6 +71,7 @@ namespace ColorTiming.Bootstrap
             transientEntities.ReleaseAll();
             soundService.ResetTrackedSounds();
             ColorTimingUrpCameraStack.Configure(scene, sceneId);
+            InstallBattlePresentation(scene, sceneId);
             ColorTimingSceneInputBinder.Bind(
                 scene, gameInput, gameTime, transientEntities, sceneFlow, settings, soundService, uiService);
             uiService.PresentScene(sceneId);
@@ -127,6 +128,18 @@ namespace ColorTiming.Bootstrap
             // the outgoing Unity scene starts unloading so scene-parented effects remain valid.
             transientEntities?.ReleaseAll();
             soundService?.ResetTrackedSounds();
+        }
+
+        private void InstallBattlePresentation(Scene scene, ColorTimingSceneId sceneId)
+        {
+            if (sceneId != ColorTimingSceneId.Boss1 && sceneId != ColorTimingSceneId.Boss2)
+            {
+                return;
+            }
+
+            var installerHost = new GameObject("BattlePresentationInstaller (Clone)");
+            SceneManager.MoveGameObjectToScene(installerHost, scene);
+            installerHost.AddComponent<BattlePresentationInstaller>().Initialize(uiService, sceneFlow);
         }
 
         private void ThrowIfDisposed()

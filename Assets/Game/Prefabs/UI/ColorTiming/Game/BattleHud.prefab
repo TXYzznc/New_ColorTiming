@@ -380,6 +380,7 @@ RectTransform:
   m_Children:
   - {fileID: 6424713896797992055}
   - {fileID: 7524948464621466378}
+  - {fileID: 4990505101850254048}
   m_Father: {fileID: 123921495614360150}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
@@ -387,6 +388,56 @@ RectTransform:
   m_AnchoredPosition: {x: 54.901478, y: 160.45001}
   m_SizeDelta: {x: 542.0903, y: 139.3}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &4893728651139646983
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4990505101850254048}
+  - component: {fileID: 1645201630278329929}
+  m_Layer: 5
+  m_Name: Slot_Boss2HP
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &4990505101850254048
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4893728651139646983}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1425836997641664003}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 7.3328, y: -5.8}
+  m_SizeDelta: {x: 894, y: 69}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1645201630278329929
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4893728651139646983}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd7a939aa0a05004ab3d85017ad27c17, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  HPItem: {fileID: 1813968790692796232, guid: ad4e1c1d08ebbec4e93653269f8831ef, type: 3}
+  boss1_Controller: {fileID: 0}
 --- !u!1 &7616285547780258717
 GameObject:
   m_ObjectHideFlags: 0
@@ -604,7 +655,7 @@ MonoBehaviour:
   heroInfo: {fileID: 8136129349139117530}
   heroHealth: {fileID: 2751729795155068195}
   boss1Health: {fileID: 5136460472265911820}
-  boss2Health: {fileID: 7410714556453937815}
+  boss2Health: {fileID: 1645201630278329929}
 --- !u!1 &9010832829977584566
 GameObject:
   m_ObjectHideFlags: 0
@@ -618,9 +669,8 @@ GameObject:
   - component: {fileID: 2403578281225495796}
   - component: {fileID: 2539920931223390030}
   - component: {fileID: 5136460472265911820}
-  - component: {fileID: 7410714556453937815}
   m_Layer: 5
-  m_Name: Slot_BossHP
+  m_Name: Slot_Boss1HP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -719,20 +769,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f1f2a4ac3fd25d54ab848adfe84f581d, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
-  HPItem: {fileID: 1813968790692796232, guid: ad4e1c1d08ebbec4e93653269f8831ef, type: 3}
-  boss1_Controller: {fileID: 0}
---- !u!114 &7410714556453937815
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9010832829977584566}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd7a939aa0a05004ab3d85017ad27c17, type: 3}
   m_Name:
   m_EditorClassIdentifier:
   HPItem: {fileID: 1813968790692796232, guid: ad4e1c1d08ebbec4e93653269f8831ef, type: 3}

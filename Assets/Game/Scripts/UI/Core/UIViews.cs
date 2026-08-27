@@ -8,5 +8,6 @@ public enum UIViews : int
 	MainMenu = 1002,
 	BattleResult = 1003,
 	Loading = 1004,
-	BattleHud = 1005
+	BattleHud = 1005,
+	BattleTutorial = 1006
 }

@@ -29,6 +29,7 @@
       <Asset Guid="15a25945c4af9f34ea76aae912aa5bd4" ResourceName="Scene" />
       <Asset Guid="161f10e7463ba4949bb13f06664990cf" ResourceName="World" />
       <Asset Guid="1809030ba6d5cc74189571df8b1d3891" ResourceName="Sound" />
+      <Asset Guid="1d56a1c0ad5516f4188f2fd84bdafd16" ResourceName="UI" />
       <Asset Guid="18868d941a71f02498051516873367ce" ResourceName="Scene" />
       <Asset Guid="1892c8154fd2bc74d9ffffac6ca469fb" ResourceName="Sound" />
       <Asset Guid="1b920e64eb554ad46847088e6f8bbda2" ResourceName="Entity" />
@@ -64,6 +65,7 @@
       <Asset Guid="4eacaa439b3bd0d4495ae387df2c5899" ResourceName="Sound" />
       <Asset Guid="52f749ae6d31fc94288dfe1f9f8896f6" ResourceName="DataTable" />
       <Asset Guid="564e06e2a382952489502831e618a485" ResourceName="Sound" />
+      <Asset Guid="563847683b2dd3a459d3b662d2ca3c66" ResourceName="UI" />
       <Asset Guid="5851a838a080da7489caee79a6d2b907" ResourceName="Sound" />
       <Asset Guid="5d0a2d2ba945c7244af738376bba749d" ResourceName="World" />
       <Asset Guid="5dc08a4ea3d06ef488eff5fd76a6cea6" ResourceName="Sound" />
@@ -136,6 +138,7 @@
       <Asset Guid="e80a0bb8827b90d4e8707e54412072ec" ResourceName="Sound" />
       <Asset Guid="ed0ac412c27c0bf4d95a4bb91f95b305" ResourceName="UI" />
       <Asset Guid="efecf147d82a934408ac6c5dccd75192" ResourceName="World" />
+      <Asset Guid="f09a0de1796ed7f47a8456dbfd592229" ResourceName="UI" />
       <Asset Guid="f2061209a0cd4f0429d9a9f8a15c433a" ResourceName="Sound" />
       <Asset Guid="f270746db49914543bb6de358ea0a2cf" ResourceName="Entity" />
       <Asset Guid="f301ca6b77c0eb946841ca75b0a2ef1f" ResourceName="Entity" />

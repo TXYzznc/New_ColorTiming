@@ -23,8 +23,10 @@ namespace ColorTiming.Presentation.UI
         int resultFormId = -1;
         int loadingFormId = -1;
         int battleHudFormId = -1;
+        int battleTutorialFormId = -1;
         BattlePresentationResult pendingResult;
         BattleHudPresentation pendingBattleHud;
+        HeroController pendingTutorialHero;
         IColorTimingLoadingForm loadingForm;
         float loadingProgress;
         bool loadingCompletionRequested;
@@ -135,6 +137,27 @@ namespace ColorTiming.Presentation.UI
             return false;
         }
 
+        public bool ShowBattleTutorial(HeroController hero)
+        {
+            ThrowIfDisposed();
+            if (hero == null) throw new ArgumentNullException(nameof(hero));
+
+            CloseBattleTutorial();
+            pendingTutorialHero = hero;
+            var parameters = UIParams.Create(false);
+            parameters.OpenCallback = OnBattleTutorialOpened;
+            parameters.CloseCallback = _ => ResetBattleTutorialState();
+            battleTutorialFormId = GF.UI.OpenUIForm(UIViews.BattleTutorial, parameters);
+            if (battleTutorialFormId >= 0)
+            {
+                return true;
+            }
+
+            ResetBattleTutorialState();
+            UnityEngine.Debug.LogError("Failed to open the ColorTiming battle tutorial GF.UI form.");
+            return false;
+        }
+
         public void Reset()
         {
             if (disposed) return;
@@ -175,6 +198,18 @@ namespace ColorTiming.Presentation.UI
 
             UnityEngine.Debug.LogError("ColorTiming battle HUD prefab must implement IColorTimingBattleHudForm.");
             CloseBattleHud();
+        }
+
+        void OnBattleTutorialOpened(UIFormLogic logic)
+        {
+            if (logic is IColorTimingBattleTutorialForm form)
+            {
+                form.BindRuntime(pendingTutorialHero, gameInput, gameTime, settings);
+                return;
+            }
+
+            UnityEngine.Debug.LogError("ColorTiming battle tutorial prefab must implement IColorTimingBattleTutorialForm.");
+            CloseBattleTutorial();
         }
 
         void OnPauseOpened(UIFormLogic logic)
@@ -231,10 +266,26 @@ namespace ColorTiming.Presentation.UI
             }
         }
 
+        void CloseBattleTutorial()
+        {
+            var serialId = battleTutorialFormId;
+            ResetBattleTutorialState();
+            if (serialId >= 0 && GF.UI != null)
+            {
+                GF.UI.CloseUIForm(serialId);
+            }
+        }
+
         void ResetBattleHudState()
         {
             battleHudFormId = -1;
             pendingBattleHud = null;
+        }
+
+        void ResetBattleTutorialState()
+        {
+            battleTutorialFormId = -1;
+            pendingTutorialHero = null;
         }
 
         void ReleaseResult()
@@ -256,6 +307,7 @@ namespace ColorTiming.Presentation.UI
             CloseStartMenu();
             CloseBattleResult();
             CloseBattleHud();
+            CloseBattleTutorial();
         }
 
         void BeginLoading()

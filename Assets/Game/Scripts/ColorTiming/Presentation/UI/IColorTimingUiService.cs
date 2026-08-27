@@ -9,6 +9,7 @@ namespace ColorTiming.Presentation.UI
         bool TogglePause();
         void PresentScene(ColorTimingSceneId scene);
         bool ShowBattleHud(BattleHudPresentation presentation);
+        bool ShowBattleTutorial(HeroController hero);
         bool ShowBattleResult(BattlePresentationResult result);
         void Reset();
     }
@@ -51,5 +52,14 @@ namespace ColorTiming.Presentation.UI
             ColorTiming.Input.IGameInput gameInput,
             IColorTimingUiService uiService,
             BattleHudPresentation presentation);
+    }
+
+    public interface IColorTimingBattleTutorialForm
+    {
+        void BindRuntime(
+            HeroController hero,
+            ColorTiming.Input.IGameInput gameInput,
+            ColorTiming.Combat.IGameTime gameTime,
+            IColorTimingSettings settings);
     }
 }
