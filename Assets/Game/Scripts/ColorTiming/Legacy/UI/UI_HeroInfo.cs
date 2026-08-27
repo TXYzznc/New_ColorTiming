@@ -39,8 +39,28 @@ public class UI_HeroInfo : MonoBehaviour, IGameInputConsumer, IColorTimingUiCons
 
     private void Start()
     {
-        controller?.OnSwitchWeapon.AddListener(SwitchWapon);
+        BindHero(controller);
         SetCursor(WeaponPresentationState.NormalCursorIndex);
+    }
+
+    public void BindHero(HeroController heroController)
+    {
+        if (controller == heroController)
+        {
+            if (controller != null && controller.nowweapon != null)
+            {
+                SwitchWapon(controller.nowweapon);
+            }
+            return;
+        }
+
+        controller?.OnSwitchWeapon.RemoveListener(SwitchWapon);
+        controller = heroController;
+        controller?.OnSwitchWeapon.AddListener(SwitchWapon);
+        if (controller != null && controller.nowweapon != null)
+        {
+            SwitchWapon(controller.nowweapon);
+        }
     }
 
     private void Update()
@@ -114,7 +134,7 @@ public class UI_HeroInfo : MonoBehaviour, IGameInputConsumer, IColorTimingUiCons
 
     private void OnDestroy()
     {
-        controller?.OnSwitchWeapon.RemoveListener(SwitchWapon);
+        BindHero(null);
         SetCursor(WeaponPresentationState.NormalCursorIndex);
     }
 

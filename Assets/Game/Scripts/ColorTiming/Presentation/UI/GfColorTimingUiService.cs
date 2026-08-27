@@ -22,7 +22,9 @@ namespace ColorTiming.Presentation.UI
         int startMenuFormId = -1;
         int resultFormId = -1;
         int loadingFormId = -1;
+        int battleHudFormId = -1;
         BattlePresentationResult pendingResult;
+        BattleHudPresentation pendingBattleHud;
         IColorTimingLoadingForm loadingForm;
         float loadingProgress;
         bool loadingCompletionRequested;
@@ -112,6 +114,27 @@ namespace ColorTiming.Presentation.UI
             return false;
         }
 
+        public bool ShowBattleHud(BattleHudPresentation presentation)
+        {
+            ThrowIfDisposed();
+            if (presentation == null) throw new ArgumentNullException(nameof(presentation));
+
+            CloseBattleHud();
+            pendingBattleHud = presentation;
+            var parameters = UIParams.Create(false);
+            parameters.OpenCallback = OnBattleHudOpened;
+            parameters.CloseCallback = _ => ResetBattleHudState();
+            battleHudFormId = GF.UI.OpenUIForm(UIViews.BattleHud, parameters);
+            if (battleHudFormId >= 0)
+            {
+                return true;
+            }
+
+            ResetBattleHudState();
+            UnityEngine.Debug.LogError("Failed to open the ColorTiming battle HUD GF.UI form.");
+            return false;
+        }
+
         public void Reset()
         {
             if (disposed) return;
@@ -140,6 +163,18 @@ namespace ColorTiming.Presentation.UI
 
             UnityEngine.Debug.LogError("ColorTiming battle-result prefab must implement IColorTimingBattleResultForm.");
             CloseBattleResult();
+        }
+
+        void OnBattleHudOpened(UIFormLogic logic)
+        {
+            if (logic is IColorTimingBattleHudForm form)
+            {
+                form.BindRuntime(gameInput, this, pendingBattleHud);
+                return;
+            }
+
+            UnityEngine.Debug.LogError("ColorTiming battle HUD prefab must implement IColorTimingBattleHudForm.");
+            CloseBattleHud();
         }
 
         void OnPauseOpened(UIFormLogic logic)
@@ -186,6 +221,22 @@ namespace ColorTiming.Presentation.UI
             ReleaseResult();
         }
 
+        void CloseBattleHud()
+        {
+            var serialId = battleHudFormId;
+            ResetBattleHudState();
+            if (serialId >= 0 && GF.UI != null)
+            {
+                GF.UI.CloseUIForm(serialId);
+            }
+        }
+
+        void ResetBattleHudState()
+        {
+            battleHudFormId = -1;
+            pendingBattleHud = null;
+        }
+
         void ReleaseResult()
         {
             resultFormId = -1;
@@ -204,6 +255,7 @@ namespace ColorTiming.Presentation.UI
             ClosePause();
             CloseStartMenu();
             CloseBattleResult();
+            CloseBattleHud();
         }
 
         void BeginLoading()

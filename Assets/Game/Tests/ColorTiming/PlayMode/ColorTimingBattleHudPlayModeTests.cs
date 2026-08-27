@@ -1,8 +1,10 @@
 ﻿using System.Collections;
 using NUnit.Framework;
+using ColorTiming.Presentation.UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
+using UnityEngine.UI;
 
 namespace ColorTiming.Tests.PlayMode
 {
@@ -23,7 +25,7 @@ namespace ColorTiming.Tests.PlayMode
             yield return WaitForScene("Boss1", TransitionTimeout);
             yield return WaitForHud(TransitionTimeout);
 
-            var boss1Hud = Object.FindObjectOfType<ColorTimingBattleHudBootstrap>(true);
+            var boss1Hud = Object.FindObjectOfType<BattleHudForm>(true);
             Assert.That(boss1Hud, Is.Not.Null);
             AssertHudRoot(boss1Hud);
             AssertBoss1Hud(boss1Hud);
@@ -39,7 +41,7 @@ namespace ColorTiming.Tests.PlayMode
 
             yield return WaitForScene("Boss2", TransitionTimeout);
             yield return WaitForHud(TransitionTimeout);
-            var boss2Hud = Object.FindObjectOfType<ColorTimingBattleHudBootstrap>(true);
+            var boss2Hud = Object.FindObjectOfType<BattleHudForm>(true);
             Assert.That(boss2Hud, Is.Not.Null);
             AssertHudRoot(boss2Hud);
             AssertBoss2Hud(boss2Hud);
@@ -55,27 +57,25 @@ namespace ColorTiming.Tests.PlayMode
             Debug.Log("[ColorTiming HUD] test-result unique-runtime-hud-and-player-layout=PASS");
         }
 
-        static void AssertHudRoot(ColorTimingBattleHudBootstrap bootstrap)
+        static void AssertHudRoot(BattleHudForm hud)
         {
-            var hud = bootstrap.transform.Find("BattleHud");
-            Assert.That(hud, Is.Not.Null, "The battle HUD must be instantiated under the bootstrap.");
-            Assert.That(hud.GetComponent<RectTransform>(), Is.Not.Null,
-                "The runtime HUD root must be a RectTransform when parented under Canvas UI.");
-            Assert.That(hud.GetComponent<RectTransform>().sizeDelta, Is.EqualTo(new Vector2(1920f, 1080f)));
+            Assert.That(hud.GetComponent<Canvas>(), Is.Not.Null);
+            Assert.That(hud.GetComponent<CanvasScaler>(), Is.Not.Null);
+            Assert.That(hud.GetComponent<GraphicRaycaster>(), Is.Not.Null);
+            Assert.That(hud.GetComponent<RectTransform>().localScale, Is.EqualTo(Vector3.one));
         }
 
-        static void AssertBoss1Hud(ColorTimingBattleHudBootstrap bootstrap)
+        static void AssertBoss1Hud(BattleHudForm hud)
         {
-            var hud = bootstrap.transform.Find("BattleHud");
             var heroBoxes = Object.FindObjectsOfType<UI_HeroHPBox>(true);
             var bossControllers = Object.FindObjectsOfType<UI_BossHPController>(true);
             var bossControllers2 = Object.FindObjectsOfType<UI_BossHPController2>(true);
             Assert.That(heroBoxes, Has.Length.EqualTo(1));
             Assert.That(bossControllers, Has.Length.EqualTo(1));
             Assert.That(bossControllers2, Has.Length.EqualTo(1));
-            Assert.That(heroBoxes[0].transform.IsChildOf(hud), Is.True);
-            Assert.That(bossControllers[0].transform.IsChildOf(hud), Is.True);
-            Assert.That(bossControllers2[0].transform.IsChildOf(hud), Is.True);
+            Assert.That(heroBoxes[0].transform.IsChildOf(hud.transform), Is.True);
+            Assert.That(bossControllers[0].transform.IsChildOf(hud.transform), Is.True);
+            Assert.That(bossControllers2[0].transform.IsChildOf(hud.transform), Is.True);
             Assert.That(bossControllers[0].enabled, Is.True);
             Assert.That(bossControllers2[0].enabled, Is.False);
 
@@ -84,18 +84,17 @@ namespace ColorTiming.Tests.PlayMode
             Debug.Log("[ColorTiming HUD] test scene=Boss1 controllers=hero:1 boss1:enabled boss2:disabled staticOutsideHud:0");
         }
 
-        static void AssertBoss2Hud(ColorTimingBattleHudBootstrap bootstrap)
+        static void AssertBoss2Hud(BattleHudForm hud)
         {
-            var hud = bootstrap.transform.Find("BattleHud");
             var heroBoxes = Object.FindObjectsOfType<UI_HeroHPBox>(true);
             var bossControllers = Object.FindObjectsOfType<UI_BossHPController>(true);
             var bossControllers2 = Object.FindObjectsOfType<UI_BossHPController2>(true);
             Assert.That(heroBoxes, Has.Length.EqualTo(1));
             Assert.That(bossControllers, Has.Length.EqualTo(1));
             Assert.That(bossControllers2, Has.Length.EqualTo(1));
-            Assert.That(heroBoxes[0].transform.IsChildOf(hud), Is.True);
-            Assert.That(bossControllers[0].transform.IsChildOf(hud), Is.True);
-            Assert.That(bossControllers2[0].transform.IsChildOf(hud), Is.True);
+            Assert.That(heroBoxes[0].transform.IsChildOf(hud.transform), Is.True);
+            Assert.That(bossControllers[0].transform.IsChildOf(hud.transform), Is.True);
+            Assert.That(bossControllers2[0].transform.IsChildOf(hud.transform), Is.True);
             Assert.That(bossControllers[0].enabled, Is.False);
             Assert.That(bossControllers2[0].enabled, Is.True);
 
@@ -107,7 +106,7 @@ namespace ColorTiming.Tests.PlayMode
         static void AssertHeroLayout(UI_HeroHPBox heroBox)
         {
             Assert.That(heroBox.controller, Is.Not.Null);
-            Assert.That(heroBox.transform.name, Is.EqualTo("P_HPBox"));
+            Assert.That(heroBox.transform.name, Is.EqualTo("HealthPips"));
             Assert.That(heroBox.transform.childCount, Is.EqualTo(heroBox.controller.heroMaxHP));
             var items = heroBox.GetComponentsInChildren<UI_HeroHPItem>(true);
             Assert.That(items, Has.Length.EqualTo(heroBox.controller.heroMaxHP));
@@ -138,9 +137,8 @@ namespace ColorTiming.Tests.PlayMode
         {
             yield return WaitUntil(() =>
             {
-                var bootstrap = Object.FindObjectOfType<ColorTimingBattleHudBootstrap>(true);
-                return bootstrap != null && bootstrap.transform.Find("BattleHud") != null
-                    && bootstrap.transform.Find("BattleHud").GetComponentInChildren<UI_HeroHPBox>(true)?.controller != null;
+                var hud = Object.FindObjectOfType<BattleHudForm>(true);
+                return hud != null && hud.GetComponentInChildren<UI_HeroHPBox>(true)?.controller != null;
             }, timeout, "Shared runtime BattleHud did not finish binding.");
         }
 

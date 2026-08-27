@@ -38,7 +38,11 @@ public class UI_HeroHPBox : MonoBehaviour
 
     void SetHP()
     {
-        if (controller == null) return;
+        if (controller == null)
+        {
+            for (var i = 0; i < items.Count; i++) items[i].gameObject.SetActive(false);
+            return;
+        }
         for (int i = 0; i < items.Count; i++)
         {
             var active = i < controller.heroHP;
