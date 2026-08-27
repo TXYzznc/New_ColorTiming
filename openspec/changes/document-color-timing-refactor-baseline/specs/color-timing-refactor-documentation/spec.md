@@ -15,7 +15,7 @@
 - **THEN** 该需求 MUST 先记录为待确认事项，且不得在未决策前改变当前功能基线或验收结论。
 
 ### Requirement: 单一证据来源与同步规则
-项目 SHALL 将原始重构日志、截图、CSV 和自动化测试结果保留在 `Documentation/Refactor`；Docs MUST 通过链接引用这些证据，而不得制造第二份原始证据。每个完成的重构变更 MUST 同步受影响的 Docs 状态和验收入口。
+项目 SHALL 将有独立结论的重构验收清单、截图、审计摘要和自动化测试结果保留在所属 OpenSpec 的 `evidence/`；Docs MUST 通过链接引用这些证据，而不得制造第二份证据。可再生成的完整日志、重复快照和过期结果 MUST 被清理。每个完成的重构变更 MUST 同步受影响的 Docs 状态和验收入口。
 
 #### Scenario: 完成一个重构批次
 - **WHEN** 一个 OpenSpec 重构批次完成实现和验证

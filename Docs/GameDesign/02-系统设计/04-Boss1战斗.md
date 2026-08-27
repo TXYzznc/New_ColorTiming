@@ -15,4 +15,4 @@
 - Boss 实体、攻击子物、Spine 订阅和声音不允许跨场景残留。
 - 当前弱点改变后，旧武器提示必须被隐藏，不能指向已过期目标。
 
-参照：[验收清单 §4](../../../Documentation/Refactor/source-feature-acceptance-checklist.md)。
+参照：[验收清单 §4](../../../openspec/changes/migrate-color-timing-to-ai-friendly-framework/evidence/source-feature-acceptance-checklist.md)。

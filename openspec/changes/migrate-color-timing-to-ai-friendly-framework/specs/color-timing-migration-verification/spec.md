@@ -37,7 +37,7 @@ An empty, prototype or test-only source script MAY be omitted only when referenc
 - **THEN** the removal record contains its GUID/class, search scope, zero required references and replacement/not-needed rationale
 
 ### Requirement: Behavior fixes are isolated and testable
-Every intentional behavior difference from the source SHALL be listed in `Documentation/Refactor/behavior-fixes.md` with source evidence, defect rationale, target behavior and a regression check; unlisted gameplay or balance changes MUST NOT be introduced.
+Every intentional behavior difference from the source SHALL be listed in `evidence/behavior-fixes.md` for this change with source evidence, defect rationale, target behavior and a regression check; unlisted gameplay or balance changes MUST NOT be introduced.
 
 #### Scenario: Fix Boss2 orange slot indexing
 - **WHEN** the known orange-segment index mismatch is corrected

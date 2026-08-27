@@ -24,4 +24,4 @@
 
 ## Impact
 
-影响 `AGENTS.md`、`.claude/CLAUDE.md`、`.claude/AGENTS.md`、`Documentation/Development/`、`openspec/specs/`、`tools/audit_framework_purity.py` 和对应 Python 测试；不修改 Unity 框架核心、业务代码、资源或现有项目实例。
+影响 `AGENTS.md`、`.claude/CLAUDE.md`、`.claude/AGENTS.md`、`Docs/Development/`、`openspec/specs/`、`tools/audit_framework_purity.py` 和对应 Python 测试；不修改 Unity 框架核心、业务代码、资源或现有项目实例。

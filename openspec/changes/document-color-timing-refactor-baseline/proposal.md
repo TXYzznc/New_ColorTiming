@@ -1,6 +1,6 @@
 ## Why
 
-ColorTiming 的重构证据分散在 `Documentation/Refactor`、OpenSpec 与代码中，尚缺少可供开发、验收和后续新增需求共同使用的产品功能基线。当前没有新玩法需求，因此需要先将源工程的已观察行为、批准的修复差异和重构路径收敛为可维护的 Docs 体系。
+ColorTiming 的重构证据分散在迁移 OpenSpec evidence、OpenSpec 与代码中，尚缺少可供开发、验收和后续新增需求共同使用的产品功能基线。当前没有新玩法需求，因此需要先将源工程的已观察行为、批准的修复差异和重构路径收敛为可维护的 Docs 体系。
 
 ## What Changes
 
@@ -22,5 +22,5 @@ ColorTiming 的重构证据分散在 `Documentation/Refactor`、OpenSpec 与代�
 ## Impact
 
 - 新增和维护 `Docs/` 下的 Markdown 文档；不修改运行时代码、Unity 场景或内容资产。
-- 以 `Documentation/Refactor/source-feature-acceptance-checklist.md`、已有审计证据和现有 OpenSpec 为输入，避免复制或改写源工程行为。
+- 以迁移 OpenSpec evidence 中的 `source-feature-acceptance-checklist.md`、已有审计证据和现有 OpenSpec 为输入，避免复制或改写源工程行为。
 - 后续重构任务与新增需求应引用本次建立的功能 ID、状态与验收入口。

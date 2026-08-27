@@ -46,7 +46,7 @@ git clone --recurse-submodules git@github.com:TXYzznc/AI-Friendly-Project.git
 
 ## 编辑器 Play Mode 热重载
 
-项目内置本地 UPM 形式的 Fast Script Reload（FSR），用于在 Unity Editor 的 Play Mode 中迭代已有 C# 方法体而不退出运行会话。首次使用、日常流程、回调、限制与排查见 [FSR 开发指南](Documentation/Development/FastScriptReload.md)。FSR 不用于已发布 Player 的热更新，也不替代 HybridCLR。
+项目内置本地 UPM 形式的 Fast Script Reload（FSR），用于在 Unity Editor 的 Play Mode 中迭代已有 C# 方法体而不退出运行会话。首次使用、日常流程、回调、限制与排查见 [FSR 开发指南](Docs/Development/FastScriptReload.md)。FSR 不用于已发布 Player 的热更新，也不替代 HybridCLR。
 
 ## 核心用法
 

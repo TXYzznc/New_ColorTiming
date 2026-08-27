@@ -9,4 +9,4 @@
 | CT-BOSS2-05 | 尾部激活后可潜地、近战、远程；头尾事件、攻击、声音和无敌不串用。 | 每个实体拥有独立事件和音频生命周期，共享的仅是战斗进度。 |
 | CT-BOSS2-06 | 最后一段仅触发一次最终结果；头尾、投射物、落点、轨迹和声音均停止，结果可回菜单。 | 结果 UI 阻断底层输入；场景转出后无遗留。 |
 
-参照：[验收清单 §5](../../../Documentation/Refactor/source-feature-acceptance-checklist.md)。
+参照：[验收清单 §5](../../../openspec/changes/migrate-color-timing-to-ai-friendly-framework/evidence/source-feature-acceptance-checklist.md)。

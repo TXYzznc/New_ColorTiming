@@ -1,6 +1,6 @@
 ## Context
 
-ColorTiming 正在从源工程迁移至 GF_X。现有 `Documentation/Refactor` 已积累场景、脚本、资源、动画和测试证据，但它是重构工作底稿而不是长期可读的项目 Docs。用户已确认：不定义新玩法；以源工程可观察功能为基线；每个功能必须可追溯至重构方式与验收依据；目录必须能承接未来需求。
+ColorTiming 正在从源工程迁移至 GF_X。现有迁移 OpenSpec evidence 已积累场景、脚本、资源、动画和测试证据，但它不是长期可读的项目 Docs。用户已确认：不定义新玩法；以源工程可观察功能为基线；每个功能必须可追溯至重构方式与验收依据；目录必须能承接未来需求。
 
 ## Goals / Non-Goals
 
@@ -28,7 +28,7 @@ ColorTiming 正在从源工程迁移至 GF_X。现有 `Documentation/Refactor` �
 
 ### 2. 文档定义功能合同，不重复原始证据
 
-系统文档保留足以实现和验收的行为描述；每项功能以 ID 链接至 `Documentation/Refactor/source-feature-acceptance-checklist.md` 和相应审计文件。原始日志、截图和 CSV 继续放在 `Documentation/Refactor`。
+系统文档保留足以实现和验收的行为描述；每项功能以 ID 链接至迁移 OpenSpec evidence 中的 `source-feature-acceptance-checklist.md` 和相应审计文件。经筛选的验收证据放在所属 OpenSpec 的 `evidence/`，可再生成的原始流水不保留。
 
 **备选方案：**把所有历史证据复制到 Docs。
 **未采用原因：**会产生双份事实来源并使维护成本上升。
@@ -50,7 +50,7 @@ ColorTiming 正在从源工程迁移至 GF_X。现有 `Documentation/Refactor` �
 
 1. 建立 Docs 目录、总览、状态表与术语/决策管理文件。
 2. 按启动、玩家、武器、Boss、HUD、音频世界、资源渲染等领域写入功能基线与重构方式。
-3. 建立重构功能矩阵与验收入口，链接已有 `Documentation/Refactor` 证据。
+3. 建立重构功能矩阵与验收入口，链接已有迁移 OpenSpec evidence。
 4. 验证链接、功能 ID 覆盖与 OpenSpec 格式；后续每个变更按该入口维护。
 
 **Rollback:** Docs 为新增、无运行时副作用的文件；如结构不合适，可只回退本次新增 Docs 和本 OpenSpec 变更，不影响现有重构实现。

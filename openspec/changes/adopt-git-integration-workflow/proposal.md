@@ -22,6 +22,6 @@ ColorTiming 将在后续重构中由客户端、技术美术、测试等多个�
 
 ## Impact
 
-- 影响 `.claude` agent 源、生成的 `.codex/agents`、`Documentation/Development/Dispatch`、项目入口指令、纯度审计及测试。
+- 影响 `.claude` agent 源、生成的 `.codex/agents`、`Docs/Development/Dispatch`、项目入口指令、纯度审计及测试。
 - 不修改 `Assets/`、`GameData/`、产品 Docs、已有业务 OpenSpec，亦不引入外部仓库历史。
 - 后续常规 Git 提交必须由实际注册的 `git-integration` 长期窗口执行；当前未提交的工作树不被暂存、提交或清理。

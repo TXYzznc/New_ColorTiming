@@ -13,14 +13,13 @@
 3. [系统关系与场景流程](GameDesign/01-核心框架/00-系统关系与场景流程.md)
 4. [重构架构与实施原则](GameDesign/04-重构实施/00-重构架构与实施原则.md)
 5. [设计状态总表](GameDesign/90-设计管理/设计状态总表.md)
-6. [源功能验收清单](../Documentation/Refactor/source-feature-acceptance-checklist.md)
+6. [源功能验收清单](../openspec/changes/migrate-color-timing-to-ai-friendly-framework/evidence/source-feature-acceptance-checklist.md)
 
 ## 文档层次
 
-- `Development/`：跨项目开发规范。当前已包含 [GF UI 全流程规范](Development/GF-UI-Standards/README.md)。
+- `Development/`：ColorTiming 制作和协作规范。当前已包含 [GF UI 全流程规范](Development/GF-UI-Standards/README.md)。
 - `GameDesign/`：ColorTiming 的功能合同、体验流程、重构实施与管理记录。
-- `Documentation/Refactor/`：原始盘点、测试日志、截图、CSV 和审计证据；是证据源，不是日常阅读入口。
-- `openspec/`：中大型变更的提案、设计、规格和任务；是变更过程的权威记录。
+- `openspec/`：中大型变更的提案、设计、规格、任务与经筛选的验收证据；是变更过程的权威记录。
 
 ## 维护规则
 

@@ -6,7 +6,7 @@
 
 **Goals:**
 
-- 以 `Documentation/Development/Dispatch/` 提供默认协作规范、空模板和新项目初始化说明。
+- 以 `Docs/Development/Dispatch/` 提供默认协作规范、空模板和新项目初始化说明。
 - 以 `ActiveAssignments.md` 作为制作人独占的持久协作总览，以 `.ai/dispatch/window-registry.local.json` 保存本机窗口标识。
 - 在入口、OpenSpec spec 和审计脚本中统一可验证的协作契约。
 

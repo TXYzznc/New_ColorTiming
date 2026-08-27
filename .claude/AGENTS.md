@@ -35,6 +35,6 @@ agent 遇到以下情况必须停止：
 
 agent 列表与白名单见 [SKILL_MATRIX.md](./SKILL_MATRIX.md)。
 
-长期用户可见工作窗口的职能路由、派发和占用规则见 [Dispatch](../Documentation/Development/Dispatch/README.md)。工作窗口可以使用当前环境的能力完成必要检查；只有显式委派的子 agent 遵守本文件、对应 agent 配置和 SKILL 白名单。中央占用表仅由制作人窗口维护，真实窗口注册仅保存在被忽略的 `.ai/dispatch/`。
+长期用户可见工作窗口的职能路由、派发和占用规则见 [Dispatch](../Docs/Development/Dispatch/README.md)。工作窗口可以使用当前环境的能力完成必要检查；只有显式委派的子 agent 遵守本文件、对应 agent 配置和 SKILL 白名单。中央占用表仅由制作人窗口维护，真实窗口注册仅保存在被忽略的 `.ai/dispatch/`。
 
-专业窗口在已派发任务、可写路径、已确认方案和验收边界内高自治：可直接询问用户、记录决定、点对点同步受影响窗口、自主实施验证与增量归档。普通进度、单项决定、测试通过、归档和独立提交不通知制作人。所有常规暂存和提交由 `git-integration` 窗口按 [Git 集成工作流](../Documentation/Development/Dispatch/GitIntegration.md) 执行；制作人只处理强制升级事件和整个批次验收。
+专业窗口在已派发任务、可写路径、已确认方案和验收边界内高自治：可直接询问用户、记录决定、点对点同步受影响窗口、自主实施验证与增量归档。普通进度、单项决定、测试通过、归档和独立提交不通知制作人。所有常规暂存和提交由 `git-integration` 窗口按 [Git 集成工作流](../Docs/Development/Dispatch/GitIntegration.md) 执行；制作人只处理强制升级事件和整个批次验收。

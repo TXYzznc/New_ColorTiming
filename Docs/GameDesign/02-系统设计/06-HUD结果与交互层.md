@@ -10,4 +10,4 @@
 
 正式 UI 制作必须遵循 [GF UI 全流程规范](../../Development/GF-UI-Standards/README.md)：一个独立页面对应一个 UIForm Prefab；先定义 Prefab 布局，再绑定逻辑；输入经 InputModule；正式页面不可运行时拼装。
 
-参照：[验收清单 §6](../../../Documentation/Refactor/source-feature-acceptance-checklist.md)。
+参照：[验收清单 §6](../../../openspec/changes/migrate-color-timing-to-ai-friendly-framework/evidence/source-feature-acceptance-checklist.md)。
