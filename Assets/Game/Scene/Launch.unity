@@ -2880,6 +2880,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c10fc849c04c47448aff7250425476c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enableLoadingProgress: 0
   loadingProgressNode: {fileID: 64586275}
   loadSliderText: {fileID: 1429869969}
   loadSlider: {fileID: 1350154050}
