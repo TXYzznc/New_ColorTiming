@@ -25,7 +25,7 @@ namespace ColorTiming.Editor
             try
             {
                 var bgmClip = RemoveLegacyStartMenuPresentation();
-                RebuildLoadingPrefab();
+                ValidateLoadingVisualHierarchy();
                 AssignStartMenuBgm(bgmClip);
                 AssetDatabase.SaveAssets();
                 AssetDatabase.Refresh();
@@ -38,16 +38,13 @@ namespace ColorTiming.Editor
             }
         }
 
-        [MenuItem("Game Framework/GameTools/Restore ColorTiming Loading Visual Hierarchy", false, 1006)]
-        public static void RestoreLoadingVisualHierarchy()
+        [MenuItem("Game Framework/GameTools/Validate ColorTiming Loading UI Structure", false, 1006)]
+        public static void ValidateLoadingUiStructure()
         {
             try
             {
-                RebuildLoadingPrefab();
-                AssetDatabase.SaveAssets();
-                AssetDatabase.Refresh();
                 ValidateLoadingVisualHierarchy();
-                Debug.Log("[ColorTiming] Loading visual hierarchy restored and validated.");
+                Debug.Log("[ColorTiming] Loading UI structure validated.");
             }
             catch (Exception exception)
             {
@@ -79,7 +76,7 @@ namespace ColorTiming.Editor
         {
             try
             {
-                RestoreLoadingVisualHierarchy();
+                ValidateLoadingUiStructure();
                 EditorApplication.Exit(0);
             }
             catch (Exception exception)
@@ -115,110 +112,6 @@ namespace ColorTiming.Editor
             return bgmClip;
         }
 
-        private static void RebuildLoadingPrefab()
-        {
-            var existing = AssetDatabase.LoadAssetAtPath<GameObject>(LoadingPrefabPath);
-            if (existing == null)
-            {
-                throw new InvalidOperationException($"Loading prefab is missing: {LoadingPrefabPath}");
-            }
-
-            var root = new GameObject("Loading");
-            try
-            {
-                var canvas = CreateLegacyCanvas(root.transform);
-                var progressRoot = CreateRect("Grp_Progress", canvas.transform, true);
-                ApplyRect((RectTransform)progressRoot.transform, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(2029f, 1300f), new Vector2(0.5f, 0.5f));
-                CreateImage("Img_Background", progressRoot.transform, LoadSprite(LoadingBackgroundGuid), Color.white, true,
-                    new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(2029f, 1300f), new Vector2(0.5f, 0.5f));
-                var progressBar = CreateImage("Img_ProgressBar", progressRoot.transform, LoadSprite(LoadingBarGuid), Color.white, true,
-                    new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(2029f, 1300f), new Vector2(0.5f, 0.5f));
-                var sliderContainer = CreateRect("Grp_Slider", progressBar.transform, true);
-                ApplyRect((RectTransform)sliderContainer.transform, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(328.80347f, -481f), new Vector2(1005.6069f, 60f), new Vector2(0.5f, 0.5f));
-                var progressSlider = CreateLegacySlider(sliderContainer.transform);
-                var fadeImage = CreateImage("Overlay_Fade", canvas.transform, null, new Color(0f, 0f, 0f, 1f), true,
-                    Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero, new Vector2(0.5f, 0.5f));
-                var form = root.AddComponent<ColorTimingLoadingForm>();
-                var serializedForm = new SerializedObject(form);
-                serializedForm.FindProperty("loadingCanvas").objectReferenceValue = canvas;
-                serializedForm.FindProperty("progressRoot").objectReferenceValue = progressRoot;
-                serializedForm.FindProperty("progressSlider").objectReferenceValue = progressSlider;
-                serializedForm.FindProperty("fadeImage").objectReferenceValue = fadeImage;
-                serializedForm.ApplyModifiedPropertiesWithoutUndo();
-                PrefabUtility.SaveAsPrefabAsset(root, LoadingPrefabPath);
-            }
-            finally
-            {
-                UnityEngine.Object.DestroyImmediate(root);
-            }
-        }
-
-        private static GameObject CreateLegacyCanvas(Transform parent)
-        {
-            var root = CreateRect("Canvas_Loading", parent, false);
-            root.layer = LayerMask.NameToLayer("UI");
-            var rect = (RectTransform)root.transform;
-            ApplyRect(rect, Vector2.zero, Vector2.zero, Vector2.zero, Vector2.zero, Vector2.zero);
-            rect.localScale = Vector3.zero;
-            var canvas = root.AddComponent<Canvas>();
-            canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-            canvas.sortingOrder = 100;
-            var scaler = root.AddComponent<CanvasScaler>();
-            scaler.uiScaleMode = CanvasScaler.ScaleMode.ConstantPixelSize;
-            scaler.scaleFactor = 1f;
-            scaler.referencePixelsPerUnit = 100f;
-            root.AddComponent<GraphicRaycaster>();
-            return root;
-        }
-
-        private static Slider CreateLegacySlider(Transform parent)
-        {
-            var root = CreateRect("Sld_Progress", parent, true);
-            ApplyRect((RectTransform)root.transform, Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero, new Vector2(0.5f, 0.5f));
-            var slider = root.AddComponent<Slider>();
-            slider.transition = Selectable.Transition.ColorTint;
-            slider.interactable = true;
-            slider.minValue = 0f;
-            slider.maxValue = 1f;
-            slider.SetValueWithoutNotify(0f);
-            var fillArea = CreateRect("Area_Fill", root.transform, false);
-            ApplyRect((RectTransform)fillArea.transform, new Vector2(0f, 0.25f), new Vector2(1f, 0.75f), new Vector2(-5f, 0f), new Vector2(-20f, 0f), new Vector2(0.5f, 0.5f));
-            var fill = CreateImage("Img_Fill", fillArea.transform, LoadSprite(LoadingHandleGuid), Color.white, true,
-                new Vector2(0f, 0f), new Vector2(0f, 1f), Vector2.zero, new Vector2(10f, 0f), new Vector2(0.5f, 0.5f));
-            CreateImage("Img_SliderBackground", root.transform, GetDefaultSprite(), Color.white, true,
-                new Vector2(0f, 0.25f), new Vector2(1f, 0.75f), Vector2.zero, Vector2.zero, new Vector2(0.5f, 0.5f)).gameObject.SetActive(false);
-            var handleArea = CreateRect("Area_HandleSlide", root.transform, true);
-            ApplyRect((RectTransform)handleArea.transform, Vector2.zero, Vector2.one, Vector2.zero, new Vector2(-20f, 0f), new Vector2(0.5f, 0.5f));
-            var handle = CreateImage("Img_Handle", handleArea.transform, LoadSprite(LoadingHandleGuid), Color.white, true,
-                new Vector2(0f, 0f), new Vector2(0f, 1f), Vector2.zero, new Vector2(60f, 0f), new Vector2(0.5f, 0.5f));
-            slider.targetGraphic = handle;
-            slider.fillRect = (RectTransform)fill.transform;
-            slider.handleRect = (RectTransform)handle.transform;
-            slider.direction = Slider.Direction.LeftToRight;
-            return slider;
-        }
-
-        private static GameObject CreateRect(string name, Transform parent, bool active)
-        {
-            var gameObject = new GameObject(name, typeof(RectTransform));
-            gameObject.transform.SetParent(parent, false);
-            gameObject.SetActive(active);
-            return gameObject;
-        }
-
-        private static Image CreateImage(string name, Transform parent, Sprite sprite, Color color, bool raycastTarget,
-            Vector2 anchorMin, Vector2 anchorMax, Vector2 anchoredPosition, Vector2 sizeDelta, Vector2 pivot)
-        {
-            var imageObject = new GameObject(name, typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
-            imageObject.transform.SetParent(parent, false);
-            ApplyRect((RectTransform)imageObject.transform, anchorMin, anchorMax, anchoredPosition, sizeDelta, pivot);
-            var image = imageObject.GetComponent<Image>();
-            image.sprite = sprite;
-            image.color = color;
-            image.raycastTarget = raycastTarget;
-            return image;
-        }
-
         private static Sprite LoadSprite(string guid)
         {
             var path = AssetDatabase.GUIDToAssetPath(guid);
@@ -242,40 +135,21 @@ namespace ColorTiming.Editor
             return sprites[0];
         }
 
-        private static void ApplyRect(RectTransform rect, Vector2 anchorMin, Vector2 anchorMax,
-            Vector2 anchoredPosition, Vector2 sizeDelta, Vector2 pivot)
-        {
-            rect.anchorMin = anchorMin;
-            rect.anchorMax = anchorMax;
-            rect.anchoredPosition = anchoredPosition;
-            rect.sizeDelta = sizeDelta;
-            rect.pivot = pivot;
-        }
-
-        private static Sprite GetDefaultSprite()
-        {
-            return AssetDatabase.GetBuiltinExtraResource<Sprite>("UI/Skin/UISprite.psd");
-        }
-
         private static void ValidateLoadingVisualHierarchy()
         {
             var root = PrefabUtility.LoadPrefabContents(LoadingPrefabPath);
             try
             {
                 Assert(root.name == "Loading", "Loading root name changed unexpectedly.");
-                Assert(root.GetComponent<Canvas>() == null, "Loading root must not own a Canvas.");
-
-                var canvas = FindRequired(root.transform, "Canvas_Loading");
-                Assert(!canvas.gameObject.activeSelf, "Canvas_Loading must preserve the source inactive state.");
-                Assert(canvas.localScale == Vector3.zero, "Canvas_Loading scale must preserve the source value.");
-                var canvasComponent = canvas.GetComponent<Canvas>();
-                var scaler = canvas.GetComponent<CanvasScaler>();
+                var canvasComponent = root.GetComponent<Canvas>();
+                var scaler = root.GetComponent<CanvasScaler>();
                 Assert(canvasComponent != null && canvasComponent.renderMode == RenderMode.ScreenSpaceOverlay && canvasComponent.sortingOrder == 100,
-                    "Canvas_Loading canvas settings differ from the source.");
+                    "Loading must use the GF.UI root Canvas settings.");
                 Assert(scaler != null && scaler.uiScaleMode == CanvasScaler.ScaleMode.ConstantPixelSize,
-                    "Canvas_Loading scaler settings differ from the source.");
+                    "Loading root CanvasScaler settings differ from the source.");
+                Assert(root.GetComponent<GraphicRaycaster>() != null, "Loading root must own a GraphicRaycaster.");
 
-                var progressRoot = FindRequired(canvas, "Grp_Progress");
+                var progressRoot = FindRequired(root.transform, "Grp_Progress");
                 AssertRect((RectTransform)progressRoot, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(2029f, 1300f));
                 AssertImageSprite(FindRequired(progressRoot, "Img_Background").GetComponent<Image>(), LoadingBackgroundGuid, "Img_Background");
                 var progressBar = FindRequired(progressRoot, "Img_ProgressBar");
@@ -294,7 +168,7 @@ namespace ColorTiming.Editor
                 Assert(slider.targetGraphic == handle && slider.handleRect == handle.rectTransform,
                     "Sld_Progress handle references differ from the source.");
 
-                var fade = FindRequired(canvas, "Overlay_Fade");
+                var fade = FindRequired(root.transform, "Overlay_Fade");
                 Assert(fade.GetSiblingIndex() == 1, "Overlay_Fade must remain after Grp_Progress in draw order.");
                 AssertRect((RectTransform)fade, Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero);
                 var fadeImage = fade.GetComponent<Image>();
@@ -304,8 +178,6 @@ namespace ColorTiming.Editor
                 var form = root.GetComponent<ColorTimingLoadingForm>();
                 Assert(form != null, "Loading prefab must retain ColorTimingLoadingForm.");
                 var serializedForm = new SerializedObject(form);
-                Assert(serializedForm.FindProperty("loadingCanvas").objectReferenceValue == canvas.gameObject,
-                    "ColorTimingLoadingForm.loadingCanvas is not bound to Canvas_Loading.");
                 Assert(serializedForm.FindProperty("progressRoot").objectReferenceValue == progressRoot.gameObject,
                     "ColorTimingLoadingForm.progressRoot is not bound to Grp_Progress.");
                 Assert(serializedForm.FindProperty("progressSlider").objectReferenceValue == slider,

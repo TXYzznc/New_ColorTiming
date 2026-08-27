@@ -23,3 +23,4 @@
 - [x] 4.3 Rebuild `Loading.prefab` through the Editor migration using the source hierarchy and migrated loading sprites.
 - [x] 4.4 Validate serialized references, structural equivalence and StartMenu-to-Boss transition behavior in Unity. (Scoped hierarchy batch validator passed; PlayMode `PauseForm_ReopensAndSceneExitReleasesPauseLease` passed 1/1.)
 - [ ] 4.5 Perform manual visual acceptance against the source prefab in the Unity Game view, including the exact intended visibility of the source-authored zero-scale Canvas.
+- [ ] 4.6 Re-run the scoped validation and Game View acceptance after normalizing Loading to the GF.UI root-Canvas structure.

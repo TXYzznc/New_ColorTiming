@@ -7,7 +7,6 @@ namespace ColorTiming.Presentation.UI
     /// <summary>Project-wide GF.UI form for product scene transitions.</summary>
     public sealed class ColorTimingLoadingForm : UIFormBase, IColorTimingLoadingForm
     {
-        [SerializeField] private GameObject loadingCanvas;
         [SerializeField] private GameObject progressRoot;
         [SerializeField] private Slider progressSlider;
         [SerializeField] private Image fadeImage;
@@ -23,10 +22,6 @@ namespace ColorTiming.Presentation.UI
             fadeTween?.Kill();
             fadeTween = null;
             displayedProgress = 0f;
-            if (loadingCanvas != null)
-            {
-                loadingCanvas.SetActive(true);
-            }
             if (progressRoot != null)
             {
                 progressRoot.SetActive(true);
@@ -45,10 +40,6 @@ namespace ColorTiming.Presentation.UI
             fadeTween = null;
             closing = false;
             displayedProgress = 0f;
-            if (loadingCanvas != null)
-            {
-                loadingCanvas.SetActive(false);
-            }
             base.OnClose(isShutdown, userData);
         }
 
