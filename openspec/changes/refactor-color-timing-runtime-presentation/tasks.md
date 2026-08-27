@@ -22,5 +22,5 @@
 - [x] 4.2 Define the GF.UI boundary: replace only the lifecycle controller; retain the original visual tree, including inactive Slider child nodes.
 - [x] 4.3 Rebuild `Loading.prefab` through the Editor migration using the source hierarchy and migrated loading sprites.
 - [x] 4.4 Validate serialized references, structural equivalence and StartMenu-to-Boss transition behavior in Unity. (Scoped hierarchy batch validator passed; PlayMode `PauseForm_ReopensAndSceneExitReleasesPauseLease` passed 1/1.)
-- [ ] 4.5 Perform manual visual acceptance against the source prefab in the Unity Game view, including the exact intended visibility of the source-authored zero-scale Canvas.
-- [ ] 4.6 Re-run the scoped validation and Game View acceptance after normalizing Loading to the GF.UI root-Canvas structure.
+- [x] 4.5 Perform manual visual acceptance against the source prefab in the Unity Game view, including the exact intended visibility of the source-authored zero-scale Canvas. (User accepted 2026-08-27.)
+- [x] 4.6 Re-run the scoped validation and Game View acceptance after normalizing Loading to the GF.UI root-Canvas structure. (User accepted 2026-08-27.)
