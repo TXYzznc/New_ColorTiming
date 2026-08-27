@@ -11,6 +11,13 @@ The system SHALL show exactly one ColorTiming-owned GF.UI loading form for every
 - **WHEN** a ColorTiming product scene transition is active
 - **THEN** Launch BuiltinView loading progress is not visible
 
+### Requirement: Loading visual hierarchy fidelity
+The ColorTiming Loading UIForm SHALL preserve the source `LoadScene_s` visual hierarchy, migrated Sprite references, active states, sibling order and RectTransform values. The implementation MAY normalize node names and replace the legacy loader controller with `ColorTimingLoadingForm`, but MUST NOT replace the source artwork/layout with a generic loading overlay.
+
+#### Scenario: Rebuild the Loading Prefab
+- **WHEN** the project Editor migration rebuilds `Loading.prefab`
+- **THEN** the resulting form binds the source-equivalent Canvas, progress root, Slider and fade image, including the source Slider's inactive Fill/Background nodes and active Handle subtree
+
 ### Requirement: Startup loading presentation suppression
 The system SHALL keep Launch BuiltinView loading progress hidden during the current framework startup path while retaining its error dialog behavior.
 

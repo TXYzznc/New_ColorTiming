@@ -110,7 +110,7 @@ namespace ColorTiming.Editor
 
             static string OutputPath(string fileName)
             {
-                return Path.Combine(ProjectRoot(), "Documentation", "Refactor", fileName);
+                return Path.Combine(ProjectRoot(), "openspec", "changes", "refactor-color-timing-runtime-presentation", "evidence", "TestResults", fileName);
             }
 
             static string ProjectRoot()

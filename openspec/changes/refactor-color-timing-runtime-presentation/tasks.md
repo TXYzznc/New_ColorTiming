@@ -15,3 +15,11 @@
 - [ ] 3.1 Add focused tests for loading-form lifecycle, BGM lifecycle, and clone naming.
 - [ ] 3.2 Run relevant EditMode and PlayMode test suites and record results. (EditMode: 203/203 passed; PlayMode full suite needs separate follow-up because the existing duplicate-EventSystem warning loop prevented completion.)
 - [x] 3.3 Run the Unity Editor migration and validate the generated Prefab and StartMenu scene.
+
+## 4. Restore source Loading visual hierarchy
+
+- [x] 4.1 Confirm that the source `LoadScene_s` visual hierarchy, image resources, active states and RectTransform values are the migration baseline.
+- [x] 4.2 Define the GF.UI boundary: replace only the lifecycle controller; retain the original visual tree, including inactive Slider child nodes.
+- [x] 4.3 Rebuild `Loading.prefab` through the Editor migration using the source hierarchy and migrated loading sprites.
+- [x] 4.4 Validate serialized references, structural equivalence and StartMenu-to-Boss transition behavior in Unity. (Scoped hierarchy batch validator passed; PlayMode `PauseForm_ReopensAndSceneExitReleasesPauseLease` passed 1/1.)
+- [ ] 4.5 Perform manual visual acceptance against the source prefab in the Unity Game view, including the exact intended visibility of the source-authored zero-scale Canvas.

@@ -66,3 +66,9 @@ collection, and regenerates framework tables. It does not hand-edit Unity YAML.
 ## Open Questions
 
 无；当前视觉沿用用户创建的 Loading Prefab，不新增启动美术。
+
+## 5. Loading visual hierarchy fidelity
+
+The GF.UI migration changes ownership, not the approved product loading artwork. `Loading.prefab` SHALL retain the source `LoadScene_s` visual tree: the Canvas child, full-screen background and progress-bar images, Slider with its inactive Fill/Background children and active Handle subtree, and full-screen fade image. Their migrated Sprite references, active states, sibling draw order and RectTransform values are the baseline. Node names MAY be normalized to the project naming convention, but a generic black overlay and built-in Sprite replacement is not an acceptable substitute.
+
+`ColorTimingLoadingForm` SHALL bind only to the retained Canvas, progress-root, Slider and fade Image. It opens/closes the Canvas through GF.UI and reproduces the source transition sequence: reset to transparent fade and visible progress on transition start; after completion, hide progress, fade to black, then fade back to transparent before closing. This keeps lifecycle ownership in GF.UI without redefining the artwork or layout.

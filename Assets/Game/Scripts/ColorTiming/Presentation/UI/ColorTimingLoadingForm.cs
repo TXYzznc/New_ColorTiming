@@ -7,27 +7,33 @@ namespace ColorTiming.Presentation.UI
     /// <summary>Project-wide GF.UI form for product scene transitions.</summary>
     public sealed class ColorTimingLoadingForm : UIFormBase, IColorTimingLoadingForm
     {
+        [SerializeField] private GameObject loadingCanvas;
+        [SerializeField] private GameObject progressRoot;
         [SerializeField] private Slider progressSlider;
         [SerializeField] private Image fadeImage;
-        [SerializeField] private CanvasGroup canvasGroup;
-        [SerializeField, Min(0f)] private float fadeOutDuration = 0.2f;
+        [SerializeField, Min(0f)] private float fadeDuration = 0.5f;
 
         private Tween fadeTween;
         private bool closing;
+        private float displayedProgress;
 
         protected override void OnOpen(object userData)
         {
             closing = false;
             fadeTween?.Kill();
-            if (canvasGroup != null)
+            fadeTween = null;
+            displayedProgress = 0f;
+            if (loadingCanvas != null)
             {
-                canvasGroup.alpha = 1f;
-                canvasGroup.blocksRaycasts = true;
-                canvasGroup.interactable = false;
+                loadingCanvas.SetActive(true);
+            }
+            if (progressRoot != null)
+            {
+                progressRoot.SetActive(true);
             }
             if (fadeImage != null)
             {
-                fadeImage.color = new Color(0f, 0f, 0f, 1f);
+                fadeImage.color = new Color(0f, 0f, 0f, 0f);
             }
             SetProgress(0f);
             base.OnOpen(userData);
@@ -38,6 +44,11 @@ namespace ColorTiming.Presentation.UI
             fadeTween?.Kill();
             fadeTween = null;
             closing = false;
+            displayedProgress = 0f;
+            if (loadingCanvas != null)
+            {
+                loadingCanvas.SetActive(false);
+            }
             base.OnClose(isShutdown, userData);
         }
 
@@ -45,7 +56,8 @@ namespace ColorTiming.Presentation.UI
         {
             if (progressSlider != null)
             {
-                progressSlider.SetValueWithoutNotify(Mathf.Clamp01(progress));
+                displayedProgress = Mathf.Max(displayedProgress, Mathf.Clamp01(progress));
+                progressSlider.SetValueWithoutNotify(displayedProgress);
             }
         }
 
@@ -57,15 +69,20 @@ namespace ColorTiming.Presentation.UI
             }
 
             closing = true;
-            if (canvasGroup == null || fadeOutDuration <= 0f)
+            if (progressRoot != null)
+            {
+                progressRoot.SetActive(false);
+            }
+            if (fadeImage == null || fadeDuration <= 0f)
             {
                 GF.UI.CloseUIForm(Id);
                 return;
             }
 
-            canvasGroup.blocksRaycasts = false;
-            fadeTween = canvasGroup.DOFade(0f, fadeOutDuration)
+            fadeTween = DOTween.Sequence()
                 .SetUpdate(true)
+                .Append(fadeImage.DOFade(1f, fadeDuration))
+                .Append(fadeImage.DOFade(0f, fadeDuration))
                 .OnComplete(() => GF.UI.CloseUIForm(Id));
         }
     }
