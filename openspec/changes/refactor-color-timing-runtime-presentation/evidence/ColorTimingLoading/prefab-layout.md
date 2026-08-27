@@ -14,17 +14,17 @@ Loading                              Canvas / CanvasScaler / GraphicRaycaster / 
 │   └── Img_ProgressBar              进度条.png
 │       └── Grp_Slider               (328.80347, -481)，1005.6069 × 60
 │           └── Sld_Progress
-│               ├── Area_Fill                inactive
+│               ├── Grp_Fill                 inactive
 │               │   └── Img_Fill             旧版滑块 Sprite
 │               ├── Img_SliderBackground     inactive（保留旧版默认 Sprite）
-│               └── Area_HandleSlide
+│               └── Grp_Handle
 │                   └── Img_Handle           旧版滑块 Sprite
-└── Overlay_Fade                     最后绘制的全屏黑色遮罩
+└── Img_FadeOverlay                  最后绘制的全屏黑色遮罩
 ```
 
 - 根节点承载 `Canvas`、`CanvasScaler`、`GraphicRaycaster` 与 UI Form；这符合 GF.UI
   预制体结构，UI Form 的打开/关闭直接管理根对象，不再额外套用 `Canvas_Loading` 子节点。
-- `Area_Fill`、`Img_Fill` 与 `Img_SliderBackground` 保持旧版的 inactive 状态，不因当前
+- `Grp_Fill`、`Img_Fill` 与 `Img_SliderBackground` 保持旧版的 inactive 状态，不因当前
   展示逻辑暂未使用而删除。
 - `ColorTimingLoadingForm` 通过已序列化的 `progressRoot`、`progressSlider`、`fadeImage`
   字段管理该视觉树；完成时依次黑色淡入、淡出并关闭。

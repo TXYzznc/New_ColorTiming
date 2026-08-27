@@ -63,7 +63,7 @@ namespace ColorTiming.Presentation.UI
             var parameters = UIParams.Create(false);
             parameters.OpenCallback = OnPauseOpened;
             parameters.CloseCallback = _ => ReleasePause();
-            pauseFormId = GF.UI.OpenUIForm(UIViews.Esc, parameters);
+            pauseFormId = GF.UI.OpenUIForm(UIViews.PauseMenu, parameters);
             if (pauseFormId < 0)
             {
                 ReleasePause();

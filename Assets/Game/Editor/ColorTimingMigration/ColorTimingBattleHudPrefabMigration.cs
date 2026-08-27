@@ -13,6 +13,7 @@ namespace ColorTiming.Editor
     public static class ColorTimingBattleHudPrefabMigration
     {
         private const string BattleHudPrefabPath = "Assets/Game/Prefabs/UI/ColorTiming/Game/BattleHud.prefab";
+        private const string HeroHealthContainerPrefabPath = "Assets/Game/Prefabs/UI/ColorTiming/P_HPBox.prefab";
         private static readonly string[] BattleScenePaths =
         {
             "Assets/Game/Scene/Boss1.unity",
@@ -26,12 +27,16 @@ namespace ColorTiming.Editor
             {
                 AssetDatabase.Refresh();
                 MigrateBattleHudPrefab();
+                MigrateReusableItemPrefabs();
+                RenamePauseMenuPrefab();
+                MigrateGameFormPrefabNames();
                 foreach (var scenePath in BattleScenePaths)
                 {
                     MigrateBattleScene(scenePath);
                 }
 
                 UGF.EditorTools.GameDataGenerator.GenerateDataTables();
+                DeleteDeprecatedHeroHealthContainer();
                 AssetDatabase.SaveAssets();
                 AssetDatabase.Refresh();
                 Validate();
@@ -81,14 +86,26 @@ namespace ColorTiming.Editor
                     root.AddComponent<GraphicRaycaster>();
                 }
 
-                Rename(root.transform, "PlayerInfo", "PlayerInfoPanel");
-                Rename(root.transform, "BossInfo", "BossInfoPanel");
-                Rename(root.transform, "juese", "CharacterPortrait");
-                Rename(root.transform, "tishi", "WeaponHint");
-                Rename(root.transform, "tishix", "ChargeWeaponHint");
-                Rename(root.transform, "P_HPBox", "HealthPips");
-                Rename(root.transform, "HPBox", "HealthPips");
-                Rename(root.transform, "Image", "BossNameBanner");
+                Rename(root.transform, "PlayerInfoPanel", "Grp_PlayerInfo");
+                Rename(root.transform, "BossInfoPanel", "Grp_BossInfo");
+                Rename(root.transform, "CharacterPortrait", "Img_CharacterPortrait");
+                Rename(root.transform, "WeaponHint", "Img_WeaponHint");
+                Rename(root.transform, "ChargeWeaponHint", "Img_ChargeWeaponHint");
+                RenamePath(root.transform, "Grp_BossInfo/Grp_HeroHP", "Slot_BossHP");
+                RenamePath(root.transform, "Grp_BossInfo/Slot_HeroHP", "Slot_BossHP");
+                Rename(root.transform, "HealthPips", "Slot_HeroHP");
+                Rename(root.transform, "Grp_HeroHP", "Slot_HeroHP");
+                Rename(root.transform, "HPBox", "Slot_BossHP");
+                Rename(root.transform, "Grp_BossHP", "Slot_BossHP");
+                Rename(root.transform, "BossNameBanner", "Img_BossNameBanner");
+
+                var heroHealthContainer = Find(root.transform, "Slot_HeroHP");
+                Assert(heroHealthContainer != null, "BattleHud hero health container is missing.");
+                if (PrefabUtility.IsPartOfPrefabInstance(heroHealthContainer.gameObject))
+                {
+                    PrefabUtility.UnpackPrefabInstance(heroHealthContainer.gameObject,
+                        PrefabUnpackMode.Completely, InteractionMode.AutomatedAction);
+                }
 
                 var form = root.GetComponent<BattleHudForm>() ?? root.AddComponent<BattleHudForm>();
                 var rootRect = (RectTransform)root.transform;
@@ -157,10 +174,11 @@ namespace ColorTiming.Editor
                     "BattleHud root RectTransform is not normalized for GF.UI.");
                 var form = root.GetComponent<BattleHudForm>();
                 Assert(form != null, "BattleHud root requires BattleHudForm.");
-                Assert(Find(root.transform, "PlayerInfoPanel") != null && Find(root.transform, "BossInfoPanel") != null,
+                Assert(Find(root.transform, "Grp_PlayerInfo") != null && Find(root.transform, "Grp_BossInfo") != null,
                     "BattleHud semantic panel names are incomplete.");
-                Assert(Find(root.transform, "CharacterPortrait") != null && Find(root.transform, "WeaponHint") != null
-                    && Find(root.transform, "ChargeWeaponHint") != null && Find(root.transform, "HealthPips") != null,
+                Assert(Find(root.transform, "Img_CharacterPortrait") != null && Find(root.transform, "Img_WeaponHint") != null
+                    && Find(root.transform, "Img_ChargeWeaponHint") != null && Find(root.transform, "Slot_HeroHP") != null
+                    && Find(root.transform, "Slot_BossHP") != null,
                     "BattleHud semantic content names are incomplete.");
                 var serializedForm = new SerializedObject(form);
                 Assert(serializedForm.FindProperty("heroInfo").objectReferenceValue != null
@@ -172,6 +190,135 @@ namespace ColorTiming.Editor
             finally
             {
                 PrefabUtility.UnloadPrefabContents(root);
+            }
+        }
+
+        private static void MigrateReusableItemPrefabs()
+        {
+            RenamePrefabNodes("Assets/Game/Prefabs/UI/ColorTiming/HeroHP_Item.prefab",
+                new[] { ("Image", "Img_HealthPip") });
+            RenamePrefabNodes("Assets/Game/Prefabs/UI/ColorTiming/BossHP_Item.prefab",
+                new[] { ("sprite", "Img_HealthPip"), ("Tip1", "Img_BossTipPrimary"), ("Tip2", "Img_BossTipSecondary") });
+        }
+
+        private static void MigrateGameFormPrefabNames()
+        {
+            RenamePrefabNodes("Assets/Game/Prefabs/UI/ColorTiming/Game/BattleResult.prefab",
+                new[] { ("Shibai_Copy", "Img_Defeat"), ("Shengli_Copy", "Img_Victory") });
+            RenamePrefabPaths("Assets/Game/Prefabs/UI/ColorTiming/Game/BattleResult.prefab",
+                new[]
+                {
+                    ("Img_Defeat/Text (Legacy)", "Txt_DefeatTitle"),
+                    ("Img_Victory/Text (Legacy)", "Txt_VictoryTitle"),
+                });
+            RenamePrefabNodes("Assets/Game/Prefabs/UI/ColorTiming/Game/MainMenu.prefab",
+                new[] { ("StartButtonBox", "Grp_StartActions"),
+                    ("GoGameButtonBox", "Grp_StageSelection"), ("SettingButtonBox", "Grp_Settings") });
+            RenamePrefabPaths("Assets/Game/Prefabs/UI/ColorTiming/Game/MainMenu.prefab",
+                new[]
+                {
+                    ("Img_Background", "Grp_Background"),
+                    ("Grp_Background/BackGround", "Img_Background"),
+                    ("Grp_Background/Title", "Img_Title"),
+                    ("Grp_StartActions/Button_Start", "Btn_OpenStageSelection"),
+                    ("Grp_StartActions/Btn_OpenStageSelection/Text (Legacy)", "Txt_OpenStageSelection"),
+                    ("Grp_StartActions/Button_Start (1)", "Btn_StartStage2"),
+                    ("Grp_StartActions/Btn_StartStage2/Text (Legacy)", "Txt_StartStage2"),
+                    ("Grp_StartActions/Button_SystemSetup", "Btn_OpenSettings"),
+                    ("Grp_StartActions/Btn_OpenSettings/Text (Legacy)", "Txt_OpenSettings"),
+                    ("Grp_StartActions/Button_Exit", "Btn_ExitGame"),
+                    ("Grp_StartActions/Btn_ExitGame/Text (Legacy)", "Txt_ExitGame"),
+                    ("Grp_StageSelection/Button_Start", "Btn_StartStage1"),
+                    ("Grp_StageSelection/Btn_StartStage1/Text (Legacy)", "Txt_StartStage1"),
+                    ("Grp_StageSelection/Button_Start_1", "Btn_StartStage2"),
+                    ("Grp_StageSelection/Button_Back", "Btn_CloseStageSelection"),
+                    ("Grp_StageSelection/Btn_CloseStageSelection/Text (Legacy)", "Txt_CloseStageSelection"),
+                    ("GameObject", "Anchor_MenuContent"),
+                    ("Grp_Settings/Btn_BGM", "Grp_BgmToggle"),
+                    ("Grp_Settings/Grp_BgmToggle/Button_BGM_Open", "Btn_EnableBgm"),
+                    ("Grp_Settings/Grp_BgmToggle/Btn_EnableBgm/Text (Legacy)", "Txt_EnableBgm"),
+                    ("Grp_Settings/Grp_BgmToggle/Button_BGM_Off", "Btn_DisableBgm"),
+                    ("Grp_Settings/Grp_BgmToggle/Btn_DisableBgm/Text (Legacy)", "Txt_DisableBgm"),
+                    ("Grp_Settings/BtnSFX", "Grp_SfxToggle"),
+                    ("Grp_Settings/Grp_SfxToggle/Button_SFX_Off", "Btn_DisableSfx"),
+                    ("Grp_Settings/Grp_SfxToggle/Button_SFX_Open", "Btn_EnableSfx"),
+                    ("Grp_Settings/OffTip", "Grp_AudioToggleHints"),
+                    ("Grp_Settings/Grp_AudioToggleHints/OffTip", "Btn_HideAudioHints"),
+                    ("Grp_Settings/Grp_AudioToggleHints/OpenTip", "Btn_ShowAudioHints"),
+                    ("Grp_Settings/Button_Back", "Btn_CloseSettings"),
+                    ("Grp_Settings/Btn_CloseSettings/Text (Legacy)", "Txt_CloseSettings"),
+                });
+            RenamePrefabPaths("Assets/Game/Prefabs/UI/ColorTiming/Game/PauseMenu.prefab",
+                new[]
+                {
+                    ("Box", "Panel_PauseContent"),
+                    ("Panel_PauseContent/Text (Legacy)", "Txt_PauseTitle"),
+                    ("Panel_PauseContent/OffTip", "Grp_PauseHints"),
+                    ("Panel_PauseContent/Grp_PauseHints/OffTip", "Btn_HidePauseHints"),
+                    ("Panel_PauseContent/Grp_PauseHints/OpenTip", "Btn_ShowPauseHints"),
+                    ("Panel_PauseContent/GoNext", "Btn_NextLevel"),
+                    ("Panel_PauseContent/GoLast", "Btn_PreviousLevel"),
+                    ("Panel_PauseContent/BackMenu", "Btn_ReturnToMenu"),
+                });
+        }
+
+        private static void RenamePauseMenuPrefab()
+        {
+            const string sourcePath = "Assets/Game/Prefabs/UI/ColorTiming/Game/Esc.prefab";
+            const string targetPath = "Assets/Game/Prefabs/UI/ColorTiming/Game/PauseMenu.prefab";
+            if (AssetDatabase.LoadAssetAtPath<GameObject>(sourcePath) != null
+                && AssetDatabase.LoadAssetAtPath<GameObject>(targetPath) == null)
+            {
+                Assert(string.IsNullOrEmpty(AssetDatabase.MoveAsset(sourcePath, targetPath)),
+                    "Could not rename Esc prefab to PauseMenu.");
+            }
+        }
+
+        private static void RenamePrefabNodes(string prefabPath, (string OldName, string NewName)[] names)
+        {
+            var root = PrefabUtility.LoadPrefabContents(prefabPath);
+            try
+            {
+                foreach (var pair in names)
+                {
+                    Rename(root.transform, pair.OldName, pair.NewName);
+                }
+                PrefabUtility.SaveAsPrefabAsset(root, prefabPath);
+            }
+            finally
+            {
+                PrefabUtility.UnloadPrefabContents(root);
+            }
+        }
+
+        private static void RenamePrefabPaths(string prefabPath, (string Path, string NewName)[] names)
+        {
+            var root = PrefabUtility.LoadPrefabContents(prefabPath);
+            try
+            {
+                foreach (var pair in names)
+                {
+                    var target = root.transform.Find(pair.Path);
+                    if (target != null)
+                    {
+                        target.name = pair.NewName;
+                    }
+                }
+
+                PrefabUtility.SaveAsPrefabAsset(root, prefabPath);
+            }
+            finally
+            {
+                PrefabUtility.UnloadPrefabContents(root);
+            }
+        }
+
+        private static void DeleteDeprecatedHeroHealthContainer()
+        {
+            if (AssetDatabase.LoadAssetAtPath<GameObject>(HeroHealthContainerPrefabPath) != null)
+            {
+                Assert(AssetDatabase.DeleteAsset(HeroHealthContainerPrefabPath),
+                    "Could not delete deprecated P_HPBox prefab.");
             }
         }
 
@@ -194,6 +341,15 @@ namespace ColorTiming.Editor
         private static void Rename(Transform root, string oldName, string newName)
         {
             var target = Find(root, oldName);
+            if (target != null)
+            {
+                target.name = newName;
+            }
+        }
+
+        private static void RenamePath(Transform root, string path, string newName)
+        {
+            var target = root.Find(path);
             if (target != null)
             {
                 target.name = newName;

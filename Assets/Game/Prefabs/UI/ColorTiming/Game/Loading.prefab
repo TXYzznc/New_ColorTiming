@@ -235,7 +235,6 @@ MonoBehaviour:
   m_OpenAnimationName:
   m_CloseAnimationName:
   m_ClickSoundName:
-  loadingCanvas: {fileID: 0}
   progressRoot: {fileID: 8857222350711005599}
   progressSlider: {fileID: 8021121976031174154}
   fadeImage: {fileID: 4269006499672677213}
@@ -325,7 +324,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5106419967082537234}
   m_Layer: 0
-  m_Name: Area_Fill
+  m_Name: Grp_Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -451,7 +450,7 @@ GameObject:
   m_Component:
   - component: {fileID: 454880656788128014}
   m_Layer: 0
-  m_Name: Area_HandleSlide
+  m_Name: Grp_Handle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -640,7 +639,7 @@ GameObject:
   - component: {fileID: 5560850202461882623}
   - component: {fileID: 4269006499672677213}
   m_Layer: 0
-  m_Name: Overlay_Fade
+  m_Name: Img_FadeOverlay
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

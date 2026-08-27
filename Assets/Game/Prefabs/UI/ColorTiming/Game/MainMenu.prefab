@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5124538797107466399}
   - component: {fileID: 6383410376485493756}
   m_Layer: 5
-  m_Name: Text (Legacy)
+  m_Name: Txt_CloseSettings
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -93,7 +93,7 @@ GameObject:
   - component: {fileID: 379639465673925645}
   - component: {fileID: 4106983532958030723}
   m_Layer: 5
-  m_Name: Button_Exit
+  m_Name: Btn_ExitGame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -236,7 +236,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3126482505139346399}
   m_Layer: 5
-  m_Name: GameObject
+  m_Name: Anchor_MenuContent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -275,7 +275,7 @@ GameObject:
   - component: {fileID: 4832281212370982911}
   - component: {fileID: 4763114369239198740}
   m_Layer: 5
-  m_Name: Button_SFX_Open
+  m_Name: Btn_EnableSfx
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -419,7 +419,7 @@ GameObject:
   - component: {fileID: 3355405097636206534}
   - component: {fileID: 1957605311326286517}
   m_Layer: 5
-  m_Name: Text (Legacy)
+  m_Name: Txt_OpenSettings
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -498,7 +498,7 @@ GameObject:
   - component: {fileID: 4159329783128904827}
   - component: {fileID: 7516313571857292220}
   m_Layer: 5
-  m_Name: Text (Legacy)
+  m_Name: Txt_OpenStageSelection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -579,7 +579,7 @@ GameObject:
   - component: {fileID: 671152158151737986}
   - component: {fileID: 8291389300875719414}
   m_Layer: 5
-  m_Name: Button_Start_1
+  m_Name: Btn_StartStage2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -725,7 +725,7 @@ GameObject:
   - component: {fileID: 6187546574518638941}
   - component: {fileID: 7073365826469999725}
   m_Layer: 5
-  m_Name: Button_SystemSetup
+  m_Name: Btn_OpenSettings
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -951,7 +951,7 @@ GameObject:
   - component: {fileID: 5741991694842797583}
   - component: {fileID: 5437421727066387655}
   m_Layer: 5
-  m_Name: SettingButtonBox
+  m_Name: Grp_Settings
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1018,7 +1018,7 @@ GameObject:
   - component: {fileID: 4555989475834917898}
   - component: {fileID: 1780755615768979454}
   m_Layer: 5
-  m_Name: Title
+  m_Name: Img_Title
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1095,7 +1095,7 @@ GameObject:
   - component: {fileID: 6985245210989713865}
   - component: {fileID: 5339076858052215788}
   m_Layer: 5
-  m_Name: Button_SFX_Off
+  m_Name: Btn_DisableSfx
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1239,7 +1239,7 @@ GameObject:
   - component: {fileID: 358121676536507067}
   - component: {fileID: 3668961770496442272}
   m_Layer: 5
-  m_Name: Text (Legacy)
+  m_Name: Txt_DisableBgm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1319,7 +1319,7 @@ GameObject:
   - component: {fileID: 2267330682883181632}
   - component: {fileID: 1933503518826045926}
   m_Layer: 5
-  m_Name: Button_Start (1)
+  m_Name: Btn_StartStage2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1453,7 +1453,7 @@ GameObject:
   - component: {fileID: 6579008553969346757}
   - component: {fileID: 3566211518817796642}
   m_Layer: 5
-  m_Name: Button_BGM_Open
+  m_Name: Btn_EnableBgm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1600,7 +1600,7 @@ GameObject:
   - component: {fileID: 6036482157917135214}
   - component: {fileID: 4370945404841288714}
   m_Layer: 5
-  m_Name: Button_Back
+  m_Name: Btn_CloseSettings
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1743,7 +1743,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3523655860239511234}
   m_Layer: 5
-  m_Name: Btn_BGM
+  m_Name: Grp_BgmToggle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1781,7 +1781,7 @@ GameObject:
   - component: {fileID: 5866131819300256081}
   - component: {fileID: 1506248143735842160}
   m_Layer: 5
-  m_Name: GoGameButtonBox
+  m_Name: Grp_StageSelection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1849,7 +1849,7 @@ GameObject:
   - component: {fileID: 524728418774717291}
   - component: {fileID: 3300230113549912625}
   m_Layer: 5
-  m_Name: OffTip
+  m_Name: Btn_HideAudioHints
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1993,7 +1993,7 @@ GameObject:
   - component: {fileID: 6276528873727629757}
   - component: {fileID: 5686556527686877018}
   m_Layer: 5
-  m_Name: Text (Legacy)
+  m_Name: Txt_CloseStageSelection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2072,7 +2072,7 @@ GameObject:
   - component: {fileID: 1959351467232784407}
   - component: {fileID: 9105609788955958225}
   m_Layer: 5
-  m_Name: Text (Legacy)
+  m_Name: Txt_StartStage1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2153,7 +2153,7 @@ GameObject:
   - component: {fileID: 5131509538214818237}
   - component: {fileID: 5488907552004608421}
   m_Layer: 5
-  m_Name: Button_Back
+  m_Name: Btn_CloseStageSelection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2519,7 +2519,7 @@ GameObject:
   - component: {fileID: 2900261083158109154}
   - component: {fileID: 9104712979293756333}
   m_Layer: 5
-  m_Name: BackGround
+  m_Name: Img_Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2596,7 +2596,7 @@ GameObject:
   - component: {fileID: 5788086547553449216}
   - component: {fileID: 1777241841878852307}
   m_Layer: 5
-  m_Name: OpenTip
+  m_Name: Btn_ShowAudioHints
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2738,7 +2738,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6733068633173200526}
   m_Layer: 5
-  m_Name: BtnSFX
+  m_Name: Grp_SfxToggle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2777,7 +2777,7 @@ GameObject:
   - component: {fileID: 1265781513409067268}
   - component: {fileID: 2672523246587878376}
   m_Layer: 5
-  m_Name: Text (Legacy)
+  m_Name: Txt_ExitGame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2854,7 +2854,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5302104102614494751}
   m_Layer: 5
-  m_Name: BackGround
+  m_Name: Grp_Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2897,7 +2897,7 @@ GameObject:
   - component: {fileID: 442456733006449506}
   - component: {fileID: 2195334699610379449}
   m_Layer: 5
-  m_Name: Button_Start
+  m_Name: Btn_StartStage1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3041,7 +3041,7 @@ GameObject:
   - component: {fileID: 2565260116755214118}
   - component: {fileID: 9180510155700143868}
   m_Layer: 5
-  m_Name: StartButtonBox
+  m_Name: Grp_StartActions
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3107,7 +3107,7 @@ GameObject:
   - component: {fileID: 8826632575675991000}
   - component: {fileID: 5109304376882383069}
   m_Layer: 5
-  m_Name: OffTip
+  m_Name: Grp_AudioToggleHints
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3172,7 +3172,7 @@ GameObject:
   - component: {fileID: 5013939879272464735}
   - component: {fileID: 1106750762949269490}
   m_Layer: 5
-  m_Name: Text (Legacy)
+  m_Name: Txt_EnableBgm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3251,7 +3251,7 @@ GameObject:
   - component: {fileID: 4559905304558675376}
   - component: {fileID: 8461383699310586499}
   m_Layer: 5
-  m_Name: Text (Legacy)
+  m_Name: Txt_StartStage2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3332,7 +3332,7 @@ GameObject:
   - component: {fileID: 8033686598666541733}
   - component: {fileID: 1888274370906379257}
   m_Layer: 5
-  m_Name: Button_BGM_Off
+  m_Name: Btn_DisableBgm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3479,7 +3479,7 @@ GameObject:
   - component: {fileID: 7369711382199942289}
   - component: {fileID: 1170223942909415609}
   m_Layer: 5
-  m_Name: Button_Start
+  m_Name: Btn_OpenStageSelection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

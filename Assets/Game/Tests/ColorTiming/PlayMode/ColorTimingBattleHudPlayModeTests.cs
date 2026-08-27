@@ -106,7 +106,7 @@ namespace ColorTiming.Tests.PlayMode
         static void AssertHeroLayout(UI_HeroHPBox heroBox)
         {
             Assert.That(heroBox.controller, Is.Not.Null);
-            Assert.That(heroBox.transform.name, Is.EqualTo("HealthPips"));
+            Assert.That(heroBox.transform.name, Is.EqualTo("Slot_HeroHP"));
             Assert.That(heroBox.transform.childCount, Is.EqualTo(heroBox.controller.heroMaxHP));
             var items = heroBox.GetComponentsInChildren<UI_HeroHPItem>(true);
             Assert.That(items, Has.Length.EqualTo(heroBox.controller.heroMaxHP));

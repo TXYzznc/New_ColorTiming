@@ -13,6 +13,23 @@ Prefab、脚本和公开类型用 PascalCase；节点采用 `前缀_语义`，�
 
 `Bg_` 背景、`Overlay_` 模态根、`Panel_` 可视容器、`Grp_` 无视觉分组、`Txt_` TMP 文本、`Img_` 图片、`Icon_` 图标、`Btn_` 按钮、`Tgl_` 开关、`Sld_` 滑条、`List_` 列表、`Item_` 模板。
 
+### 无可视节点
+
+无 `Graphic` 的节点不是一律使用 `Grp_`；前缀必须表达它在页面中的功能，而不是
+挂载脚本的类型。禁止使用 `GameObject`、`Box`、`Container`、`Area`、`Copy`、中文或
+组件类型作为节点名。
+
+- `Grp_语义`：仅组织同一逻辑区域的静态子节点，不承担运行时注入或定位契约。
+- `Slot_语义`：页面预留的运行时内容宿主；动态 Item、子页面或可替换内容只从这里
+  创建/挂接。例如 `Slot_HeroHP` 挂 `UI_HeroHPBox`，其子级为 `HeroHP_Item(Clone)`。
+- `Anchor_语义`：无视觉定位参照；供动画、特效、跟随物或弹出物读取位置，不承载内容。
+- `Hook_语义`：无视觉功能宿主；挂载页面局部控制器、事件桥接或触发组件，名称说明功能
+  （如 `Hook_InputBlocker`），不写脚本类名。
+
+同一节点只选择一个主要职责前缀。具有 Image、Button、Slider 等可视/交互组件时，优先
+使用其可视组件前缀；不要因同时挂有辅助脚本改成 `Hook_`。运行时创建对象使用资产名加
+精确 `(Clone)` 后缀；动态原型资产以 `*_Item` 命名，只有池模板才使用 `Item_*Template`。
+
 ## Canvas 与根节点
 
 - UIForm 根使用全屏 Stretch：anchorMin `(0,0)`、anchorMax `(1,1)`、offsets 为 `0`。

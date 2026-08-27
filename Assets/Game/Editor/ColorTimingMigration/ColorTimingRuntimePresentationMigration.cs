@@ -25,6 +25,7 @@ namespace ColorTiming.Editor
             try
             {
                 var bgmClip = RemoveLegacyStartMenuPresentation();
+                NormalizeLoadingNodeNames();
                 ValidateLoadingVisualHierarchy();
                 AssignStartMenuBgm(bgmClip);
                 AssetDatabase.SaveAssets();
@@ -45,6 +46,23 @@ namespace ColorTiming.Editor
             {
                 ValidateLoadingVisualHierarchy();
                 Debug.Log("[ColorTiming] Loading UI structure validated.");
+            }
+            catch (Exception exception)
+            {
+                Debug.LogException(exception);
+                throw;
+            }
+        }
+
+        [MenuItem("Game Framework/GameTools/Normalize ColorTiming Loading UI Names", false, 1007)]
+        public static void NormalizeLoadingUiNames()
+        {
+            try
+            {
+                NormalizeLoadingNodeNames();
+                ValidateLoadingVisualHierarchy();
+                AssetDatabase.SaveAssets();
+                Debug.Log("[ColorTiming] Loading UI node names normalized.");
             }
             catch (Exception exception)
             {
@@ -161,19 +179,19 @@ namespace ColorTiming.Editor
                 var slider = sliderRoot.GetComponent<Slider>();
                 Assert(slider != null && Mathf.Approximately(slider.minValue, 0f) && Mathf.Approximately(slider.maxValue, 1f),
                     "Sld_Progress settings differ from the source.");
-                Assert(!FindRequired(sliderRoot, "Area_Fill").gameObject.activeSelf, "Area_Fill must preserve the source inactive state.");
+                Assert(!FindRequired(sliderRoot, "Grp_Fill").gameObject.activeSelf, "Grp_Fill must preserve the source inactive state.");
                 Assert(!FindRequired(sliderRoot, "Img_SliderBackground").gameObject.activeSelf, "Img_SliderBackground must preserve the source inactive state.");
-                var handle = FindRequired(sliderRoot, "Area_HandleSlide/Img_Handle").GetComponent<Image>();
+                var handle = FindRequired(sliderRoot, "Grp_Handle/Img_Handle").GetComponent<Image>();
                 AssertImageSprite(handle, LoadingHandleGuid, "Img_Handle");
                 Assert(slider.targetGraphic == handle && slider.handleRect == handle.rectTransform,
                     "Sld_Progress handle references differ from the source.");
 
-                var fade = FindRequired(root.transform, "Overlay_Fade");
-                Assert(fade.GetSiblingIndex() == 1, "Overlay_Fade must remain after Grp_Progress in draw order.");
+                var fade = FindRequired(root.transform, "Img_FadeOverlay");
+                Assert(fade.GetSiblingIndex() == 1, "Img_FadeOverlay must remain after Grp_Progress in draw order.");
                 AssertRect((RectTransform)fade, Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero);
                 var fadeImage = fade.GetComponent<Image>();
                 Assert(fadeImage != null && fadeImage.sprite == null && fadeImage.color == new Color(0f, 0f, 0f, 1f),
-                    "Overlay_Fade settings differ from the source.");
+                    "Img_FadeOverlay settings differ from the source.");
 
                 var form = root.GetComponent<ColorTimingLoadingForm>();
                 Assert(form != null, "Loading prefab must retain ColorTimingLoadingForm.");
@@ -183,12 +201,56 @@ namespace ColorTiming.Editor
                 Assert(serializedForm.FindProperty("progressSlider").objectReferenceValue == slider,
                     "ColorTimingLoadingForm.progressSlider is not bound to Sld_Progress.");
                 Assert(serializedForm.FindProperty("fadeImage").objectReferenceValue == fadeImage,
-                    "ColorTimingLoadingForm.fadeImage is not bound to Overlay_Fade.");
+                    "ColorTimingLoadingForm.fadeImage is not bound to Img_FadeOverlay.");
             }
             finally
             {
                 PrefabUtility.UnloadPrefabContents(root);
             }
+        }
+
+        private static void NormalizeLoadingNodeNames()
+        {
+            var root = PrefabUtility.LoadPrefabContents(LoadingPrefabPath);
+            try
+            {
+                Rename(root.transform, "Area_Fill", "Grp_Fill");
+                Rename(root.transform, "Area_HandleSlide", "Grp_Handle");
+                Rename(root.transform, "Overlay_Fade", "Img_FadeOverlay");
+                PrefabUtility.SaveAsPrefabAsset(root, LoadingPrefabPath);
+            }
+            finally
+            {
+                PrefabUtility.UnloadPrefabContents(root);
+            }
+        }
+
+        private static void Rename(Transform root, string oldName, string newName)
+        {
+            var target = FindRequiredOrNull(root, oldName);
+            if (target != null)
+            {
+                target.name = newName;
+            }
+        }
+
+        private static Transform FindRequiredOrNull(Transform root, string name)
+        {
+            if (root.name == name)
+            {
+                return root;
+            }
+
+            for (var index = 0; index < root.childCount; index++)
+            {
+                var result = FindRequiredOrNull(root.GetChild(index), name);
+                if (result != null)
+                {
+                    return result;
+                }
+            }
+
+            return null;
         }
 
         private static Transform FindRequired(Transform root, string path)
