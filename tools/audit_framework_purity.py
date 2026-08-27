@@ -169,24 +169,24 @@ PROHIBITED_PATTERNS = {
 }
 
 COLLABORATION_REQUIRED_FILES = (
-    "Documentation/Development/AI-Team-Collaboration-Initialization.md",
-    "Documentation/Development/Dispatch/README.md",
-    "Documentation/Development/Dispatch/RoleRouting.md",
-    "Documentation/Development/Dispatch/DispatchTemplate.md",
-    "Documentation/Development/Dispatch/ActiveAssignments.template.md",
-    "Documentation/Development/Dispatch/PauseAndRecovery.md",
-    "Documentation/Development/Dispatch/WindowAutomation.md",
-    "Documentation/Development/Dispatch/GitIntegration.md",
-    "Documentation/Development/Dispatch/WindowRegistry.example.json",
-    "Documentation/Development/Dispatch/DecisionArchiveTemplate.md",
-    "Documentation/Development/Dispatch/OpenSpecBatching.md",
-    "Documentation/Development/Dispatch/Active/README.md",
+    "Docs/Development/AI-Team-Collaboration-Initialization.md",
+    "Docs/Development/Dispatch/README.md",
+    "Docs/Development/Dispatch/RoleRouting.md",
+    "Docs/Development/Dispatch/DispatchTemplate.md",
+    "Docs/Development/Dispatch/ActiveAssignments.template.md",
+    "Docs/Development/Dispatch/PauseAndRecovery.md",
+    "Docs/Development/Dispatch/WindowAutomation.md",
+    "Docs/Development/Dispatch/GitIntegration.md",
+    "Docs/Development/Dispatch/WindowRegistry.example.json",
+    "Docs/Development/Dispatch/DecisionArchiveTemplate.md",
+    "Docs/Development/Dispatch/OpenSpecBatching.md",
+    "Docs/Development/Dispatch/Active/README.md",
 )
 
 COLLABORATION_ENTRY_LINKS = {
-    "AGENTS.md": "Documentation/Development/Dispatch/README.md",
-    ".claude/AGENTS.md": "Documentation/Development/Dispatch/README.md",
-    ".claude/CLAUDE.md": "Documentation/Development/Dispatch/README.md",
+    "AGENTS.md": "Docs/Development/Dispatch/README.md",
+    ".claude/AGENTS.md": "Docs/Development/Dispatch/README.md",
+    ".claude/CLAUDE.md": "Docs/Development/Dispatch/README.md",
 }
 
 COLLABORATION_PROHIBITED_PATTERNS = {
@@ -223,8 +223,8 @@ CONTENT_TARGETS = (
     "Assets/Game/Scripts",
     "Assets/Game/ScriptsBuiltin",
     "openspec/specs",
-    "Documentation/Development/Dispatch",
-    "Documentation/Development/AI-Team-Collaboration-Initialization.md",
+    "Docs/Development/Dispatch",
+    "Docs/Development/AI-Team-Collaboration-Initialization.md",
     "ProjectSettings/EditorBuildSettings.asset",
 )
 
