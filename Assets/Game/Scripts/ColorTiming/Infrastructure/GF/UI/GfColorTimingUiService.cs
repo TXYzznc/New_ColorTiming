@@ -451,15 +451,25 @@ namespace ColorTiming.Infrastructure.GF.UI
         }
 
         // 响应TransitionStarted回调，并更新本对象状态。
-        void OnTransitionStarted(ColorTimingSceneId scene)
+        void OnTransitionStarted(SceneTransitionContext context)
         {
+            bool shouldPresentLoading = ShouldPresentLoading(context);
             Log.Info(
-                "[ColorTiming.UIFlow] action=TransitionStarted target={0} hasCurrentScene={1} currentScene={2} decision=OpenLoading",
-                scene,
-                sceneFlow.HasCurrentScene,
-                sceneFlow.CurrentScene);
+                "[ColorTiming.UIFlow] action=TransitionStarted source={0} target={1} initial={2} decision={3}",
+                context.SourceScene.HasValue ? context.SourceScene.Value.ToString() : "None",
+                context.TargetScene,
+                context.IsInitialTransition,
+                shouldPresentLoading ? "OpenLoading" : "SkipLoading.InitialStartMenu");
             CloseTrackedGameplayForms();
-            BeginLoading();
+            if (shouldPresentLoading)
+            {
+                BeginLoading();
+            }
+        }
+
+        internal static bool ShouldPresentLoading(SceneTransitionContext context)
+        {
+            return !context.IsInitialTransition || context.TargetScene != ColorTimingSceneId.StartMenu;
         }
 
         // 响应Transition进度回调，并更新本对象状态。

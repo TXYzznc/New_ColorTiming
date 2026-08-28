@@ -151,7 +151,7 @@ namespace ColorTiming.Bootstrap
         }
 
         // 响应TransitionStarted回调，并更新本对象状态。
-        private void OnTransitionStarted(ColorTimingSceneId scene)
+        private void OnTransitionStarted(SceneTransitionContext _)
         {
             // GF.Entity recycles hidden objects on its next update. Request cleanup before
             // the outgoing Unity scene starts unloading so scene-parented effects remain valid.

@@ -7,7 +7,7 @@ namespace ColorTiming.Bootstrap.Flow
 {
     public interface IColorTimingSceneFlow
     {
-        event Action<ColorTimingSceneId> TransitionStarted;
+        event Action<SceneTransitionContext> TransitionStarted;
         event Action<float> TransitionProgress;
         event Action<ColorTimingSceneId> SceneChanged;
         event Action<ColorTimingSceneId, string> TransitionFailed;

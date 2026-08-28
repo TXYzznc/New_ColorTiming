@@ -21,7 +21,7 @@ namespace ColorTiming.Bootstrap.Flow
             this.beginTransition = beginTransition ?? throw new ArgumentNullException(nameof(beginTransition));
         }
 
-        public event Action<ColorTimingSceneId> TransitionStarted;
+        public event Action<SceneTransitionContext> TransitionStarted;
         public event Action<float> TransitionProgress;
         public event Action<ColorTimingSceneId> SceneChanged;
         public event Action<ColorTimingSceneId, string> TransitionFailed;
@@ -42,7 +42,8 @@ namespace ColorTiming.Bootstrap.Flow
             pendingScene = scene;
             isTransitioning = true;
             transitionProgress = 0f;
-            TransitionStarted?.Invoke(scene);
+            var context = new SceneTransitionContext(hasCurrentScene ? currentScene : (ColorTimingSceneId?)null, scene);
+            TransitionStarted?.Invoke(context);
 
             try
             {
