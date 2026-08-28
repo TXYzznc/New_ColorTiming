@@ -52,4 +52,4 @@
 - [x] 7.3 Compare protected asset/event manifests and review every allowed prefab/scene serialized difference
 - [x] 7.4 Run framework purity and repository integrity audits without modifying `ScriptsBuiltin`
 - [x] 7.5 Update the feature audit, migration evidence and manual visual/audio/feel acceptance checklist
-- [ ] 7.6 Hand final scoped changes to the Git integration task for Chinese commits without pushing
+- [x] 7.6 Hand final scoped changes to the Git integration task for Chinese commits without pushing
