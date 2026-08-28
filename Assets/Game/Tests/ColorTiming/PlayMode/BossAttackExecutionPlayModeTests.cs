@@ -1,9 +1,11 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using ColorTiming.Bosses.Boss2;
+using ColorTiming.Application.Battle;
+using ColorTiming.Bootstrap;
 using ColorTiming.Combat;
 using ColorTiming.Presentation.Entities;
 using NUnit.Framework;
@@ -21,35 +23,31 @@ namespace ColorTiming.Tests.PlayMode
         const float TransitionTimeout = 20f;
         const float AttackTimeout = 15f;
 
-        static readonly MethodInfo PlayBoss1Animation = typeof(Boss1_Controller).GetMethod(
+        static readonly MethodInfo PlayBoss1Animation = typeof(Boss1ActorView).GetMethod(
             "AnimPlay",
             BindingFlags.Instance | BindingFlags.NonPublic);
 
-        static readonly FieldInfo Boss1Health = typeof(Boss1_Controller).GetField(
-            "battleHealth",
-            BindingFlags.Instance | BindingFlags.NonPublic);
-
-        static readonly MethodInfo PlayBoss2HeadAnimation = typeof(Boss2_Controller).GetMethod(
+        static readonly MethodInfo PlayBoss2HeadAnimation = typeof(Boss2ActorView).GetMethod(
             "AnimPlay",
             BindingFlags.Instance | BindingFlags.NonPublic);
 
-        static readonly MethodInfo PlayBoss2TailAnimation = typeof(Boss2_Controller_w).GetMethod(
+        static readonly MethodInfo PlayBoss2TailAnimation = typeof(Boss2TailActorView).GetMethod(
             "AnimPlay",
             BindingFlags.Instance | BindingFlags.NonPublic);
 
-        static readonly FieldInfo Boss2HeadCooldown = typeof(Boss2_Controller).GetField(
+        static readonly FieldInfo Boss2HeadCooldown = typeof(Boss2ActorView).GetField(
             "atkCD",
             BindingFlags.Instance | BindingFlags.NonPublic);
 
-        static readonly FieldInfo Boss2HeadBurrow = typeof(Boss2_Controller).GetField(
+        static readonly FieldInfo Boss2HeadBurrow = typeof(Boss2ActorView).GetField(
             "burrowFlow",
             BindingFlags.Instance | BindingFlags.NonPublic);
 
-        static readonly FieldInfo Boss2TailCooldown = typeof(Boss2_Controller_w).GetField(
+        static readonly FieldInfo Boss2TailCooldown = typeof(Boss2TailActorView).GetField(
             "atkCD",
             BindingFlags.Instance | BindingFlags.NonPublic);
 
-        static readonly FieldInfo Boss2TailBurrow = typeof(Boss2_Controller_w).GetField(
+        static readonly FieldInfo Boss2TailBurrow = typeof(Boss2TailActorView).GetField(
             "burrowFlow",
             BindingFlags.Instance | BindingFlags.NonPublic);
 
@@ -58,18 +56,16 @@ namespace ColorTiming.Tests.PlayMode
         public IEnumerator Boss1_AllSixAttacksPlayAndDispatchTheirAuthoredSpineEvents()
         {
             yield return BootToStartMenu();
-            FindActive<UI_ButtonAction>().GoTest1();
+            FindActive<MainMenuForm>().GoTest1();
             yield return WaitForScene("Boss1", TransitionTimeout);
 
-            var boss = FindActive<Boss1_Controller>();
-            var presentation = boss.GetComponent<Boss1Anim>();
+            var boss = FindActive<Boss1ActorView>();
+            var presentation = boss.GetComponent<Boss1AnimationEventRelay>();
             Assert.That(boss, Is.Not.Null);
             Assert.That(presentation, Is.Not.Null);
             Assert.That(PlayBoss1Animation, Is.Not.Null);
-            Assert.That(Boss1Health, Is.Not.Null);
-
-            var health = (BossBattleHealth)Boss1Health.GetValue(boss);
-            Assert.That(health, Is.Not.Null);
+            var session = FindActive<BattleRuntimeContext>()?.Session;
+            Assert.That(session, Is.Not.Null);
             // Keep the authored Spine tracks and callbacks live while preventing the
             // controller Update loop from starting a random attack over the forced contract run.
             boss.enabled = false;
@@ -78,21 +74,21 @@ namespace ColorTiming.Tests.PlayMode
                 boss,
                 boss.skeletonAnimation1,
                 "attack_1_test1_60fps",
-                health,
+                session,
                 false,
                 presentation.sk1.name);
             yield return VerifyAttack(
                 boss,
                 boss.skeletonAnimation1,
                 "attack_2_test1_60fps",
-                health,
+                session,
                 false,
                 presentation.sk2.name);
             yield return VerifyAttack(
                 boss,
                 boss.skeletonAnimation1,
                 "attack_3_test2_60fps",
-                health,
+                session,
                 false,
                 presentation.sk3.name,
                 presentation.sk3_1.name);
@@ -100,7 +96,7 @@ namespace ColorTiming.Tests.PlayMode
                 boss,
                 boss.skeletonAnimation1,
                 "attack_4_test1_60fps",
-                health,
+                session,
                 false,
                 presentation.sk1.name,
                 presentation.sk3.name,
@@ -109,23 +105,23 @@ namespace ColorTiming.Tests.PlayMode
                 boss,
                 boss.skeletonAnimation2,
                 "attack_5_test1_60fps2",
-                health,
+                session,
                 true,
                 presentation.sk5.name);
             yield return VerifyAttack(
                 boss,
                 boss.skeletonAnimation1,
                 "attack_6_60fps",
-                health,
+                session,
                 false,
                 presentation.sk6.name);
 
-            var hud = FindActive<UI_HeroInfo>();
+            var hud = FindActive<BattlePlayerInfoView>();
             Assert.That(hud, Is.Not.Null);
             hud.TogglePause();
-            yield return WaitUntil(() => FindActive<UI_ESC>() != null, 10f,
+            yield return WaitUntil(() => FindActive<PauseMenuForm>() != null, 10f,
                 "Boss1 attack contract cleanup could not open the pause form.");
-            FindActive<UI_ESC>().BackMenu();
+            FindActive<PauseMenuForm>().BackMenu();
             yield return WaitForScene("StartMenu", TransitionTimeout);
         }
 
@@ -134,12 +130,12 @@ namespace ColorTiming.Tests.PlayMode
         public IEnumerator Boss2_HeadTailBurrowAndAttackEventsExecuteThroughFrameworkEntities()
         {
             yield return BootToStartMenu();
-            FindActive<UI_ButtonAction>().GoTest2();
+            FindActive<MainMenuForm>().GoTest2();
             yield return WaitForScene("Boss2", TransitionTimeout);
 
-            var boss = FindActive<Boss2_Controller>();
-            var presentation = boss.GetComponent<Boss2Anim_s>();
-            var tail = UnityEngine.Object.FindObjectsOfType<Boss2_Controller_w>(true).Single();
+            var boss = FindActive<Boss2ActorView>();
+            var presentation = boss.GetComponent<Boss2AnimationEventRelay>();
+            var tail = UnityEngine.Object.FindObjectsOfType<Boss2TailActorView>(true).Single();
             Assert.That(boss, Is.Not.Null);
             Assert.That(presentation, Is.Not.Null);
             Assert.That(tail, Is.Not.Null);
@@ -176,7 +172,8 @@ namespace ColorTiming.Tests.PlayMode
             while (boss.Boss1HP.Count > 11)
             {
                 var color = boss.Boss1HP[0];
-                boss.OnDamage(null, new Weapon(color, WeaponType.nor), Vector2.zero, "tail-threshold-contract");
+                boss.ReceiveDamage(BattleDamageTestFactory.ToBoss(
+                    (ColorTiming.Combat.WeaponColor)color, "tail-threshold-contract"));
             }
             Assert.That(tail.gameObject.activeSelf, Is.True,
                 "The tail did not activate on the 12-to-11 transition.");
@@ -200,25 +197,25 @@ namespace ColorTiming.Tests.PlayMode
                 "attack_2",
                 tail.sk2.name);
 
-            var hud = FindActive<UI_HeroInfo>();
+            var hud = FindActive<BattlePlayerInfoView>();
             Assert.That(hud, Is.Not.Null);
             hud.TogglePause();
-            yield return WaitUntil(() => FindActive<UI_ESC>() != null, 10f,
+            yield return WaitUntil(() => FindActive<PauseMenuForm>() != null, 10f,
                 "Boss2 attack contract cleanup could not open the pause form.");
-            FindActive<UI_ESC>().BackMenu();
+            FindActive<PauseMenuForm>().BackMenu();
             yield return WaitForScene("StartMenu", TransitionTimeout);
         }
 
         static IEnumerator VerifyAttack(
-            Boss1_Controller boss,
+            Boss1ActorView boss,
             SkeletonAnimation view,
             string animationName,
-            BossBattleHealth health,
+            BattleSession session,
             bool expectInvulnerability,
             params string[] expectedEntityNames)
         {
             yield return HideActiveTransientEntities(expectedEntityNames);
-            Assert.That(health.IsDamageable, Is.True, $"{animationName} must start damageable.");
+            Assert.That(session.Snapshot.BossDamageable, Is.True, $"{animationName} must start damageable.");
 
             var observedEvents = new List<string>();
             void RecordEvent(TrackEntry _, Spine.Event spineEvent)
@@ -243,7 +240,7 @@ namespace ColorTiming.Tests.PlayMode
             var deadline = Time.realtimeSinceStartup + AttackTimeout;
             while (Time.realtimeSinceStartup < deadline)
             {
-                if (!health.IsDamageable)
+                if (!session.Snapshot.BossDamageable)
                 {
                     sawInvulnerability = true;
                 }
@@ -274,7 +271,7 @@ namespace ColorTiming.Tests.PlayMode
                 $"Observed Spine events: [{string.Join(", ", observedEvents)}].");
             Assert.That(sawInvulnerability, Is.EqualTo(expectInvulnerability),
                 $"{animationName} produced an unexpected invulnerability contract.");
-            Assert.That(health.IsDamageable, Is.True,
+            Assert.That(session.Snapshot.BossDamageable, Is.True,
                 $"{animationName} did not restore boss damageability on completion.");
             view.AnimationState.Event -= RecordEvent;
         }
@@ -342,7 +339,7 @@ namespace ColorTiming.Tests.PlayMode
             view.AnimationState.Event -= RecordEvent;
         }
 
-        static IEnumerator VerifyHeadBurrow(Boss2_Controller boss, Boss2Anim_s presentation)
+        static IEnumerator VerifyHeadBurrow(Boss2ActorView boss, Boss2AnimationEventRelay presentation)
         {
             var expectedEntityNames = new[] { boss.dundiObj.name, presentation.sk0.name };
             yield return HideActiveTransientEntities(expectedEntityNames);
@@ -385,7 +382,7 @@ namespace ColorTiming.Tests.PlayMode
                 "Boss2 burrow did not emit both trail and resurfacing entities.");
         }
 
-        static IEnumerator VerifyInitialTailBurrow(Boss2_Controller_w tail)
+        static IEnumerator VerifyInitialTailBurrow(Boss2TailActorView tail)
         {
             var flow = (Boss2BurrowFlow)Boss2TailBurrow.GetValue(tail);
             var collider = tail.GetComponent<PolygonCollider2D>();
@@ -443,10 +440,8 @@ namespace ColorTiming.Tests.PlayMode
             {
                 SceneManager.LoadScene("Launch", LoadSceneMode.Single);
             }
-            yield return ColorTimingPlayModeBoot.EnsureFormalLaunchStartedInBatchMode();
-            yield return WaitForScene("StartMenu", BootTimeout);
-            yield return ColorTimingPlayModeBoot.WaitForProductSceneTransitions();
-            yield return WaitUntil(() => FindActive<UI_ButtonAction>() != null, 10f,
+            yield return ColorTimingPlayModeBoot.EnsureStartMenu(BootTimeout);
+            yield return WaitUntil(() => FindActive<MainMenuForm>() != null, 10f,
                 "StartMenu GF.UI form did not become active.");
         }
 

@@ -1,10 +1,12 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
+using ColorTiming.Application.Battle;
 using ColorTiming.Combat;
 using ColorTiming.Input;
 using ColorTiming.Settings;
 using UnityEngine;
 using UnityEngine.UI;
+using CombatWeaponType = ColorTiming.Combat.WeaponType;
 
 namespace ColorTiming.Presentation.UI
 {
@@ -15,33 +17,35 @@ namespace ColorTiming.Presentation.UI
         [SerializeField] private Image weaponTipImage;
         [SerializeField] private Sprite[] weaponTips;
 
-        private readonly HashSet<WeaponType> shownWeaponTypes = new HashSet<WeaponType>();
-        private HeroController hero;
+        private readonly HashSet<CombatWeaponType> shownWeaponTypes = new HashSet<CombatWeaponType>();
+        private BattleSession session;
+        private WeaponIdentity lastWeapon;
         private IGameInput gameInput;
         private IGameTime gameTime;
         private IColorTimingSettings settings;
         private IDisposable pauseLease;
         private float earliestDismissTime;
 
-        public void BindRuntime(HeroController runtimeHero, IGameInput input, IGameTime time, IColorTimingSettings projectSettings)
+        public void BindRuntime(BattleSession runtimeSession, IGameInput input, IGameTime time, IColorTimingSettings projectSettings)
         {
-            if (hero != null)
+            if (session != null)
             {
-                hero.OnSwitchWeapon.RemoveListener(OnSwitchWeapon);
+                session.SnapshotChanged -= OnSnapshotChanged;
             }
 
-            hero = runtimeHero ?? throw new ArgumentNullException(nameof(runtimeHero));
+            session = runtimeSession ?? throw new ArgumentNullException(nameof(runtimeSession));
             gameInput = input ?? throw new ArgumentNullException(nameof(input));
             gameTime = time ?? throw new ArgumentNullException(nameof(time));
             settings = projectSettings ?? throw new ArgumentNullException(nameof(projectSettings));
-            hero.OnSwitchWeapon.AddListener(OnSwitchWeapon);
+            lastWeapon = session.Snapshot.Weapon;
+            session.SnapshotChanged += OnSnapshotChanged;
             if (tipContent != null) tipContent.SetActive(false);
         }
 
         protected override void OnClose(bool isShutdown, object userData)
         {
-            if (hero != null) hero.OnSwitchWeapon.RemoveListener(OnSwitchWeapon);
-            hero = null;
+            if (session != null) session.SnapshotChanged -= OnSnapshotChanged;
+            session = null;
             shownWeaponTypes.Clear();
             ReleasePause();
             base.OnClose(isShutdown, userData);
@@ -61,15 +65,18 @@ namespace ColorTiming.Presentation.UI
             }
         }
 
-        private void OnSwitchWeapon(Weapon weapon)
+        private void OnSnapshotChanged(BattleSnapshot snapshot)
         {
-            if (weapon == null || settings == null || settings.KeyTipsDisabled || weapon.weaponType == WeaponType.nor
-                || !shownWeaponTypes.Add(weapon.weaponType))
+            if (snapshot.Weapon.Equals(lastWeapon)) return;
+            lastWeapon = snapshot.Weapon;
+            var weaponType = snapshot.Weapon.Type;
+            if (settings == null || settings.KeyTipsDisabled || weaponType == CombatWeaponType.Normal
+                || !shownWeaponTypes.Add(weaponType))
             {
                 return;
             }
 
-            var index = (int)weapon.weaponType - 1;
+            var index = (int)weaponType - 1;
             if (weaponTipImage == null || weaponTips == null || index < 0 || index >= weaponTips.Length)
             {
                 throw new InvalidOperationException("BattleTutorial weapon-tip sprites are incomplete.");

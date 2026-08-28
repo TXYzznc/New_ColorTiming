@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using ColorTiming.Bootstrap.Flow;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;

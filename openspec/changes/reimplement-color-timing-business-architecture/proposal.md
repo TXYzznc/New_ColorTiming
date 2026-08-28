@@ -28,6 +28,6 @@
 ## Impact
 
 - 主要影响 `Assets/Game/Scripts/ColorTiming/`、其测试程序集，以及包含业务脚本接线的 ColorTiming Scene/Prefab。
-- 不扩展 HybridCLR 热更程序集清单；新增普通 `ColorTiming.Domain` 与 `ColorTiming.Application` 运行时程序集，现有 `Hotfix` 仅承载启动入口及 Unity/GF 适配并单向引用它们，测试程序集继续独立。
+- 不把业务热更作为设计目标，也不扩展 HybridCLR 热更程序集清单；新增普通 `ColorTiming.Domain` 与 `ColorTiming.Application` 运行时程序集，历史命名的 `Hotfix` 仅承载启动入口及 Unity/GF 适配并单向引用它们，测试程序集继续独立。
 - 资源本体视为受保护输入；允许保留 `.meta` 的改名/迁移和可审计的脚本重绑，不重新制作或破坏美术资产。
 - 旧业务类型和场景扫描式组合属于删除范围；GF_X 框架核心、第三方包与无关工具配置不属于本次修改范围。

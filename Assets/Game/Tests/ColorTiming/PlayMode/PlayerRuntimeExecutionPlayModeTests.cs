@@ -1,7 +1,8 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Linq;
 using System.Reflection;
+using ColorTiming.Combat;
 using ColorTiming.Input;
 using ColorTiming.Input.Adapters;
 using ColorTiming.Player;
@@ -18,7 +19,7 @@ namespace ColorTiming.Tests.PlayMode
         const float BootTimeout = 30f;
         const float TransitionTimeout = 20f;
 
-        static readonly FieldInfo PlayerState = typeof(HeroController).GetField(
+        static readonly FieldInfo PlayerState = typeof(PlayerActorView).GetField(
             "playerState",
             BindingFlags.Instance | BindingFlags.NonPublic);
 
@@ -27,10 +28,10 @@ namespace ColorTiming.Tests.PlayMode
         public IEnumerator SemanticInput_PickupHitDashDeathAndAnimationRestartExecuteInBoss1()
         {
             yield return BootToStartMenu();
-            FindActive<UI_ButtonAction>().GoTest1();
+            FindActive<MainMenuForm>().GoTest1();
             yield return WaitForScene("Boss1", TransitionTimeout);
 
-            var hero = FindActive<HeroController>();
+            var hero = FindActive<PlayerActorView>();
             var input = new MutableGameInput();
             var settings = new GfColorTimingSettings();
             var originalKeyTips = settings.KeyTipsDisabled;
@@ -68,14 +69,15 @@ namespace ColorTiming.Tests.PlayMode
                 Assert.That(hero.characterSprite.transform.localScale.x, Is.LessThan(0f));
                 input.Move = Vector2.zero;
 
-                Assert.That(hero.PickUPWeapon(new Weapon(ColorType.hong, WeaponType.jiandao)), Is.True);
-                Assert.That(hero.nowweapon.weaponType, Is.EqualTo(WeaponType.jiandao));
-                Assert.That(hero.nowweapon.colorType, Is.EqualTo(ColorType.hong));
+                Assert.That(hero.PickUPWeapon(
+                    new WeaponIdentity(WeaponColor.Red, ColorTiming.Combat.WeaponType.Scissors)), Is.True);
+                Assert.That(hero.nowweapon.Type, Is.EqualTo(ColorTiming.Combat.WeaponType.Scissors));
+                Assert.That(hero.nowweapon.Color, Is.EqualTo(WeaponColor.Red));
 
-                hero.OnDamage(null, new Weapon(ColorType.hong, WeaponType.nor),
-                    (Vector2)hero.transform.position + Vector2.left, "player-contract-hit");
+                hero.ReceiveDamage(BattleDamageTestFactory.ToPlayer(
+                    (Vector2)hero.transform.position + Vector2.left, "player-contract-hit"));
                 Assert.That(hero.heroHP, Is.EqualTo(4));
-                Assert.That(hero.nowweapon.weaponType, Is.EqualTo(WeaponType.nor),
+                Assert.That(hero.nowweapon.Type, Is.EqualTo(ColorTiming.Combat.WeaponType.Normal),
                     "A damaging hit must force the held weapon to drop.");
                 yield return WaitForHitRecovery(state);
 
@@ -88,12 +90,19 @@ namespace ColorTiming.Tests.PlayMode
                 input.DashPressed = true;
                 yield return null;
                 input.DashPressed = false;
-                yield return WaitUntil(() => state.IsDashing, 3f,
-                    "Semantic DashPressed did not enter the authored Dash state.");
+                var dashDeadline = Time.realtimeSinceStartup + 3f;
+                while (!state.CanEvadeDamage && Time.realtimeSinceStartup < dashDeadline)
+                {
+                    yield return null;
+                }
+                Assert.That(state.CanEvadeDamage, Is.True,
+                    $"Semantic DashPressed did not enter the authored dash-invulnerability window. " +
+                    $"DomainState={state.State}, DashSignal={state.HasDashInvulnerability}, " +
+                    $"AnimatorState={hero.animator.GetCurrentAnimatorStateInfo(0).fullPathHash}.");
 
                 var dashStart = hero.transform.position;
-                hero.OnDamage(null, new Weapon(ColorType.hong, WeaponType.nor),
-                    (Vector2)hero.transform.position + Vector2.left, "successful-dash-contract");
+                hero.ReceiveDamage(BattleDamageTestFactory.ToPlayer(
+                    (Vector2)hero.transform.position + Vector2.left, "successful-dash-contract"));
                 Assert.That(hero.heroHP, Is.EqualTo(5),
                     "A successful Dash must heal the previously missing heart.");
                 Assert.That(Time.timeScale, Is.EqualTo(0.45f).Within(0.01f));
@@ -106,22 +115,22 @@ namespace ColorTiming.Tests.PlayMode
 
                 for (var remaining = 4; remaining >= 1; remaining--)
                 {
-                    hero.OnDamage(null, new Weapon(ColorType.hong, WeaponType.nor),
-                        (Vector2)hero.transform.position + Vector2.left, "player-contract-hit");
+                    hero.ReceiveDamage(BattleDamageTestFactory.ToPlayer(
+                        (Vector2)hero.transform.position + Vector2.left, "player-contract-hit"));
                     Assert.That(hero.heroHP, Is.EqualTo(remaining));
                     yield return WaitForHitRecovery(state);
                 }
 
                 var oldHeroId = hero.GetInstanceID();
-                hero.OnDamage(null, new Weapon(ColorType.hong, WeaponType.nor),
-                    (Vector2)hero.transform.position + Vector2.left, "player-contract-death");
+                hero.ReceiveDamage(BattleDamageTestFactory.ToPlayer(
+                    (Vector2)hero.transform.position + Vector2.left, "player-contract-death"));
                 Assert.That(hero.heroHP, Is.Zero);
                 Assert.That(state.IsAlive, Is.False);
                 Assert.That(hero.deathShow.activeSelf, Is.True);
-                Assert.That(hero.GetComponent<HeroCamera_>().enabled, Is.False);
+                Assert.That(hero.GetComponent<PlayerCameraLifecycleView>().enabled, Is.False);
 
                 yield return WaitUntil(
-                    () => UnityEngine.Object.FindObjectsOfType<HeroController>(true).Any(
+                    () => UnityEngine.Object.FindObjectsOfType<PlayerActorView>(true).Any(
                         candidate => candidate.gameObject.activeInHierarchy
                                      && candidate.GetInstanceID() != oldHeroId
                                      && candidate.heroHP == candidate.heroMaxHP),
@@ -129,12 +138,12 @@ namespace ColorTiming.Tests.PlayMode
                     "Death animation event did not restart Boss1 with a fresh full-health hero.");
                 Assert.That(SceneManager.GetActiveScene().name, Is.EqualTo("Boss1"));
 
-                var restartedHud = FindActive<UI_HeroInfo>();
+                var restartedHud = FindActive<BattlePlayerInfoView>();
                 Assert.That(restartedHud, Is.Not.Null);
                 restartedHud.TogglePause();
-                yield return WaitUntil(() => FindActive<UI_ESC>() != null, 10f,
+                yield return WaitUntil(() => FindActive<PauseMenuForm>() != null, 10f,
                     "Player contract cleanup could not open the pause form.");
-                FindActive<UI_ESC>().BackMenu();
+                FindActive<PauseMenuForm>().BackMenu();
                 yield return WaitForScene("StartMenu", TransitionTimeout);
             }
             finally
@@ -160,10 +169,8 @@ namespace ColorTiming.Tests.PlayMode
             {
                 SceneManager.LoadScene("Launch", LoadSceneMode.Single);
             }
-            yield return ColorTimingPlayModeBoot.EnsureFormalLaunchStartedInBatchMode();
-            yield return WaitForScene("StartMenu", BootTimeout);
-            yield return ColorTimingPlayModeBoot.WaitForProductSceneTransitions();
-            yield return WaitUntil(() => FindActive<UI_ButtonAction>() != null, 10f,
+            yield return ColorTimingPlayModeBoot.EnsureStartMenu(BootTimeout);
+            yield return WaitUntil(() => FindActive<MainMenuForm>() != null, 10f,
                 "StartMenu GF.UI form did not become active.");
         }
 

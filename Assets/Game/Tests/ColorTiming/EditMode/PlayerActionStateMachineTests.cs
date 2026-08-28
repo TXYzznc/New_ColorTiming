@@ -26,6 +26,21 @@ namespace ColorTiming.Tests.EditMode
         }
 
         [Test]
+        public void DashInvulnerabilitySignal_MayArriveBeforeAnimatorStateEntry()
+        {
+            var state = new PlayerActionStateMachine();
+
+            state.SetDashInvulnerable(true);
+            Assert.That(state.CanEvadeDamage, Is.False);
+
+            Assert.That(state.BeginDash(), Is.True);
+            Assert.That(state.CanEvadeDamage, Is.True);
+
+            state.EndDash();
+            Assert.That(state.HasDashInvulnerability, Is.False);
+        }
+
+        [Test]
         public void HitStun_HasOneSecondDamageRejection_IndependentOfAnimationExit()
         {
             var state = new PlayerActionStateMachine();

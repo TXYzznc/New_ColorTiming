@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Linq;
 using UnityEditor;
@@ -39,7 +39,7 @@ namespace ColorTiming.Editor
                 throw new InvalidOperationException($"Resource export group has no valid paths: {GroupName}");
             }
 
-            var projectRoot = Directory.GetParent(Application.dataPath)?.FullName
+            var projectRoot = Directory.GetParent(global::UnityEngine.Application.dataPath)?.FullName
                 ?? throw new InvalidOperationException("Could not resolve the project root.");
             var packagePath = Path.Combine(projectRoot, PackageRelativePath);
             Directory.CreateDirectory(Path.GetDirectoryName(packagePath) ?? projectRoot);

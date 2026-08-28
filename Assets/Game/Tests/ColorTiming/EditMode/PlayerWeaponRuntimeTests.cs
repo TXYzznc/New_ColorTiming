@@ -50,15 +50,14 @@ namespace ColorTiming.Tests.EditMode
         [TestCase(WeaponColor.Green, CombatWeaponType.Hammer)]
         [TestCase(WeaponColor.Purple, CombatWeaponType.Bomb)]
         [TestCase(WeaponColor.Orange, CombatWeaponType.Airplane)]
-        public void LegacyWeaponCompatibility_RoundTripsDomainIdentity(
+        public void AnimatorIndex_RoundTripsDomainIdentity(
             WeaponColor color,
             CombatWeaponType type)
         {
             var identity = new WeaponIdentity(color, type);
-            var legacy = new global::Weapon(identity);
-
-            Assert.That(legacy.Identity, Is.EqualTo(identity));
-            Assert.That(WeaponIdentity.FromLegacyAnimatorIndex(legacy.GetIntType()), Is.EqualTo(identity));
+            Assert.That(
+                WeaponIdentity.FromLegacyAnimatorIndex(identity.ToLegacyAnimatorIndex()),
+                Is.EqualTo(identity));
         }
     }
 }

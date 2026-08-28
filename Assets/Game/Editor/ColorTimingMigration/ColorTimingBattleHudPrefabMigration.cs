@@ -105,10 +105,10 @@ namespace ColorTiming.Editor
                 rootRect.sizeDelta = Vector2.zero;
                 rootRect.pivot = new Vector2(0.5f, 0.5f);
                 rootRect.localScale = Vector3.one;
-                var heroInfo = root.GetComponentInChildren<UI_HeroInfo>(true);
-                var heroHealth = root.GetComponentInChildren<UI_HeroHPBox>(true);
-                var boss1Health = root.GetComponentInChildren<UI_BossHPController>(true);
-                var boss2Health = root.GetComponentInChildren<UI_BossHPController2>(true);
+                var heroInfo = root.GetComponentInChildren<BattlePlayerInfoView>(true);
+                var heroHealth = root.GetComponentInChildren<PlayerHealthPipsView>(true);
+                var boss1Health = root.GetComponentInChildren<Boss1HealthView>(true);
+                var boss2Health = root.GetComponentInChildren<Boss2HealthView>(true);
                 Assert(heroInfo != null && heroHealth != null && boss1Health != null && boss2Health != null,
                     "Battle HUD must contain each serialized presentation component.");
                 SeparateBossHealthSlots(ref boss1Health, ref boss2Health);
@@ -155,8 +155,8 @@ namespace ColorTiming.Editor
                     && serializedForm.FindProperty("boss1Health").objectReferenceValue != null
                     && serializedForm.FindProperty("boss2Health").objectReferenceValue != null,
                     "BattleHudForm references are incomplete.");
-                var boss1Health = root.GetComponentInChildren<UI_BossHPController>(true);
-                var boss2Health = root.GetComponentInChildren<UI_BossHPController2>(true);
+                var boss1Health = root.GetComponentInChildren<Boss1HealthView>(true);
+                var boss2Health = root.GetComponentInChildren<Boss2HealthView>(true);
                 Assert(boss1Health != null && boss2Health != null
                     && boss1Health.transform != boss2Health.transform
                     && boss1Health.transform.name == "Slot_Boss1HP"
@@ -317,8 +317,8 @@ namespace ColorTiming.Editor
         }
 
         private static void SeparateBossHealthSlots(
-            ref UI_BossHPController boss1Health,
-            ref UI_BossHPController2 boss2Health)
+            ref Boss1HealthView boss1Health,
+            ref Boss2HealthView boss2Health)
         {
             if (boss1Health.transform != boss2Health.transform)
             {
@@ -334,7 +334,7 @@ namespace ColorTiming.Editor
             var boss2Slot = (RectTransform)boss2SlotObject.transform;
             boss2Slot.SetParent(boss1Slot.parent, false);
             CopyRectTransform(boss1Slot, boss2Slot);
-            var replacement = boss2SlotObject.AddComponent<UI_BossHPController2>();
+            var replacement = boss2SlotObject.AddComponent<Boss2HealthView>();
             replacement.HPItem = boss2Health.HPItem;
             UnityEngine.Object.DestroyImmediate(boss2Health);
             boss2Health = replacement;

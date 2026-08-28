@@ -2,7 +2,9 @@
   "name": "ColorTiming.EditMode.Tests",
   "rootNamespace": "ColorTiming.Tests.EditMode",
   "references": [
-    "Hotfix"
+    "Hotfix",
+    "ColorTiming.Domain",
+    "ColorTiming.Application"
   ],
   "includePlatforms": [
     "Editor"

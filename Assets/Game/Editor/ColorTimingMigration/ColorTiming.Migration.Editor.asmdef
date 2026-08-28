@@ -3,6 +3,8 @@
     "rootNamespace": "ColorTiming.Editor",
     "references": [
         "Hotfix",
+        "ColorTiming.Domain",
+        "ColorTiming.Application",
         "UnityGameFramework.Runtime",
         "GameFramework",
         "Unity.UGUI",

@@ -26,8 +26,9 @@ namespace ColorTiming.Presentation.UI
         int battleTutorialFormId = -1;
         BattlePresentationResult pendingResult;
         BattleHudPresentation pendingBattleHud;
-        HeroController pendingTutorialHero;
+        ColorTiming.Application.Battle.BattleSession pendingTutorialSession;
         IColorTimingLoadingForm loadingForm;
+        IUiSoundSink uiSound;
         float loadingProgress;
         bool loadingCompletionRequested;
         bool disposed;
@@ -137,13 +138,13 @@ namespace ColorTiming.Presentation.UI
             return false;
         }
 
-        public bool ShowBattleTutorial(HeroController hero)
+        public bool ShowBattleTutorial(ColorTiming.Application.Battle.BattleSession session)
         {
             ThrowIfDisposed();
-            if (hero == null) throw new ArgumentNullException(nameof(hero));
+            if (session == null) throw new ArgumentNullException(nameof(session));
 
             CloseBattleTutorial();
-            pendingTutorialHero = hero;
+            pendingTutorialSession = session;
             var parameters = UIParams.Create(false);
             parameters.OpenCallback = OnBattleTutorialOpened;
             parameters.CloseCallback = _ => ResetBattleTutorialState();
@@ -169,6 +170,7 @@ namespace ColorTiming.Presentation.UI
             if (logic is IColorTimingStartMenuForm form)
             {
                 form.BindRuntime(sceneFlow, settings, soundService);
+                uiSound = form.UiSound;
                 return;
             }
 
@@ -204,7 +206,7 @@ namespace ColorTiming.Presentation.UI
         {
             if (logic is IColorTimingBattleTutorialForm form)
             {
-                form.BindRuntime(pendingTutorialHero, gameInput, gameTime, settings);
+                form.BindRuntime(pendingTutorialSession, gameInput, gameTime, settings);
                 return;
             }
 
@@ -216,7 +218,7 @@ namespace ColorTiming.Presentation.UI
         {
             if (logic is IColorTimingPauseForm form)
             {
-                form.BindRuntime(sceneFlow, settings);
+                form.BindRuntime(sceneFlow, settings, uiSound);
                 return;
             }
 
@@ -285,7 +287,7 @@ namespace ColorTiming.Presentation.UI
         void ResetBattleTutorialState()
         {
             battleTutorialFormId = -1;
-            pendingTutorialHero = null;
+            pendingTutorialSession = null;
         }
 
         void ReleaseResult()

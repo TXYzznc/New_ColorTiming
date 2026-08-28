@@ -22,17 +22,7 @@ namespace ColorTiming.Tests.PlayMode
                 SceneManager.LoadScene("Launch", LoadSceneMode.Single);
             }
 
-            yield return ColorTimingPlayModeBoot.EnsureFormalLaunchStartedInBatchMode();
-
-            var deadline = Time.realtimeSinceStartup + 30f;
-            while (!SceneManager.GetSceneByName("StartMenu").isLoaded && Time.realtimeSinceStartup < deadline)
-            {
-                yield return null;
-            }
-
-            Assert.That(SceneManager.GetSceneByName("StartMenu").isLoaded, Is.True,
-                "Framework startup did not reach StartMenu within 30 real-time seconds.");
-            yield return ColorTimingPlayModeBoot.WaitForProductSceneTransitions();
+            yield return ColorTimingPlayModeBoot.EnsureStartMenu(30f);
             var launchScene = SceneManager.GetSceneByName("Launch");
             Assert.That(launchScene.isLoaded, Is.True,
                 "The framework Launch scene must remain loaded as the persistent bootstrap scene.");

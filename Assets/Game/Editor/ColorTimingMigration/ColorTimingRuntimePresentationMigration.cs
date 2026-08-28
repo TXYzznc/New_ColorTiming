@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using ColorTiming.Presentation.UI;
 using UnityEditor;
@@ -115,14 +115,6 @@ namespace ColorTiming.Editor
             foreach (var source in audioSources)
             {
                 UnityEngine.Object.DestroyImmediate(source.gameObject);
-            }
-
-            var loaders = scene.GetRootGameObjects()
-                .SelectMany(root => root.GetComponentsInChildren<LoadScenes>(true))
-                .ToArray();
-            foreach (var loader in loaders)
-            {
-                UnityEngine.Object.DestroyImmediate(loader.gameObject);
             }
 
             EditorSceneManager.MarkSceneDirty(scene);
@@ -288,10 +280,10 @@ namespace ColorTiming.Editor
             var root = PrefabUtility.LoadPrefabContents(MainMenuPrefabPath);
             try
             {
-                var form = root.GetComponentInChildren<UI_ButtonAction>(true);
+                var form = root.GetComponentInChildren<MainMenuForm>(true);
                 if (form == null)
                 {
-                    throw new InvalidOperationException("MainMenu prefab must contain UI_ButtonAction.");
+                    throw new InvalidOperationException("MainMenu prefab must contain MainMenuForm.");
                 }
 
                 var serializedForm = new SerializedObject(form);

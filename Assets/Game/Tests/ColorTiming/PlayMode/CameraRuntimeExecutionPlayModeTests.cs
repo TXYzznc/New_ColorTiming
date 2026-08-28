@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Linq;
 using System.Reflection;
@@ -14,15 +14,15 @@ namespace ColorTiming.Tests.PlayMode
         const float BootTimeout = 30f;
         const float TransitionTimeout = 20f;
 
-        static readonly MethodInfo UpdateParallax = typeof(CameraShow).GetMethod(
+        static readonly MethodInfo UpdateParallax = typeof(CameraParallaxView).GetMethod(
             "Update",
             BindingFlags.Instance | BindingFlags.NonPublic);
 
-        static readonly MethodInfo UpdateHeroCamera = typeof(HeroCamera_).GetMethod(
+        static readonly MethodInfo UpdateHeroCamera = typeof(PlayerCameraLifecycleView).GetMethod(
             "Update",
             BindingFlags.Instance | BindingFlags.NonPublic);
 
-        static readonly FieldInfo VirtualCamera = typeof(HeroCamera_).GetField(
+        static readonly FieldInfo VirtualCamera = typeof(PlayerCameraLifecycleView).GetField(
             "virtualCamera",
             BindingFlags.Instance | BindingFlags.Public);
 
@@ -31,13 +31,13 @@ namespace ColorTiming.Tests.PlayMode
         public IEnumerator Boss1_ParallaxDistanceZoomAndCinemachineRuntimeWiringExecute()
         {
             yield return BootToStartMenu();
-            FindActive<UI_ButtonAction>().GoTest1();
+            FindActive<MainMenuForm>().GoTest1();
             yield return WaitForScene("Boss1", TransitionTimeout);
 
             var mainCamera = Camera.main;
-            var parallax = UnityEngine.Object.FindObjectsOfType<CameraShow>(true)
+            var parallax = UnityEngine.Object.FindObjectsOfType<CameraParallaxView>(true)
                 .First(candidate => candidate.gameObject.activeInHierarchy && candidate.caseLevel > 0f);
-            var heroCamera = FindActive<HeroCamera_>();
+            var heroCamera = FindActive<PlayerCameraLifecycleView>();
 
             Assert.That(mainCamera, Is.Not.Null);
             Assert.That(UpdateParallax, Is.Not.Null);
@@ -94,15 +94,15 @@ namespace ColorTiming.Tests.PlayMode
                 parallax.BindGameplayCamera(mainCamera);
             }
 
-            var hud = FindActive<UI_HeroInfo>();
+            var hud = FindActive<BattlePlayerInfoView>();
             hud.TogglePause();
-            yield return WaitUntil(() => FindActive<UI_ESC>() != null, 10f,
+            yield return WaitUntil(() => FindActive<PauseMenuForm>() != null, 10f,
                 "Camera contract cleanup could not open the pause form.");
-            FindActive<UI_ESC>().BackMenu();
+            FindActive<PauseMenuForm>().BackMenu();
             yield return WaitForScene("StartMenu", TransitionTimeout);
         }
 
-        static float ReadOrthographicSize(HeroCamera_ heroCamera)
+        static float ReadOrthographicSize(PlayerCameraLifecycleView heroCamera)
         {
             var virtualCamera = VirtualCamera.GetValue(heroCamera);
             Assert.That(virtualCamera, Is.Not.Null);
@@ -135,10 +135,8 @@ namespace ColorTiming.Tests.PlayMode
             {
                 SceneManager.LoadScene("Launch", LoadSceneMode.Single);
             }
-            yield return ColorTimingPlayModeBoot.EnsureFormalLaunchStartedInBatchMode();
-            yield return WaitForScene("StartMenu", BootTimeout);
-            yield return ColorTimingPlayModeBoot.WaitForProductSceneTransitions();
-            yield return WaitUntil(() => FindActive<UI_ButtonAction>() != null, 10f,
+            yield return ColorTimingPlayModeBoot.EnsureStartMenu(BootTimeout);
+            yield return WaitUntil(() => FindActive<MainMenuForm>() != null, 10f,
                 "StartMenu GF.UI form did not become active.");
         }
 

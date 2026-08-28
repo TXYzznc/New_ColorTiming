@@ -3,6 +3,8 @@
   "rootNamespace": "ColorTiming.Tests.PlayMode",
     "references": [
     "Hotfix",
+    "ColorTiming.Domain",
+    "ColorTiming.Application",
     "Builtin.Runtime",
     "UnityGameFramework.Runtime",
     "GameFramework",

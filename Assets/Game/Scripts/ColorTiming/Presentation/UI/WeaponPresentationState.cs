@@ -1,4 +1,4 @@
-﻿using ColorTiming.Combat;
+using ColorTiming.Combat;
 
 namespace ColorTiming.Presentation.UI
 {

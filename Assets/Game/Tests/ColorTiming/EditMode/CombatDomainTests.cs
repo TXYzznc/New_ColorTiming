@@ -144,9 +144,13 @@ namespace ColorTiming.Tests.EditMode
             Assert.That(queue.Count, Is.EqualTo(15));
         }
 
-        private static DamageRequest Request(WeaponColor color)
+        private static BattleDamage Request(WeaponColor color)
         {
-            return new DamageRequest(null, new WeaponIdentity(color, CombatWeaponType.Scissors), new CombatPoint(1f, 2f));
+            return new BattleDamage(
+                ActorId.Player,
+                ActorId.BossHead,
+                new WeaponIdentity(color, CombatWeaponType.Scissors),
+                new CombatPoint(1f, 2f));
         }
     }
 }

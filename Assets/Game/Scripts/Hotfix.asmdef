@@ -14,7 +14,9 @@
         "Unity.Jobs",
         "Unity.Collections",
         "Unity.Mathematics",
-        "Obfuz.Runtime"
+        "Obfuz.Runtime",
+        "ColorTiming.Domain",
+        "ColorTiming.Application"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

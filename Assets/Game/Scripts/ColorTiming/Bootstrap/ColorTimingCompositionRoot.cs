@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using ColorTiming.Bootstrap.Flow;
 using ColorTiming.Combat;
 using ColorTiming.Input;
@@ -26,6 +27,7 @@ namespace ColorTiming.Bootstrap
         private GfColorTimingSettings settings;
         private GfColorTimingSoundService soundService;
         private GfColorTimingUiService uiService;
+        private BattleRuntimeContext battleRuntime;
         private bool initialized;
         private bool disposed;
 
@@ -70,11 +72,17 @@ namespace ColorTiming.Bootstrap
 
             transientEntities.ReleaseAll();
             soundService.ResetTrackedSounds();
+            if (battleRuntime != null)
+            {
+                UnityEngine.Object.Destroy(battleRuntime.gameObject);
+                battleRuntime = null;
+            }
             ColorTimingUrpCameraStack.Configure(scene, sceneId);
-            InstallBattlePresentation(scene, sceneId);
-            ColorTimingSceneInputBinder.Bind(
-                scene, gameInput, gameTime, transientEntities, sceneFlow, settings, soundService, uiService);
             uiService.PresentScene(sceneId);
+            if (sceneId == ColorTimingSceneId.Boss1 || sceneId == ColorTimingSceneId.Boss2)
+            {
+                InstallBattleRuntime(scene, sceneId);
+            }
         }
 
         internal void CompleteSceneTransition(ColorTimingSceneId scene)
@@ -108,6 +116,11 @@ namespace ColorTiming.Bootstrap
             ColorTimingUrpCameraStack.Reset();
             uiService?.Dispose();
             uiService = null;
+            if (battleRuntime != null)
+            {
+                UnityEngine.Object.Destroy(battleRuntime.gameObject);
+                battleRuntime = null;
+            }
             transientEntities?.ReleaseAll();
             if (inputHost != null)
             {
@@ -130,16 +143,19 @@ namespace ColorTiming.Bootstrap
             soundService?.ResetTrackedSounds();
         }
 
-        private void InstallBattlePresentation(Scene scene, ColorTimingSceneId sceneId)
+        private void InstallBattleRuntime(Scene scene, ColorTimingSceneId sceneId)
         {
-            if (sceneId != ColorTimingSceneId.Boss1 && sceneId != ColorTimingSceneId.Boss2)
-            {
-                return;
-            }
-
-            var installerHost = new GameObject("BattlePresentationInstaller (Clone)");
-            SceneManager.MoveGameObjectToScene(installerHost, scene);
-            installerHost.AddComponent<BattlePresentationInstaller>().Initialize(uiService, sceneFlow);
+            var anchors = scene.GetRootGameObjects()
+                .Select(root => root.GetComponent<BattleSceneAnchors>())
+                .SingleOrDefault(value => value != null);
+            if (anchors == null)
+                throw new InvalidOperationException($"Scene '{scene.path}' requires one BattleSceneAnchors root.");
+            var host = new GameObject("BattleRuntimeContext (Clone)");
+            SceneManager.MoveGameObjectToScene(host, scene);
+            battleRuntime = host.AddComponent<BattleRuntimeContext>();
+            battleRuntime.Initialize(
+                anchors, sceneId, gameInput, gameTime, transientEntities,
+                sceneFlow, settings, soundService, uiService);
         }
 
         private void ThrowIfDisposed()

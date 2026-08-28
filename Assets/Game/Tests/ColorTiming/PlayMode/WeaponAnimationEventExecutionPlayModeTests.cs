@@ -1,8 +1,9 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using ColorTiming.Combat;
 using ColorTiming.Input;
 using ColorTiming.Input.Adapters;
 using ColorTiming.Presentation.Entities;
@@ -11,6 +12,7 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
+using CombatWeaponType = ColorTiming.Combat.WeaponType;
 
 namespace ColorTiming.Tests.PlayMode
 {
@@ -19,12 +21,16 @@ namespace ColorTiming.Tests.PlayMode
         const float BootTimeout = 30f;
         const float TransitionTimeout = 20f;
 
-        static readonly MethodInfo DropWeapon = typeof(HeroController).GetMethod(
+        static readonly MethodInfo DropWeapon = typeof(PlayerActorView).GetMethod(
             "DisWeapon",
             BindingFlags.Instance | BindingFlags.NonPublic);
 
         static readonly FieldInfo SkillWeapon = typeof(Skill_base).GetField(
             "atkWeapon",
+            BindingFlags.Instance | BindingFlags.NonPublic);
+
+        static readonly FieldInfo SkillAttacker = typeof(Skill_base).GetField(
+            "attackerId",
             BindingFlags.Instance | BindingFlags.NonPublic);
 
         static readonly FieldInfo SkillParameter = typeof(Skill_base).GetField(
@@ -36,7 +42,7 @@ namespace ColorTiming.Tests.PlayMode
         public IEnumerator EveryAuthoredWeaponColorExecutesAnimationEventThroughGfEntity()
         {
             yield return BootToStartMenu();
-            FindActive<UI_ButtonAction>().GoTest1();
+            FindActive<MainMenuForm>().GoTest1();
             yield return WaitForScene("Boss1", TransitionTimeout);
 
             var settings = new GfColorTimingSettings();
@@ -44,30 +50,30 @@ namespace ColorTiming.Tests.PlayMode
             settings.KeyTipsDisabled = true;
             try
             {
-                var boss1Hero = FindActive<HeroController>();
+                var boss1Hero = FindActive<PlayerActorView>();
                 yield return VerifySceneWeaponSet(
                     boss1Hero,
-                    new[] { ColorType.hong, ColorType.lv, ColorType.zi },
-                    new[] { WeaponType.jiandao, WeaponType.chuizhi, WeaponType.zhadan });
+                    new[] { WeaponColor.Red, WeaponColor.Green, WeaponColor.Purple },
+                    new[] { CombatWeaponType.Scissors, CombatWeaponType.Hammer, CombatWeaponType.Bomb });
 
-                var hud = FindActive<UI_HeroInfo>();
+                var hud = FindActive<BattlePlayerInfoView>();
                 hud.TogglePause();
-                yield return WaitUntil(() => FindActive<UI_ESC>() != null, 10f,
+                yield return WaitUntil(() => FindActive<PauseMenuForm>() != null, 10f,
                     "Boss1 weapon contract could not open the pause form.");
-                FindActive<UI_ESC>().GoNextLevel(2);
+                FindActive<PauseMenuForm>().GoNextLevel(2);
                 yield return WaitForScene("Boss2", TransitionTimeout);
 
-                var boss2Hero = FindActive<HeroController>();
+                var boss2Hero = FindActive<PlayerActorView>();
                 yield return VerifySceneWeaponSet(
                     boss2Hero,
-                    new[] { ColorType.hong, ColorType.lv, ColorType.zi, ColorType.chen },
-                    new[] { WeaponType.meigongdao, WeaponType.futou, WeaponType.zhifeiji });
+                    new[] { WeaponColor.Red, WeaponColor.Green, WeaponColor.Purple, WeaponColor.Orange },
+                    new[] { CombatWeaponType.Knife, CombatWeaponType.Axe, CombatWeaponType.Airplane });
 
-                hud = FindActive<UI_HeroInfo>();
+                hud = FindActive<BattlePlayerInfoView>();
                 hud.TogglePause();
-                yield return WaitUntil(() => FindActive<UI_ESC>() != null, 10f,
+                yield return WaitUntil(() => FindActive<PauseMenuForm>() != null, 10f,
                     "Boss2 weapon contract could not open the pause form.");
-                FindActive<UI_ESC>().BackMenu();
+                FindActive<PauseMenuForm>().BackMenu();
                 yield return WaitForScene("StartMenu", TransitionTimeout);
             }
             finally
@@ -78,17 +84,17 @@ namespace ColorTiming.Tests.PlayMode
         }
 
         static IEnumerator VerifySceneWeaponSet(
-            HeroController hero,
-            IReadOnlyList<ColorType> colors,
-            IReadOnlyList<WeaponType> weaponTypes)
+            PlayerActorView hero,
+            IReadOnlyList<WeaponColor> colors,
+            IReadOnlyList<CombatWeaponType> weaponTypes)
         {
             Assert.That(hero, Is.Not.Null);
             Assert.That(DropWeapon, Is.Not.Null);
             Assert.That(SkillWeapon, Is.Not.Null);
             Assert.That(SkillParameter, Is.Not.Null);
 
-            var eventReceiver = hero.characterSprite.GetComponent<HeroAnimStae>();
-            var fire = hero.GetComponent<HeroFrireSystem>();
+            var eventReceiver = hero.characterSprite.GetComponent<PlayerAnimationEventRelay>();
+            var fire = hero.GetComponent<PlayerSkillEmitter>();
             var input = new PointerOnlyInput { PointerScreenPosition = new Vector2(320f, 180f) };
             fire.BindGameInput(input);
             fire.BindGameplayPointer(new FixedPointerWorld(new Vector2(12f, 34f)));
@@ -104,7 +110,7 @@ namespace ColorTiming.Tests.PlayMode
             {
                 foreach (var color in colors)
                 {
-                    var weapon = new Weapon(color, weaponType);
+                    var weapon = new WeaponIdentity(color, weaponType);
                     Assert.That(hero.PickUPWeapon(weapon), Is.True,
                         $"Could not pick up {color}/{weaponType}.");
                     var expectedPrefab = ExpectedPrefab(fire, weaponType);
@@ -115,7 +121,7 @@ namespace ColorTiming.Tests.PlayMode
                         weapon,
                         "animation-event");
 
-                    if (weaponType == WeaponType.jiandao && color == colors[0])
+                    if (weaponType == CombatWeaponType.Scissors && color == colors[0])
                     {
                         yield return ExecuteAndAssert(
                             hero,
@@ -126,17 +132,17 @@ namespace ColorTiming.Tests.PlayMode
                     }
 
                     DropWeapon.Invoke(hero, new object[] { false });
-                    Assert.That(hero.nowweapon.weaponType, Is.EqualTo(WeaponType.nor));
+                    Assert.That(hero.nowweapon.Type, Is.EqualTo(CombatWeaponType.Normal));
                     yield return null;
                 }
             }
         }
 
         static IEnumerator ExecuteAndAssert(
-            HeroController hero,
-            HeroAnimStae eventReceiver,
+            PlayerActorView hero,
+            PlayerAnimationEventRelay eventReceiver,
             string expectedEntityName,
-            Weapon expectedWeapon,
+            WeaponIdentity expectedWeapon,
             string eventParameter)
         {
             yield return HideMatchingEntities(expectedEntityName);
@@ -161,15 +167,15 @@ namespace ColorTiming.Tests.PlayMode
                 $"Animation Event did not show GF.Entity '{expectedEntityName}'.");
             Assert.That(skill, Is.Not.Null,
                 $"GF.Entity '{expectedEntityName}' has no Skill_base participant.");
-            var actualWeapon = (Weapon)SkillWeapon.GetValue(skill);
-            Assert.That(actualWeapon.Identity, Is.EqualTo(expectedWeapon.Identity));
-            Assert.That(skill.attacker, Is.SameAs(hero.gameObject));
+            var actualWeapon = (WeaponIdentity)SkillWeapon.GetValue(skill);
+            Assert.That(actualWeapon, Is.EqualTo(expectedWeapon));
+            Assert.That((ActorId)SkillAttacker.GetValue(skill), Is.EqualTo(ActorId.Player));
 
             var actualParameter = (string)SkillParameter.GetValue(skill);
-            if (expectedWeapon.weaponType == WeaponType.zhadan
-                || expectedWeapon.weaponType == WeaponType.zhifeiji)
+            if (expectedWeapon.Type == CombatWeaponType.Bomb
+                || expectedWeapon.Type == CombatWeaponType.Airplane)
             {
-                Assert.That(actualParameter, Does.StartWith(((int)expectedWeapon.colorType + 1) + "="));
+                Assert.That(actualParameter, Does.StartWith(((int)expectedWeapon.Color + 1) + "="));
                 Assert.That(actualParameter, Does.Contain("12.00"));
                 Assert.That(actualParameter, Does.Contain("34.00"));
             }
@@ -179,16 +185,16 @@ namespace ColorTiming.Tests.PlayMode
             }
         }
 
-        static GameObject ExpectedPrefab(HeroFrireSystem fire, WeaponType type)
+        static GameObject ExpectedPrefab(PlayerSkillEmitter fire, CombatWeaponType type)
         {
             switch (type)
             {
-                case WeaponType.jiandao: return fire.sk_jiandao;
-                case WeaponType.chuizhi: return fire.sk_chuizi;
-                case WeaponType.zhadan: return fire.sk_zhadan;
-                case WeaponType.meigongdao: return fire.sk_dao;
-                case WeaponType.futou: return fire.sk_futou;
-                case WeaponType.zhifeiji: return fire.sk_feiji;
+                case CombatWeaponType.Scissors: return fire.sk_jiandao;
+                case CombatWeaponType.Hammer: return fire.sk_chuizi;
+                case CombatWeaponType.Bomb: return fire.sk_zhadan;
+                case CombatWeaponType.Knife: return fire.sk_dao;
+                case CombatWeaponType.Axe: return fire.sk_futou;
+                case CombatWeaponType.Airplane: return fire.sk_feiji;
                 default: throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
         }
@@ -221,10 +227,8 @@ namespace ColorTiming.Tests.PlayMode
             {
                 SceneManager.LoadScene("Launch", LoadSceneMode.Single);
             }
-            yield return ColorTimingPlayModeBoot.EnsureFormalLaunchStartedInBatchMode();
-            yield return WaitForScene("StartMenu", BootTimeout);
-            yield return ColorTimingPlayModeBoot.WaitForProductSceneTransitions();
-            yield return WaitUntil(() => FindActive<UI_ButtonAction>() != null, 10f,
+            yield return ColorTimingPlayModeBoot.EnsureStartMenu(BootTimeout);
+            yield return WaitUntil(() => FindActive<MainMenuForm>() != null, 10f,
                 "StartMenu GF.UI form did not become active.");
         }
 

@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using ColorTiming.Presentation.Audio;
 using NUnit.Framework;
 using UnityEngine;
@@ -32,60 +32,60 @@ namespace ColorTiming.Tests.EditMode
         [Test]
         public void Boss1_MapsEveryAuthoredCueToBossSoundChannel()
         {
-            var manager = host.AddComponent<Boss1SoundManager>();
-            var expected = new Dictionary<string, AudioClip>
+            var manager = host.AddComponent<Boss1SoundView>();
+            var expected = new Dictionary<Boss1SoundCue, AudioClip>
             {
-                ["hit"] = manager.hit = Clip("boss1-hit"),
-                ["atkReady"] = manager.atkReady = Clip("boss1-ready"),
-                ["atkEnd"] = manager.atkEnd = Clip("boss1-end"),
-                ["atk1"] = manager.atk1 = Clip("boss1-atk1"),
-                ["atk2"] = manager.atk2 = Clip("boss1-atk2"),
-                ["atk3_1"] = manager.atk3 = Clip("boss1-atk3"),
-                ["atk4"] = manager.atk4 = Clip("boss1-atk4"),
-                ["atk5"] = manager.atk5 = Clip("boss1-atk5"),
-                ["atk6"] = manager.atk6 = Clip("boss1-atk6"),
+                [Boss1SoundCue.Hit] = manager.hit = Clip("boss1-hit"),
+                [Boss1SoundCue.AttackReady] = manager.atkReady = Clip("boss1-ready"),
+                [Boss1SoundCue.AttackEnd] = manager.atkEnd = Clip("boss1-end"),
+                [Boss1SoundCue.Attack1] = manager.atk1 = Clip("boss1-atk1"),
+                [Boss1SoundCue.Attack2] = manager.atk2 = Clip("boss1-atk2"),
+                [Boss1SoundCue.Attack3] = manager.atk3 = Clip("boss1-atk3"),
+                [Boss1SoundCue.Attack4] = manager.atk4 = Clip("boss1-atk4"),
+                [Boss1SoundCue.Attack5] = manager.atk5 = Clip("boss1-atk5"),
+                [Boss1SoundCue.Attack6] = manager.atk6 = Clip("boss1-atk6"),
             };
             manager.BindSoundService(sound);
 
             foreach (var pair in expected)
             {
                 sound.Reset();
-                manager.PlayBoss1Sound(pair.Key);
-                AssertSingleBossCue(pair.Value, pair.Key);
+                manager.Play(pair.Key);
+                AssertSingleBossCue(pair.Value, pair.Key.ToString());
             }
 
             sound.Reset();
-            manager.PlayBoss1Sound("unknown");
+            Assert.That(manager.TryPlayAnimationCue("unknown"), Is.False);
             Assert.That(sound.Calls, Is.Empty);
         }
 
         [Test]
         public void Boss2_MapsEveryAuthoredCueToBossSoundChannel()
         {
-            var manager = host.AddComponent<Boss2SoundManager>();
-            var expected = new Dictionary<string, AudioClip>
+            var manager = host.AddComponent<Boss2SoundView>();
+            var expected = new Dictionary<Boss2SoundCue, AudioClip>
             {
-                ["hit"] = manager.hit = Clip("boss2-hit"),
-                ["rt_t"] = manager.rt_tou = Clip("boss2-head-enter"),
-                ["ct_t"] = manager.ct_tou = Clip("boss2-head-exit"),
-                ["rt_w"] = manager.rt_wei = Clip("boss2-tail-enter"),
-                ["ct_w"] = manager.ct_wei = Clip("boss2-tail-exit"),
-                ["atk1_t"] = manager.atk1_tou = Clip("boss2-head-atk1"),
-                ["atk2_t"] = manager.atk2_tou = Clip("boss2-head-atk2"),
-                ["atk1_w"] = manager.atk1_wei = Clip("boss2-tail-atk1"),
-                ["atk2_w"] = manager.atk2_wei = Clip("boss2-tail-atk2"),
+                [Boss2SoundCue.Hit] = manager.hit = Clip("boss2-hit"),
+                [Boss2SoundCue.HeadEnterBurrow] = manager.rt_tou = Clip("boss2-head-enter"),
+                [Boss2SoundCue.HeadExitBurrow] = manager.ct_tou = Clip("boss2-head-exit"),
+                [Boss2SoundCue.TailEnterBurrow] = manager.rt_wei = Clip("boss2-tail-enter"),
+                [Boss2SoundCue.TailExitBurrow] = manager.ct_wei = Clip("boss2-tail-exit"),
+                [Boss2SoundCue.HeadAttack1] = manager.atk1_tou = Clip("boss2-head-atk1"),
+                [Boss2SoundCue.HeadAttack2] = manager.atk2_tou = Clip("boss2-head-atk2"),
+                [Boss2SoundCue.TailAttack1] = manager.atk1_wei = Clip("boss2-tail-atk1"),
+                [Boss2SoundCue.TailAttack2] = manager.atk2_wei = Clip("boss2-tail-atk2"),
             };
             manager.BindSoundService(sound);
 
             foreach (var pair in expected)
             {
                 sound.Reset();
-                manager.PlayBoss2Sound(pair.Key);
-                AssertSingleBossCue(pair.Value, pair.Key);
+                manager.Play(pair.Key);
+                AssertSingleBossCue(pair.Value, pair.Key.ToString());
             }
 
             sound.Reset();
-            manager.PlayBoss2Sound("unknown");
+            Assert.That(manager.TryPlayAnimationCue("unknown"), Is.False);
             Assert.That(sound.Calls, Is.Empty);
         }
 

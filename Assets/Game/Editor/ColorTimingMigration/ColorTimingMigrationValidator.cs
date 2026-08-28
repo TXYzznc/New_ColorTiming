@@ -75,7 +75,7 @@ namespace ColorTiming.Editor
         {
             var report = new ValidationReport
             {
-                unityVersion = Application.unityVersion,
+                unityVersion = global::UnityEngine.Application.unityVersion,
                 generatedAtUtc = DateTime.UtcNow.ToString("O"),
             };
 
@@ -93,7 +93,7 @@ namespace ColorTiming.Editor
                 && report.unresolvedGuidReferences.Count == 0
                 && report.loadFailures.Count == 0;
 
-            var projectRoot = Directory.GetParent(Application.dataPath)?.FullName
+            var projectRoot = Directory.GetParent(global::UnityEngine.Application.dataPath)?.FullName
                 ?? throw new InvalidOperationException("Could not resolve project root.");
             var outputPath = Path.Combine(projectRoot, "Documentation", "Refactor", "asset-validation.json");
             Directory.CreateDirectory(Path.GetDirectoryName(outputPath) ?? projectRoot);
@@ -225,13 +225,13 @@ namespace ColorTiming.Editor
         {
             var productRoots = new[]
             {
-                Path.Combine(Application.dataPath, "Game", "ColorTiming"),
-                Path.Combine(Application.dataPath, "Game", "Prefabs", "Entity", "ColorTiming"),
-                Path.Combine(Application.dataPath, "Game", "Prefabs", "UI", "ColorTiming"),
-                Path.Combine(Application.dataPath, "Game", "Prefabs", "World", "ColorTiming"),
+                Path.Combine(global::UnityEngine.Application.dataPath, "Game", "ColorTiming"),
+                Path.Combine(global::UnityEngine.Application.dataPath, "Game", "Prefabs", "Entity", "ColorTiming"),
+                Path.Combine(global::UnityEngine.Application.dataPath, "Game", "Prefabs", "UI", "ColorTiming"),
+                Path.Combine(global::UnityEngine.Application.dataPath, "Game", "Prefabs", "World", "ColorTiming"),
             };
 
-            var projectRoot = Directory.GetParent(Application.dataPath)?.FullName
+            var projectRoot = Directory.GetParent(global::UnityEngine.Application.dataPath)?.FullName
                 ?? throw new InvalidOperationException("Could not resolve project root.");
             var serializedFiles = productRoots
                          .Where(Directory.Exists)
@@ -243,7 +243,7 @@ namespace ColorTiming.Editor
             foreach (var filePath in serializedFiles)
             {
                 report.scannedSerializedAssets++;
-                var projectPath = "Assets" + filePath.Substring(Application.dataPath.Length).Replace('\\', '/');
+                var projectPath = "Assets" + filePath.Substring(global::UnityEngine.Application.dataPath.Length).Replace('\\', '/');
                 foreach (Match match in GuidReference.Matches(File.ReadAllText(filePath)))
                 {
                     report.scannedGuidReferences++;

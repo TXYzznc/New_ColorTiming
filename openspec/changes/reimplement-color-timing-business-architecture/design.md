@@ -4,7 +4,7 @@ ColorTiming 已完成从源工程到 GF_X 的第一阶段迁移，但业务层�
 
 约束如下：
 
-- Unity 2022.3.62f3，GF_X 启动入口仍位于 `Hotfix` 程序集；本次不增加多热更程序集，也不修改 `Assets/Game/ScriptsBuiltin/`。
+- Unity 2022.3.62f3，GF_X 启动入口仍位于历史命名为 `Hotfix` 的程序集；本次把它视为普通 Unity/GF 组合与适配程序集，不设计多热更程序集，也不修改 `Assets/Game/ScriptsBuiltin/`。
 - 现有美术资源必须复用。纹理、Sprite、字体、音频、视频、材质、Shader、粒子、Spine、Animator、AnimationClip、Timeline 和可视 Prefab 是受保护输入。
 - 现有 129 个 Animation Event、19 个 UnityEvent 与 Spine Event 必须保持可调用和时序等价。
 - 用户选择“先完成最终设计，再一次性长任务实施”，不接受长期新旧业务双轨。
@@ -37,9 +37,9 @@ ColorTiming 已完成从源工程到 GF_X 的第一阶段迁移，但业务层�
 
 1. `ColorTiming.Domain`：纯 C# 值对象、实体状态、规则、命令结果和领域事件。
 2. `ColorTiming.Application`：`BattleSession`、用例、端口、快照、生命周期与事件分发。
-3. `Hotfix/ColorTiming.Presentation`：Unity 物理、Animator/Spine、UGUI、摄像机、音频、瞬态实体薄适配。
-4. `Hotfix/ColorTiming.Infrastructure.GF`：GF Scene/UI/Sound/Entity/Setting/Input 端口实现。
-5. `Hotfix/ColorTiming.Bootstrap`：启动过程、场景 composition root、显式 scene anchors 和销毁顺序。
+3. `ColorTiming.Presentation`（现由框架既有 `Hotfix.asmdef` 编译）：Unity 物理、Animator/Spine、UGUI、摄像机、音频、瞬态实体薄适配。
+4. `ColorTiming.Infrastructure.GF`（同上）：GF Scene/UI/Sound/Entity/Setting/Input 端口实现。
+5. `ColorTiming.Bootstrap`（同上）：启动过程、场景 composition root、显式 scene anchors 和销毁顺序。
 
 备选 A“继续在单一 Hotfix 中整理旧 MonoBehaviour”改动较小，但无法物理阻止 Domain 反向依赖 Unity，拒绝。备选 B“ECS/完全数据驱动重写”会扩大资源迁移和行为偏差，项目规模不需要，拒绝。
 
@@ -50,13 +50,13 @@ ColorTiming 已完成从源工程到 GF_X 的第一阶段迁移，但业务层�
 - `Hotfix.asmdef`：引用 Domain 与 Application，继续承载 `HotfixEntry`、Unity/GF 实现和序列化脚本。
 - EditMode 测试优先直接引用 Domain/Application；PlayMode 引用 Hotfix、Domain/Application 与既有 GF/Spine 依赖。
 
-它们是普通 Player/AOT 运行时程序集，不加入 HybridCLR 热更列表。若未来关闭热更，依赖方向不变；若仍只热更 `Hotfix`，Domain/Application 变更需要随 Player 发布，这是已接受取舍。
+它们是普通 Player/AOT 运行时程序集，不加入 HybridCLR 热更列表。当前架构不以业务热更为目标，也不为可能永远不会发生的多程序集热更新增加 DTO、代理、跨程序集协议或加载边界；`Hotfix` 仅保留框架既有名称和启动职责。
 
 ### 3. `BattleSession` 是唯一权威状态所有者
 
 每个 Boss 场景只创建一个 session，持有：
 
-- `PlayerState`：生命、无敌窗口、动作状态、方向、当前武器与三槽库存。
+- `PlayerState`：生命、无敌窗口、动作状态、方向与单个手持武器槽。
 - `BossState`：生命/弱点队列、阶段、死亡与 Boss 专有运行状态。
 - `BattleState`：场景 ID、运行/暂停/结束、终局结果、单调 tick/command 序号。
 - 注入的 `IRandomSource`、配置和值类型时钟输入；不读取 Unity 静态时间。
@@ -70,8 +70,8 @@ Application 接收 `MoveIntent`、`AttackIntent`、`DashIntent`、`PickupIntent`
 | 现有职责 | 最终职责 |
 |---|---|
 | `HeroController` | `PlayerActorView`：Rigidbody2D 移动、碰撞锚点、session 命令与 snapshot 渲染 |
-| `HeroAnimStae` | `PlayerAnimationEvents`：保留 `DashWD`、`DashEnd`、`Attack`、`Hit`、`SkillMove`、`Wudi` 等事件签名 |
-| `HeroFrireSystem` | `PlayerSkillView`：按表现事件请求 GF Entity 并绑定只读技能 payload |
+| `HeroAnimStae` | `PlayerAnimationEventRelay`：保留 `DashWD`、`DashEnd`、`Attack`、`Hit`、`SkillMove`、`Wudi` 等事件签名 |
+| `HeroFrireSystem` | `PlayerSkillEmitter`：按表现事件请求 GF Entity 并绑定只读技能 payload |
 | `Boss1_Controller` / `Boss2_Controller` | `Boss1ActorView` / `Boss2ActorView`：物理/Spine/Collider 表现和 session 命令 |
 | `Boss1Anim` / `Boss2Anim_s` | Boss Spine 事件适配器，负责订阅、转译与成对退订 |
 | `Skill_base` / 技能子类 | 统一 `SkillHitboxView` 加少量专有表现策略；命中只提交 `DamageCommand` |
@@ -84,7 +84,7 @@ Application 接收 `MoveIntent`、`AttackIntent`、`DashIntent`、`PickupIntent`
 
 Boss1/Boss2 场景保留一个作者化锚点组件，字段只引用场景中的 Player view、Boss view、摄像机、音频 cue anchors、生成点和关卡边界。它不是服务、状态或上下文。
 
-GF 场景成功事件后，Bootstrap 动态创建 `BattleCompositionRoot (Clone)`：
+GF 场景成功事件后，Bootstrap 动态创建 `BattleRuntimeContext (Clone)`：
 
 1. 定位唯一 `BattleSceneAnchors`（只允许对该已知组件做一次直接查询）。
 2. 从 anchors 构造配置、Domain 和 `BattleSession`。
@@ -132,9 +132,9 @@ ColorTiming.Domain
         ↑
 ColorTiming.Application
         ↑
-Hotfix: Presentation.Unity + Infrastructure.GF
+Existing Unity/GF adapter assembly: Presentation + Infrastructure
         ↑
-Hotfix: Bootstrap / HotfixEntry
+Existing Unity/GF adapter assembly: Bootstrap / HotfixEntry
 ```
 
 禁止 Domain/Application 引用 UnityEngine、GF、Spine、Cinemachine、UGUI、Resources、SceneManager、`GameObject` 或任何 Presentation 类型。架构 EditMode 测试扫描程序集引用和命名空间，发现逆向引用即失败。
@@ -156,7 +156,7 @@ GF Input / Physics / Serialized Art Event
 ## Risks / Trade-offs
 
 - [一次性替换范围大，编译中间态较长] → 按 Domain/Application、views、scene wiring、删除旧实现的内部批次实施，但只在全部契约通过后交付，不保留长期双轨。
-- [普通 Domain/Application 程序集不能随单一 Hotfix DLL 独立热更] → 用户明确暂不考虑多热更程序集且未来大概率不热更；随 Player 发布是接受的取舍。
+- [普通 Domain/Application 程序集不能独立热更] → 当前产品不以业务热更为目标；保持简单、稳定的本地程序集依赖优先于预留未确认的热更能力。
 - [序列化类型改名可能导致 Missing Script] → 优先原位改写并保留 `.meta` GUID；必须换脚本时通过 Unity API 重绑并运行 Missing Script/GUID 审计。
 - [Animation/Spine 事件可能在特殊时序调用已销毁 session] → adapter 维护可空绑定 token，`OnDisable/OnDestroy` 对称退订，dispose 后事件安全忽略并记录一次诊断。
 - [纯 Domain 与 Unity 物理存在行为偏差] → Domain 只决定规则，位移和碰撞仍由原 Rigidbody2D/Collider2D 参数驱动；PlayMode 覆盖接触到命令的适配边界。
@@ -183,4 +183,4 @@ GF Input / Physics / Serialized Art Event
 
 ## Open Questions
 
-已确认的本轮边界内无阻塞问题。未来是否完全关闭 HybridCLR、是否将 Presentation/GF 再拆普通程序集，留作框架级独立决策，不影响本次实现。
+已确认的本轮边界内无阻塞问题。是否从框架层完全移除 HybridCLR 属于独立框架决策；本次业务架构不依赖它，也不为它预留多热更程序集方案。

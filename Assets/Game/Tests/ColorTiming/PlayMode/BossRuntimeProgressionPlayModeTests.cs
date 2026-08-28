@@ -1,6 +1,7 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using ColorTiming.Combat;
 using NUnit.Framework;
 using Spine.Unity;
 using UnityEngine;
@@ -20,12 +21,12 @@ namespace ColorTiming.Tests.PlayMode
         {
             yield return BootToStartMenu();
 
-            var menu = FindActive<UI_ButtonAction>();
+            var menu = FindActive<MainMenuForm>();
             Assert.That(menu, Is.Not.Null);
             menu.GoTest1();
             yield return WaitForScene("Boss1", TransitionTimeout);
 
-            var boss1 = FindActive<Boss1_Controller>();
+            var boss1 = FindActive<Boss1ActorView>();
             Assert.That(boss1, Is.Not.Null);
             Assert.That(boss1.Boss1HP, Has.Count.EqualTo(11));
             AssertAnimations(boss1.skeletonAnimation1,
@@ -34,24 +35,25 @@ namespace ColorTiming.Tests.PlayMode
                 "attack_4_test1_60fps", "attack_6_60fps");
             AssertAnimations(boss1.skeletonAnimation2, "attack_5_test1_60fps2");
 
-            var boss1Colors = new HashSet<ColorType>();
+            var boss1Colors = new HashSet<WeaponColor>();
             AssertWrongColorDoesNotDamage(boss1);
             while (boss1.Boss1HP.Count > 0)
             {
                 var before = boss1.Boss1HP.Count;
                 var color = boss1.Boss1HP[0];
                 boss1Colors.Add(color);
-                boss1.OnDamage(null, new Weapon(color, WeaponType.nor), Vector2.zero, "playmode-regression");
+                boss1.ReceiveDamage(BattleDamageTestFactory.ToBoss(
+                    color, "playmode-regression"));
                 Assert.That(boss1.Boss1HP, Has.Count.EqualTo(before - 1));
                 yield return null;
             }
 
-            Assert.That(boss1Colors.SetEquals(new[] { ColorType.hong, ColorType.lv, ColorType.zi }), Is.True,
+            Assert.That(boss1Colors.SetEquals(new[] { WeaponColor.Red, WeaponColor.Green, WeaponColor.Purple }), Is.True,
                 "Boss1 runtime queue must exercise all three authored colors.");
             yield return WaitForScene("Boss2", TransitionTimeout);
 
-            var boss2 = FindActive<Boss2_Controller>();
-            var tail = Object.FindObjectsOfType<Boss2_Controller_w>(true).Single();
+            var boss2 = FindActive<Boss2ActorView>();
+            var tail = Object.FindObjectsOfType<Boss2TailActorView>(true).Single();
             Assert.That(boss2, Is.Not.Null);
             Assert.That(boss2.Boss1HP, Has.Count.EqualTo(15));
             AssertAnimations(boss2.skeletonAnimation1,
@@ -61,14 +63,15 @@ namespace ColorTiming.Tests.PlayMode
             Assert.That(tail.gameObject.activeSelf, Is.False,
                 "Boss2 tail must start inactive before the 12-to-11 threshold.");
 
-            var boss2Colors = new HashSet<ColorType>();
+            var boss2Colors = new HashSet<WeaponColor>();
             AssertWrongColorDoesNotDamage(boss2);
             while (boss2.Boss1HP.Count > 0)
             {
                 var before = boss2.Boss1HP.Count;
                 var color = boss2.Boss1HP[0];
                 boss2Colors.Add(color);
-                boss2.OnDamage(null, new Weapon(color, WeaponType.nor), Vector2.zero, "playmode-regression");
+                boss2.ReceiveDamage(BattleDamageTestFactory.ToBoss(
+                    color, "playmode-regression"));
                 Assert.That(boss2.Boss1HP, Has.Count.EqualTo(before - 1));
                 if (boss2.Boss1HP.Count == 11)
                 {
@@ -79,43 +82,45 @@ namespace ColorTiming.Tests.PlayMode
             }
 
             Assert.That(boss2Colors.SetEquals(
-                new[] { ColorType.hong, ColorType.lv, ColorType.zi, ColorType.chen }), Is.True,
+                new[] { WeaponColor.Red, WeaponColor.Green, WeaponColor.Purple, WeaponColor.Orange }), Is.True,
                 "Boss2 runtime queue must exercise all four authored colors.");
             Assert.That(boss2.death, Is.True);
             Assert.That(tail.IsStoppedForBattleEnd, Is.True,
                 "Final victory must synchronously stop the tail before result UI pauses game time.");
             Assert.That(tail.GetComponent<Collider2D>().enabled, Is.False);
 
-            yield return WaitUntil(() => FindActive<UI_BattleResultForm>() != null, 10f,
+            yield return WaitUntil(() => FindActive<BattleResultForm>() != null, 10f,
                 "Final victory did not open the GF.UI battle-result form.");
             Assert.That(Time.timeScale, Is.EqualTo(0f));
 
-            var hud = FindActive<UI_HeroInfo>();
+            var hud = FindActive<BattlePlayerInfoView>();
             Assert.That(hud, Is.Not.Null);
             hud.TogglePause();
-            yield return WaitUntil(() => FindActive<UI_ESC>() != null, 10f,
+            yield return WaitUntil(() => FindActive<PauseMenuForm>() != null, 10f,
                 "Cleanup pause form did not open after the final-result assertion.");
-            FindActive<UI_ESC>().BackMenu();
+            FindActive<PauseMenuForm>().BackMenu();
             yield return WaitForScene("StartMenu", TransitionTimeout);
             Assert.That(Time.timeScale, Is.EqualTo(1f));
         }
 
-        static void AssertWrongColorDoesNotDamage(Boss1_Controller boss)
+        static void AssertWrongColorDoesNotDamage(Boss1ActorView boss)
         {
             var current = boss.Boss1HP[0];
-            var wrong = new[] { ColorType.hong, ColorType.lv, ColorType.zi }.First(color => color != current);
+            var wrong = new[] { WeaponColor.Red, WeaponColor.Green, WeaponColor.Purple }.First(color => color != current);
             var before = boss.Boss1HP.Count;
-            boss.OnDamage(null, new Weapon(wrong, WeaponType.nor), Vector2.zero, "wrong-color");
+            boss.ReceiveDamage(BattleDamageTestFactory.ToBoss(
+                wrong, "wrong-color"));
             Assert.That(boss.Boss1HP, Has.Count.EqualTo(before));
         }
 
-        static void AssertWrongColorDoesNotDamage(Boss2_Controller boss)
+        static void AssertWrongColorDoesNotDamage(Boss2ActorView boss)
         {
             var current = boss.Boss1HP[0];
-            var wrong = new[] { ColorType.hong, ColorType.lv, ColorType.zi, ColorType.chen }
+            var wrong = new[] { WeaponColor.Red, WeaponColor.Green, WeaponColor.Purple, WeaponColor.Orange }
                 .First(color => color != current);
             var before = boss.Boss1HP.Count;
-            boss.OnDamage(null, new Weapon(wrong, WeaponType.nor), Vector2.zero, "wrong-color");
+            boss.ReceiveDamage(BattleDamageTestFactory.ToBoss(
+                wrong, "wrong-color"));
             Assert.That(boss.Boss1HP, Has.Count.EqualTo(before));
         }
 
@@ -140,10 +145,8 @@ namespace ColorTiming.Tests.PlayMode
             {
                 SceneManager.LoadScene("Launch", LoadSceneMode.Single);
             }
-            yield return ColorTimingPlayModeBoot.EnsureFormalLaunchStartedInBatchMode();
-            yield return WaitForScene("StartMenu", BootTimeout);
-            yield return ColorTimingPlayModeBoot.WaitForProductSceneTransitions();
-            yield return WaitUntil(() => FindActive<UI_ButtonAction>() != null, 10f,
+            yield return ColorTimingPlayModeBoot.EnsureStartMenu(BootTimeout);
+            yield return WaitUntil(() => FindActive<MainMenuForm>() != null, 10f,
                 "StartMenu GF.UI form did not become active.");
         }
 

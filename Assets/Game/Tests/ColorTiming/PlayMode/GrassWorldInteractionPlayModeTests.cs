@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,11 +16,11 @@ namespace ColorTiming.Tests.PlayMode
         const float BootTimeout = 30f;
         const float TransitionTimeout = 20f;
 
-        static readonly MethodInfo EnterGrass = typeof(XiaoCao).GetMethod(
+        static readonly MethodInfo EnterGrass = typeof(GrassInteractionView).GetMethod(
             "OnTriggerEnter2D",
             BindingFlags.Instance | BindingFlags.NonPublic);
 
-        static readonly MethodInfo ExitGrass = typeof(XiaoCao).GetMethod(
+        static readonly MethodInfo ExitGrass = typeof(GrassInteractionView).GetMethod(
             "OnTriggerExit2D",
             BindingFlags.Instance | BindingFlags.NonPublic);
 
@@ -29,14 +29,14 @@ namespace ColorTiming.Tests.PlayMode
         public IEnumerator GrassEnterExit_AnimatesAndSwitchesFrameworkFootstepCueSet()
         {
             yield return BootToStartMenu();
-            FindActive<UI_ButtonAction>().GoTest1();
+            FindActive<MainMenuForm>().GoTest1();
             yield return WaitForScene("Boss1", TransitionTimeout);
 
-            var hero = FindActive<HeroController>();
+            var hero = FindActive<PlayerActorView>();
             var heroCollider = hero.GetComponentsInChildren<Collider2D>(true)
                 .FirstOrDefault(candidate => candidate.CompareTag("Player"));
-            var heroSound = hero.GetComponentInChildren<HeroSoundManager>(true);
-            var grass = UnityEngine.Object.FindObjectsOfType<XiaoCao>(true)
+            var heroSound = hero.GetComponentInChildren<PlayerSoundView>(true);
+            var grass = UnityEngine.Object.FindObjectsOfType<GrassInteractionView>(true)
                 .FirstOrDefault(candidate => candidate.gameObject.activeInHierarchy
                                              && candidate.audioClips != null
                                              && candidate.audioClips.Count > 0
@@ -46,7 +46,7 @@ namespace ColorTiming.Tests.PlayMode
             Assert.That(heroCollider, Is.Not.Null);
             Assert.That(heroSound, Is.Not.Null);
             Assert.That(grass, Is.Not.Null,
-                "Boss1 must contain an active XiaoCao instance with non-empty grass rustle clips.");
+                "Boss1 must contain an active GrassInteractionView with non-empty grass rustle clips.");
             var animator = grass.GetComponent<Animator>();
             Assert.That(grass.audioClips, Is.Not.Empty.And.All.Not.Null,
                 "Grass rustle clips must have no missing references.");
@@ -86,11 +86,11 @@ namespace ColorTiming.Tests.PlayMode
             Assert.That(sound.Calls[0].Channel, Is.EqualTo(ColorTimingSoundChannel.Player));
             Assert.That(heroSound.rMoveAudio, Does.Contain(sound.Calls[0].Clip));
 
-            var hud = FindActive<UI_HeroInfo>();
+            var hud = FindActive<BattlePlayerInfoView>();
             hud.TogglePause();
-            yield return WaitUntil(() => FindActive<UI_ESC>() != null, 10f,
+            yield return WaitUntil(() => FindActive<PauseMenuForm>() != null, 10f,
                 "Grass contract cleanup could not open the pause form.");
-            FindActive<UI_ESC>().BackMenu();
+            FindActive<PauseMenuForm>().BackMenu();
             yield return WaitForScene("StartMenu", TransitionTimeout);
         }
 
@@ -102,10 +102,8 @@ namespace ColorTiming.Tests.PlayMode
             {
                 SceneManager.LoadScene("Launch", LoadSceneMode.Single);
             }
-            yield return ColorTimingPlayModeBoot.EnsureFormalLaunchStartedInBatchMode();
-            yield return WaitForScene("StartMenu", BootTimeout);
-            yield return ColorTimingPlayModeBoot.WaitForProductSceneTransitions();
-            yield return WaitUntil(() => FindActive<UI_ButtonAction>() != null, 10f,
+            yield return ColorTimingPlayModeBoot.EnsureStartMenu(BootTimeout);
+            yield return WaitUntil(() => FindActive<MainMenuForm>() != null, 10f,
                 "StartMenu GF.UI form did not become active.");
         }
 

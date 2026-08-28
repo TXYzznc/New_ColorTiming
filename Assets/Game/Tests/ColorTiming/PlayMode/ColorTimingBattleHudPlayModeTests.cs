@@ -1,6 +1,8 @@
-﻿using System.Collections;
+using System.Collections;
 using NUnit.Framework;
 using System.Linq;
+using ColorTiming.Bootstrap;
+using ColorTiming.Combat;
 using ColorTiming.Presentation.UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -21,7 +23,7 @@ namespace ColorTiming.Tests.PlayMode
         {
             yield return BootToStartMenu();
 
-            var menu = FindActive<UI_ButtonAction>();
+            var menu = FindActive<MainMenuForm>();
             Assert.That(menu, Is.Not.Null);
             menu.GoTest1();
             yield return WaitForScene("Boss1", TransitionTimeout);
@@ -33,13 +35,13 @@ namespace ColorTiming.Tests.PlayMode
             AssertBoss1Hud(boss1Hud);
             AssertDynamicBattlePresentation("Boss1");
 
-            var boss1 = FindActive<Boss1_Controller>();
+            var boss1 = FindActive<Boss1ActorView>();
             Assert.That(boss1, Is.Not.Null);
             yield return AssertHudPresentationResetsAfterPoolReuse(boss1);
             while (boss1.Boss1HP.Count > 0)
             {
                 var color = boss1.Boss1HP[0];
-                boss1.OnDamage(null, new Weapon(color, WeaponType.nor), Vector2.zero, "hud-runtime-test");
+                boss1.ReceiveDamage(BossDamage((WeaponColor)color, "hud-runtime-test"));
                 yield return null;
             }
 
@@ -51,54 +53,55 @@ namespace ColorTiming.Tests.PlayMode
             AssertBoss2Hud(boss2Hud);
             AssertDynamicBattlePresentation("Boss2");
 
-            var heroHud = FindActive<UI_HeroInfo>();
+            var heroHud = FindActive<BattlePlayerInfoView>();
             Assert.That(heroHud, Is.Not.Null);
             heroHud.TogglePause();
-            yield return WaitUntil(() => FindActive<UI_ESC>() != null, 10f,
+            yield return WaitUntil(() => FindActive<PauseMenuForm>() != null, 10f,
                 "HUD test cleanup could not open the pause form.");
-            FindActive<UI_ESC>().BackMenu();
+            FindActive<PauseMenuForm>().BackMenu();
             yield return WaitForScene("StartMenu", TransitionTimeout);
 
             Debug.Log("[ColorTiming HUD] test-result unique-runtime-hud-and-player-layout=PASS");
         }
 
-        static IEnumerator AssertHudPresentationResetsAfterPoolReuse(Boss1_Controller boss1)
+        static IEnumerator AssertHudPresentationResetsAfterPoolReuse(Boss1ActorView boss1)
         {
-            var heroInfo = FindActive<UI_HeroInfo>();
+            var heroInfo = FindActive<BattlePlayerInfoView>();
             Assert.That(heroInfo, Is.Not.Null);
-            var hero = heroInfo.controller;
+            var hero = FindActive<PlayerActorView>();
             Assert.That(hero, Is.Not.Null);
 
-            var testWeapon = new Weapon(ColorType.hong, WeaponType.chuizhi);
-            var testPresentation = WeaponPresentationState.From(testWeapon.Identity);
-            hero.OnSwitchWeapon.Invoke(testWeapon);
+            var testWeapon = new WeaponIdentity(WeaponColor.Red, ColorTiming.Combat.WeaponType.Hammer);
+            var testPresentation = WeaponPresentationState.From(testWeapon);
+            Assert.That(hero.PickUPWeapon(testWeapon), Is.True);
             Assert.That(heroInfo.heroWeapon.sprite, Is.SameAs(heroInfo.weapons[testPresentation.IconIndex]));
             Assert.That(heroInfo.weaponTip.gameObject.activeSelf, Is.False);
             Assert.That(heroInfo.weaponTipx.gameObject.activeSelf, Is.True);
 
-            heroInfo.BindHero(null);
+            var session = heroInfo.Session;
+            heroInfo.BindSession(null);
             Assert.That(heroInfo.heroWeapon.sprite,
                 Is.SameAs(heroInfo.weapons[WeaponPresentationState.NormalIconIndex]));
             Assert.That(heroInfo.weaponTip.gameObject.activeSelf, Is.True);
             Assert.That(heroInfo.weaponTipx.gameObject.activeSelf, Is.False);
-            heroInfo.BindHero(hero);
+            heroInfo.BindSession(session);
 
-            var bossHud = FindActive<UI_BossHPController>();
+            var bossHud = FindActive<Boss1HealthView>();
             Assert.That(bossHud, Is.Not.Null);
             for (var i = 0; i < 3; i++)
             {
                 var color = boss1.Boss1HP[0];
-                boss1.OnDamage(null, new Weapon(color, WeaponType.nor), Vector2.zero, "hud-pool-reset-test");
+                boss1.ReceiveDamage(BossDamage((WeaponColor)color, "hud-pool-reset-test"));
                 yield return null;
             }
 
-            var firstItem = bossHud.GetComponentsInChildren<UI_BossHP_Item>(true)
+            var firstItem = bossHud.GetComponentsInChildren<BossWeaknessPipView>(true)
                 .First(item => item.transform.GetSiblingIndex() == 0);
             Assert.That(firstItem.tip1.activeSelf, Is.False,
                 "Boss1 weakness tutorial should stop after the initial three presentations.");
 
             bossHud.Bind(null);
-            bossHud.Bind(boss1);
+            bossHud.Bind(session);
             Assert.That(firstItem.tip1.activeSelf, Is.True,
                 "Boss1 weakness tutorial count must reset when the pooled HUD binds a new battle.");
         }
@@ -113,9 +116,9 @@ namespace ColorTiming.Tests.PlayMode
 
         static void AssertBoss1Hud(BattleHudForm hud)
         {
-            var heroBoxes = Object.FindObjectsOfType<UI_HeroHPBox>(true);
-            var bossControllers = Object.FindObjectsOfType<UI_BossHPController>(true);
-            var bossControllers2 = Object.FindObjectsOfType<UI_BossHPController2>(true);
+            var heroBoxes = Object.FindObjectsOfType<PlayerHealthPipsView>(true);
+            var bossControllers = Object.FindObjectsOfType<Boss1HealthView>(true);
+            var bossControllers2 = Object.FindObjectsOfType<Boss2HealthView>(true);
             Assert.That(heroBoxes, Has.Length.EqualTo(1));
             Assert.That(bossControllers, Has.Length.EqualTo(1));
             Assert.That(bossControllers2, Has.Length.EqualTo(1));
@@ -132,9 +135,9 @@ namespace ColorTiming.Tests.PlayMode
 
         static void AssertBoss2Hud(BattleHudForm hud)
         {
-            var heroBoxes = Object.FindObjectsOfType<UI_HeroHPBox>(true);
-            var bossControllers = Object.FindObjectsOfType<UI_BossHPController>(true);
-            var bossControllers2 = Object.FindObjectsOfType<UI_BossHPController2>(true);
+            var heroBoxes = Object.FindObjectsOfType<PlayerHealthPipsView>(true);
+            var bossControllers = Object.FindObjectsOfType<Boss1HealthView>(true);
+            var bossControllers2 = Object.FindObjectsOfType<Boss2HealthView>(true);
             Assert.That(heroBoxes, Has.Length.EqualTo(1));
             Assert.That(bossControllers, Has.Length.EqualTo(1));
             Assert.That(bossControllers2, Has.Length.EqualTo(1));
@@ -151,8 +154,8 @@ namespace ColorTiming.Tests.PlayMode
 
         static void AssertDynamicBattlePresentation(string sceneName)
         {
-            Assert.That(FindActive<BattlePresentationInstaller>(), Is.Not.Null,
-                $"{sceneName} must create its runtime battle presentation installer.");
+            Assert.That(FindActive<BattleRuntimeContext>(), Is.Not.Null,
+                $"{sceneName} must create its runtime battle context.");
             Assert.That(Object.FindObjectOfType<BattleTutorialForm>(true), Is.Not.Null,
                 $"{sceneName} must open the runtime battle tutorial form.");
             var scene = SceneManager.GetSceneByName(sceneName);
@@ -164,13 +167,13 @@ namespace ColorTiming.Tests.PlayMode
                 $"{sceneName} must not retain an authored EventSystem.");
         }
 
-        static void AssertHeroLayout(UI_HeroHPBox heroBox)
+        static void AssertHeroLayout(PlayerHealthPipsView heroBox)
         {
-            Assert.That(heroBox.controller, Is.Not.Null);
+            Assert.That(heroBox.Session, Is.Not.Null);
             Assert.That(heroBox.transform.name, Is.EqualTo("Slot_HeroHP"));
-            Assert.That(heroBox.transform.childCount, Is.EqualTo(heroBox.controller.heroMaxHP));
-            var items = heroBox.GetComponentsInChildren<UI_HeroHPItem>(true);
-            Assert.That(items, Has.Length.EqualTo(heroBox.controller.heroMaxHP));
+            Assert.That(heroBox.transform.childCount, Is.EqualTo(heroBox.Session.Snapshot.PlayerMaximumHealth));
+            var items = heroBox.GetComponentsInChildren<PlayerHealthPipView>(true);
+            Assert.That(items, Has.Length.EqualTo(heroBox.Session.Snapshot.PlayerMaximumHealth));
             for (var i = 0; i < items.Length; i++)
             {
                 var expected = new Vector2(i * 35f, i % 2 == 0 ? 0f : -33f);
@@ -187,10 +190,8 @@ namespace ColorTiming.Tests.PlayMode
             ColorTimingPlayModeBoot.PreserveTestRunnerAcrossFrameworkScenes();
             if (!SceneManager.GetSceneByName("Launch").isLoaded)
                 SceneManager.LoadScene("Launch", LoadSceneMode.Single);
-            yield return ColorTimingPlayModeBoot.EnsureFormalLaunchStartedInBatchMode();
-            yield return WaitForScene("StartMenu", BootTimeout);
-            yield return ColorTimingPlayModeBoot.WaitForProductSceneTransitions();
-            yield return WaitUntil(() => FindActive<UI_ButtonAction>() != null, 10f,
+            yield return ColorTimingPlayModeBoot.EnsureStartMenu(BootTimeout);
+            yield return WaitUntil(() => FindActive<MainMenuForm>() != null, 10f,
                 "StartMenu GF.UI form did not become active.");
         }
 
@@ -199,7 +200,7 @@ namespace ColorTiming.Tests.PlayMode
             yield return WaitUntil(() =>
             {
                 var hud = Object.FindObjectOfType<BattleHudForm>(true);
-                return hud != null && hud.GetComponentInChildren<UI_HeroHPBox>(true)?.controller != null;
+                return hud != null && hud.GetComponentInChildren<PlayerHealthPipsView>(true)?.Session != null;
             }, timeout, "Shared runtime BattleHud did not finish binding.");
         }
 
@@ -223,6 +224,16 @@ namespace ColorTiming.Tests.PlayMode
             foreach (var candidate in Object.FindObjectsOfType<T>(true))
                 if (candidate.gameObject.activeInHierarchy) return candidate;
             return null;
+        }
+
+        static BattleDamage BossDamage(WeaponColor color, string parameter)
+        {
+            return new BattleDamage(
+                ActorId.Player,
+                ActorId.BossHead,
+                new WeaponIdentity(color, ColorTiming.Combat.WeaponType.Normal),
+                new CombatPoint(0f, 0f),
+                parameter);
         }
     }
 }

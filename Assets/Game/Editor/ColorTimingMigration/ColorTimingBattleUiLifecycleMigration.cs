@@ -1,5 +1,6 @@
-﻿using System;
+using System;
 using System.Linq;
+using ColorTiming.Bootstrap;
 using ColorTiming.Presentation.UI;
 using UnityEditor;
 using UnityEditor.SceneManagement;
@@ -63,60 +64,8 @@ namespace ColorTiming.Editor
 
         private static void CreateBattleTutorialPrefab()
         {
-            if (AssetDatabase.LoadAssetAtPath<GameObject>(BattleTutorialPrefabPath) != null)
-            {
-                return;
-            }
-
-            var scene = EditorSceneManager.OpenScene(BattleScenePaths[0], OpenSceneMode.Single);
-            var source = FindComponents<UI_WeaponTip>(scene).SingleOrDefault();
-            Assert(source != null, "Boss1 must provide one legacy UI_WeaponTip source for migration.");
-            Assert(source.showTip != null && source.weaponTipImage != null && source.weaponTips != null,
-                "Legacy UI_WeaponTip references are incomplete.");
-
-            var root = new GameObject("BattleTutorial", typeof(RectTransform), typeof(Canvas), typeof(CanvasScaler),
-                typeof(GraphicRaycaster), typeof(BattleTutorialForm));
-            try
-            {
-                root.layer = LayerMask.NameToLayer("UI");
-                var rootRect = (RectTransform)root.transform;
-                rootRect.anchorMin = Vector2.zero;
-                rootRect.anchorMax = Vector2.one;
-                rootRect.anchoredPosition = Vector2.zero;
-                rootRect.sizeDelta = Vector2.zero;
-                rootRect.localScale = Vector3.one;
-                root.GetComponent<Canvas>().renderMode = RenderMode.ScreenSpaceOverlay;
-                root.GetComponent<CanvasScaler>().uiScaleMode = CanvasScaler.ScaleMode.ConstantPixelSize;
-
-                var visual = UnityEngine.Object.Instantiate(source.gameObject, root.transform, false);
-                visual.name = "Panel_Tutorial";
-                var clonedSource = visual.GetComponent<UI_WeaponTip>();
-                Assert(clonedSource != null, "Weapon-tip visual clone lost its source component.");
-                var tipContent = clonedSource.showTip;
-                var weaponTipImage = clonedSource.weaponTipImage;
-                tipContent.name = "Panel_TipContent";
-                weaponTipImage.gameObject.name = "Img_WeaponTip";
-                tipContent.SetActive(false);
-                UnityEngine.Object.DestroyImmediate(clonedSource);
-
-                var form = root.GetComponent<BattleTutorialForm>();
-                var serializedForm = new SerializedObject(form);
-                serializedForm.FindProperty("tipContent").objectReferenceValue = tipContent;
-                serializedForm.FindProperty("weaponTipImage").objectReferenceValue = weaponTipImage;
-                var sprites = serializedForm.FindProperty("weaponTips");
-                sprites.arraySize = source.weaponTips.Length;
-                for (var index = 0; index < source.weaponTips.Length; index++)
-                {
-                    sprites.GetArrayElementAtIndex(index).objectReferenceValue = source.weaponTips[index];
-                }
-
-                serializedForm.ApplyModifiedPropertiesWithoutUndo();
-                PrefabUtility.SaveAsPrefabAsset(root, BattleTutorialPrefabPath);
-            }
-            finally
-            {
-                UnityEngine.Object.DestroyImmediate(root);
-            }
+            Assert(AssetDatabase.LoadAssetAtPath<GameObject>(BattleTutorialPrefabPath) != null,
+                "BattleTutorial prefab is required. Its visual source has already been migrated and the legacy scene component is no longer supported.");
         }
 
         private static void CreateWorldUiRoot()
@@ -158,7 +107,7 @@ namespace ColorTiming.Editor
         {
             var scene = EditorSceneManager.OpenScene(scenePath, OpenSceneMode.Single);
             var legacyUiRoots = scene.GetRootGameObjects()
-                .Where(root => root.GetComponent<Canvas>() != null || root.GetComponentInChildren<UI_Game>(true) != null)
+                .Where(root => root.GetComponent<Canvas>() != null)
                 .ToArray();
             Assert(legacyUiRoots.Length <= 1, $"{scenePath} must not contain more than one legacy battle UI root.");
             if (legacyUiRoots.Length == 1)
@@ -171,8 +120,8 @@ namespace ColorTiming.Editor
                 UnityEngine.Object.DestroyImmediate(eventSystem.gameObject);
             }
 
-            Assert(FindComponents<ColorTimingBattleHudBootstrap>(scene).Length == 0,
-                $"{scenePath} still contains an authored BattleHudContext outside the legacy UI root.");
+            Assert(FindComponents<BattleSceneAnchors>(scene).Length <= 1,
+                $"{scenePath} contains duplicate BattleSceneAnchors roots.");
             EditorSceneManager.MarkSceneDirty(scene);
             EditorSceneManager.SaveScene(scene);
         }
@@ -215,10 +164,8 @@ namespace ColorTiming.Editor
             var scene = EditorSceneManager.OpenScene(scenePath, OpenSceneMode.Single);
             Assert(FindComponents<Canvas>(scene).Length == 0 && FindComponents<EventSystem>(scene).Length == 0,
                 $"{scenePath} must not retain authored product UI roots or EventSystem.");
-            Assert(FindComponents<UI_Game>(scene).Length == 0
-                && FindComponents<UI_WeaponTip>(scene).Length == 0
-                && FindComponents<UI_SoundManager>(scene).Length == 0
-                && FindComponents<ColorTimingBattleHudBootstrap>(scene).Length == 0,
+            Assert(FindComponents<UiSoundView>(scene).Length == 0
+                && FindComponents<BattleSceneAnchors>(scene).Length == 1,
                 $"{scenePath} retains a legacy battle UI behaviour.");
         }
 

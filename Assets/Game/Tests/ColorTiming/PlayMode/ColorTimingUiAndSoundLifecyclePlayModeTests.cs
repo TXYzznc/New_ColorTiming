@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using ColorTiming.Presentation.Audio;
@@ -23,14 +23,14 @@ namespace ColorTiming.Tests.PlayMode
         {
             yield return BootToStartMenu();
 
-            var sequence = Object.FindObjectOfType<StartVido>(true);
+            var sequence = Object.FindObjectOfType<MainMenuIntroSequence>(true);
             Assert.That(sequence, Is.Not.Null);
             sequence.RestartSequence();
             yield return null;
 
             var intro = sequence.GetComponent<VideoPlayer>();
             var loop = sequence.loop2;
-            var output = sequence.transform.parent.Find("VideoOutput")?.GetComponent<RawImage>();
+            var output = sequence.VideoDisplay;
             Assert.That(intro, Is.Not.Null);
             Assert.That(loop, Is.Not.Null);
             Assert.That(output, Is.Not.Null);
@@ -55,7 +55,7 @@ namespace ColorTiming.Tests.PlayMode
             Assert.That(output.gameObject.layer, Is.EqualTo(sequence.gameObject.layer),
                 "The runtime RawImage must stay on the same UI layer as the authored video objects.");
 
-            var menu = FindActive<UI_ButtonAction>();
+            var menu = FindActive<MainMenuForm>();
             Assert.That(menu, Is.Not.Null);
             menu.SettingBtnDwon();
             yield return new WaitForSecondsRealtime(0.25f);
@@ -74,51 +74,53 @@ namespace ColorTiming.Tests.PlayMode
         {
             yield return BootToStartMenu();
 
-            var startMenu = FindActive<UI_ButtonAction>();
+            var startMenu = FindActive<MainMenuForm>();
             Assert.That(startMenu, Is.Not.Null);
             startMenu.GoTest1();
             yield return WaitForScene("Boss1", TransitionTimeout);
 
-            var hud = FindActive<UI_HeroInfo>();
-            Assert.That(hud, Is.Not.Null, "Boss1 HUD did not bind through the ColorTiming composition root.");
+            yield return WaitUntil(() => FindActive<BattlePlayerInfoView>() != null, 10f,
+                "Boss1 HUD did not bind through the ColorTiming composition root.");
+            var hud = FindActive<BattlePlayerInfoView>();
 
             for (var cycle = 0; cycle < 2; cycle++)
             {
                 hud.TogglePause();
-                yield return WaitUntil(() => FindActive<UI_ESC>() != null, 10f,
+                yield return WaitUntil(() => FindActive<PauseMenuForm>() != null, 10f,
                     $"Pause form did not open on cycle {cycle + 1}.");
                 Assert.That(Time.timeScale, Is.EqualTo(0f));
 
                 hud.TogglePause();
-                yield return WaitUntil(() => FindActive<UI_ESC>() == null, 10f,
+                yield return WaitUntil(() => FindActive<PauseMenuForm>() == null, 10f,
                     $"Pause form did not close on cycle {cycle + 1}.");
                 Assert.That(Time.timeScale, Is.EqualTo(1f));
             }
 
             hud.TogglePause();
-            yield return WaitUntil(() => FindActive<UI_ESC>() != null, 10f,
+            yield return WaitUntil(() => FindActive<PauseMenuForm>() != null, 10f,
                 "Pause form did not open before the scene-exit check.");
-            FindActive<UI_ESC>().GoNextLevel(2);
+            FindActive<PauseMenuForm>().GoNextLevel(2);
             yield return WaitForScene("Boss2", TransitionTimeout);
 
             Assert.That(Time.timeScale, Is.EqualTo(1f),
                 "Leaving paused Boss1 must release the UI-owned game-time lease.");
-            Assert.That(FindActive<UI_ESC>(), Is.Null,
+            Assert.That(FindActive<PauseMenuForm>(), Is.Null,
                 "The Boss1 pause form must not survive the transition to Boss2.");
 
-            var boss2Hud = FindActive<UI_HeroInfo>();
-            Assert.That(boss2Hud, Is.Not.Null, "Boss2 HUD did not bind through the composition root.");
+            yield return WaitUntil(() => FindActive<BattlePlayerInfoView>() != null, 10f,
+                "Boss2 HUD did not bind through the composition root.");
+            var boss2Hud = FindActive<BattlePlayerInfoView>();
             boss2Hud.TogglePause();
-            yield return WaitUntil(() => FindActive<UI_ESC>() != null, 10f,
+            yield return WaitUntil(() => FindActive<PauseMenuForm>() != null, 10f,
                 "Boss2 pause form did not open before returning to StartMenu.");
-            FindActive<UI_ESC>().BackMenu();
+            FindActive<PauseMenuForm>().BackMenu();
             yield return WaitForScene("StartMenu", TransitionTimeout);
 
             Assert.That(Time.timeScale, Is.EqualTo(1f),
                 "Leaving paused Boss2 must release the UI-owned game-time lease.");
-            Assert.That(FindActive<UI_ESC>(), Is.Null,
+            Assert.That(FindActive<PauseMenuForm>(), Is.Null,
                 "The outgoing pause form must not survive the scene transition.");
-            Assert.That(Object.FindObjectsOfType<UI_ButtonAction>(true).Length, Is.EqualTo(1),
+            Assert.That(Object.FindObjectsOfType<MainMenuForm>(true).Length, Is.EqualTo(1),
                 "GF.UI must reuse exactly one pooled StartMenu form after returning from gameplay.");
         }
 
@@ -128,7 +130,7 @@ namespace ColorTiming.Tests.PlayMode
         {
             yield return BootToStartMenu();
 
-            var menu = FindActive<UI_ButtonAction>();
+            var menu = FindActive<MainMenuForm>();
             Assert.That(menu, Is.Not.Null);
             Assert.That(menu.StartBtnBox.activeSelf, Is.True);
             Assert.That(menu.GoButtonBox.activeSelf, Is.False);
@@ -261,10 +263,8 @@ namespace ColorTiming.Tests.PlayMode
             {
                 SceneManager.LoadScene("Launch", LoadSceneMode.Single);
             }
-            yield return ColorTimingPlayModeBoot.EnsureFormalLaunchStartedInBatchMode();
-            yield return WaitForScene("StartMenu", BootTimeout);
-            yield return ColorTimingPlayModeBoot.WaitForProductSceneTransitions();
-            yield return WaitUntil(() => FindActive<UI_ButtonAction>() != null, 10f,
+            yield return ColorTimingPlayModeBoot.EnsureStartMenu(BootTimeout);
+            yield return WaitUntil(() => FindActive<MainMenuForm>() != null, 10f,
                 "StartMenu GF.UI form did not become active.");
         }
 

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Text;
 using System.Xml;
@@ -110,12 +110,12 @@ namespace ColorTiming.Editor
 
             static string OutputPath(string fileName)
             {
-                return Path.Combine(ProjectRoot(), "openspec", "changes", "refactor-color-timing-runtime-presentation", "evidence", "TestResults", fileName);
+                return Path.Combine(ProjectRoot(), "openspec", "changes", "reimplement-color-timing-business-architecture", "evidence", "TestResults", fileName);
             }
 
             static string ProjectRoot()
             {
-                return Directory.GetParent(Application.dataPath)?.FullName
+                return Directory.GetParent(global::UnityEngine.Application.dataPath)?.FullName
                     ?? throw new InvalidOperationException("Could not resolve the Unity project root.");
             }
         }

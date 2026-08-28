@@ -1,5 +1,6 @@
 using ColorTiming.Bootstrap.Flow;
 using ColorTiming.Settings;
+using ColorTiming.Presentation.Audio;
 
 namespace ColorTiming.Presentation.UI
 {
@@ -9,7 +10,7 @@ namespace ColorTiming.Presentation.UI
         bool TogglePause();
         void PresentScene(ColorTimingSceneId scene);
         bool ShowBattleHud(BattleHudPresentation presentation);
-        bool ShowBattleTutorial(HeroController hero);
+        bool ShowBattleTutorial(ColorTiming.Application.Battle.BattleSession session);
         bool ShowBattleResult(BattlePresentationResult result);
         void Reset();
     }
@@ -21,7 +22,7 @@ namespace ColorTiming.Presentation.UI
 
     public interface IColorTimingPauseForm
     {
-        void BindRuntime(IColorTimingSceneFlow sceneFlow, IColorTimingSettings settings);
+        void BindRuntime(IColorTimingSceneFlow sceneFlow, IColorTimingSettings settings, IUiSoundSink uiSound);
     }
 
     public interface IColorTimingStartMenuForm
@@ -30,6 +31,7 @@ namespace ColorTiming.Presentation.UI
             IColorTimingSceneFlow sceneFlow,
             IColorTimingSettings settings,
             ColorTiming.Presentation.Audio.IColorTimingSoundService soundService);
+        IUiSoundSink UiSound { get; }
     }
 
     public interface IColorTimingLoadingForm
@@ -57,7 +59,7 @@ namespace ColorTiming.Presentation.UI
     public interface IColorTimingBattleTutorialForm
     {
         void BindRuntime(
-            HeroController hero,
+            ColorTiming.Application.Battle.BattleSession session,
             ColorTiming.Input.IGameInput gameInput,
             ColorTiming.Combat.IGameTime gameTime,
             IColorTimingSettings settings);
