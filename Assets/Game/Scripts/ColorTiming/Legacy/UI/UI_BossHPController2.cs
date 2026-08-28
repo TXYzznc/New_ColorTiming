@@ -18,10 +18,15 @@ public class UI_BossHPController2 : MonoBehaviour
         if (boss1_Controller == bossController && items.Count > 0) return;
         boss1_Controller?.OnDamage_Event.RemoveListener(SetHPBox);
         boss1_Controller = bossController;
+        cCount = 0;
         boss1_Controller?.OnDamage_Event.AddListener(SetHPBox);
         if (boss1_Controller == null)
         {
-            for (int i = 0; i < items.Count; i++) items[i].gameObject.SetActive(false);
+            for (int i = 0; i < items.Count; i++)
+            {
+                items[i].HideTip();
+                items[i].gameObject.SetActive(false);
+            }
             return;
         }
         EnsureItems(7);

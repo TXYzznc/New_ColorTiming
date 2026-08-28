@@ -35,6 +35,7 @@ namespace ColorTiming.Tests.PlayMode
 
             var boss1 = FindActive<Boss1_Controller>();
             Assert.That(boss1, Is.Not.Null);
+            yield return AssertHudPresentationResetsAfterPoolReuse(boss1);
             while (boss1.Boss1HP.Count > 0)
             {
                 var color = boss1.Boss1HP[0];
@@ -59,6 +60,47 @@ namespace ColorTiming.Tests.PlayMode
             yield return WaitForScene("StartMenu", TransitionTimeout);
 
             Debug.Log("[ColorTiming HUD] test-result unique-runtime-hud-and-player-layout=PASS");
+        }
+
+        static IEnumerator AssertHudPresentationResetsAfterPoolReuse(Boss1_Controller boss1)
+        {
+            var heroInfo = FindActive<UI_HeroInfo>();
+            Assert.That(heroInfo, Is.Not.Null);
+            var hero = heroInfo.controller;
+            Assert.That(hero, Is.Not.Null);
+
+            var testWeapon = new Weapon(ColorType.hong, WeaponType.chuizhi);
+            var testPresentation = WeaponPresentationState.From(testWeapon.Identity);
+            hero.OnSwitchWeapon.Invoke(testWeapon);
+            Assert.That(heroInfo.heroWeapon.sprite, Is.SameAs(heroInfo.weapons[testPresentation.IconIndex]));
+            Assert.That(heroInfo.weaponTip.gameObject.activeSelf, Is.False);
+            Assert.That(heroInfo.weaponTipx.gameObject.activeSelf, Is.True);
+
+            heroInfo.BindHero(null);
+            Assert.That(heroInfo.heroWeapon.sprite,
+                Is.SameAs(heroInfo.weapons[WeaponPresentationState.NormalIconIndex]));
+            Assert.That(heroInfo.weaponTip.gameObject.activeSelf, Is.True);
+            Assert.That(heroInfo.weaponTipx.gameObject.activeSelf, Is.False);
+            heroInfo.BindHero(hero);
+
+            var bossHud = FindActive<UI_BossHPController>();
+            Assert.That(bossHud, Is.Not.Null);
+            for (var i = 0; i < 3; i++)
+            {
+                var color = boss1.Boss1HP[0];
+                boss1.OnDamage(null, new Weapon(color, WeaponType.nor), Vector2.zero, "hud-pool-reset-test");
+                yield return null;
+            }
+
+            var firstItem = bossHud.GetComponentsInChildren<UI_BossHP_Item>(true)
+                .First(item => item.transform.GetSiblingIndex() == 0);
+            Assert.That(firstItem.tip1.activeSelf, Is.False,
+                "Boss1 weakness tutorial should stop after the initial three presentations.");
+
+            bossHud.Bind(null);
+            bossHud.Bind(boss1);
+            Assert.That(firstItem.tip1.activeSelf, Is.True,
+                "Boss1 weakness tutorial count must reset when the pooled HUD binds a new battle.");
         }
 
         static void AssertHudRoot(BattleHudForm hud)

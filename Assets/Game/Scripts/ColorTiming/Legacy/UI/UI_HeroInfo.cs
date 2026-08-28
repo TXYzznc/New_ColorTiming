@@ -51,6 +51,10 @@ public class UI_HeroInfo : MonoBehaviour, IGameInputConsumer, IColorTimingUiCons
             {
                 SwitchWapon(controller.nowweapon);
             }
+            else
+            {
+                ResetPresentation();
+            }
             return;
         }
 
@@ -60,6 +64,10 @@ public class UI_HeroInfo : MonoBehaviour, IGameInputConsumer, IColorTimingUiCons
         if (controller != null && controller.nowweapon != null)
         {
             SwitchWapon(controller.nowweapon);
+        }
+        else
+        {
+            ResetPresentation();
         }
     }
 
@@ -135,6 +143,26 @@ public class UI_HeroInfo : MonoBehaviour, IGameInputConsumer, IColorTimingUiCons
     private void OnDestroy()
     {
         BindHero(null);
+    }
+
+    private void ResetPresentation()
+    {
+        nowWeapon = null;
+        if (heroWeapon != null
+            && TryGet(weapons, WeaponPresentationState.NormalIconIndex, out var normalWeaponIcon))
+        {
+            heroWeapon.sprite = normalWeaponIcon;
+        }
+
+        if (weaponTip != null)
+        {
+            weaponTip.gameObject.SetActive(true);
+        }
+        if (weaponTipx != null)
+        {
+            weaponTipx.gameObject.SetActive(false);
+        }
+
         SetCursor(WeaponPresentationState.NormalCursorIndex);
     }
 
