@@ -36,6 +36,7 @@ namespace ColorTiming.Infrastructure.GF.UI
         IColorTimingLoadingForm loadingForm;
         IUiSoundSink uiSound;
         float loadingProgress;
+        int loadingProgressLogBucket = -1;
         bool loadingCompletionRequested;
         bool disposed;
 
@@ -56,6 +57,7 @@ namespace ColorTiming.Infrastructure.GF.UI
             this.sceneFlow.TransitionProgress += OnTransitionProgress;
             this.sceneFlow.SceneChanged += OnSceneChanged;
             this.sceneFlow.TransitionFailed += OnTransitionFailed;
+            Log.Info("[ColorTiming.UIFlow] action=Service.Initialize result=Success");
         }
 
         public bool IsPauseOpen => pauseFormId >= 0;
@@ -87,6 +89,10 @@ namespace ColorTiming.Infrastructure.GF.UI
         public void PresentScene(ColorTimingSceneId scene)
         {
             ThrowIfDisposed();
+            Log.Info(
+                "[ColorTiming.UIFlow] action=PresentScene scene={0} closeGameplayForms=True opensMainMenu={1}",
+                scene,
+                scene == ColorTimingSceneId.StartMenu);
             CloseTrackedGameplayForms();
             if (scene != ColorTimingSceneId.StartMenu)
             {
@@ -97,6 +103,11 @@ namespace ColorTiming.Infrastructure.GF.UI
             parameters.OpenCallback = OnStartMenuOpened;
             parameters.CloseCallback = _ => startMenuFormId = -1;
             startMenuFormId = global::GF.UI.OpenUIForm(UIViews.MainMenu, parameters);
+            Log.Info(
+                "[ColorTiming.UIFlow] action=MainMenu.Open.Request result={0} serialId={1} loadingSerialId={2}",
+                startMenuFormId >= 0 ? "Accepted" : "Rejected",
+                startMenuFormId,
+                loadingFormId);
             if (startMenuFormId < 0)
             {
                 UnityEngine.Debug.LogError("Failed to open the ColorTiming start-menu GF.UI form.");
@@ -185,6 +196,10 @@ namespace ColorTiming.Infrastructure.GF.UI
             {
                 form.BindRuntime(sceneFlow, settings, soundService);
                 uiSound = form.UiSound;
+                Log.Info(
+                    "[ColorTiming.UIFlow] action=MainMenu.Open.Callback result=Success serialId={0} loadingSerialId={1}",
+                    startMenuFormId,
+                    loadingFormId);
                 return;
             }
 
@@ -325,7 +340,7 @@ namespace ColorTiming.Infrastructure.GF.UI
         void CloseTrackedForms()
         {
             CloseTrackedGameplayForms();
-            CloseLoading();
+            CloseLoading("CloseTrackedForms");
         }
 
         // 关闭TrackedGameplayForms并结束本次生命周期。
@@ -340,13 +355,23 @@ namespace ColorTiming.Infrastructure.GF.UI
 
         void BeginLoading()
         {
-            CloseLoading();
+            CloseLoading("ReplaceExistingBeforeOpen");
             loadingProgress = 0f;
+            loadingProgressLogBucket = 0;
             loadingCompletionRequested = false;
+            Log.Info(
+                "[ColorTiming.UIFlow] action=Loading.Open.Request reason=SceneTransition hasCurrentScene={0} currentScene={1} isTransitioning={2}",
+                sceneFlow.HasCurrentScene,
+                sceneFlow.CurrentScene,
+                sceneFlow.IsTransitioning);
             var parameters = UIParams.Create(false);
             parameters.OpenCallback = OnLoadingOpened;
             parameters.CloseCallback = _ => ResetLoadingState();
             loadingFormId = global::GF.UI.OpenUIForm(UIViews.Loading, parameters);
+            Log.Info(
+                "[ColorTiming.UIFlow] action=Loading.Open.Request result={0} serialId={1}",
+                loadingFormId >= 0 ? "Accepted" : "Rejected",
+                loadingFormId);
             if (loadingFormId < 0)
             {
                 UnityEngine.Debug.LogError("Failed to open the ColorTiming loading GF.UI form.");
@@ -359,11 +384,16 @@ namespace ColorTiming.Infrastructure.GF.UI
             if (logic is not IColorTimingLoadingForm form)
             {
                 UnityEngine.Debug.LogError("ColorTiming loading prefab must implement IColorTimingLoadingForm.");
-                CloseLoading();
+                CloseLoading("InvalidLoadingForm");
                 return;
             }
 
             loadingForm = form;
+            Log.Info(
+                "[ColorTiming.UIFlow] action=Loading.Open.Callback result=Success serialId={0} progress={1:0.###} completionRequested={2}",
+                loadingFormId,
+                loadingProgress,
+                loadingCompletionRequested);
             loadingForm.SetProgress(loadingProgress);
             if (loadingCompletionRequested)
             {
@@ -372,9 +402,18 @@ namespace ColorTiming.Infrastructure.GF.UI
         }
 
         // 关闭加载并结束本次生命周期。
-        void CloseLoading()
+        void CloseLoading(string reason = "Unspecified")
         {
             var serialId = loadingFormId;
+            if (serialId >= 0 || loadingForm != null)
+            {
+                Log.Info(
+                    "[ColorTiming.UIFlow] action=Loading.Close.Request reason={0} serialId={1} hasBoundForm={2} progress={3:0.###}",
+                    reason,
+                    serialId,
+                    loadingForm != null,
+                    loadingProgress);
+            }
             ResetLoadingState();
             if (serialId >= 0 && global::GF.UI != null)
             {
@@ -387,6 +426,7 @@ namespace ColorTiming.Infrastructure.GF.UI
             loadingFormId = -1;
             loadingForm = null;
             loadingProgress = 0f;
+            loadingProgressLogBucket = -1;
             loadingCompletionRequested = false;
         }
 
@@ -413,6 +453,11 @@ namespace ColorTiming.Infrastructure.GF.UI
         // 响应TransitionStarted回调，并更新本对象状态。
         void OnTransitionStarted(ColorTimingSceneId scene)
         {
+            Log.Info(
+                "[ColorTiming.UIFlow] action=TransitionStarted target={0} hasCurrentScene={1} currentScene={2} decision=OpenLoading",
+                scene,
+                sceneFlow.HasCurrentScene,
+                sceneFlow.CurrentScene);
             CloseTrackedGameplayForms();
             BeginLoading();
         }
@@ -422,11 +467,27 @@ namespace ColorTiming.Infrastructure.GF.UI
         {
             loadingProgress = progress;
             loadingForm?.SetProgress(progress);
+            int bucket = Math.Min(4, Math.Max(0, (int)(progress * 4f)));
+            if (bucket > loadingProgressLogBucket)
+            {
+                loadingProgressLogBucket = bucket;
+                Log.Info(
+                    "[ColorTiming.UIFlow] action=Loading.Progress bucket={0} progress={1:0.###} serialId={2} hasBoundForm={3}",
+                    bucket,
+                    progress,
+                    loadingFormId,
+                    loadingForm != null);
+            }
         }
 
         // 响应场景变化回调，并更新本对象状态。
         void OnSceneChanged(ColorTimingSceneId scene)
         {
+            Log.Info(
+                "[ColorTiming.UIFlow] action=SceneChanged scene={0} decision=CompleteLoading serialId={1} hasBoundForm={2}",
+                scene,
+                loadingFormId,
+                loadingForm != null);
             loadingProgress = 1f;
             loadingCompletionRequested = true;
             loadingForm?.SetProgress(loadingProgress);
@@ -436,7 +497,11 @@ namespace ColorTiming.Infrastructure.GF.UI
         // 响应TransitionFailed回调，并更新本对象状态。
         void OnTransitionFailed(ColorTimingSceneId scene, string error)
         {
-            CloseLoading();
+            Log.Warning(
+                "[ColorTiming.UIFlow] action=TransitionFailed scene={0} error={1}",
+                scene,
+                error ?? string.Empty);
+            CloseLoading("TransitionFailed");
         }
 
         void ThrowIfDisposed()

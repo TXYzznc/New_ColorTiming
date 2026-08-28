@@ -28,7 +28,14 @@ namespace ColorTiming.Bootstrap
             SubscribeEvents();
             compositionRoot = new ColorTimingCompositionRoot(BeginSceneTransition);
             compositionRoot.Initialize();
-            if (!compositionRoot.SceneFlow.TryLoad(ColorTimingSceneId.StartMenu))
+            Log.Info("[ColorTiming.Startup] action=InitialScene.Request target=StartMenu");
+            bool accepted = compositionRoot.SceneFlow.TryLoad(ColorTimingSceneId.StartMenu);
+            Log.Info(
+                "[ColorTiming.Startup] action=InitialScene.Request result={0} target=StartMenu hasCurrentScene={1} isTransitioning={2}",
+                accepted ? "Accepted" : "Rejected",
+                compositionRoot.SceneFlow.HasCurrentScene,
+                compositionRoot.SceneFlow.IsTransitioning);
+            if (!accepted)
             {
                 Log.Error("ColorTiming failed to request its initial StartMenu scene.");
             }
@@ -50,6 +57,11 @@ namespace ColorTiming.Bootstrap
             waitingForTargetUnload = GF.Scene.SceneIsUnloading(loadingSceneAsset);
             GFTrace.Info("ColorTiming", "Scene.Load.Begin", null,
                 GFTrace.Data("scene", scene.ToString(), "asset", loadingSceneAsset));
+            Log.Info(
+                "[ColorTiming.SceneFlow] action=Transition.Begin target={0} asset={1} targetAlreadyUnloading={2}",
+                scene,
+                loadingSceneAsset,
+                waitingForTargetUnload);
 
             GF.Sound.StopAllLoadingSounds();
             GF.Sound.StopAllLoadedSounds();
@@ -76,6 +88,11 @@ namespace ColorTiming.Bootstrap
         // 加载待处理场景，并处理完成或失败结果。
         private void LoadPendingScene()
         {
+            Log.Info(
+                "[ColorTiming.SceneFlow] action=SceneLoad.Request target={0} asset={1} waitingForTargetUnload={2}",
+                loadingScene,
+                loadingSceneAsset,
+                waitingForTargetUnload);
             GF.Scene.LoadScene(loadingSceneAsset, this);
         }
 
@@ -159,6 +176,11 @@ namespace ColorTiming.Bootstrap
             }
 
             Scene loadedScene = SceneManager.GetSceneByPath(args.SceneAssetName);
+            Log.Info(
+                "[ColorTiming.SceneFlow] action=SceneLoad.Success target={0} asset={1} sceneValid={2}; binding scene before transition completion",
+                loadingScene,
+                args.SceneAssetName,
+                loadedScene.IsValid());
             compositionRoot.BindScene(loadedScene, loadingScene);
             compositionRoot.CompleteSceneTransition(loadingScene);
             GFTrace.Success("ColorTiming", "Scene.Load.Success", null,

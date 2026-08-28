@@ -79,6 +79,11 @@ public class MainMenuForm : UIFormBase, IColorTimingSceneFlowConsumer, IColorTim
     // 在 GF UI 表单打开时接收参数并刷新显示。
     protected override void OnOpen(object userData)
     {
+        Log.Info(
+            "[ColorTiming.UIFlow] action=MainMenuForm.OnOpen id={0} frame={1} realtime={2:0.000}",
+            Id,
+            Time.frameCount,
+            Time.realtimeSinceStartup);
         // GF.UI pools forms, so authored navigation state must be restored on every open.
         if (StartBtnBox != null) StartBtnBox.SetActive(true);
         if (GoButtonBox != null) GoButtonBox.SetActive(false);
@@ -92,6 +97,12 @@ public class MainMenuForm : UIFormBase, IColorTimingSceneFlowConsumer, IColorTim
     // 在 GF UI 表单关闭时停止流程并清理临时状态。
     protected override void OnClose(bool isShutdown, object userData)
     {
+        Log.Info(
+            "[ColorTiming.UIFlow] action=MainMenuForm.OnClose id={0} isShutdown={1} frame={2} realtime={3:0.000}",
+            Id,
+            isShutdown,
+            Time.frameCount,
+            Time.realtimeSinceStartup);
         videoSequence?.StopSequence();
         StopBgmPlayback();
         base.OnClose(isShutdown, userData);

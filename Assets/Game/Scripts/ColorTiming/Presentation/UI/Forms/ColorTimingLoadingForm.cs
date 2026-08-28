@@ -5,6 +5,7 @@ using DG.Tweening;
 using ColorTiming.Presentation.UI.Contracts;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityGameFramework.Runtime;
 
 namespace ColorTiming.Presentation.UI.Forms
 {
@@ -23,6 +24,11 @@ namespace ColorTiming.Presentation.UI.Forms
         // 在 GF UI 表单打开时接收参数并刷新显示。
         protected override void OnOpen(object userData)
         {
+            Log.Info(
+                "[ColorTiming.UIFlow] action=LoadingForm.OnOpen id={0} frame={1} realtime={2:0.000}",
+                Id,
+                Time.frameCount,
+                Time.realtimeSinceStartup);
             closing = false;
             fadeTween?.Kill();
             fadeTween = null;
@@ -42,6 +48,12 @@ namespace ColorTiming.Presentation.UI.Forms
         // 在 GF UI 表单关闭时停止流程并清理临时状态。
         protected override void OnClose(bool isShutdown, object userData)
         {
+            Log.Info(
+                "[ColorTiming.UIFlow] action=LoadingForm.OnClose id={0} isShutdown={1} frame={2} realtime={3:0.000}",
+                Id,
+                isShutdown,
+                Time.frameCount,
+                Time.realtimeSinceStartup);
             fadeTween?.Kill();
             fadeTween = null;
             closing = false;
@@ -64,10 +76,18 @@ namespace ColorTiming.Presentation.UI.Forms
         {
             if (closing)
             {
+                Log.Info(
+                    "[ColorTiming.UIFlow] action=LoadingForm.CompleteAndClose result=IgnoredAlreadyClosing id={0}",
+                    Id);
                 return;
             }
 
             closing = true;
+            Log.Info(
+                "[ColorTiming.UIFlow] action=LoadingForm.CompleteAndClose result=Begin id={0} progress={1:0.###} fadeDuration={2:0.###}",
+                Id,
+                displayedProgress,
+                fadeDuration);
             if (progressRoot != null)
             {
                 progressRoot.SetActive(false);
