@@ -3,12 +3,14 @@ using System.Collections;
 using ColorTiming.Application.Battle;
 using ColorTiming.Bootstrap.Flow;
 using ColorTiming.Combat;
+using ColorTiming.Infrastructure.Unity.Input;
 using ColorTiming.Input;
-using ColorTiming.Input.Adapters;
 using ColorTiming.Presentation.Audio;
 using ColorTiming.Presentation.Actors;
 using ColorTiming.Presentation.Entities;
-using ColorTiming.Presentation.UI;
+using ColorTiming.Presentation.UI.Contracts;
+using ColorTiming.Presentation.UI.Models;
+using ColorTiming.Presentation.UI.Presenters;
 using ColorTiming.Settings;
 using UnityEngine;
 

@@ -1,0 +1,22 @@
+{
+  "status": "PASS",
+  "failures": [],
+  "allowedSerializedChangesRequiringReview": [
+    "Assets/Game/Scene/Boss1.unity",
+    "Assets/Game/Scene/Boss2.unity"
+  ],
+  "baselineCounts": {
+    "assetCount": 3355,
+    "rawCount": 3298,
+    "serializedCount": 57,
+    "animationEventCount": 129,
+    "unityEventCount": 19
+  },
+  "currentCounts": {
+    "assetCount": 3355,
+    "rawCount": 3298,
+    "serializedCount": 57,
+    "animationEventCount": 129,
+    "unityEventCount": 19
+  }
+}

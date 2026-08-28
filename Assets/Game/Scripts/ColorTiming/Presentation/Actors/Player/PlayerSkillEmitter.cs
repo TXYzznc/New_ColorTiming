@@ -1,7 +1,6 @@
 using System;
 using ColorTiming.Combat;
 using ColorTiming.Input;
-using ColorTiming.Input.Adapters;
 using ColorTiming.Presentation.Entities;
 using UnityEngine;
 using CombatWeaponType = ColorTiming.Combat.WeaponType;

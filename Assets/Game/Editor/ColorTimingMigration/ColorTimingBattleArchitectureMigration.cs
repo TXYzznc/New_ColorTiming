@@ -9,7 +9,7 @@ using ColorTiming.Input;
 using ColorTiming.Presentation.Audio;
 using ColorTiming.Presentation.Actors;
 using ColorTiming.Presentation.Entities;
-using ColorTiming.Presentation.UI;
+using ColorTiming.Presentation.UI.Contracts;
 using ColorTiming.Settings;
 using UnityEditor;
 using UnityEditor.SceneManagement;

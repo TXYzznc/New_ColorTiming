@@ -1,0 +1,148 @@
+{
+  "passed": true,
+  "scriptRoot": "Assets/Game/Scripts/ColorTiming",
+  "checkedScriptCount": 28,
+  "issues": [],
+  "scripts": [
+    {
+      "path": "Presentation/UI/Forms/BattleHudForm.cs",
+      "guid": "2c65aad324ef23745a46fc57e6b9c791",
+      "namespace": "ColorTiming.Presentation.UI.Forms"
+    },
+    {
+      "path": "Presentation/UI/Forms/BattleTutorialForm.cs",
+      "guid": "7e701e516cd388044937dfe7e8293255",
+      "namespace": "ColorTiming.Presentation.UI.Forms"
+    },
+    {
+      "path": "Presentation/UI/Forms/ColorTimingLoadingForm.cs",
+      "guid": "d40a06f13dae1694a9e06ce3d971b930",
+      "namespace": "ColorTiming.Presentation.UI.Forms"
+    },
+    {
+      "path": "Presentation/UI/Forms/MainMenuForm.cs",
+      "guid": "b9cd36b0d383e7f4487ecb2a57b8b5a2",
+      "namespace": "ColorTiming.Presentation.UI.Forms"
+    },
+    {
+      "path": "Presentation/UI/Forms/PauseMenuForm.cs",
+      "guid": "83e88180789b9614699de8934fb8964d",
+      "namespace": "ColorTiming.Presentation.UI.Forms"
+    },
+    {
+      "path": "Presentation/UI/Forms/BattleResultForm.cs",
+      "guid": "5089c843456c0e64697c28d4a4f662c6",
+      "namespace": "ColorTiming.Presentation.UI.Forms"
+    },
+    {
+      "path": "Presentation/UI/Components/BattlePlayerInfoView.cs",
+      "guid": "10b5e2d63d3a11d4ab1a741699aa88d1",
+      "namespace": "ColorTiming.Presentation.UI.Components"
+    },
+    {
+      "path": "Presentation/UI/Components/Boss1HealthView.cs",
+      "guid": "f1f2a4ac3fd25d54ab848adfe84f581d",
+      "namespace": "ColorTiming.Presentation.UI.Components"
+    },
+    {
+      "path": "Presentation/UI/Components/Boss2HealthView.cs",
+      "guid": "fd7a939aa0a05004ab3d85017ad27c17",
+      "namespace": "ColorTiming.Presentation.UI.Components"
+    },
+    {
+      "path": "Presentation/UI/Components/BossWeaknessPipView.cs",
+      "guid": "3b1b4e0ce86445441b3a77202a892f6e",
+      "namespace": "ColorTiming.Presentation.UI.Components"
+    },
+    {
+      "path": "Presentation/UI/Components/PlayerHealthPipsView.cs",
+      "guid": "96bff7c2db6b2e643a2c57af27ea8def",
+      "namespace": "ColorTiming.Presentation.UI.Components"
+    },
+    {
+      "path": "Presentation/UI/Components/PlayerHealthPipView.cs",
+      "guid": "b6a708d0191e2d143af4c0dcac0a152b",
+      "namespace": "ColorTiming.Presentation.UI.Components"
+    },
+    {
+      "path": "Presentation/UI/Components/UiButtonSoundView.cs",
+      "guid": "3d7b885f386c53c41bf1c8fcdd697dd7",
+      "namespace": "ColorTiming.Presentation.UI.Components"
+    },
+    {
+      "path": "Presentation/UI/Components/UiSoundView.cs",
+      "guid": "934366cbb0b605a4e8d82eae91179bfb",
+      "namespace": "ColorTiming.Presentation.UI.Components"
+    },
+    {
+      "path": "Presentation/UI/Components/MainMenuIntroSequence.cs",
+      "guid": "d43edb29e88b0f544833b5bbb54d0669",
+      "namespace": "ColorTiming.Presentation.UI.Components"
+    },
+    {
+      "path": "Presentation/UI/Presenters/BattleHudPresentation.cs",
+      "guid": "79705b77bc0647746a2da8f0c44c5cf0",
+      "namespace": "ColorTiming.Presentation.UI.Presenters"
+    },
+    {
+      "path": "Presentation/UI/Models/BattlePresentationResult.cs",
+      "guid": "c434c9df05de411cbb5021d6198c4d2d",
+      "namespace": "ColorTiming.Presentation.UI.Models"
+    },
+    {
+      "path": "Presentation/UI/Models/WeaponPresentationState.cs",
+      "guid": "f4b3bfdfb33d54e47a39f5966990a51f",
+      "namespace": "ColorTiming.Presentation.UI.Models"
+    },
+    {
+      "path": "Presentation/UI/Contracts/IColorTimingUiService.cs",
+      "guid": "7642d8b4c74a42a6ac17560b9adab0d9",
+      "namespace": "ColorTiming.Presentation.UI.Contracts"
+    },
+    {
+      "path": "Presentation/UI/Contracts/IPlayerDamageSignal.cs",
+      "guid": "d265887703884d25a75dbac00d0a94cc",
+      "namespace": "ColorTiming.Presentation.UI.Contracts"
+    },
+    {
+      "path": "Infrastructure/GF/UI/GfColorTimingUiService.cs",
+      "guid": "d008de7b02b840bc84abb66e36deec8e",
+      "namespace": "ColorTiming.Infrastructure.GF.UI"
+    },
+    {
+      "path": "Infrastructure/GF/Audio/GfColorTimingSoundService.cs",
+      "guid": "9012c53b53c545f599fbd641550a64d4",
+      "namespace": "ColorTiming.Infrastructure.GF.Audio"
+    },
+    {
+      "path": "Infrastructure/GF/Entity/GfTransientEntityService.cs",
+      "guid": "120e3a578f9543599f911411f4ec67ef",
+      "namespace": "ColorTiming.Infrastructure.GF.Entity"
+    },
+    {
+      "path": "Infrastructure/GF/Settings/GfColorTimingSettings.cs",
+      "guid": "3fcb46c7e3a546c59d35521144086294",
+      "namespace": "ColorTiming.Infrastructure.GF.Settings"
+    },
+    {
+      "path": "Infrastructure/Unity/Input/LegacyGameInputAdapter.cs",
+      "guid": "900540d9b9ac9a84aaf7183e438a1603",
+      "namespace": "ColorTiming.Infrastructure.Unity.Input"
+    },
+    {
+      "path": "Infrastructure/Unity/Input/GameplayPointerWorldAdapter.cs",
+      "guid": "e5409a4cb1f5a1a4d9cadb105d260137",
+      "namespace": "ColorTiming.Infrastructure.Unity.Input"
+    },
+    {
+      "path": "Infrastructure/Unity/Time/UnityGameTimeAdapter.cs",
+      "guid": "69f4ff2e114f448f9530e47fa3d45d27",
+      "namespace": "ColorTiming.Infrastructure.Unity.Time"
+    },
+    {
+      "path": "Presentation/Camera/ColorTimingUrpCameraStack.cs",
+      "guid": "271cbebbd1c179f40a612ffe0c3ae61b",
+      "namespace": "ColorTiming.Presentation.Camera"
+    }
+  ]
+}

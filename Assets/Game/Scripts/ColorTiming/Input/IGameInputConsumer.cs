@@ -7,7 +7,7 @@ namespace ColorTiming.Input
 
     public interface IGameplayPointerConsumer
     {
-        void BindGameplayPointer(Adapters.IGameplayPointerWorld pointerWorld);
+        void BindGameplayPointer(IGameplayPointerWorld pointerWorld);
     }
 
     public interface IGameplayCameraConsumer

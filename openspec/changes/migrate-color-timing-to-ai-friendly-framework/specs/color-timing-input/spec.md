@@ -4,7 +4,7 @@
 All ColorTiming gameplay and UI application code SHALL consume `IGameInput` or narrower semantic interfaces, and direct `UnityEngine.Input` calls SHALL exist only inside the selected Unity input adapter.
 
 #### Scenario: Static input boundary audit
-- **WHEN** project code outside `Assets/Game/Scripts/ColorTiming/Input/Adapters/` is scanned
+- **WHEN** project code outside `Assets/Game/Scripts/ColorTiming/Infrastructure/Unity/Input/` is scanned
 - **THEN** it contains no direct calls to `Input.GetAxis`, `Input.GetAxisRaw`, `Input.GetButton`, `Input.GetButtonDown`, `Input.GetKey`, `Input.GetKeyDown`, `Input.mousePosition` or `Input.anyKeyDown`
 
 ### Requirement: Existing control semantics are preserved
@@ -47,4 +47,3 @@ Input API selection SHALL be isolated behind the semantic contract; changing fro
 #### Scenario: Test adapter drives player logic
 - **WHEN** an EditMode or PlayMode test supplies a deterministic fake `IGameInput`
 - **THEN** the same player and flow logic responds without accessing hardware input
-

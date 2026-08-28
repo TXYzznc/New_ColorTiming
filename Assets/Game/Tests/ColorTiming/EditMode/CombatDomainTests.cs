@@ -1,7 +1,8 @@
 using System.Linq;
 using ColorTiming.Combat;
-using ColorTiming.Presentation.UI;
+using ColorTiming.Infrastructure.GF.Audio;
 using ColorTiming.Presentation.Audio;
+using ColorTiming.Presentation.UI.Models;
 using NUnit.Framework;
 using CombatWeaponType = ColorTiming.Combat.WeaponType;
 

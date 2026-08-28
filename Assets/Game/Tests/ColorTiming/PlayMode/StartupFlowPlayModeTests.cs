@@ -1,5 +1,5 @@
 using System.Collections;
-using ColorTiming.Input.Adapters;
+using ColorTiming.Infrastructure.Unity.Input;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.SceneManagement;

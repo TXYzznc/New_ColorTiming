@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Linq;
 using System.Reflection;
+using ColorTiming.Presentation.UI.Components;
+using ColorTiming.Presentation.UI.Forms;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.SceneManagement;

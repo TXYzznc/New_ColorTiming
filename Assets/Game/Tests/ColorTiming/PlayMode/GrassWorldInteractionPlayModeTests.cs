@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using ColorTiming.Presentation.Audio;
+using ColorTiming.Presentation.UI.Components;
+using ColorTiming.Presentation.UI.Forms;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.SceneManagement;
