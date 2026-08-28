@@ -1,3 +1,6 @@
+// 文件职责：定义 战斗场景锚点，承担 Bootstrap 模块中的对应职责。
+// 所属模块：ColorTiming / Bootstrap。
+
 using System;
 using ColorTiming.Presentation.Audio;
 using UnityEngine;
@@ -31,6 +34,7 @@ namespace ColorTiming.Bootstrap
         public MonoBehaviour[] ExplicitBindings => explicitBindings;
         public SoundCue[] SoundCues => soundCues;
 
+        // 执行Validate对应的主要流程。
         public void Validate(bool expectBoss1)
         {
             if (hero == null) throw new InvalidOperationException("BattleSceneAnchors requires one PlayerActorView.");

@@ -1,3 +1,5 @@
+// 文件职责：定义 StaticUIComponent，承担 Extension 模块中的对应职责。
+// 所属模块：Extension。
 
 using UnityEngine;
 using UnityGameFramework.Runtime;
@@ -11,6 +13,7 @@ public class StaticUIComponent : GameFrameworkComponent
     [SerializeField] GameObject joystickView = null;
     public GameObject JoystickView => joystickView;
 
+    // 在首帧启动依赖就绪后的业务或表现流程。
     private void Start()
     {
         UpdateCanvasScaler();
@@ -31,6 +34,7 @@ public class StaticUIComponent : GameFrameworkComponent
         }
     }
 
+    // 根据当前状态更新CanvasScaler。
     public void UpdateCanvasScaler()
     {
         var uiRootCanvas = GFBuiltin.RootCanvas;

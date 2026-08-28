@@ -1,3 +1,6 @@
+// 文件职责：提供热更程序集的统一初始化入口；当前也作为项目脚本启动边界。
+// 所属模块：Scripts 根模块。
+
 using System;
 using GameFramework;
 using GameFramework.Fsm;
@@ -12,6 +15,7 @@ using UnityGameFramework.Runtime;
 public static class HotfixEntry
 {
     // Framework callback adapter: exceptions are handled locally and reported to the framework log.
+    // 启动项目脚本入口并注册业务流程。
     public static async void StartHotfixLogic(bool enableHotfix)
     {
         try

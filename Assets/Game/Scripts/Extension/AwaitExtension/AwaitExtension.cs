@@ -1,3 +1,6 @@
+// 文件职责：将 GF 资源、场景、下载和网络操作转换为可等待任务。
+// 所属模块：Extension / AwaitExtension。
+
 using System;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
@@ -24,6 +27,7 @@ public static class AwaitExtension
     private static bool isSubscribeEvent = false;
 #endif
 
+    // 订阅完成当前流程所需的框架事件。
     public static void SubscribeEvent()
     {
         GFBuiltin.Event.Subscribe(OpenUIFormSuccessEventArgs.EventId, OnOpenUIFormSuccess);
@@ -104,6 +108,7 @@ public static class AwaitExtension
     }
 
 
+    // 响应Load数据数据表成功回调，并更新本对象状态。
     private static void OnLoadDataTableSuccess(object sender, GameEventArgs e)
     {
         var ne = (LoadDataTableSuccessEventArgs)e;
@@ -116,6 +121,7 @@ public static class AwaitExtension
         }
     }
 
+    // 响应Load数据数据表失败回调，并更新本对象状态。
     private static void OnLoadDataTableFailure(object sender, GameEventArgs e)
     {
         var ne = (LoadDataTableFailureEventArgs)e;
@@ -142,6 +148,7 @@ public static class AwaitExtension
         return tcs.Task;
     }
 
+    // 响应OpenUI表单成功回调，并更新本对象状态。
     private static void OnOpenUIFormSuccess(object sender, GameEventArgs e)
     {
         OpenUIFormSuccessEventArgs ne = (OpenUIFormSuccessEventArgs)e;
@@ -153,6 +160,7 @@ public static class AwaitExtension
         }
     }
 
+    // 响应OpenUI表单失败回调，并更新本对象状态。
     private static void OnOpenUIFormFailure(object sender, GameEventArgs e)
     {
         OpenUIFormFailureEventArgs ne = (OpenUIFormFailureEventArgs)e;
@@ -187,6 +195,7 @@ public static class AwaitExtension
     }
 
 
+    // 响应Show实体成功回调，并更新本对象状态。
     private static void OnShowEntitySuccess(object sender, GameEventArgs e)
     {
         ShowEntitySuccessEventArgs ne = (ShowEntitySuccessEventArgs)e;
@@ -198,6 +207,7 @@ public static class AwaitExtension
         }
     }
 
+    // 响应Show实体失败回调，并更新本对象状态。
     private static void OnShowEntityFailure(object sender, GameEventArgs e)
     {
         ShowEntityFailureEventArgs ne = (ShowEntityFailureEventArgs)e;
@@ -240,6 +250,7 @@ public static class AwaitExtension
         return await tcs.Task;
     }
 
+    // 响应Load场景成功回调，并更新本对象状态。
     private static void OnLoadSceneSuccess(object sender, GameEventArgs e)
     {
         LoadSceneSuccessEventArgs ne = (LoadSceneSuccessEventArgs)e;
@@ -251,6 +262,7 @@ public static class AwaitExtension
         }
     }
 
+    // 响应Load场景失败回调，并更新本对象状态。
     private static void OnLoadSceneFailure(object sender, GameEventArgs e)
     {
         LoadSceneFailureEventArgs ne = (LoadSceneFailureEventArgs)e;
@@ -291,6 +303,7 @@ public static class AwaitExtension
         }
         return await tcs.Task;
     }
+    // 响应Unload场景成功回调，并更新本对象状态。
     private static void OnUnloadSceneSuccess(object sender, GameEventArgs e)
     {
         UnloadSceneSuccessEventArgs ne = (UnloadSceneSuccessEventArgs)e;
@@ -302,6 +315,7 @@ public static class AwaitExtension
         }
     }
 
+    // 响应Unload场景失败回调，并更新本对象状态。
     private static void OnUnloadSceneFailure(object sender, GameEventArgs e)
     {
         UnloadSceneFailureEventArgs ne = (UnloadSceneFailureEventArgs)e;
@@ -412,6 +426,7 @@ public static class AwaitExtension
         return tsc.Task;
     }
 
+    // 响应Web请求成功回调，并更新本对象状态。
     private static void OnWebRequestSuccess(object sender, GameEventArgs e)
     {
         WebRequestSuccessEventArgs ne = (WebRequestSuccessEventArgs)e;
@@ -439,6 +454,7 @@ public static class AwaitExtension
         }
     }
 
+    // 响应Web请求失败回调，并更新本对象状态。
     private static void OnWebRequestFailure(object sender, GameEventArgs e)
     {
         WebRequestFailureEventArgs ne = (WebRequestFailureEventArgs)e;
@@ -483,6 +499,7 @@ public static class AwaitExtension
         return tcs.Task;
     }
 
+    // 响应下载成功回调，并更新本对象状态。
     private static void OnDownloadSuccess(object sender, GameEventArgs e)
     {
         DownloadSuccessEventArgs ne = (DownloadSuccessEventArgs)e;
@@ -509,6 +526,7 @@ public static class AwaitExtension
         }
     }
 
+    // 响应下载失败回调，并更新本对象状态。
     private static void OnDownloadFailure(object sender, GameEventArgs e)
     {
         DownloadFailureEventArgs ne = (DownloadFailureEventArgs)e;

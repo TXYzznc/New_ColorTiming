@@ -1,3 +1,6 @@
+// 文件职责：定义 GfColorTiming设置，承担 设置 模块中的对应职责。
+// 所属模块：ColorTiming / Infrastructure / GF / Settings。
+
 using System;
 using ColorTiming.Settings;
 
@@ -36,6 +39,7 @@ namespace ColorTiming.Infrastructure.GF.Settings
             }
         }
 
+        // 设置音效Enabled，并使后续流程使用最新状态。
         void SetSoundEnabled(bool enabled, params Const.SoundGroup[] groups)
         {
             RequireSetting();

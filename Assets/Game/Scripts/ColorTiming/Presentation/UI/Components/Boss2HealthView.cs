@@ -1,3 +1,6 @@
+// 文件职责：负责 Boss2生命值 的场景或界面表现。
+// 所属模块：ColorTiming / Presentation / UI / Components。
+
 using System.Collections;
 using System.Collections.Generic;
 using ColorTiming.Application.Battle;
@@ -14,10 +17,12 @@ public class Boss2HealthView : MonoBehaviour
     public BattleSession Session => session;
 
     int cCount;
+    // 缓存本组件依赖，并完成不依赖外部服务的本地初始化。
     private void Awake()
     {
     }
 
+    // 执行Bind对应的主要流程。
     public void Bind(BattleSession battleSession)
     {
         if (session == battleSession && items.Count > 0) return;
@@ -42,12 +47,14 @@ public class Boss2HealthView : MonoBehaviour
     }
 
     int lastWeaknessCount = -1;
+    // 响应快照变化回调，并更新本对象状态。
     void OnSnapshotChanged(BattleSnapshot snapshot)
     {
         if (snapshot.Weaknesses.Count == lastWeaknessCount) return;
         SetHPBox(snapshot);
     }
 
+    // 设置HPBox，并使后续流程使用最新状态。
     void SetHPBox(BattleSnapshot snapshot)
     {
         if (session == null) return;
@@ -89,6 +96,7 @@ public class Boss2HealthView : MonoBehaviour
         }
     }
 
+    // 组件销毁时释放订阅、句柄和运行时资源。
     private void OnDestroy()
     {
         if (session != null) session.SnapshotChanged -= OnSnapshotChanged;

@@ -1,3 +1,6 @@
+// 文件职责：协调单场战斗的生命周期、领域状态和展示快照。
+// 所属模块：ColorTiming / Application / Battle。
+
 using System;
 using ColorTiming.Bosses.Boss2;
 using ColorTiming.Combat;
@@ -18,6 +21,7 @@ namespace ColorTiming.Application.Battle
         private bool disposed;
         private bool tailActive;
 
+        // 初始化战斗会话实例及其核心依赖。
         public BattleSession(BattleKind kind, IRandomSource random, int playerMaximumHealth = 5)
         {
             if (random == null) throw new ArgumentNullException(nameof(random));
@@ -43,12 +47,14 @@ namespace ColorTiming.Application.Battle
         public event Action<BattleSnapshot> SnapshotChanged;
         public event Action<BattlePresentationEvent> PresentationRequested;
 
+        // 按当前时间步推进核心状态，并发布必要的状态变化。
         public void Tick(float deltaTime)
         {
             EnsureRunningOrPaused();
             if (Lifecycle == BattleLifecycle.Running) PlayerActions.Tick(deltaTime);
         }
 
+        // 设置暂停状态，并使后续流程使用最新状态。
         public void SetPaused(bool paused)
         {
             EnsureMutable();
@@ -59,18 +65,21 @@ namespace ColorTiming.Application.Battle
             PublishSnapshot();
         }
 
+        // 设置移动输入，并使后续流程使用最新状态。
         public void SetMove(float x, float y)
         {
             EnsureMutable();
             if (Lifecycle == BattleLifecycle.Running) PlayerActions.SetMove(x, y);
         }
 
+        // 设置技能移动状态，并使后续流程使用最新状态。
         public void SetSkillMoving(bool active)
         {
             EnsureMutable();
             if (!IsTerminal) PlayerActions.SetSkillMoving(active);
         }
 
+        // 设置Hit动画激活状态，并使后续流程使用最新状态。
         public void SetHitAnimationActive(bool active)
         {
             EnsureMutable();
@@ -78,6 +87,7 @@ namespace ColorTiming.Application.Battle
             else PlayerActions.EndHit();
         }
 
+        // 尝试开始冲刺，并通过返回值报告是否成功。
         public bool TryBeginDash()
         {
             EnsureMutable();
@@ -86,6 +96,7 @@ namespace ColorTiming.Application.Battle
             return true;
         }
 
+        // 执行结束冲刺对应的主要流程。
         public void EndDash()
         {
             EnsureMutable();
@@ -94,18 +105,21 @@ namespace ColorTiming.Application.Battle
             if (before != PlayerActions.State) PublishSnapshot();
         }
 
+        // 设置冲刺无敌状态，并使后续流程使用最新状态。
         public void SetDashInvulnerable(bool active)
         {
             EnsureMutable();
             PlayerActions.SetDashInvulnerable(active);
         }
 
+        // 设置动画无敌状态，并使后续流程使用最新状态。
         public void SetAnimationInvulnerable(bool active)
         {
             EnsureMutable();
             PlayerActions.SetAnimationInvulnerable(active);
         }
 
+        // 尝试开始攻击，并通过返回值报告是否成功。
         public bool TryBeginAttack()
         {
             EnsureMutable();
@@ -114,6 +128,7 @@ namespace ColorTiming.Application.Battle
             return true;
         }
 
+        // 执行结束攻击对应的主要流程。
         public void EndAttack()
         {
             EnsureMutable();
@@ -122,24 +137,28 @@ namespace ColorTiming.Application.Battle
             if (before != PlayerActions.State) PublishSnapshot();
         }
 
+        // 尝试拾取，并通过返回值报告是否成功。
         public bool TryPickup(WeaponIdentity weapon)
         {
             EnsureMutable();
             return Lifecycle == BattleLifecycle.Running && Inventory.TryPickup(weapon);
         }
 
+        // 尝试丢弃，并通过返回值报告是否成功。
         public bool TryDrop(out WeaponIdentity weapon)
         {
             EnsureMutable();
             return Inventory.TryDrop(out weapon);
         }
 
+        // 执行Consume攻击武器对应的主要流程。
         public bool ConsumeAttackWeapon(out WeaponIdentity weapon)
         {
             EnsureMutable();
             return Inventory.ConsumeAttackWeapon(out weapon);
         }
 
+        // 把当前规则或配置应用到玩家伤害。
         public PlayerDamageResolution ApplyPlayerDamage(BattleDamage damage)
         {
             EnsureMutable();
@@ -160,6 +179,7 @@ namespace ColorTiming.Application.Battle
             return resolution;
         }
 
+        // 解析成功冲刺并返回可供上层使用的结果。
         public int ResolveSuccessfulDash()
         {
             EnsureMutable();
@@ -173,6 +193,7 @@ namespace ColorTiming.Application.Battle
             return healed;
         }
 
+        // 把当前规则或配置应用到Boss伤害。
         public BossDamageResolution ApplyBossDamage(BattleDamage damage)
         {
             EnsureMutable();
@@ -196,6 +217,7 @@ namespace ColorTiming.Application.Battle
             return resolution;
         }
 
+        // 设置BossDamageable，并使后续流程使用最新状态。
         public void SetBossDamageable(bool damageable)
         {
             EnsureMutable();
@@ -204,6 +226,7 @@ namespace ColorTiming.Application.Battle
             PublishSnapshot();
         }
 
+        // 释放本对象持有的订阅、服务和临时资源。
         public void Dispose()
         {
             if (disposed) return;
@@ -217,6 +240,7 @@ namespace ColorTiming.Application.Battle
 
         private bool IsTerminal => Lifecycle == BattleLifecycle.Victory || Lifecycle == BattleLifecycle.Defeat;
 
+        // 响应武器变化回调，并更新本对象状态。
         private void OnWeaponChanged(WeaponIdentity weapon)
         {
             PresentationRequested?.Invoke(new BattlePresentationEvent(BattlePresentationEventKind.PlayerWeaponChanged, weapon.Color));
@@ -229,6 +253,7 @@ namespace ColorTiming.Application.Battle
             if (notify) SnapshotChanged?.Invoke(Snapshot);
         }
 
+        // 根据当前配置构建快照。
         private BattleSnapshot BuildSnapshot()
         {
             return new BattleSnapshot(

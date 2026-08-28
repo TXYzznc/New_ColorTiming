@@ -1,3 +1,6 @@
+// 文件职责：实现 战斗Tutorial GF.UI 表单及其交互生命周期。
+// 所属模块：ColorTiming / Presentation / UI / Forms。
+
 using System;
 using System.Collections.Generic;
 using ColorTiming.Application.Battle;
@@ -27,6 +30,7 @@ namespace ColorTiming.Presentation.UI.Forms
         private IDisposable pauseLease;
         private float earliestDismissTime;
 
+        // 绑定运行时依赖或事件监听。
         public void BindRuntime(BattleSession runtimeSession, IGameInput input, IGameTime time, IColorTimingSettings projectSettings)
         {
             if (session != null)
@@ -43,6 +47,7 @@ namespace ColorTiming.Presentation.UI.Forms
             if (tipContent != null) tipContent.SetActive(false);
         }
 
+        // 在 GF UI 表单关闭时停止流程并清理临时状态。
         protected override void OnClose(bool isShutdown, object userData)
         {
             if (session != null) session.SnapshotChanged -= OnSnapshotChanged;
@@ -52,6 +57,7 @@ namespace ColorTiming.Presentation.UI.Forms
             base.OnClose(isShutdown, userData);
         }
 
+        // 逐帧推进需要实时刷新的业务或表现状态。
         private void Update()
         {
             if (gameInput == null || tipContent == null || !tipContent.activeSelf || Time.unscaledTime < earliestDismissTime)
@@ -66,6 +72,7 @@ namespace ColorTiming.Presentation.UI.Forms
             }
         }
 
+        // 响应快照变化回调，并更新本对象状态。
         private void OnSnapshotChanged(BattleSnapshot snapshot)
         {
             if (snapshot.Weapon.Equals(lastWeapon)) return;
@@ -90,6 +97,7 @@ namespace ColorTiming.Presentation.UI.Forms
             pauseLease = gameTime.Acquire(0f);
         }
 
+        // 释放暂停及其临时资源。
         private void ReleasePause()
         {
             pauseLease?.Dispose();

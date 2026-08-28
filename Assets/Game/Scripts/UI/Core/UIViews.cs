@@ -1,3 +1,6 @@
+// 文件职责：定义 UIViews，承担 Core 模块中的对应职责。
+// 所属模块：UI / Core。
+
 /**此代码由工具自动生成,请勿手动修改!**/
 #if ENABLE_OBFUZ
 [Obfuz.ObfuzIgnore]

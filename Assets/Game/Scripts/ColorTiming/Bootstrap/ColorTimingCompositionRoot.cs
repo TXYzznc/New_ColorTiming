@@ -1,3 +1,6 @@
+// 文件职责：集中创建、注入和释放 ColorTiming 运行时服务。
+// 所属模块：ColorTiming / Bootstrap。
+
 using System;
 using System.Linq;
 using ColorTiming.Bootstrap.Flow;
@@ -36,6 +39,7 @@ namespace ColorTiming.Bootstrap
         private bool initialized;
         private bool disposed;
 
+        // 初始化ColorTimingCompositionRoot实例及其核心依赖。
         public ColorTimingCompositionRoot(Action<ColorTimingSceneId> beginSceneTransition)
         {
             sceneFlow = new ColorTimingSceneFlow(
@@ -46,6 +50,7 @@ namespace ColorTiming.Bootstrap
         public IGameInput GameInput => gameInput;
         public IGameTime GameTime => gameTime;
 
+        // 执行Initialize对应的主要流程。
         public void Initialize()
         {
             ThrowIfDisposed();
@@ -67,6 +72,7 @@ namespace ColorTiming.Bootstrap
             initialized = true;
         }
 
+        // 绑定场景依赖或事件监听。
         internal void BindScene(Scene scene, ColorTimingSceneId sceneId)
         {
             ThrowIfDisposed();
@@ -90,24 +96,28 @@ namespace ColorTiming.Bootstrap
             }
         }
 
+        // 执行完成场景Transition对应的主要流程。
         internal void CompleteSceneTransition(ColorTimingSceneId scene)
         {
             ThrowIfDisposed();
             sceneFlow.CompleteTransition(scene);
         }
 
+        // 执行Report场景Transition进度对应的主要流程。
         internal void ReportSceneTransitionProgress(float progress)
         {
             ThrowIfDisposed();
             sceneFlow.ReportTransitionProgress(progress);
         }
 
+        // 执行失败场景Transition对应的主要流程。
         internal void FailSceneTransition(ColorTimingSceneId scene, string errorMessage)
         {
             ThrowIfDisposed();
             sceneFlow.FailTransition(scene, errorMessage);
         }
 
+        // 释放本对象持有的订阅、服务和临时资源。
         public void Dispose()
         {
             if (disposed)
@@ -140,6 +150,7 @@ namespace ColorTiming.Bootstrap
             sceneFlow.Dispose();
         }
 
+        // 响应TransitionStarted回调，并更新本对象状态。
         private void OnTransitionStarted(ColorTimingSceneId scene)
         {
             // GF.Entity recycles hidden objects on its next update. Request cleanup before

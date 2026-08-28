@@ -1,3 +1,6 @@
+// 文件职责：定义 武器生成Policy，承担 玩家 模块中的对应职责。
+// 所属模块：ColorTiming / Domain / Player。
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +14,7 @@ namespace ColorTiming.Player
         private readonly float interval;
         private float remaining;
 
+        // 初始化武器生成Clock实例及其核心依赖。
         public WeaponSpawnClock(float interval)
         {
             if (interval <= 0f)
@@ -21,6 +25,7 @@ namespace ColorTiming.Player
             this.interval = interval;
         }
 
+        // 按当前时间步推进核心状态，并发布必要的状态变化。
         public bool Tick(float deltaTime)
         {
             if (deltaTime < 0f)
@@ -52,6 +57,7 @@ namespace ColorTiming.Player
 
     public readonly struct WeaponSpawnDecision
     {
+        // 初始化武器生成Decision实例及其核心依赖。
         public WeaponSpawnDecision(bool shouldSpawn, WeaponIdentity weapon)
         {
             ShouldSpawn = shouldSpawn;
@@ -69,6 +75,7 @@ namespace ColorTiming.Player
         private readonly int activeLimit;
         private readonly int guaranteeThreshold;
 
+        // 初始化武器生成Policy实例及其核心依赖。
         public WeaponSpawnPolicy(
             IEnumerable<WeaponColor> allowedColors,
             IEnumerable<CombatWeaponType> allowedTypes,
@@ -92,6 +99,7 @@ namespace ColorTiming.Player
             this.guaranteeThreshold = guaranteeThreshold;
         }
 
+        // 执行Boss1对应的主要流程。
         public static WeaponSpawnPolicy Boss1(int activeLimit = 5)
         {
             return new WeaponSpawnPolicy(
@@ -100,6 +108,7 @@ namespace ColorTiming.Player
                 activeLimit);
         }
 
+        // 执行Boss2对应的主要流程。
         public static WeaponSpawnPolicy Boss2(int activeLimit = 10)
         {
             return new WeaponSpawnPolicy(
@@ -108,6 +117,7 @@ namespace ColorTiming.Player
                 activeLimit);
         }
 
+        // 执行Decide对应的主要流程。
         public WeaponSpawnDecision Decide(
             IReadOnlyCollection<WeaponColor> activeColors,
             WeaponColor currentWeakness,

@@ -1,3 +1,6 @@
+// 文件职责：定义 ColorTimingUrp相机Stack，承担 相机 模块中的对应职责。
+// 所属模块：ColorTiming / Presentation / Camera。
+
 using System.Linq;
 using ColorTiming.Bootstrap.Flow;
 using UnityEngine;
@@ -12,6 +15,7 @@ namespace ColorTiming.Presentation.Camera
     /// </summary>
     internal static class ColorTimingUrpCameraStack
     {
+        // 执行Configure对应的主要流程。
         public static void Configure(Scene scene, ColorTimingSceneId sceneId)
         {
             var uiCamera = GFBuiltin.UICamera;
@@ -41,6 +45,7 @@ namespace ColorTiming.Presentation.Camera
             gameplayData.cameraStack.Add(uiCamera);
         }
 
+        // 恢复组件的默认配置或初始运行状态。
         public static void Reset()
         {
             var uiCamera = GFBuiltin.UICamera;

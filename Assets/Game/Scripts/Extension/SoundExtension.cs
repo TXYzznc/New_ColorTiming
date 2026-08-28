@@ -1,3 +1,6 @@
+// 文件职责：提供 音效 相关的通用扩展方法。
+// 所属模块：Extension。
+
 using GameFramework;
 using UnityEngine;
 using UnityGameFramework.Runtime;
@@ -8,6 +11,7 @@ public static class SoundExtension
     /// Play a non-positional sound effect through the framework's default sound group.
     /// The framework does not provide any sound assets; callers supply a project asset name.
     /// </summary>
+    // 播放效果对应的动画、音频或表现。
     public static int PlayEffect(this SoundComponent soundComponent, string name, string groupName = null)
     {
         return soundComponent.PlayEffect(name, Vector3.zero, groupName);
@@ -17,6 +21,7 @@ public static class SoundExtension
     /// Play a positional sound effect through a configured sound group.
     /// Missing configuration or assets are reported and ignored safely.
     /// </summary>
+    // 播放效果对应的动画、音频或表现。
     public static int PlayEffect(this SoundComponent soundComponent, string name, Vector3 worldPosition, string groupName = null)
     {
         if (soundComponent == null || string.IsNullOrWhiteSpace(name))
@@ -38,6 +43,7 @@ public static class SoundExtension
         return soundComponent.PlaySound(name, groupName, worldPosition);
     }
 
+    // 播放音效对应的动画、音频或表现。
     public static int PlaySound(
         this SoundComponent soundComponent,
         string name,

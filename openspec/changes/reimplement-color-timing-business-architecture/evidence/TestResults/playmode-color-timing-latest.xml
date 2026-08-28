@@ -1,24 +1,24 @@
-<?xml version="1.0" encoding="utf-8"?>
-<test-suite type="TestSuite" id="1032" name="GameDesinger" fullname="GameDesinger" runstate="Runnable" testcasecount="15" result="Passed" start-time="2026-08-28 04:01:39Z" end-time="2026-08-28 04:03:03Z" duration="84.809837" total="15" passed="15" failed="0" inconclusive="0" skipped="0" asserts="0">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<test-suite type="TestSuite" id="1032" name="GameDesinger" fullname="GameDesinger" runstate="Runnable" testcasecount="15" result="Passed" start-time="2026-08-28 06:53:11Z" end-time="2026-08-28 06:54:37Z" duration="85.935261" total="15" passed="15" failed="0" inconclusive="0" skipped="0" asserts="0">
   <properties>
     <property name="platform" value="PlayMode" />
   </properties>
-  <test-suite type="Assembly" id="1026" name="ColorTiming.PlayMode.Tests.dll" fullname="D:/unity/UnityProject/ColorTimeing/New/_ColorTiming/Library/ScriptAssemblies/ColorTiming.PlayMode.Tests.dll" runstate="Runnable" testcasecount="15" result="Passed" start-time="2026-08-28 04:01:39Z" end-time="2026-08-28 04:03:03Z" duration="84.802315" total="15" passed="15" failed="0" inconclusive="0" skipped="0" asserts="0">
+  <test-suite type="Assembly" id="1026" name="ColorTiming.PlayMode.Tests.dll" fullname="D:/unity/UnityProject/ColorTimeing/New/_ColorTiming/Library/ScriptAssemblies/ColorTiming.PlayMode.Tests.dll" runstate="Runnable" testcasecount="15" result="Passed" start-time="2026-08-28 06:53:11Z" end-time="2026-08-28 06:54:37Z" duration="85.928434" total="15" passed="15" failed="0" inconclusive="0" skipped="0" asserts="0">
     <properties>
       <property name="_PID" value="76392" />
       <property name="_APPDOMAIN" value="Unity Child Domain" />
       <property name="platform" value="PlayMode" />
       <property name="EditorOnly" value="False" />
     </properties>
-    <test-suite type="TestSuite" id="1027" name="ColorTiming" fullname="ColorTiming" runstate="Runnable" testcasecount="15" result="Passed" start-time="2026-08-28 04:01:39Z" end-time="2026-08-28 04:03:03Z" duration="84.786416" total="15" passed="15" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <test-suite type="TestSuite" id="1027" name="ColorTiming" fullname="ColorTiming" runstate="Runnable" testcasecount="15" result="Passed" start-time="2026-08-28 06:53:11Z" end-time="2026-08-28 06:54:37Z" duration="85.913258" total="15" passed="15" failed="0" inconclusive="0" skipped="0" asserts="0">
       <properties />
-      <test-suite type="TestSuite" id="1028" name="Tests" fullname="ColorTiming.Tests" runstate="Runnable" testcasecount="15" result="Passed" start-time="2026-08-28 04:01:39Z" end-time="2026-08-28 04:03:03Z" duration="84.770576" total="15" passed="15" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <test-suite type="TestSuite" id="1028" name="Tests" fullname="ColorTiming.Tests" runstate="Runnable" testcasecount="15" result="Passed" start-time="2026-08-28 06:53:11Z" end-time="2026-08-28 06:54:37Z" duration="85.896634" total="15" passed="15" failed="0" inconclusive="0" skipped="0" asserts="0">
         <properties />
-        <test-suite type="TestSuite" id="1029" name="PlayMode" fullname="ColorTiming.Tests.PlayMode" runstate="Runnable" testcasecount="15" result="Passed" start-time="2026-08-28 04:01:39Z" end-time="2026-08-28 04:03:03Z" duration="84.749676" total="15" passed="15" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <test-suite type="TestSuite" id="1029" name="PlayMode" fullname="ColorTiming.Tests.PlayMode" runstate="Runnable" testcasecount="15" result="Passed" start-time="2026-08-28 06:53:11Z" end-time="2026-08-28 06:54:37Z" duration="85.880854" total="15" passed="15" failed="0" inconclusive="0" skipped="0" asserts="0">
           <properties />
-          <test-suite type="TestFixture" id="1001" name="BossAttackExecutionPlayModeTests" fullname="ColorTiming.Tests.PlayMode.BossAttackExecutionPlayModeTests" classname="ColorTiming.Tests.PlayMode.BossAttackExecutionPlayModeTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-08-28 04:01:39Z" end-time="2026-08-28 04:02:29Z" duration="50.409653" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <test-suite type="TestFixture" id="1001" name="BossAttackExecutionPlayModeTests" fullname="ColorTiming.Tests.PlayMode.BossAttackExecutionPlayModeTests" classname="ColorTiming.Tests.PlayMode.BossAttackExecutionPlayModeTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-08-28 06:53:11Z" end-time="2026-08-28 06:54:03Z" duration="51.697208" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
             <properties />
-            <test-case id="1002" name="Boss1_AllSixAttacksPlayAndDispatchTheirAuthoredSpineEvents" fullname="ColorTiming.Tests.PlayMode.BossAttackExecutionPlayModeTests.Boss1_AllSixAttacksPlayAndDispatchTheirAuthoredSpineEvents" methodname="Boss1_AllSixAttacksPlayAndDispatchTheirAuthoredSpineEvents" classname="ColorTiming.Tests.PlayMode.BossAttackExecutionPlayModeTests" runstate="Runnable" seed="2146035726" result="Passed" start-time="2026-08-28 04:01:39Z" end-time="2026-08-28 04:02:05Z" duration="26.114672" asserts="0">
+            <test-case id="1002" name="Boss1_AllSixAttacksPlayAndDispatchTheirAuthoredSpineEvents" fullname="ColorTiming.Tests.PlayMode.BossAttackExecutionPlayModeTests.Boss1_AllSixAttacksPlayAndDispatchTheirAuthoredSpineEvents" methodname="Boss1_AllSixAttacksPlayAndDispatchTheirAuthoredSpineEvents" classname="ColorTiming.Tests.PlayMode.BossAttackExecutionPlayModeTests" runstate="Runnable" seed="552443452" result="Passed" start-time="2026-08-28 06:53:11Z" end-time="2026-08-28 06:53:37Z" duration="26.118941" asserts="0">
               <properties>
                 <property name="_JOINTYPE" value="UnityCombinatorial" />
                 <property name="Timeout" value="180000" />
@@ -29,12 +29,12 @@
 <color=#2BD988>----------UI Match:0----------</color>
 <color=#2BD988>进入HybridCLR热更流程! 预加载游戏数据...</color>
 <color=#2BD988>初始化游戏设置. 游戏语言:English,系统语言:ChineseSimplified</color>
-[UnitySkills] [Self-Test] Starting (ProcessJobQueue ticks=139, listener=True)
+[UnitySkills] [Self-Test] Starting (ProcessJobQueue ticks=96, listener=True)
 <color=#2BD988>Framework preload completed. Entering the generic ready state.</color>
 已初始化BOSS血量:11
 ]]></output>
             </test-case>
-            <test-case id="1003" name="Boss2_HeadTailBurrowAndAttackEventsExecuteThroughFrameworkEntities" fullname="ColorTiming.Tests.PlayMode.BossAttackExecutionPlayModeTests.Boss2_HeadTailBurrowAndAttackEventsExecuteThroughFrameworkEntities" methodname="Boss2_HeadTailBurrowAndAttackEventsExecuteThroughFrameworkEntities" classname="ColorTiming.Tests.PlayMode.BossAttackExecutionPlayModeTests" runstate="Runnable" seed="1690112972" result="Passed" start-time="2026-08-28 04:02:05Z" end-time="2026-08-28 04:02:29Z" duration="24.276663" asserts="0">
+            <test-case id="1003" name="Boss2_HeadTailBurrowAndAttackEventsExecuteThroughFrameworkEntities" fullname="ColorTiming.Tests.PlayMode.BossAttackExecutionPlayModeTests.Boss2_HeadTailBurrowAndAttackEventsExecuteThroughFrameworkEntities" methodname="Boss2_HeadTailBurrowAndAttackEventsExecuteThroughFrameworkEntities" classname="ColorTiming.Tests.PlayMode.BossAttackExecutionPlayModeTests" runstate="Runnable" seed="1449011077" result="Passed" start-time="2026-08-28 06:53:37Z" end-time="2026-08-28 06:54:03Z" duration="25.559896" asserts="0">
               <properties>
                 <property name="_JOINTYPE" value="UnityCombinatorial" />
                 <property name="Timeout" value="240000" />
@@ -46,9 +46,9 @@
 ]]></output>
             </test-case>
           </test-suite>
-          <test-suite type="TestFixture" id="1004" name="BossRuntimeProgressionPlayModeTests" fullname="ColorTiming.Tests.PlayMode.BossRuntimeProgressionPlayModeTests" classname="ColorTiming.Tests.PlayMode.BossRuntimeProgressionPlayModeTests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-08-28 04:02:29Z" end-time="2026-08-28 04:02:33Z" duration="4.211111" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <test-suite type="TestFixture" id="1004" name="BossRuntimeProgressionPlayModeTests" fullname="ColorTiming.Tests.PlayMode.BossRuntimeProgressionPlayModeTests" classname="ColorTiming.Tests.PlayMode.BossRuntimeProgressionPlayModeTests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-08-28 06:54:03Z" end-time="2026-08-28 06:54:07Z" duration="4.070891" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
             <properties />
-            <test-case id="1005" name="FormalFlow_ConsumesEveryBossColor_ActivatesTailAndShowsFinalResult" fullname="ColorTiming.Tests.PlayMode.BossRuntimeProgressionPlayModeTests.FormalFlow_ConsumesEveryBossColor_ActivatesTailAndShowsFinalResult" methodname="FormalFlow_ConsumesEveryBossColor_ActivatesTailAndShowsFinalResult" classname="ColorTiming.Tests.PlayMode.BossRuntimeProgressionPlayModeTests" runstate="Runnable" seed="1183658431" result="Passed" start-time="2026-08-28 04:02:29Z" end-time="2026-08-28 04:02:33Z" duration="4.168380" asserts="0">
+            <test-case id="1005" name="FormalFlow_ConsumesEveryBossColor_ActivatesTailAndShowsFinalResult" fullname="ColorTiming.Tests.PlayMode.BossRuntimeProgressionPlayModeTests.FormalFlow_ConsumesEveryBossColor_ActivatesTailAndShowsFinalResult" methodname="FormalFlow_ConsumesEveryBossColor_ActivatesTailAndShowsFinalResult" classname="ColorTiming.Tests.PlayMode.BossRuntimeProgressionPlayModeTests" runstate="Runnable" seed="1815100660" result="Passed" start-time="2026-08-28 06:54:03Z" end-time="2026-08-28 06:54:07Z" duration="4.029200" asserts="0">
               <properties>
                 <property name="_JOINTYPE" value="UnityCombinatorial" />
                 <property name="Timeout" value="120000" />
@@ -64,9 +64,9 @@ BOSS 已经死亡，不再处理伤害
 ]]></output>
             </test-case>
           </test-suite>
-          <test-suite type="TestFixture" id="1006" name="CameraRuntimeExecutionPlayModeTests" fullname="ColorTiming.Tests.PlayMode.CameraRuntimeExecutionPlayModeTests" classname="ColorTiming.Tests.PlayMode.CameraRuntimeExecutionPlayModeTests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-08-28 04:02:33Z" end-time="2026-08-28 04:02:35Z" duration="1.792332" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <test-suite type="TestFixture" id="1006" name="CameraRuntimeExecutionPlayModeTests" fullname="ColorTiming.Tests.PlayMode.CameraRuntimeExecutionPlayModeTests" classname="ColorTiming.Tests.PlayMode.CameraRuntimeExecutionPlayModeTests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-08-28 06:54:07Z" end-time="2026-08-28 06:54:09Z" duration="1.715851" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
             <properties />
-            <test-case id="1007" name="Boss1_ParallaxDistanceZoomAndCinemachineRuntimeWiringExecute" fullname="ColorTiming.Tests.PlayMode.CameraRuntimeExecutionPlayModeTests.Boss1_ParallaxDistanceZoomAndCinemachineRuntimeWiringExecute" methodname="Boss1_ParallaxDistanceZoomAndCinemachineRuntimeWiringExecute" classname="ColorTiming.Tests.PlayMode.CameraRuntimeExecutionPlayModeTests" runstate="Runnable" seed="1639159691" result="Passed" start-time="2026-08-28 04:02:33Z" end-time="2026-08-28 04:02:35Z" duration="1.755007" asserts="0">
+            <test-case id="1007" name="Boss1_ParallaxDistanceZoomAndCinemachineRuntimeWiringExecute" fullname="ColorTiming.Tests.PlayMode.CameraRuntimeExecutionPlayModeTests.Boss1_ParallaxDistanceZoomAndCinemachineRuntimeWiringExecute" methodname="Boss1_ParallaxDistanceZoomAndCinemachineRuntimeWiringExecute" classname="ColorTiming.Tests.PlayMode.CameraRuntimeExecutionPlayModeTests" runstate="Runnable" seed="79878123" result="Passed" start-time="2026-08-28 06:54:07Z" end-time="2026-08-28 06:54:09Z" duration="1.678501" asserts="0">
               <properties>
                 <property name="_JOINTYPE" value="UnityCombinatorial" />
                 <property name="Timeout" value="90000" />
@@ -77,9 +77,9 @@ BOSS 已经死亡，不再处理伤害
 ]]></output>
             </test-case>
           </test-suite>
-          <test-suite type="TestFixture" id="1008" name="ColorTimingBattleHudPlayModeTests" fullname="ColorTiming.Tests.PlayMode.ColorTimingBattleHudPlayModeTests" classname="ColorTiming.Tests.PlayMode.ColorTimingBattleHudPlayModeTests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-08-28 04:02:35Z" end-time="2026-08-28 04:02:39Z" duration="3.720549" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <test-suite type="TestFixture" id="1008" name="ColorTimingBattleHudPlayModeTests" fullname="ColorTiming.Tests.PlayMode.ColorTimingBattleHudPlayModeTests" classname="ColorTiming.Tests.PlayMode.ColorTimingBattleHudPlayModeTests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-08-28 06:54:09Z" end-time="2026-08-28 06:54:13Z" duration="3.726852" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
             <properties />
-            <test-case id="1009" name="BattleHud_IsRuntimeOwned_Unique_AndPlayerItemsUseExpectedLayout" fullname="ColorTiming.Tests.PlayMode.ColorTimingBattleHudPlayModeTests.BattleHud_IsRuntimeOwned_Unique_AndPlayerItemsUseExpectedLayout" methodname="BattleHud_IsRuntimeOwned_Unique_AndPlayerItemsUseExpectedLayout" classname="ColorTiming.Tests.PlayMode.ColorTimingBattleHudPlayModeTests" runstate="Runnable" seed="2089114114" result="Passed" start-time="2026-08-28 04:02:35Z" end-time="2026-08-28 04:02:39Z" duration="3.701320" asserts="0">
+            <test-case id="1009" name="BattleHud_IsRuntimeOwned_Unique_AndPlayerItemsUseExpectedLayout" fullname="ColorTiming.Tests.PlayMode.ColorTimingBattleHudPlayModeTests.BattleHud_IsRuntimeOwned_Unique_AndPlayerItemsUseExpectedLayout" methodname="BattleHud_IsRuntimeOwned_Unique_AndPlayerItemsUseExpectedLayout" classname="ColorTiming.Tests.PlayMode.ColorTimingBattleHudPlayModeTests" runstate="Runnable" seed="246156709" result="Passed" start-time="2026-08-28 06:54:09Z" end-time="2026-08-28 06:54:13Z" duration="3.705957" asserts="0">
               <properties>
                 <property name="_JOINTYPE" value="UnityCombinatorial" />
                 <property name="Timeout" value="120000" />
@@ -105,9 +105,9 @@ BOSS 已经死亡，不再处理伤害
 ]]></output>
             </test-case>
           </test-suite>
-          <test-suite type="TestFixture" id="1010" name="ColorTimingUiAndSoundLifecyclePlayModeTests" fullname="ColorTiming.Tests.PlayMode.ColorTimingUiAndSoundLifecyclePlayModeTests" classname="ColorTiming.Tests.PlayMode.ColorTimingUiAndSoundLifecyclePlayModeTests" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-08-28 04:02:39Z" end-time="2026-08-28 04:02:47Z" duration="8.097846" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <test-suite type="TestFixture" id="1010" name="ColorTimingUiAndSoundLifecyclePlayModeTests" fullname="ColorTiming.Tests.PlayMode.ColorTimingUiAndSoundLifecyclePlayModeTests" classname="ColorTiming.Tests.PlayMode.ColorTimingUiAndSoundLifecyclePlayModeTests" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-08-28 06:54:13Z" end-time="2026-08-28 06:54:21Z" duration="8.202101" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
             <properties />
-            <test-case id="1012" name="PauseForm_ReopensAndSceneExitReleasesPauseLease" fullname="ColorTiming.Tests.PlayMode.ColorTimingUiAndSoundLifecyclePlayModeTests.PauseForm_ReopensAndSceneExitReleasesPauseLease" methodname="PauseForm_ReopensAndSceneExitReleasesPauseLease" classname="ColorTiming.Tests.PlayMode.ColorTimingUiAndSoundLifecyclePlayModeTests" runstate="Runnable" seed="771064572" result="Passed" start-time="2026-08-28 04:02:39Z" end-time="2026-08-28 04:02:41Z" duration="2.510365" asserts="0">
+            <test-case id="1012" name="PauseForm_ReopensAndSceneExitReleasesPauseLease" fullname="ColorTiming.Tests.PlayMode.ColorTimingUiAndSoundLifecyclePlayModeTests.PauseForm_ReopensAndSceneExitReleasesPauseLease" methodname="PauseForm_ReopensAndSceneExitReleasesPauseLease" classname="ColorTiming.Tests.PlayMode.ColorTimingUiAndSoundLifecyclePlayModeTests" runstate="Runnable" seed="627747159" result="Passed" start-time="2026-08-28 06:54:13Z" end-time="2026-08-28 06:54:15Z" duration="2.436175" asserts="0">
               <properties>
                 <property name="_JOINTYPE" value="UnityCombinatorial" />
                 <property name="Timeout" value="90000" />
@@ -118,7 +118,7 @@ BOSS 已经死亡，不再处理伤害
 已初始化BOSS血量:15
 ]]></output>
             </test-case>
-            <test-case id="1014" name="SoundGroups_PersistMutePolicyAndResetTrackedSceneSounds" fullname="ColorTiming.Tests.PlayMode.ColorTimingUiAndSoundLifecyclePlayModeTests.SoundGroups_PersistMutePolicyAndResetTrackedSceneSounds" methodname="SoundGroups_PersistMutePolicyAndResetTrackedSceneSounds" classname="ColorTiming.Tests.PlayMode.ColorTimingUiAndSoundLifecyclePlayModeTests" runstate="Runnable" seed="640660856" result="Passed" start-time="2026-08-28 04:02:41Z" end-time="2026-08-28 04:02:41Z" duration="0.125399" asserts="0">
+            <test-case id="1014" name="SoundGroups_PersistMutePolicyAndResetTrackedSceneSounds" fullname="ColorTiming.Tests.PlayMode.ColorTimingUiAndSoundLifecyclePlayModeTests.SoundGroups_PersistMutePolicyAndResetTrackedSceneSounds" methodname="SoundGroups_PersistMutePolicyAndResetTrackedSceneSounds" classname="ColorTiming.Tests.PlayMode.ColorTimingUiAndSoundLifecyclePlayModeTests" runstate="Runnable" seed="1206038570" result="Passed" start-time="2026-08-28 06:54:15Z" end-time="2026-08-28 06:54:15Z" duration="0.283683" asserts="0">
               <properties>
                 <property name="_JOINTYPE" value="UnityCombinatorial" />
                 <property name="Timeout" value="90000" />
@@ -126,7 +126,7 @@ BOSS 已经死亡，不再处理伤害
                 <property name="repeatIteration" value="0" />
               </properties>
             </test-case>
-            <test-case id="1013" name="StartMenuNavigation_AndAllSettingsPersistThroughGfSetting" fullname="ColorTiming.Tests.PlayMode.ColorTimingUiAndSoundLifecyclePlayModeTests.StartMenuNavigation_AndAllSettingsPersistThroughGfSetting" methodname="StartMenuNavigation_AndAllSettingsPersistThroughGfSetting" classname="ColorTiming.Tests.PlayMode.ColorTimingUiAndSoundLifecyclePlayModeTests" runstate="Runnable" seed="1823133292" result="Passed" start-time="2026-08-28 04:02:41Z" end-time="2026-08-28 04:02:42Z" duration="0.100264" asserts="0">
+            <test-case id="1013" name="StartMenuNavigation_AndAllSettingsPersistThroughGfSetting" fullname="ColorTiming.Tests.PlayMode.ColorTimingUiAndSoundLifecyclePlayModeTests.StartMenuNavigation_AndAllSettingsPersistThroughGfSetting" methodname="StartMenuNavigation_AndAllSettingsPersistThroughGfSetting" classname="ColorTiming.Tests.PlayMode.ColorTimingUiAndSoundLifecyclePlayModeTests" runstate="Runnable" seed="1166338227" result="Passed" start-time="2026-08-28 06:54:15Z" end-time="2026-08-28 06:54:15Z" duration="0.098907" asserts="0">
               <properties>
                 <property name="_JOINTYPE" value="UnityCombinatorial" />
                 <property name="Timeout" value="90000" />
@@ -134,7 +134,7 @@ BOSS 已经死亡，不再处理伤害
                 <property name="repeatIteration" value="0" />
               </properties>
             </test-case>
-            <test-case id="1011" name="StartMenuVideo_RendersAndSwitchesFromIntroToLoop" fullname="ColorTiming.Tests.PlayMode.ColorTimingUiAndSoundLifecyclePlayModeTests.StartMenuVideo_RendersAndSwitchesFromIntroToLoop" methodname="StartMenuVideo_RendersAndSwitchesFromIntroToLoop" classname="ColorTiming.Tests.PlayMode.ColorTimingUiAndSoundLifecyclePlayModeTests" runstate="Runnable" seed="1142434640" result="Passed" start-time="2026-08-28 04:02:42Z" end-time="2026-08-28 04:02:47Z" duration="5.342024" asserts="0">
+            <test-case id="1011" name="StartMenuVideo_RendersAndSwitchesFromIntroToLoop" fullname="ColorTiming.Tests.PlayMode.ColorTimingUiAndSoundLifecyclePlayModeTests.StartMenuVideo_RendersAndSwitchesFromIntroToLoop" methodname="StartMenuVideo_RendersAndSwitchesFromIntroToLoop" classname="ColorTiming.Tests.PlayMode.ColorTimingUiAndSoundLifecyclePlayModeTests" runstate="Runnable" seed="305541377" result="Passed" start-time="2026-08-28 06:54:15Z" end-time="2026-08-28 06:54:21Z" duration="5.350886" asserts="0">
               <properties>
                 <property name="_JOINTYPE" value="UnityCombinatorial" />
                 <property name="Timeout" value="90000" />
@@ -143,9 +143,9 @@ BOSS 已经死亡，不再处理伤害
               </properties>
             </test-case>
           </test-suite>
-          <test-suite type="TestFixture" id="1015" name="GrassWorldInteractionPlayModeTests" fullname="ColorTiming.Tests.PlayMode.GrassWorldInteractionPlayModeTests" classname="ColorTiming.Tests.PlayMode.GrassWorldInteractionPlayModeTests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-08-28 04:02:47Z" end-time="2026-08-28 04:02:49Z" duration="1.719128" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <test-suite type="TestFixture" id="1015" name="GrassWorldInteractionPlayModeTests" fullname="ColorTiming.Tests.PlayMode.GrassWorldInteractionPlayModeTests" classname="ColorTiming.Tests.PlayMode.GrassWorldInteractionPlayModeTests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-08-28 06:54:21Z" end-time="2026-08-28 06:54:22Z" duration="1.646876" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
             <properties />
-            <test-case id="1016" name="GrassEnterExit_AnimatesAndSwitchesFrameworkFootstepCueSet" fullname="ColorTiming.Tests.PlayMode.GrassWorldInteractionPlayModeTests.GrassEnterExit_AnimatesAndSwitchesFrameworkFootstepCueSet" methodname="GrassEnterExit_AnimatesAndSwitchesFrameworkFootstepCueSet" classname="ColorTiming.Tests.PlayMode.GrassWorldInteractionPlayModeTests" runstate="Runnable" seed="1788304838" result="Passed" start-time="2026-08-28 04:02:47Z" end-time="2026-08-28 04:02:49Z" duration="1.703770" asserts="0">
+            <test-case id="1016" name="GrassEnterExit_AnimatesAndSwitchesFrameworkFootstepCueSet" fullname="ColorTiming.Tests.PlayMode.GrassWorldInteractionPlayModeTests.GrassEnterExit_AnimatesAndSwitchesFrameworkFootstepCueSet" methodname="GrassEnterExit_AnimatesAndSwitchesFrameworkFootstepCueSet" classname="ColorTiming.Tests.PlayMode.GrassWorldInteractionPlayModeTests" runstate="Runnable" seed="1919592906" result="Passed" start-time="2026-08-28 06:54:21Z" end-time="2026-08-28 06:54:22Z" duration="1.630121" asserts="0">
               <properties>
                 <property name="_JOINTYPE" value="UnityCombinatorial" />
                 <property name="Timeout" value="90000" />
@@ -156,16 +156,16 @@ BOSS 已经死亡，不再处理伤害
 ]]></output>
             </test-case>
           </test-suite>
-          <test-suite type="TestFixture" id="1017" name="PlayerEntityLifecyclePlayModeTests" fullname="ColorTiming.Tests.PlayMode.PlayerEntityLifecyclePlayModeTests" classname="ColorTiming.Tests.PlayMode.PlayerEntityLifecyclePlayModeTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-08-28 04:02:49Z" end-time="2026-08-28 04:02:49Z" duration="0.158978" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <test-suite type="TestFixture" id="1017" name="PlayerEntityLifecyclePlayModeTests" fullname="ColorTiming.Tests.PlayMode.PlayerEntityLifecyclePlayModeTests" classname="ColorTiming.Tests.PlayMode.PlayerEntityLifecyclePlayModeTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-08-28 06:54:22Z" end-time="2026-08-28 06:54:23Z" duration="0.155434" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
             <properties />
-            <test-case id="1018" name="SkillAnimationEnd_ReleasesFrameworkEntityExactlyOnce" fullname="ColorTiming.Tests.PlayMode.PlayerEntityLifecyclePlayModeTests.SkillAnimationEnd_ReleasesFrameworkEntityExactlyOnce" methodname="SkillAnimationEnd_ReleasesFrameworkEntityExactlyOnce" classname="ColorTiming.Tests.PlayMode.PlayerEntityLifecyclePlayModeTests" runstate="Runnable" seed="960769915" result="Passed" start-time="2026-08-28 04:02:49Z" end-time="2026-08-28 04:02:49Z" duration="0.049624" asserts="0">
+            <test-case id="1018" name="SkillAnimationEnd_ReleasesFrameworkEntityExactlyOnce" fullname="ColorTiming.Tests.PlayMode.PlayerEntityLifecyclePlayModeTests.SkillAnimationEnd_ReleasesFrameworkEntityExactlyOnce" methodname="SkillAnimationEnd_ReleasesFrameworkEntityExactlyOnce" classname="ColorTiming.Tests.PlayMode.PlayerEntityLifecyclePlayModeTests" runstate="Runnable" seed="1018619904" result="Passed" start-time="2026-08-28 06:54:22Z" end-time="2026-08-28 06:54:22Z" duration="0.048214" asserts="0">
               <properties>
                 <property name="_JOINTYPE" value="UnityCombinatorial" />
                 <property name="retryIteration" value="0" />
                 <property name="repeatIteration" value="0" />
               </properties>
             </test-case>
-            <test-case id="1019" name="UnityGameTimeAdapter_ComposesAndReleasesRequests" fullname="ColorTiming.Tests.PlayMode.PlayerEntityLifecyclePlayModeTests.UnityGameTimeAdapter_ComposesAndReleasesRequests" methodname="UnityGameTimeAdapter_ComposesAndReleasesRequests" classname="ColorTiming.Tests.PlayMode.PlayerEntityLifecyclePlayModeTests" runstate="Runnable" seed="1118832298" result="Passed" start-time="2026-08-28 04:02:49Z" end-time="2026-08-28 04:02:49Z" duration="0.088762" asserts="0">
+            <test-case id="1019" name="UnityGameTimeAdapter_ComposesAndReleasesRequests" fullname="ColorTiming.Tests.PlayMode.PlayerEntityLifecyclePlayModeTests.UnityGameTimeAdapter_ComposesAndReleasesRequests" methodname="UnityGameTimeAdapter_ComposesAndReleasesRequests" classname="ColorTiming.Tests.PlayMode.PlayerEntityLifecyclePlayModeTests" runstate="Runnable" seed="1055410736" result="Passed" start-time="2026-08-28 06:54:22Z" end-time="2026-08-28 06:54:23Z" duration="0.085899" asserts="0">
               <properties>
                 <property name="_JOINTYPE" value="UnityCombinatorial" />
                 <property name="retryIteration" value="0" />
@@ -173,9 +173,9 @@ BOSS 已经死亡，不再处理伤害
               </properties>
             </test-case>
           </test-suite>
-          <test-suite type="TestFixture" id="1020" name="PlayerRuntimeExecutionPlayModeTests" fullname="ColorTiming.Tests.PlayMode.PlayerRuntimeExecutionPlayModeTests" classname="ColorTiming.Tests.PlayMode.PlayerRuntimeExecutionPlayModeTests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-08-28 04:02:49Z" end-time="2026-08-28 04:03:00Z" duration="10.965340" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <test-suite type="TestFixture" id="1020" name="PlayerRuntimeExecutionPlayModeTests" fullname="ColorTiming.Tests.PlayMode.PlayerRuntimeExecutionPlayModeTests" classname="ColorTiming.Tests.PlayMode.PlayerRuntimeExecutionPlayModeTests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-08-28 06:54:23Z" end-time="2026-08-28 06:54:34Z" duration="11.012027" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
             <properties />
-            <test-case id="1021" name="SemanticInput_PickupHitDashDeathAndAnimationRestartExecuteInBoss1" fullname="ColorTiming.Tests.PlayMode.PlayerRuntimeExecutionPlayModeTests.SemanticInput_PickupHitDashDeathAndAnimationRestartExecuteInBoss1" methodname="SemanticInput_PickupHitDashDeathAndAnimationRestartExecuteInBoss1" classname="ColorTiming.Tests.PlayMode.PlayerRuntimeExecutionPlayModeTests" runstate="Runnable" seed="278168390" result="Passed" start-time="2026-08-28 04:02:49Z" end-time="2026-08-28 04:03:00Z" duration="10.947401" asserts="0">
+            <test-case id="1021" name="SemanticInput_PickupHitDashDeathAndAnimationRestartExecuteInBoss1" fullname="ColorTiming.Tests.PlayMode.PlayerRuntimeExecutionPlayModeTests.SemanticInput_PickupHitDashDeathAndAnimationRestartExecuteInBoss1" methodname="SemanticInput_PickupHitDashDeathAndAnimationRestartExecuteInBoss1" classname="ColorTiming.Tests.PlayMode.PlayerRuntimeExecutionPlayModeTests" runstate="Runnable" seed="579368088" result="Passed" start-time="2026-08-28 06:54:23Z" end-time="2026-08-28 06:54:34Z" duration="10.994075" asserts="0">
               <properties>
                 <property name="_JOINTYPE" value="UnityCombinatorial" />
                 <property name="Timeout" value="180000" />
@@ -187,9 +187,9 @@ BOSS 已经死亡，不再处理伤害
 ]]></output>
             </test-case>
           </test-suite>
-          <test-suite type="TestFixture" id="1022" name="StartupFlowPlayModeTests" fullname="ColorTiming.Tests.PlayMode.StartupFlowPlayModeTests" classname="ColorTiming.Tests.PlayMode.StartupFlowPlayModeTests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-08-28 04:03:00Z" end-time="2026-08-28 04:03:00Z" duration="0.090964" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <test-suite type="TestFixture" id="1022" name="StartupFlowPlayModeTests" fullname="ColorTiming.Tests.PlayMode.StartupFlowPlayModeTests" classname="ColorTiming.Tests.PlayMode.StartupFlowPlayModeTests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-08-28 06:54:34Z" end-time="2026-08-28 06:54:34Z" duration="0.090768" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
             <properties />
-            <test-case id="1023" name="LaunchBootsFrameworkAndLoadsStartMenuOnce" fullname="ColorTiming.Tests.PlayMode.StartupFlowPlayModeTests.LaunchBootsFrameworkAndLoadsStartMenuOnce" methodname="LaunchBootsFrameworkAndLoadsStartMenuOnce" classname="ColorTiming.Tests.PlayMode.StartupFlowPlayModeTests" runstate="Runnable" seed="1253131206" result="Passed" start-time="2026-08-28 04:03:00Z" end-time="2026-08-28 04:03:00Z" duration="0.065117" asserts="0">
+            <test-case id="1023" name="LaunchBootsFrameworkAndLoadsStartMenuOnce" fullname="ColorTiming.Tests.PlayMode.StartupFlowPlayModeTests.LaunchBootsFrameworkAndLoadsStartMenuOnce" methodname="LaunchBootsFrameworkAndLoadsStartMenuOnce" classname="ColorTiming.Tests.PlayMode.StartupFlowPlayModeTests" runstate="Runnable" seed="1006167429" result="Passed" start-time="2026-08-28 06:54:34Z" end-time="2026-08-28 06:54:34Z" duration="0.069974" asserts="0">
               <properties>
                 <property name="_JOINTYPE" value="UnityCombinatorial" />
                 <property name="Timeout" value="60000" />
@@ -198,9 +198,9 @@ BOSS 已经死亡，不再处理伤害
               </properties>
             </test-case>
           </test-suite>
-          <test-suite type="TestFixture" id="1024" name="WeaponAnimationEventExecutionPlayModeTests" fullname="ColorTiming.Tests.PlayMode.WeaponAnimationEventExecutionPlayModeTests" classname="ColorTiming.Tests.PlayMode.WeaponAnimationEventExecutionPlayModeTests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-08-28 04:03:00Z" end-time="2026-08-28 04:03:03Z" duration="3.569497" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <test-suite type="TestFixture" id="1024" name="WeaponAnimationEventExecutionPlayModeTests" fullname="ColorTiming.Tests.PlayMode.WeaponAnimationEventExecutionPlayModeTests" classname="ColorTiming.Tests.PlayMode.WeaponAnimationEventExecutionPlayModeTests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-08-28 06:54:34Z" end-time="2026-08-28 06:54:37Z" duration="3.413761" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
             <properties />
-            <test-case id="1025" name="EveryAuthoredWeaponColorExecutesAnimationEventThroughGfEntity" fullname="ColorTiming.Tests.PlayMode.WeaponAnimationEventExecutionPlayModeTests.EveryAuthoredWeaponColorExecutesAnimationEventThroughGfEntity" methodname="EveryAuthoredWeaponColorExecutesAnimationEventThroughGfEntity" classname="ColorTiming.Tests.PlayMode.WeaponAnimationEventExecutionPlayModeTests" runstate="Runnable" seed="608189995" result="Passed" start-time="2026-08-28 04:03:00Z" end-time="2026-08-28 04:03:03Z" duration="3.551327" asserts="0">
+            <test-case id="1025" name="EveryAuthoredWeaponColorExecutesAnimationEventThroughGfEntity" fullname="ColorTiming.Tests.PlayMode.WeaponAnimationEventExecutionPlayModeTests.EveryAuthoredWeaponColorExecutesAnimationEventThroughGfEntity" methodname="EveryAuthoredWeaponColorExecutesAnimationEventThroughGfEntity" classname="ColorTiming.Tests.PlayMode.WeaponAnimationEventExecutionPlayModeTests" runstate="Runnable" seed="1278403219" result="Passed" start-time="2026-08-28 06:54:34Z" end-time="2026-08-28 06:54:37Z" duration="3.398688" asserts="0">
               <properties>
                 <property name="_JOINTYPE" value="UnityCombinatorial" />
                 <property name="Timeout" value="300000" />

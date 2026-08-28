@@ -1,4 +1,7 @@
-﻿using GameFramework.Fsm;
+﻿// 文件职责：实现 FrameworkReady 的 GF 流程节点。
+// 所属模块：Procedures。
+
+using GameFramework.Fsm;
 using System;
 using GameFramework.Procedure;
 using UnityGameFramework.Runtime;
@@ -10,6 +13,7 @@ using UnityGameFramework.Runtime;
 [Obfuz.ObfuzIgnore(Obfuz.ObfuzScope.TypeName)]
 public sealed class FrameworkReadyProcedure : ProcedureBase
 {
+    // 响应Enter回调，并更新本对象状态。
     protected override async void OnEnter(IFsm<IProcedureManager> procedureOwner)
     {
         base.OnEnter(procedureOwner);

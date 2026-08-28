@@ -1,3 +1,6 @@
+// 文件职责：负责 战斗玩家Info 的场景或界面表现。
+// 所属模块：ColorTiming / Presentation / UI / Components。
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -33,27 +36,32 @@ public class BattlePlayerInfoView : MonoBehaviour, IGameInputConsumer, IColorTim
     IGameInput gameInput;
     IColorTimingUiService uiService;
 
+    // 绑定Game输入依赖或事件监听。
     public void BindGameInput(IGameInput input)
     {
         gameInput = input ?? throw new ArgumentNullException(nameof(input));
     }
 
+    // 绑定UIService依赖或事件监听。
     public void BindUiService(IColorTimingUiService service)
     {
         uiService = service ?? throw new ArgumentNullException(nameof(service));
     }
 
+    // 在首帧启动依赖就绪后的业务或表现流程。
     private void Start()
     {
         BindSession(session);
         SetCursor(WeaponPresentationState.NormalCursorIndex);
     }
 
+    // 绑定会话依赖或事件监听。
     public void BindSession(BattleSession battleSession)
     {
         if (session == battleSession)
         {
             if (session != null) SwitchWeapon(session.Snapshot.Weapon);
+            // 执行Reset展示对应的主要流程。
             else ResetPresentation();
             return;
         }
@@ -62,9 +70,11 @@ public class BattlePlayerInfoView : MonoBehaviour, IGameInputConsumer, IColorTim
         session = battleSession;
         if (session != null) session.SnapshotChanged += OnSnapshotChanged;
         if (session != null) SwitchWeapon(session.Snapshot.Weapon);
+        // 执行Reset展示对应的主要流程。
         else ResetPresentation();
     }
 
+    // 逐帧推进需要实时刷新的业务或表现状态。
     private void Update()
     {
         if (gameInput == null)
@@ -92,6 +102,7 @@ public class BattlePlayerInfoView : MonoBehaviour, IGameInputConsumer, IColorTim
 
     }
 
+    // 响应快照变化回调，并更新本对象状态。
     private void OnSnapshotChanged(BattleSnapshot snapshot)
     {
         if (!hasWeaponState || !snapshot.Weapon.Equals(nowWeapon)) SwitchWeapon(snapshot.Weapon);
@@ -120,6 +131,7 @@ public class BattlePlayerInfoView : MonoBehaviour, IGameInputConsumer, IColorTim
     }
 
     // Public for serialized UI compatibility and deterministic PlayMode validation.
+    // 执行Toggle暂停对应的主要流程。
     public void TogglePause()
     {
         var opened = uiService != null && uiService.TogglePause();
@@ -132,6 +144,7 @@ public class BattlePlayerInfoView : MonoBehaviour, IGameInputConsumer, IColorTim
         if (session != null) SwitchWeapon(session.Snapshot.Weapon);
     }
 
+    // 组件销毁时释放订阅、句柄和运行时资源。
     private void OnDestroy()
     {
         BindSession(null);
@@ -159,6 +172,7 @@ public class BattlePlayerInfoView : MonoBehaviour, IGameInputConsumer, IColorTim
         SetCursor(WeaponPresentationState.NormalCursorIndex);
     }
 
+    // 设置Cursor，并使后续流程使用最新状态。
     private void SetCursor(int index)
     {
         if (TryGet(cursors, index, out var cursor))

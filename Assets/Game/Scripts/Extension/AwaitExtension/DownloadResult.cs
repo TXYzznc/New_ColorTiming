@@ -1,3 +1,6 @@
+// 文件职责：定义 下载结果 数据及其状态语义。
+// 所属模块：Extension / AwaitExtension。
+
 using System;
 using GameFramework;
 
@@ -28,6 +31,7 @@ public class DownloadResult : IReference
         return downLoadResult;
     }
 
+    // 清空当前保存的运行时状态，使对象可安全复用。
     public void Clear()
     {
         IsError = false;

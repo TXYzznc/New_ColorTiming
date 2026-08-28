@@ -1,4 +1,7 @@
-﻿/// Credit Simie
+﻿// 文件职责：实现可换行排列子节点的自定义 UGUI 布局组。
+// 所属模块：Common。
+
+/// Credit Simie
 /// Sourced from - http://forum.unity3d.com/threads/flowlayoutgroup.296709/
 /// Example http://forum.unity3d.com/threads/flowlayoutgroup.296709/
 /// Update by Martin Sharkbomb - http://forum.unity3d.com/threads/flowlayoutgroup.296709/#post-1977028
@@ -45,16 +48,19 @@ namespace UnityEngine.UI
 
 		}
 
+		// 设置布局Horizontal，并使后续流程使用最新状态。
 		public override void SetLayoutHorizontal()
 		{
 			SetLayout(0, false);
 		}
 
+		// 设置布局Vertical，并使后续流程使用最新状态。
 		public override void SetLayoutVertical()
 		{
 			SetLayout(1, false);
 		}
 
+		// 执行Calculate布局输入Vertical对应的主要流程。
 		public override void CalculateLayoutInputVertical()
 		{
 			if (startAxis == Axis.Horizontal)
@@ -116,6 +122,7 @@ namespace UnityEngine.UI
 		/// <param name="width">Width to calculate the layout with</param>
 		/// <param name="axis">0 for horizontal axis, 1 for vertical</param>
 		/// <param name="layoutInput">If true, sets the layout input for the axis. If false, sets child position for axis</param>
+		// 设置布局，并使后续流程使用最新状态。
 		public float SetLayout(int axis, bool layoutInput)
 		{
 			//container height and width
@@ -312,6 +319,7 @@ namespace UnityEngine.UI
 			}
 		}
 
+		// 执行布局行对应的主要流程。
 		protected void LayoutRow(IList<RectTransform> contents, float rowWidth, float rowHeight, float maxWidth, float xOffset, float yOffset, int axis)
 		{
 			var xPos = xOffset;
@@ -396,6 +404,7 @@ namespace UnityEngine.UI
 			}
 		}
 
+		// 执行布局Col对应的主要流程。
 		protected void LayoutCol(IList<RectTransform> contents, float colWidth, float colHeight, float maxHeight, float xOffset, float yOffset, int axis)
 		{
 			var yPos = yOffset;
@@ -483,6 +492,7 @@ namespace UnityEngine.UI
 			}
 		}
 
+		// 获取GreatestMinimumChildWidth。
 		public float GetGreatestMinimumChildWidth()
 		{
 			var max = 0f;
@@ -495,6 +505,7 @@ namespace UnityEngine.UI
 			return max;
 		}
 
+		// 获取GreatestMinimumChildHeigth。
 		public float GetGreatestMinimumChildHeigth()
 		{
 			var max = 0f;

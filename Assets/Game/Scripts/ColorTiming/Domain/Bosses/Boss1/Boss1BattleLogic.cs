@@ -1,3 +1,6 @@
+// 文件职责：实现 Boss1战斗 的核心业务规则。
+// 所属模块：ColorTiming / Domain / Bosses / Boss1。
+
 using System;
 
 namespace ColorTiming.Bosses.Boss1
@@ -21,6 +24,7 @@ namespace ColorTiming.Bosses.Boss1
 
     public static class Boss1DistanceZones
     {
+        // 执行Resolve对应的主要流程。
         public static Boss1DistanceZone Resolve(bool insideNear, bool insideMiddle)
         {
             if (insideNear)
@@ -35,6 +39,7 @@ namespace ColorTiming.Bosses.Boss1
     {
         public Boss1Attack? LastAttack { get; private set; }
 
+        // 执行Select对应的主要流程。
         public Boss1Attack Select(Boss1DistanceZone zone, float sample)
         {
             if (sample < 0f || sample >= 1f)
@@ -73,6 +78,7 @@ namespace ColorTiming.Bosses.Boss1
 
     public sealed class Boss1AttackCycle
     {
+        // 初始化Boss1攻击Cycle实例及其核心依赖。
         public Boss1AttackCycle(float initialCooldown)
         {
             SetCooldown(initialCooldown);
@@ -81,6 +87,7 @@ namespace ColorTiming.Bosses.Boss1
         public float CooldownRemaining { get; private set; }
         public bool IsAttacking { get; private set; }
 
+        // 按当前时间步推进核心状态，并发布必要的状态变化。
         public bool Tick(float deltaTime)
         {
             if (deltaTime < 0f)
@@ -96,6 +103,7 @@ namespace ColorTiming.Bosses.Boss1
             return CooldownRemaining <= 0f;
         }
 
+        // 执行开始攻击对应的主要流程。
         public bool BeginAttack()
         {
             if (IsAttacking || CooldownRemaining > 0f)
@@ -107,12 +115,14 @@ namespace ColorTiming.Bosses.Boss1
             return true;
         }
 
+        // 执行完成攻击对应的主要流程。
         public void CompleteAttack(float nextCooldown)
         {
             IsAttacking = false;
             SetCooldown(nextCooldown);
         }
 
+        // 设置冷却，并使后续流程使用最新状态。
         private void SetCooldown(float seconds)
         {
             if (seconds < 0f)

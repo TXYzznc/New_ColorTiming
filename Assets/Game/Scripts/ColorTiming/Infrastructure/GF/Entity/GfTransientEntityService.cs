@@ -1,3 +1,6 @@
+// 文件职责：通过 GF.Entity 创建和回收短生命周期业务实体。
+// 所属模块：ColorTiming / Infrastructure / GF / Entity。
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,11 +20,13 @@ namespace ColorTiming.Infrastructure.GF.Entity
         private readonly HashSet<int> activeEntityIds = new HashSet<int>();
         private readonly IColorTimingSoundService soundService;
 
+        // 初始化GfTransient实体Service实例及其核心依赖。
         public GfTransientEntityService(IColorTimingSoundService soundService)
         {
             this.soundService = soundService ?? throw new ArgumentNullException(nameof(soundService));
         }
 
+        // 执行生成对应的主要流程。
         public int Spawn(
             string prefabName,
             Vector3 position,
@@ -72,6 +77,7 @@ namespace ColorTiming.Infrastructure.GF.Entity
             return entityId;
         }
 
+        // 释放All及其临时资源。
         public void ReleaseAll()
         {
             if (GFBuiltin.Entity == null)
@@ -102,12 +108,14 @@ namespace ColorTiming.Infrastructure.GF.Entity
         private Action<int> released;
         private int trackedEntityId;
 
+        // 绑定Tracking依赖或事件监听。
         internal void BindTracking(int entityId, Action<int> onReleased)
         {
             trackedEntityId = entityId;
             released = onReleased;
         }
 
+        // 实体显示时读取参数并建立本次生命周期状态。
         protected override void OnShow(object userData)
         {
             base.OnShow(userData);
@@ -121,6 +129,7 @@ namespace ColorTiming.Infrastructure.GF.Entity
             }
         }
 
+        // 实体隐藏时清理本次显示产生的运行时状态。
         protected override void OnHide(bool isShutdown, object userData)
         {
             foreach (var participant in participants)
@@ -145,6 +154,7 @@ namespace ColorTiming.Infrastructure.GF.Entity
             base.OnHide(isShutdown, userData);
         }
 
+        // 释放当前对象及其持有的临时资源。
         private void Release()
         {
             GFBuiltin.Entity.HideEntitySafe(this);

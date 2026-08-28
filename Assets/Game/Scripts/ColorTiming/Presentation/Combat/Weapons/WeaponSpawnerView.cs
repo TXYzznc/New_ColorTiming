@@ -1,3 +1,6 @@
+// 文件职责：负责 武器Spawner 的场景或界面表现。
+// 所属模块：ColorTiming / Presentation / Combat / Weapons。
+
 using System.Collections.Generic;
 using ColorTiming.Application.Battle;
 using ColorTiming.Combat;
@@ -25,9 +28,11 @@ public abstract class WeaponSpawnerView : MonoBehaviour, ITransientEntityConsume
     private BattleSession session;
     private int lastWeaknessCount = -1;
 
+    // 创建Policy并完成必要的初始配置。
     protected abstract WeaponSpawnPolicy CreatePolicy(int activeLimit);
     protected abstract int TutorialTipId { get; }
 
+    // 绑定战斗会话依赖或事件监听。
     public void BindBattleSession(BattleSession battleSession)
     {
         if (session != null) session.SnapshotChanged -= OnSnapshotChanged;
@@ -36,11 +41,13 @@ public abstract class WeaponSpawnerView : MonoBehaviour, ITransientEntityConsume
         session.SnapshotChanged += OnSnapshotChanged;
     }
 
+    // 绑定TransientEntities依赖或事件监听。
     public void BindTransientEntities(ITransientEntityService entities)
     {
         transientEntities = entities ?? throw new System.ArgumentNullException(nameof(entities));
     }
 
+    // 在首帧启动依赖就绪后的业务或表现流程。
     protected virtual void Start()
     {
         if (wTime <= 0f)
@@ -56,11 +63,13 @@ public abstract class WeaponSpawnerView : MonoBehaviour, ITransientEntityConsume
             new UnityWeaponRandomSource());
     }
 
+    // 组件销毁时释放订阅、句柄和运行时资源。
     protected virtual void OnDestroy()
     {
         if (session != null) session.SnapshotChanged -= OnSnapshotChanged;
     }
 
+    // 逐帧推进需要实时刷新的业务或表现状态。
     protected virtual void Update()
     {
         if (runtime == null || session == null
@@ -83,6 +92,7 @@ public abstract class WeaponSpawnerView : MonoBehaviour, ITransientEntityConsume
         }
     }
 
+    // 尝试Get当前项弱点，并通过返回值报告是否成功。
     bool TryGetCurrentWeakness(out WeaponColor weakness)
     {
         if (session != null && session.Snapshot.Weaknesses.Count > 0)
@@ -94,12 +104,14 @@ public abstract class WeaponSpawnerView : MonoBehaviour, ITransientEntityConsume
         return false;
     }
 
+    // 响应快照变化回调，并更新本对象状态。
     void OnSnapshotChanged(BattleSnapshot snapshot)
     {
         if (lastWeaknessCount >= 0 && snapshot.Weaknesses.Count < lastWeaknessCount) OnBossDamaged();
         lastWeaknessCount = snapshot.Weaknesses.Count;
     }
 
+    // 响应BossDamaged回调，并更新本对象状态。
     protected void OnBossDamaged()
     {
         if (weaponT == null)
@@ -116,6 +128,7 @@ public abstract class WeaponSpawnerView : MonoBehaviour, ITransientEntityConsume
         CheckWeaponTip();
     }
 
+    // 创建武器dis并完成必要的初始配置。
     public void CreateWeapon_dis(Vector3 position, WeaponIdentity weapon)
     {
         CreateWeapon(weapon, position);
@@ -134,6 +147,7 @@ public abstract class WeaponSpawnerView : MonoBehaviour, ITransientEntityConsume
         }
     }
 
+    // 创建武器并完成必要的初始配置。
     private void CreateWeapon(WeaponIdentity identity, Vector3 position)
     {
         if (transientEntities == null)
@@ -211,6 +225,7 @@ public abstract class WeaponSpawnerView : MonoBehaviour, ITransientEntityConsume
 
     private sealed class UnityWeaponRandomSource : IRandomSource
     {
+        // 执行Range对应的主要流程。
         public int Range(int minimumInclusive, int maximumExclusive)
         {
             return Random.Range(minimumInclusive, maximumExclusive);

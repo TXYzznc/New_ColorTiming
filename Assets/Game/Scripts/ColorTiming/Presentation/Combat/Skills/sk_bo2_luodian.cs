@@ -1,3 +1,6 @@
+// 文件职责：实现战斗技能 sk_bo2_luodian 的运行时表现和回收行为。
+// 所属模块：ColorTiming / Presentation / Combat / Skills。
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -18,12 +21,14 @@ public class sk_bo2_luodian : MonoBehaviour, IFrameworkEntityParticipant
     float releaseDelay = -1f;
     Action frameworkRelease;
     bool releasing;
+    // 设置CaseF，并使后续流程使用最新状态。
     public void SetCaseF(Transform _c)
     {
         cseF = _c;
         dis = Vector2.Distance(cseF.position, transform.position);
     }
 
+    // 逐帧推进需要实时刷新的业务或表现状态。
     void Update()
     {
         if (releaseDelay > 0f)
@@ -116,11 +121,13 @@ public class sk_bo2_luodian : MonoBehaviour, IFrameworkEntityParticipant
     }
 
 
+    // 设置Wait结束，并使后续流程使用最新状态。
     public void SetWaitEnd()
     {
         releaseDelay = 0.5f;
     }
 
+    // 释放实体及其临时资源。
     public void ReleaseEntity()
     {
         if (releasing)
@@ -138,11 +145,13 @@ public class sk_bo2_luodian : MonoBehaviour, IFrameworkEntityParticipant
         }
     }
 
+    // 绑定FrameworkRelease依赖或事件监听。
     public void BindFrameworkRelease(Action release)
     {
         frameworkRelease = release;
     }
 
+    // 响应Framework实体Spawned回调，并更新本对象状态。
     public void OnFrameworkEntitySpawned()
     {
         fTime = 0f;
@@ -153,6 +162,7 @@ public class sk_bo2_luodian : MonoBehaviour, IFrameworkEntityParticipant
         sp = sp != null ? sp : GetComponent<SpriteRenderer>();
     }
 
+    // 响应Framework实体Despawned回调，并更新本对象状态。
     public void OnFrameworkEntityDespawned()
     {
         cseF = null;

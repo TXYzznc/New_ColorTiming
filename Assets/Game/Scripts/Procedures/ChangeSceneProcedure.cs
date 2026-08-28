@@ -1,4 +1,7 @@
-﻿using GameFramework;
+﻿// 文件职责：实现 Change场景 的 GF 流程节点。
+// 所属模块：Procedures。
+
+using GameFramework;
 using GameFramework.Procedure;
 using UnityGameFramework.Runtime;
 using GameFramework.Fsm;
@@ -13,6 +16,7 @@ public class ChangeSceneProcedure : ProcedureBase
     private bool loadSceneOver = false;
     private bool eventsSubscribed;
     private string nextScene = string.Empty;
+    // 响应Enter回调，并更新本对象状态。
     protected override void OnEnter(IFsm<IProcedureManager> procedureOwner)
     {
         base.OnEnter(procedureOwner);
@@ -52,6 +56,7 @@ public class ChangeSceneProcedure : ProcedureBase
         GF.Scene.LoadScene(UtilityBuiltin.AssetsPath.GetScenePath(nextScene), this);
     }
 
+    // 由 GF 生命周期逐帧推进当前对象状态。
     protected override void OnUpdate(IFsm<IProcedureManager> procedureOwner, float elapseSeconds, float realElapseSeconds)
     {
         base.OnUpdate(procedureOwner, elapseSeconds, realElapseSeconds);
@@ -66,6 +71,7 @@ public class ChangeSceneProcedure : ProcedureBase
         loadSceneOver = false;
     }
 
+    // 响应Leave回调，并更新本对象状态。
     protected override void OnLeave(IFsm<IProcedureManager> procedureOwner, bool isShutdown)
     {
         if (!eventsSubscribed)
@@ -80,6 +86,7 @@ public class ChangeSceneProcedure : ProcedureBase
         GF.Event.Unsubscribe(LoadSceneUpdateEventArgs.EventId, OnLoadSceneUpdate);
         base.OnLeave(procedureOwner, isShutdown);
     }
+    // 响应Load场景Update回调，并更新本对象状态。
     private void OnLoadSceneUpdate(object sender, GameEventArgs e)
     {
         var arg = (LoadSceneUpdateEventArgs)e;
@@ -92,6 +99,7 @@ public class ChangeSceneProcedure : ProcedureBase
         GFTrace.Info("Scene", "Load.Progress", null, GFTrace.Data("asset", arg.SceneAssetName, "progress", arg.Progress.ToString("0.###")));
     }
 
+    // 响应Load场景成功回调，并更新本对象状态。
     private void OnLoadSceneSuccess(object sender, GameEventArgs e)
     {
         var arg = (LoadSceneSuccessEventArgs)e;

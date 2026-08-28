@@ -1,3 +1,6 @@
+// 文件职责：通过 GF.Sound 播放、停止和管理业务音频。
+// 所属模块：ColorTiming / Infrastructure / GF / Audio。
+
 using System;
 using System.Collections.Generic;
 using ColorTiming.Bootstrap;
@@ -17,6 +20,7 @@ namespace ColorTiming.Infrastructure.GF.Audio
         IGameTime gameTime;
         bool gameplayPaused;
 
+        // 执行Initialize对应的主要流程。
         public void Initialize(IGameTime time)
         {
             if (gameTime != null) gameTime.ScaleChanged -= OnScaleChanged;
@@ -25,6 +29,7 @@ namespace ColorTiming.Infrastructure.GF.Audio
             OnScaleChanged(gameTime.EffectiveScale);
         }
 
+        // 启动当前配置的动画、音频或其他表现。
         public int Play(AudioClip clip, ColorTimingSoundChannel channel, Vector3 position, bool loop = false)
         {
             if (clip == null || global::GF.Sound == null)
@@ -53,6 +58,7 @@ namespace ColorTiming.Infrastructure.GF.Audio
             return serialId;
         }
 
+        // 执行ResetTrackedSounds对应的主要流程。
         public void ResetTrackedSounds()
         {
             if (global::GF.Sound != null)
@@ -67,6 +73,7 @@ namespace ColorTiming.Infrastructure.GF.Audio
             gameplaySounds.Clear();
         }
 
+        // 执行Stop对应的主要流程。
         public void Stop(int serialId)
         {
             if (serialId <= 0)
@@ -79,6 +86,7 @@ namespace ColorTiming.Infrastructure.GF.Audio
             gameplaySounds.Remove(serialId);
         }
 
+        // 根据当前配置构建RelativeName。
         public static string BuildRelativeName(string clipName, ColorTimingSoundChannel channel)
         {
             if (string.IsNullOrWhiteSpace(clipName))
@@ -94,6 +102,7 @@ namespace ColorTiming.Infrastructure.GF.Audio
                 : fileName;
         }
 
+        // 逐帧推进需要实时刷新的业务或表现状态。
         private void Update()
         {
             // A sound requested while paused can still be loading. Reapplying pause makes
@@ -102,6 +111,7 @@ namespace ColorTiming.Infrastructure.GF.Audio
             ApplyToGameplaySounds(global::GF.Sound.PauseSound);
         }
 
+        // 响应缩放变化回调，并更新本对象状态。
         void OnScaleChanged(float scale)
         {
             var shouldPause = scale <= 0f;
@@ -111,6 +121,7 @@ namespace ColorTiming.Infrastructure.GF.Audio
             ApplyToGameplaySounds(gameplayPaused ? global::GF.Sound.PauseSound : global::GF.Sound.ResumeSound);
         }
 
+        // 把当前规则或配置应用到ToGameplaySounds。
         void ApplyToGameplaySounds(Action<int> operation)
         {
             staleGameplaySounds.Clear();
@@ -126,6 +137,7 @@ namespace ColorTiming.Infrastructure.GF.Audio
             staleGameplaySounds.Clear();
         }
 
+        // 把当前规则或配置应用到ToGameplay音效。
         void ApplyToGameplaySound(int serialId, Action<int> operation)
         {
             try
@@ -150,6 +162,7 @@ namespace ColorTiming.Infrastructure.GF.Audio
                 || channel == ColorTimingSoundChannel.Environment;
         }
 
+        // 组件销毁时释放订阅、句柄和运行时资源。
         private void OnDestroy()
         {
             if (gameTime != null) gameTime.ScaleChanged -= OnScaleChanged;

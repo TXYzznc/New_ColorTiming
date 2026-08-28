@@ -1,3 +1,6 @@
+// 文件职责：把 ColorTiming 业务启动流程接入 GF Procedure。
+// 所属模块：ColorTiming / Bootstrap。
+
 using ColorTiming.Bootstrap.Flow;
 using GameFramework;
 using GameFramework.Event;
@@ -17,6 +20,7 @@ namespace ColorTiming.Bootstrap
         private bool waitingForTargetUnload;
         private bool eventsSubscribed;
 
+        // 响应Enter回调，并更新本对象状态。
         protected override void OnEnter(IFsm<IProcedureManager> procedureOwner)
         {
             base.OnEnter(procedureOwner);
@@ -30,6 +34,7 @@ namespace ColorTiming.Bootstrap
             }
         }
 
+        // 响应Leave回调，并更新本对象状态。
         protected override void OnLeave(IFsm<IProcedureManager> procedureOwner, bool isShutdown)
         {
             UnsubscribeEvents();
@@ -68,6 +73,7 @@ namespace ColorTiming.Bootstrap
             }
         }
 
+        // 加载待处理场景，并处理完成或失败结果。
         private void LoadPendingScene()
         {
             GF.Scene.LoadScene(loadingSceneAsset, this);
@@ -103,6 +109,7 @@ namespace ColorTiming.Bootstrap
             GF.Event.Unsubscribe(UnloadSceneFailureEventArgs.EventId, OnUnloadSceneFailure);
         }
 
+        // 响应Unload场景成功回调，并更新本对象状态。
         private void OnUnloadSceneSuccess(object sender, GameEventArgs eventArgs)
         {
             UnloadSceneSuccessEventArgs args = (UnloadSceneSuccessEventArgs)eventArgs;
@@ -115,6 +122,7 @@ namespace ColorTiming.Bootstrap
             LoadPendingScene();
         }
 
+        // 响应Unload场景失败回调，并更新本对象状态。
         private void OnUnloadSceneFailure(object sender, GameEventArgs eventArgs)
         {
             UnloadSceneFailureEventArgs args = (UnloadSceneFailureEventArgs)eventArgs;
@@ -129,6 +137,7 @@ namespace ColorTiming.Bootstrap
             Log.Error("ColorTiming scene '{0}' could not unload for reload.", loadingScene);
         }
 
+        // 响应Load场景Update回调，并更新本对象状态。
         private void OnLoadSceneUpdate(object sender, GameEventArgs eventArgs)
         {
             LoadSceneUpdateEventArgs args = (LoadSceneUpdateEventArgs)eventArgs;
@@ -140,6 +149,7 @@ namespace ColorTiming.Bootstrap
             compositionRoot.ReportSceneTransitionProgress(args.Progress);
         }
 
+        // 响应Load场景成功回调，并更新本对象状态。
         private void OnLoadSceneSuccess(object sender, GameEventArgs eventArgs)
         {
             LoadSceneSuccessEventArgs args = (LoadSceneSuccessEventArgs)eventArgs;
@@ -155,6 +165,7 @@ namespace ColorTiming.Bootstrap
                 GFTrace.Data("scene", loadingScene.ToString(), "asset", args.SceneAssetName));
         }
 
+        // 响应Load场景失败回调，并更新本对象状态。
         private void OnLoadSceneFailure(object sender, GameEventArgs eventArgs)
         {
             LoadSceneFailureEventArgs args = (LoadSceneFailureEventArgs)eventArgs;

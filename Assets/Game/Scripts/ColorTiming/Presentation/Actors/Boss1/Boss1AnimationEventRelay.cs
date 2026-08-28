@@ -1,3 +1,6 @@
+// 文件职责：定义 Boss1动画事件Relay，承担 Boss1 模块中的对应职责。
+// 所属模块：ColorTiming / Presentation / Actors / Boss1。
+
 using Spine;
 using Spine.Unity;
 using System;
@@ -40,11 +43,13 @@ public class Boss1AnimationEventRelay : MonoBehaviour, ITransientEntityConsumer
     Boss1SoundView soundManager1;
     ITransientEntityService transientEntities;
 
+    // 绑定TransientEntities依赖或事件监听。
     public void BindTransientEntities(ITransientEntityService entities)
     {
         transientEntities = entities ?? throw new ArgumentNullException(nameof(entities));
     }
 
+    // 在首帧启动依赖就绪后的业务或表现流程。
     private void Start()
     {
       soundManager1 = GetComponent<Boss1SoundView>();
@@ -53,6 +58,7 @@ public class Boss1AnimationEventRelay : MonoBehaviour, ITransientEntityConsumer
     float _it;
     float lerpSpeed = 10;
     float _showTime = -1;
+    // 逐帧推进需要实时刷新的业务或表现状态。
     private void Update()
     {
 
@@ -80,6 +86,7 @@ public class Boss1AnimationEventRelay : MonoBehaviour, ITransientEntityConsumer
 
     }
 
+    // 执行GoAtk对应的主要流程。
     public void GoAtk(TrackEntry trackEntry, Spine.Event e)
     {
 
@@ -171,6 +178,7 @@ public class Boss1AnimationEventRelay : MonoBehaviour, ITransientEntityConsumer
     }
 
 
+    // 响应Hit回调，并更新本对象状态。
     public void OnHit()
     {
         soundManager1?.Play(Boss1SoundCue.Hit);
@@ -178,6 +186,7 @@ public class Boss1AnimationEventRelay : MonoBehaviour, ITransientEntityConsumer
     }
 
 
+    // 显示Hit并同步当前数据。
     void ShowHit()
     {
         float _sp = flip ? -1 : 1;
@@ -212,6 +221,7 @@ public class Boss1AnimationEventRelay : MonoBehaviour, ITransientEntityConsumer
     }
 
 
+    // 播放音效对应的动画、音频或表现。
     public void PlaySound(string atk_)
     {
         soundManager1?.TryPlayAnimationCue(atk_);

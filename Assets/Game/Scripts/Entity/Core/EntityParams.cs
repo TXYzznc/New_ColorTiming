@@ -1,3 +1,6 @@
+// 文件职责：承载 实体 创建或调用所需参数。
+// 所属模块：Entity / Core。
+
 #pragma warning disable IDE1006 // 命名样式
 using GameFramework;
 using UnityEngine;
@@ -39,6 +42,7 @@ public class EntityParams : RefParams
     /// <param name="eulerAngles"></param>
     /// <param name="localScale"></param>
     /// <returns></returns>
+    // 创建并初始化新的实例。
     public static EntityParams Create(Vector3? position = null, Vector3? eulerAngles = null, Vector3? localScale = null)
     {
         var eParams = ReferencePool.Acquire<EntityParams>();
@@ -48,6 +52,7 @@ public class EntityParams : RefParams
         eParams.localScale = localScale;
         return eParams;
     }
+    // 重置对象属性，使实例可以安全复用。
     protected override void ResetProperties()
     {
         base.ResetProperties();

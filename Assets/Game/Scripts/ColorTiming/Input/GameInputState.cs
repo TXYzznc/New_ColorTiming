@@ -1,3 +1,6 @@
+// 文件职责：定义 Game输入状态 数据及其状态语义。
+// 所属模块：ColorTiming / Input。
+
 using UnityEngine;
 
 namespace ColorTiming.Input
@@ -18,6 +21,7 @@ namespace ColorTiming.Input
         public bool AnyPressed => !anyPressConsumed && frame.AnyPressed;
         public bool ConfirmPressed => !gameplaySuppressed && frame.ConfirmPressed;
 
+        // 执行Advance帧对应的主要流程。
         public void AdvanceFrame(GameInputFrame nextFrame)
         {
             frame = nextFrame;
@@ -25,6 +29,7 @@ namespace ColorTiming.Input
             anyPressConsumed = false;
         }
 
+        // 执行ConsumeAnyPressForOverlay对应的主要流程。
         public bool ConsumeAnyPressForOverlay()
         {
             if (anyPressConsumed || !frame.AnyPressed)
@@ -40,6 +45,7 @@ namespace ColorTiming.Input
 
     public sealed class FakeGameInput : GameInputState
     {
+        // 设置帧，并使后续流程使用最新状态。
         public void SetFrame(GameInputFrame frame)
         {
             AdvanceFrame(frame);

@@ -1,3 +1,6 @@
+// 文件职责：负责 玩家Actor 的场景或界面表现。
+// 所属模块：ColorTiming / Presentation / Actors / Player。
+
 using System;
 using ColorTiming.Application.Battle;
 using ColorTiming.Combat;
@@ -76,6 +79,7 @@ public class PlayerActorView : MonoBehaviour, IBattleDamageReceiver, IGameInputC
     IDisposable hitSlowMotion;
 
     /// <summary>Bound by the runtime-created battle composition root before Start.</summary>
+    // 绑定战斗会话依赖或事件监听。
     public void BindBattleSession(BattleSession session)
     {
         if (battleSession != null && !ReferenceEquals(battleSession, session))
@@ -88,21 +92,25 @@ public class PlayerActorView : MonoBehaviour, IBattleDamageReceiver, IGameInputC
         TryInitializeSession();
     }
 
+    // 绑定Game输入依赖或事件监听。
     public void BindGameInput(IGameInput input)
     {
         gameInput = input ?? throw new ArgumentNullException(nameof(input));
     }
 
+    // 绑定Gameplay指针依赖或事件监听。
     public void BindGameplayPointer(IGameplayPointerWorld pointer)
     {
         pointerWorld = pointer ?? throw new ArgumentNullException(nameof(pointer));
     }
 
+    // 绑定游戏时间依赖或事件监听。
     public void BindGameTime(IGameTime time)
     {
         gameTime = time ?? throw new ArgumentNullException(nameof(time));
     }
 
+    // 在首帧启动依赖就绪后的业务或表现流程。
     void Start()
     {
         attackInputGate = new PlayerAttackInputGate();
@@ -131,6 +139,7 @@ public class PlayerActorView : MonoBehaviour, IBattleDamageReceiver, IGameInputC
         //animator.GetCurrentAnimatorStateInfo
     }
 
+    // 尝试Initialize会话，并通过返回值报告是否成功。
     void TryInitializeSession()
     {
         if (sessionInitialized || !viewStarted || battleSession == null) return;
@@ -168,6 +177,7 @@ public class PlayerActorView : MonoBehaviour, IBattleDamageReceiver, IGameInputC
 
 
     // Update is called once per frame
+    // 逐帧推进需要实时刷新的业务或表现状态。
     void Update()
     {
         if (playerState == null || !playerState.IsAlive || !(Time.timeScale > 0))
@@ -230,11 +240,13 @@ public class PlayerActorView : MonoBehaviour, IBattleDamageReceiver, IGameInputC
 
     }
 
+    // 响应冲刺Invulnerability回调，并更新本对象状态。
     private void OnDashInvulnerability(bool active)
     {
         battleSession?.SetDashInvulnerable(active);
     }
 
+    // 按物理帧推进与刚体或碰撞相关的状态。
     private void FixedUpdate()
     {
         if (playerState == null || playerState.IsHitStunned || !playerState.IsAlive) return;
@@ -364,6 +376,7 @@ public class PlayerActorView : MonoBehaviour, IBattleDamageReceiver, IGameInputC
         heroFrireSystem?.OnFire(nowweapon, characterSprite.transform.localScale.x,parm);
     }
 
+    // 执行PickUP武器对应的主要流程。
     public bool PickUPWeapon(WeaponIdentity weapon)
     {
         if (battleSession == null || !battleSession.TryPickup(weapon))
@@ -406,6 +419,7 @@ public class PlayerActorView : MonoBehaviour, IBattleDamageReceiver, IGameInputC
 
     }
 
+    // 响应Anim状态EnterF回调，并更新本对象状态。
     private void OnAnimStateEnterF(AnimatorStateInfo stateInfo, bool enter)
     {
         if (enter)
@@ -418,6 +432,7 @@ public class PlayerActorView : MonoBehaviour, IBattleDamageReceiver, IGameInputC
         }
     }
 
+    // 执行EnterAnim状态对应的主要流程。
     void EnterAnimState(AnimatorStateInfo stateInfo)
     {
         OnAnimState?.Invoke(true,stateInfo);
@@ -450,6 +465,7 @@ public class PlayerActorView : MonoBehaviour, IBattleDamageReceiver, IGameInputC
         }
     }
 
+    // 执行ExitAnim状态对应的主要流程。
     void ExitAnimState(AnimatorStateInfo stateInfo)
     {
         OnAnimState?.Invoke(false, stateInfo);
@@ -536,6 +552,7 @@ public class PlayerActorView : MonoBehaviour, IBattleDamageReceiver, IGameInputC
         }
     }
 
+    // 响应HitAnim回调，并更新本对象状态。
     private void OnHit_Anim(int arg0)
     {
         if (playerState == null || !playerState.IsAlive) return;
@@ -566,6 +583,7 @@ public class PlayerActorView : MonoBehaviour, IBattleDamageReceiver, IGameInputC
         }
     }
 
+    // 组件销毁时释放订阅、句柄和运行时资源。
     private void OnDestroy()
     {
         OnAnimStateEnter.RemoveListener(OnAnimStateEnterF);

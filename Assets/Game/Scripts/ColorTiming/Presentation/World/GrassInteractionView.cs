@@ -1,3 +1,6 @@
+// 文件职责：负责 GrassInteraction 的场景或界面表现。
+// 所属模块：ColorTiming / Presentation / World。
+
 using System.Collections.Generic;
 using UnityEngine;
 using System;
@@ -10,6 +13,7 @@ public sealed class GrassInteractionView : MonoBehaviour, IColorTimingSoundConsu
     bool hasTriggerParameter;
     IColorTimingSoundService soundService;
 
+    // 绑定音效Service依赖或事件监听。
     public void BindSoundService(IColorTimingSoundService service)
     {
         soundService = service ?? throw new ArgumentNullException(nameof(service));
@@ -17,6 +21,7 @@ public sealed class GrassInteractionView : MonoBehaviour, IColorTimingSoundConsu
 
     public List<AudioClip> audioClips;
 
+    // 在首帧启动依赖就绪后的业务或表现流程。
     private void Start()
     {
         animator = GetComponent<Animator>();
@@ -34,6 +39,7 @@ public sealed class GrassInteractionView : MonoBehaviour, IColorTimingSoundConsu
         }
     }
 
+    // 响应TriggerEnter2D回调，并更新本对象状态。
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //if ("Player" == collision.gameObject.tag )

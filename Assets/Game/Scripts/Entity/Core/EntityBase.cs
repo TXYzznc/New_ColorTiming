@@ -1,10 +1,14 @@
-﻿using GameFramework;
+﻿// 文件职责：定义 实体基类，承担 Core 模块中的对应职责。
+// 所属模块：Entity / Core。
+
+using GameFramework;
 using UnityGameFramework.Runtime;
 #if UNITY_EDITOR
 using UnityEditor;
 [CustomEditor(typeof(EntityBase), true)]
 public class EntityBaseInspector : Editor
 {
+    // 响应检视面板GUI回调，并更新本对象状态。
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
@@ -18,6 +22,7 @@ public class EntityBase : EntityLogic
 {
     public int Id { get; private set; }
     public EntityParams Params { get; private set; }
+    // 在 GF 对象首次初始化时建立持久引用。
     protected override void OnInit(object userData)
     {
         base.OnInit(userData);
@@ -29,6 +34,7 @@ public class EntityBase : EntityLogic
         Id = this.Entity.Id;
     }
 
+    // 实体显示时读取参数并建立本次生命周期状态。
     protected override void OnShow(object userData)
     {
         base.OnShow(userData);
@@ -64,6 +70,7 @@ public class EntityBase : EntityLogic
 
         Params.OnShowCallback?.Invoke(this);
     }
+    // 实体隐藏时清理本次显示产生的运行时状态。
     protected override void OnHide(bool isShutdown, object userData)
     {
         Params.OnHideCallback?.Invoke(this);

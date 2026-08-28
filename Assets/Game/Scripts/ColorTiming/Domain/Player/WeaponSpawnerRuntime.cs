@@ -1,3 +1,6 @@
+// 文件职责：定义 武器Spawner运行时，承担 玩家 模块中的对应职责。
+// 所属模块：ColorTiming / Domain / Player。
+
 using System;
 using System.Collections.Generic;
 using ColorTiming.Combat;
@@ -14,6 +17,7 @@ namespace ColorTiming.Player
         private readonly WeaponSpawnPolicy policy;
         private readonly IRandomSource random;
 
+        // 初始化武器Spawner运行时实例及其核心依赖。
         public WeaponSpawnerRuntime(float interval, WeaponSpawnPolicy policy, IRandomSource random)
         {
             clock = new WeaponSpawnClock(interval);
@@ -21,6 +25,7 @@ namespace ColorTiming.Player
             this.random = random ?? throw new ArgumentNullException(nameof(random));
         }
 
+        // 按当前时间步推进核心状态，并发布必要的状态变化。
         public WeaponSpawnDecision Tick(
             float deltaTime,
             IReadOnlyCollection<WeaponColor> activeColors,

@@ -1,3 +1,6 @@
+// 文件职责：负责 Boss2尾部Actor 的场景或界面表现。
+// 所属模块：ColorTiming / Presentation / Actors / Boss2。
+
 using Spine;
 using Spine.Unity;
 using System;
@@ -52,11 +55,13 @@ public class Boss2TailActorView : MonoBehaviour, ITransientEntityConsumer, IBatt
 
     public bool IsStoppedForBattleEnd { get; private set; }
 
+    // 绑定TransientEntities依赖或事件监听。
     public void BindTransientEntities(ITransientEntityService entities)
     {
         transientEntities = entities ?? throw new ArgumentNullException(nameof(entities));
     }
 
+    // 绑定战斗会话依赖或事件监听。
     public void BindBattleSession(BattleSession session)
     {
         if (battleSession != null && !ReferenceEquals(battleSession, session))
@@ -64,10 +69,12 @@ public class Boss2TailActorView : MonoBehaviour, ITransientEntityConsumer, IBatt
         battleSession = session ?? throw new ArgumentNullException(nameof(session));
     }
 
+    // 绑定玩家目标依赖或事件监听。
     public void BindPlayerTarget(Transform target)
     {
         playerTarget = target != null ? target : throw new ArgumentNullException(nameof(target));
     }
+    // 在首帧启动依赖就绪后的业务或表现流程。
     private void Start()
     {
         PolygonCollider2D = GetComponent<PolygonCollider2D>();
@@ -81,6 +88,7 @@ public class Boss2TailActorView : MonoBehaviour, ITransientEntityConsumer, IBatt
         AnimPlay(animName_Rutu, false);
     }
 
+    // 逐帧推进需要实时刷新的业务或表现状态。
     private void Update()
     {
         if (IsStoppedForBattleEnd || battleSession == null || playerTarget == null)
@@ -100,6 +108,7 @@ public class Boss2TailActorView : MonoBehaviour, ITransientEntityConsumer, IBatt
         }
     }
 
+    // 按物理帧推进与刚体或碰撞相关的状态。
     private void FixedUpdate()
     {
         if (battleSession == null || playerTarget == null)
@@ -243,6 +252,7 @@ public class Boss2TailActorView : MonoBehaviour, ITransientEntityConsumer, IBatt
 
     }
 
+    // 停止For战斗结束并清理临时播放状态。
     public void StopForBattleEnd()
     {
         if (IsStoppedForBattleEnd)

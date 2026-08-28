@@ -1,3 +1,6 @@
+// 文件职责：在场景中建立并释放战斗会话及运行时依赖。
+// 所属模块：ColorTiming / Bootstrap。
+
 using System;
 using System.Collections;
 using ColorTiming.Application.Battle;
@@ -59,6 +62,7 @@ namespace ColorTiming.Bootstrap
             ui.ShowBattleTutorial(session);
         }
 
+        // 执行Show对应的主要流程。
         void Show(BattlePresentationResult result)
         {
             if (resultHandled) return;
@@ -114,6 +118,7 @@ namespace ColorTiming.Bootstrap
             }
         }
 
+        // 响应展示请求回调，并更新本对象状态。
         void OnPresentationRequested(BattlePresentationEvent message)
         {
             if (message.Kind == BattlePresentationEventKind.BattleWon)
@@ -124,6 +129,7 @@ namespace ColorTiming.Bootstrap
                 Show(BattlePresentationResult.PlayerDefeated);
         }
 
+        // 加载Boss2AfterDelay，并处理完成或失败结果。
         IEnumerator LoadBoss2AfterDelay()
         {
             yield return new WaitForSecondsRealtime(1f);
@@ -131,6 +137,7 @@ namespace ColorTiming.Bootstrap
             sceneFlow.TryLoad(ColorTimingSceneId.Boss2);
         }
 
+        // 组件销毁时释放订阅、句柄和运行时资源。
         void OnDestroy()
         {
             if (pendingTransition != null) StopCoroutine(pendingTransition);
@@ -144,6 +151,7 @@ namespace ColorTiming.Bootstrap
 
         sealed class UnityRandomSource : IRandomSource
         {
+            // 执行Range对应的主要流程。
             public int Range(int minimumInclusive, int maximumExclusive) =>
                 UnityEngine.Random.Range(minimumInclusive, maximumExclusive);
         }

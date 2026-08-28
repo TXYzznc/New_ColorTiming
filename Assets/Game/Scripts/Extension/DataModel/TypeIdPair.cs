@@ -1,3 +1,6 @@
+// 文件职责：定义 类型IDPair，承担 数据模型 模块中的对应职责。
+// 所属模块：Extension / DataModel。
+
 using GameFramework;
 using System;
 using System.Runtime.InteropServices;

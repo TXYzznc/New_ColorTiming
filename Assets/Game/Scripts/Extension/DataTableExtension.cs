@@ -1,4 +1,7 @@
-﻿using GameFramework;
+﻿// 文件职责：提供数据表加载、查询和资源索引辅助方法。
+// 所属模块：Extension。
+
+using GameFramework;
 using GameFramework.DataTable;
 using System;
 using System.IO;
@@ -19,6 +22,7 @@ public static class DataTableExtension
     /// <param name="dataTableName"></param>
     /// <param name="abTestGroupName"></param>
     /// <param name="userData"></param>
+    // 加载数据数据表，并处理完成或失败结果。
     public static void LoadDataTable(this DataTableComponent dataTableComponent, string dataTableName, string abTestGroupName, bool useBytes, object userData = null)
     {
         if (string.IsNullOrWhiteSpace(dataTableName))
@@ -71,71 +75,85 @@ public static class DataTableExtension
     /// <param name="dataTableComponent"></param>
     /// <param name="dataTableName"></param>
     /// <param name="userData"></param>
+    // 加载数据数据表，并处理完成或失败结果。
     public static void LoadDataTable(this DataTableComponent dataTableComponent, string dataTableName, bool useBytes, object userData = null)
     {
         string abTestGroup = GFBuiltin.Setting.GetABTestGroup();
         dataTableComponent.LoadDataTable(dataTableName, abTestGroup, useBytes, userData);
     }
+    // 解析颜色32并写入当前数据结构。
     public static Color32 ParseColor32(string value)
     {
         if (string.IsNullOrWhiteSpace(value)) return new Color32(255, 255, 255, 255);
         string[] splitValue = value.Split(',');
         return new Color32(byte.Parse(splitValue[0]), byte.Parse(splitValue[1]), byte.Parse(splitValue[2]), byte.Parse(splitValue[3]));
     }
+    // 从数据流读取并解析颜色32。
     public static Color32 ReadColor32(this BinaryReader binaryReader)
     {
         return new Color32(binaryReader.ReadByte(), binaryReader.ReadByte(), binaryReader.ReadByte(), binaryReader.ReadByte());
     }
+    // 解析颜色并写入当前数据结构。
     public static Color ParseColor(string value)
     {
         if (string.IsNullOrWhiteSpace(value)) return Color.white;
         string[] splitValue = value.Split(',');
         return new Color(float.Parse(splitValue[0]), float.Parse(splitValue[1]), float.Parse(splitValue[2]), float.Parse(splitValue[3]));
     }
+    // 从数据流读取并解析颜色。
     public static Color ReadColor(this BinaryReader binaryReader)
     {
         return new Color(binaryReader.ReadSingle(), binaryReader.ReadSingle(), binaryReader.ReadSingle(), binaryReader.ReadSingle());
     }
+    // 解析Quaternion并写入当前数据结构。
     public static Quaternion ParseQuaternion(string value)
     {
         if (string.IsNullOrWhiteSpace(value)) return Quaternion.identity;
         string[] splitValue = value.Split(',');
         return new Quaternion(float.Parse(splitValue[0]), float.Parse(splitValue[1]), float.Parse(splitValue[2]), float.Parse(splitValue[3]));
     }
+    // 从数据流读取并解析Quaternion。
     public static Quaternion ReadQuaternion(this BinaryReader binaryReader)
     {
         return new Quaternion(binaryReader.ReadSingle(), binaryReader.ReadSingle(), binaryReader.ReadSingle(), binaryReader.ReadSingle());
     }
+    // 解析Date时间并写入当前数据结构。
     public static DateTime ParseDateTime(string value)
     {
         if (string.IsNullOrWhiteSpace(value)) return DateTime.MinValue;
         return DateTime.Parse(value);
     }
+    // 从数据流读取并解析Date时间。
     public static DateTime ReadDateTime(this BinaryReader binaryReader)
     {
         return new DateTime(binaryReader.ReadInt64());
     }
+    // 解析Rect并写入当前数据结构。
     public static Rect ParseRect(string value)
     {
         if (string.IsNullOrWhiteSpace(value)) return Rect.zero;
         string[] splitValue = value.Split(',');
         return new Rect(float.Parse(splitValue[0]), float.Parse(splitValue[1]), float.Parse(splitValue[2]), float.Parse(splitValue[3]));
     }
+    // 从数据流读取并解析Rect。
     public static Rect ReadRect(this BinaryReader binaryReader)
     {
         return new Rect(binaryReader.ReadSingle(), binaryReader.ReadSingle(), binaryReader.ReadSingle(), binaryReader.ReadSingle());
     }
+    // 解析Vector2并写入当前数据结构。
     public static Vector2 ParseVector2(string value)
     {
         if (string.IsNullOrWhiteSpace(value)) return Vector2.zero;
         string[] splitValue = value.Split(',');
         return new Vector2(float.Parse(splitValue[0]), float.Parse(splitValue[1]));
     }
+    // 从数据流读取并解析Vector2。
     public static Vector2 ReadVector2(this BinaryReader binaryReader)
     {
         return new Vector2(binaryReader.ReadSingle(), binaryReader.ReadSingle());
     }
 
+    // 解析Vector2Array并写入当前数据结构。
     public static Vector2[] ParseVector2Array(string value)
     {
         string[] arr = ParseArrayElements(value);
@@ -147,6 +165,7 @@ public static class DataTableExtension
         }
         return result;
     }
+    // 从数据流读取并解析Vector2Array。
     public static Vector2[] ReadVector2Array(this BinaryReader binaryReader)
     {
         int length = binaryReader.Read7BitEncodedInt32();
@@ -158,16 +177,19 @@ public static class DataTableExtension
         }
         return result;
     }
+    // 解析Vector2Int并写入当前数据结构。
     public static Vector2Int ParseVector2Int(string value)
     {
         if (string.IsNullOrWhiteSpace(value)) return Vector2Int.zero;
         string[] splitValue = value.Split(',');
         return new Vector2Int(int.Parse(splitValue[0]), int.Parse(splitValue[1]));
     }
+    // 从数据流读取并解析Vector2Int。
     public static Vector2Int ReadVector2Int(this BinaryReader binaryReader)
     {
         return new Vector2Int(binaryReader.Read7BitEncodedInt32(), binaryReader.Read7BitEncodedInt32());
     }
+    // 解析Vector2IntArray并写入当前数据结构。
     public static Vector2Int[] ParseVector2IntArray(string value)
     {
         string[] arr = ParseArrayElements(value);
@@ -179,6 +201,7 @@ public static class DataTableExtension
         }
         return result;
     }
+    // 从数据流读取并解析Vector2IntArray。
     public static Vector2Int[] ReadVector2IntArray(this BinaryReader binaryReader)
     {
         int length = binaryReader.Read7BitEncodedInt32();
@@ -190,6 +213,7 @@ public static class DataTableExtension
         }
         return result;
     }
+    // 解析Vector3并写入当前数据结构。
     public static Vector3 ParseVector3(string value)
     {
         if (string.IsNullOrWhiteSpace(value)) return Vector3.zero;
@@ -197,10 +221,12 @@ public static class DataTableExtension
 
         return new Vector3(float.Parse(splitValue[0]), float.Parse(splitValue[1]), float.Parse(splitValue[2]));
     }
+    // 从数据流读取并解析Vector3。
     public static Vector3 ReadVector3(this BinaryReader binaryReader)
     {
         return new Vector3(binaryReader.ReadSingle(), binaryReader.ReadSingle(), binaryReader.ReadSingle());
     }
+    // 解析Vector3Array并写入当前数据结构。
     public static Vector3[] ParseVector3Array(string value)
     {
         string[] arr = ParseArrayElements(value);
@@ -212,6 +238,7 @@ public static class DataTableExtension
         }
         return result;
     }
+    // 从数据流读取并解析Vector3Array。
     public static Vector3[] ReadVector3Array(this BinaryReader binaryReader)
     {
         int length = binaryReader.Read7BitEncodedInt32();
@@ -223,16 +250,19 @@ public static class DataTableExtension
         }
         return result;
     }
+    // 解析Vector3Int并写入当前数据结构。
     public static Vector3Int ParseVector3Int(string value)
     {
         if (string.IsNullOrWhiteSpace(value)) return Vector3Int.zero;
         string[] splitValue = value.Split(',');
         return new Vector3Int(int.Parse(splitValue[0]), int.Parse(splitValue[1]), int.Parse(splitValue[2]));
     }
+    // 从数据流读取并解析Vector3Int。
     public static Vector3Int ReadVector3Int(this BinaryReader binaryReader)
     {
         return new Vector3Int(binaryReader.Read7BitEncodedInt32(), binaryReader.Read7BitEncodedInt32(), binaryReader.Read7BitEncodedInt32());
     }
+    // 解析Vector3IntArray并写入当前数据结构。
     public static Vector3Int[] ParseVector3IntArray(string value)
     {
         string[] arr = ParseArrayElements(value);
@@ -244,6 +274,7 @@ public static class DataTableExtension
         }
         return result;
     }
+    // 从数据流读取并解析Vector3IntArray。
     public static Vector3Int[] ReadVector3IntArray(this BinaryReader binaryReader)
     {
         int length = binaryReader.Read7BitEncodedInt32();
@@ -255,16 +286,19 @@ public static class DataTableExtension
         }
         return result;
     }
+    // 解析Vector4并写入当前数据结构。
     public static Vector4 ParseVector4(string value)
     {
         if (string.IsNullOrWhiteSpace(value)) return Vector4.zero;
         string[] splitValue = value.Split(',');
         return new Vector4(float.Parse(splitValue[0]), float.Parse(splitValue[1]), float.Parse(splitValue[2]), float.Parse(splitValue[3]));
     }
+    // 从数据流读取并解析Vector4。
     public static Vector4 ReadVector4(this BinaryReader binaryReader)
     {
         return new Vector4(binaryReader.ReadSingle(), binaryReader.ReadSingle(), binaryReader.ReadSingle(), binaryReader.ReadSingle());
     }
+    // 解析Vector4Array并写入当前数据结构。
     public static Vector4[] ParseVector4Array(string value)
     {
         string[] arr = ParseArrayElements(value);
@@ -277,6 +311,7 @@ public static class DataTableExtension
         }
         return result;
     }
+    // 从数据流读取并解析Vector4Array。
     public static Vector4[] ReadVector4Array(this BinaryReader binaryReader)
     {
         int length = binaryReader.Read7BitEncodedInt32();
@@ -288,17 +323,20 @@ public static class DataTableExtension
         }
         return result;
     }
+    // 解析int4并写入当前数据结构。
     public static Unity.Mathematics.int4 Parseint4(string value)
     {
         if (string.IsNullOrWhiteSpace(value)) return int4.zero;
         string[] splitValue = value.Split(',');
         return new Unity.Mathematics.int4(int.Parse(splitValue[0]), int.Parse(splitValue[1]), int.Parse(splitValue[2]), int.Parse(splitValue[3]));
     }
+    // 从数据流读取并解析int4。
     public static Unity.Mathematics.int4 Readint4(this BinaryReader binaryReader)
     {
         return new Unity.Mathematics.int4(binaryReader.Read7BitEncodedInt32(), binaryReader.Read7BitEncodedInt32(), binaryReader.Read7BitEncodedInt32(), binaryReader.Read7BitEncodedInt32());
     }
 
+    // 解析int4Array并写入当前数据结构。
     public static Unity.Mathematics.int4[] Parseint4Array(string value)
     {
         if (string.IsNullOrWhiteSpace(value)) return null;
@@ -310,6 +348,7 @@ public static class DataTableExtension
         }
         return result;
     }
+    // 从数据流读取并解析int4Array。
     public static Unity.Mathematics.int4[] Readint4Array(this BinaryReader binaryReader)
     {
         int length = binaryReader.Read7BitEncodedInt32();
@@ -506,10 +545,12 @@ public static class DataTableExtension
         return arr;
     }
 
+    // 解析类型并写入当前数据结构。
     public static Type ParseType(string value)
     {
         return Utility.Assembly.GetType(value);
     }
+    // 从数据流读取并解析类型。
     public static Type ReadType(this BinaryReader binaryReader)
     {
         return ParseType(binaryReader.ReadString());
@@ -533,6 +574,7 @@ public static class DataTableExtension
         }
         return null;
     }
+    // 尝试ParseEnum，并通过返回值报告是否成功。
     public static bool TryParseEnum(string enumValue, out Type enumType, out int value)
     {
         enumType = null;
@@ -598,6 +640,7 @@ public static class DataTableExtension
         }
         return enumType != null && enumType.IsEnum;
     }
+    // 尝试ParseEnum，并通过返回值报告是否成功。
     public static bool TryParseEnum(string enumValue, out Type enumType)
     {
         return TryParseEnum(enumValue, out enumType, out _);

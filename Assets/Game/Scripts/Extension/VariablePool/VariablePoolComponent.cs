@@ -1,4 +1,7 @@
-﻿using GameFramework;
+﻿// 文件职责：定义 VariablePoolComponent，承担 VariablePool 模块中的对应职责。
+// 所属模块：Extension / VariablePool。
+
+using GameFramework;
 using System.Collections.Generic;
 using UnityGameFramework.Runtime;
 using UnityEngine;
@@ -15,11 +18,13 @@ public class VariablePoolComponentInspector : UnityEditor.Editor
     int m_UnfoldId;
     int m_TotalVariableCount;
     bool m_Debug;
+    // 组件启用时注册监听并同步当前状态。
     private void OnEnable()
     {
         m_Target = target as VariablePoolComponent;
         m_UnfoldId = -1;
     }
+    // 响应检视面板GUI回调，并更新本对象状态。
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
@@ -76,6 +81,7 @@ public class VariablePoolComponent : GameFrameworkComponent
 #if UNITY_EDITOR
     public Dictionary<int, Dictionary<string, Variable>> Variables => m_Variables;
 #endif
+    // 缓存本组件依赖，并完成不依赖外部服务的本地初始化。
     protected override void Awake()
     {
         base.Awake();
@@ -83,11 +89,13 @@ public class VariablePoolComponent : GameFrameworkComponent
         m_DelayedReleaseVariables = new List<DelayedReleaseInfo>(Mathf.Max(m_DelayedReleaseCapacity, 1));
     }
 
+    // 在普通帧更新完成后同步最终表现状态。
     private void LateUpdate()
     {
         ReleaseDelayedVariables(Time.frameCount);
     }
 
+    // 组件销毁时释放订阅、句柄和运行时资源。
     private void OnDestroy()
     {
         ReleaseAllDelayedVariables();
@@ -154,11 +162,13 @@ public class VariablePoolComponent : GameFrameworkComponent
         }
     }
 
+    // 执行HasVariable对应的主要流程。
     public bool HasVariable(int rootId, string key)
     {
         return m_Variables.TryGetValue(rootId, out var values) && values.ContainsKey(key);
     }
 
+    // 执行DelayReleaseVariable对应的主要流程。
     public void DelayReleaseVariable(Variable value)
     {
         if (value == null)
@@ -173,6 +183,7 @@ public class VariablePoolComponent : GameFrameworkComponent
         });
     }
 
+    // 清空Variables的运行时状态。
     public void ClearVariables(int rootId)
     {
         if (m_Variables.TryGetValue(rootId, out var values))
@@ -202,6 +213,7 @@ public class VariablePoolComponent : GameFrameworkComponent
         }
     }
 
+    // 释放DelayedVariables及其临时资源。
     private void ReleaseDelayedVariables(int currentFrame)
     {
         if (m_DelayedReleaseVariables.Count == 0)
@@ -234,6 +246,7 @@ public class VariablePoolComponent : GameFrameworkComponent
         }
     }
 
+    // 释放AllDelayedVariables及其临时资源。
     private void ReleaseAllDelayedVariables()
     {
         for (int i = 0; i < m_DelayedReleaseVariables.Count; i++)

@@ -1,3 +1,6 @@
+// 文件职责：承载 Ref 创建或调用所需参数。
+// 所属模块：Common。
+
 using GameFramework;
 using UnityGameFramework.Runtime;
 /// <summary>
@@ -6,6 +9,7 @@ using UnityGameFramework.Runtime;
 public class RefParams : IReference
 {
     public int Id { get; protected set; }
+    // 创建并初始化新的实例。
     public static RefParams Create()
     {
         var eParams = ReferencePool.Acquire<RefParams>();
@@ -24,12 +28,14 @@ public class RefParams : IReference
     {
         GF.VariablePool.SetVariable<T>(Id, key, value);
     }
+    // 写入新的值并替换旧状态。
     public void Set(string key, object value)
     {
         var varObj = ReferencePool.Acquire<VarObject>();
         varObj.Value = value;
         Set<VarObject>(key, varObj);
     }
+    // 获取当前保存的值。
     public object Get(string key)
     {
         return Get<VarObject>(key).Value;
@@ -66,6 +72,7 @@ public class RefParams : IReference
         return GF.VariablePool.TryGetVariable<T>(this.Id, key, out value);
     }
 
+    // 清空当前保存的运行时状态，使对象可安全复用。
     public void Clear()
     {
         ResetProperties();

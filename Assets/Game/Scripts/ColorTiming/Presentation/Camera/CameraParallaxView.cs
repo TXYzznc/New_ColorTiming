@@ -1,3 +1,6 @@
+// 文件职责：负责 相机Parallax 的场景或界面表现。
+// 所属模块：ColorTiming / Presentation / Camera。
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,17 +12,20 @@ public sealed class CameraParallaxView : MonoBehaviour, IGameplayCameraConsumer
 
     Transform gameplayCamera;
 
+    // 绑定Gameplay相机依赖或事件监听。
     public void BindGameplayCamera(Camera camera)
     {
         gameplayCamera = camera != null ? camera.transform : null;
     }
 
     Vector3 startPos;
+    // 在首帧启动依赖就绪后的业务或表现流程。
     private void Start()
     {
         startPos = transform.position;
     }
 
+    // 逐帧推进需要实时刷新的业务或表现状态。
     private void Update()
     {
         //获取差值

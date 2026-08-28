@@ -1,3 +1,6 @@
+// 文件职责：负责 玩家Death序列 的场景或界面表现。
+// 所属模块：ColorTiming / Presentation / Actors / Player。
+
 using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,6 +12,7 @@ public class PlayerDeathSequenceView : MonoBehaviour, IColorTimingSceneFlowConsu
 {
     IColorTimingSceneFlow sceneFlow;
 
+    // 绑定场景流程依赖或事件监听。
     public void BindSceneFlow(IColorTimingSceneFlow flow)
     {
         sceneFlow = flow ?? throw new ArgumentNullException(nameof(flow));
@@ -23,6 +27,7 @@ public class PlayerDeathSequenceView : MonoBehaviour, IColorTimingSceneFlowConsu
 
     float startSize = 8f;
     bool restartRequested;
+    // 在首帧启动依赖就绪后的业务或表现流程。
     private void Start()
     {
         // 控制镜头缩进到5.2   先获取镜头大小
@@ -36,6 +41,7 @@ public class PlayerDeathSequenceView : MonoBehaviour, IColorTimingSceneFlowConsu
         //transform.localScale = new Vector3(_l, _l, 1);
     }
 
+    // 逐帧推进需要实时刷新的业务或表现状态。
     private void Update()
     {
         if(_st > 0)
@@ -58,6 +64,7 @@ public class PlayerDeathSequenceView : MonoBehaviour, IColorTimingSceneFlowConsu
     }
 
 
+    // 执行DeathOver对应的主要流程。
     public void DeathOver(int _e)
     {
         if (_e > 0 && !restartRequested)

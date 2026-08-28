@@ -1,3 +1,6 @@
+// 文件职责：定义 Boss战斗生命值，承担 Combat 模块中的对应职责。
+// 所属模块：ColorTiming / Domain / Combat。
+
 using System;
 
 namespace ColorTiming.Combat
@@ -15,6 +18,7 @@ namespace ColorTiming.Combat
     {
         private bool victoryEmitted;
 
+        // 初始化Boss战斗生命值实例及其核心依赖。
         public BossBattleHealth(WeaknessQueue weaknesses)
         {
             Weaknesses = weaknesses ?? throw new ArgumentNullException(nameof(weaknesses));
@@ -30,6 +34,7 @@ namespace ColorTiming.Combat
         public event Action<WeaponColor> DamageAccepted;
         public event Action Victory;
 
+        // 执行Apply对应的主要流程。
         public BossDamageResolution Apply(BattleDamage request)
         {
             if (Result != BattleResult.InProgress)

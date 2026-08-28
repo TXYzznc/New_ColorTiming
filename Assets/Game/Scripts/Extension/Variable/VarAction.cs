@@ -1,4 +1,7 @@
-﻿using GameFramework;
+﻿// 文件职责：定义 Var动作，承担 Variable 模块中的对应职责。
+// 所属模块：Extension / Variable。
+
+using GameFramework;
 using System;
 using System.Collections;
 using System.Collections.Generic;

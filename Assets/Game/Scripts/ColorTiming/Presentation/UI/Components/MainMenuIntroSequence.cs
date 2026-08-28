@@ -1,3 +1,6 @@
+// 文件职责：定义 Main菜单Intro序列，承担 Components 模块中的对应职责。
+// 所属模块：ColorTiming / Presentation / UI / Components。
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -18,11 +21,13 @@ public class MainMenuIntroSequence : MonoBehaviour
 
     public VideoPlayer loop2;
     public RawImage VideoDisplay => videoDisplay;
+    // 缓存本组件依赖，并完成不依赖外部服务的本地初始化。
     void Awake()
     {
         player = GetComponent<VideoPlayer>();
     }
 
+    // 组件启用时注册监听并同步当前状态。
     void OnEnable()
     {
         if (player == null) player = GetComponent<VideoPlayer>();
@@ -30,6 +35,7 @@ public class MainMenuIntroSequence : MonoBehaviour
         EnsureVideoOutput();
     }
 
+    // 组件停用时解除监听并停止临时流程。
     void OnDisable()
     {
         if (player != null) player.loopPointReached -= PlayEnd;
@@ -40,6 +46,7 @@ public class MainMenuIntroSequence : MonoBehaviour
         }
     }
 
+    // 播放结束对应的动画、音频或表现。
     private void PlayEnd(VideoPlayer source)
     {
         if (switchRoutine == null)
@@ -108,6 +115,7 @@ public class MainMenuIntroSequence : MonoBehaviour
         gameObject.SetActive(false);
     }
 
+    // 执行Restart序列对应的主要流程。
     public void RestartSequence()
     {
         if (player == null) player = GetComponent<VideoPlayer>();
@@ -134,6 +142,7 @@ public class MainMenuIntroSequence : MonoBehaviour
         }
     }
 
+    // 停止序列并清理临时播放状态。
     public void StopSequence()
     {
         if (switchRoutine != null)
@@ -194,6 +203,7 @@ public class MainMenuIntroSequence : MonoBehaviour
         }
     }
 
+    // 组件销毁时释放订阅、句柄和运行时资源。
     private void OnDestroy()
     {
         if (outputTexture == null)

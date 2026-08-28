@@ -1,3 +1,6 @@
+// 文件职责：定义 FunctionLibrary，承担 Utilities 模块中的对应职责。
+// 所属模块：ColorTiming / Presentation / Utilities。
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,6 +18,7 @@ public static class FunctionLibrary
         return newList;
     }
 
+    // 获取位置OnCircle。
     public static Vector2 GetPositionOnCircle(float angleInDegrees, float radius)
     {
         // 将角度转换为弧度

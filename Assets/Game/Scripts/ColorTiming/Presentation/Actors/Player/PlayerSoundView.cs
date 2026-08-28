@@ -1,3 +1,6 @@
+// 文件职责：负责 玩家音效 的场景或界面表现。
+// 所属模块：ColorTiming / Presentation / Actors / Player。
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,6 +17,7 @@ public class PlayerSoundView : MonoBehaviour, IColorTimingSoundConsumer
 {
     IColorTimingSoundService soundService;
 
+    // 绑定音效Service依赖或事件监听。
     public void BindSoundService(IColorTimingSoundService service)
     {
         soundService = service ?? throw new ArgumentNullException(nameof(service));
@@ -27,6 +31,7 @@ public class PlayerSoundView : MonoBehaviour, IColorTimingSoundConsumer
     public AudioClip disWeapon;
 
     public List<string> moveCase = new List<string>();
+    // 添加Overwrite移动输入Case并维护相关集合状态。
     public void AddOverwriteMoveCase(bool add,string name)
     {
         if (add)
@@ -40,11 +45,13 @@ public class PlayerSoundView : MonoBehaviour, IColorTimingSoundConsumer
 
     }
 
+    // 播放Auido对应的动画、音频或表现。
     public void PlayAuido(AudioClip audioClip)
     {
         soundService?.Play(audioClip, ColorTimingSoundChannel.Player, transform.position);
     }
 
+    // 播放Auido随机源对应的动画、音频或表现。
     public void PlayAuido_Random(string randomName)
     {
         List<AudioClip> audioClips = new List<AudioClip>();
@@ -70,6 +77,7 @@ public class PlayerSoundView : MonoBehaviour, IColorTimingSoundConsumer
 
     }
 
+    // 启动当前配置的动画、音频或其他表现。
     public void Play(PlayerSoundCue cue)
     {
         AudioClip clip;
@@ -88,11 +96,13 @@ public class PlayerSoundView : MonoBehaviour, IColorTimingSoundConsumer
         PlayAuido(clip);
     }
 
+    // 播放Auido随机源对应的动画、音频或表现。
     public void PlayAuido_Random(AudioClip[] audioClips)
     {
 
     }
 
+    // 播放Auido随机源对应的动画、音频或表现。
     public void PlayAuido_Random(List<AudioClip> audioClips)
     {
 

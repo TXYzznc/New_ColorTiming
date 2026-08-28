@@ -1,3 +1,6 @@
+// 文件职责：定义 武器词汇，承担 Combat 模块中的对应职责。
+// 所属模块：ColorTiming / Domain / Combat。
+
 using System;
 
 namespace ColorTiming.Combat
@@ -23,6 +26,7 @@ namespace ColorTiming.Combat
 
     public readonly struct WeaponIdentity : IEquatable<WeaponIdentity>
     {
+        // 初始化武器标识实例及其核心依赖。
         public WeaponIdentity(WeaponColor color, WeaponType type)
         {
             if (!Enum.IsDefined(typeof(WeaponColor), color))
@@ -42,16 +46,19 @@ namespace ColorTiming.Combat
         public WeaponType Type { get; }
         public bool IsNormal => Type == WeaponType.Normal;
 
+        // 执行ToLegacyAnimatorIndex对应的主要流程。
         public int ToLegacyAnimatorIndex()
         {
             return IsNormal ? 0 : (int)Type + (int)Color * 6;
         }
 
+        // 执行FromLegacy对应的主要流程。
         public static WeaponIdentity FromLegacy(int colorIndex, int weaponTypeIndex)
         {
             return new WeaponIdentity((WeaponColor)colorIndex, (WeaponType)weaponTypeIndex);
         }
 
+        // 执行FromLegacyAnimatorIndex对应的主要流程。
         public static WeaponIdentity FromLegacyAnimatorIndex(int animatorIndex)
         {
             if (animatorIndex == 0)

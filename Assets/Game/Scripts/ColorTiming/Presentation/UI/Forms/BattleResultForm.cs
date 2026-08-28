@@ -1,3 +1,6 @@
+// 文件职责：实现 战斗结果 GF.UI 表单及其交互生命周期。
+// 所属模块：ColorTiming / Presentation / UI / Forms。
+
 using System;
 using ColorTiming.Bootstrap.Flow;
 using ColorTiming.Input;
@@ -18,6 +21,7 @@ public sealed class BattleResultForm : UIFormBase, IColorTimingBattleResultForm
     IGameInput gameInput;
     float fade;
 
+    // 绑定运行时依赖或事件监听。
     public void BindRuntime(
         IColorTimingSceneFlow flow,
         IGameInput input,
@@ -38,6 +42,7 @@ public sealed class BattleResultForm : UIFormBase, IColorTimingBattleResultForm
         fade = 0f;
     }
 
+    // 逐帧推进需要实时刷新的业务或表现状态。
     void Update()
     {
         if (victory != null && victory.gameObject.activeSelf && fade < 1f)

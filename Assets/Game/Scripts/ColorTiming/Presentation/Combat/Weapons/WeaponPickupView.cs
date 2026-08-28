@@ -1,3 +1,5 @@
+// 文件职责：负责 武器拾取 的场景或界面表现。
+// 所属模块：ColorTiming / Presentation / Combat / Weapons。
 
 using System;
 using ColorTiming.Combat;
@@ -20,16 +22,19 @@ public class WeaponPickupView : MonoBehaviour, IColorTimingSoundConsumer, IFrame
     IColorTimingSoundService soundService;
     Action frameworkRelease;
 
+    // 绑定音效Service依赖或事件监听。
     public void BindSoundService(IColorTimingSoundService service)
     {
         soundService = service ?? throw new ArgumentNullException(nameof(service));
     }
 
+    // 绑定FrameworkRelease依赖或事件监听。
     public void BindFrameworkRelease(Action release)
     {
         frameworkRelease = release;
     }
 
+    // 响应Framework实体Spawned回调，并更新本对象状态。
     public void OnFrameworkEntitySpawned() { }
 
     public void OnFrameworkEntityDespawned()
@@ -47,6 +52,7 @@ public class WeaponPickupView : MonoBehaviour, IColorTimingSoundConsumer, IFrame
 
     float fadeProgress;
 
+    // 缓存本组件依赖，并完成不依赖外部服务的本地初始化。
     private void Awake()
     {
         boxCollider = GetComponent<BoxCollider2D>();
@@ -55,6 +61,7 @@ public class WeaponPickupView : MonoBehaviour, IColorTimingSoundConsumer, IFrame
         spr.color = new Color(0f, 0f, 0f, 0f);
     }
 
+    // 组件启用时注册监听并同步当前状态。
     private void OnEnable()
     {
         fadeProgress = 0f;
@@ -65,6 +72,7 @@ public class WeaponPickupView : MonoBehaviour, IColorTimingSoundConsumer, IFrame
         }
     }
 
+    // 逐帧推进需要实时刷新的业务或表现状态。
     private void Update()
     {
         if (spr == null || boxCollider == null)
@@ -84,6 +92,7 @@ public class WeaponPickupView : MonoBehaviour, IColorTimingSoundConsumer, IFrame
         }
     }
 
+    // 执行InitPick武器对应的主要流程。
     public void InitPickWeapon(WeaponIdentity weapon)
     {
         Weapon = weapon;
@@ -92,6 +101,7 @@ public class WeaponPickupView : MonoBehaviour, IColorTimingSoundConsumer, IFrame
         SetSprite(false);
     }
 
+    // 设置Sprite，并使后续流程使用最新状态。
     void SetSprite(bool outline)
     {
         if (!spr) spr = GetComponent<SpriteRenderer>();
@@ -126,6 +136,7 @@ public class WeaponPickupView : MonoBehaviour, IColorTimingSoundConsumer, IFrame
         SetInWeapon(true);
     }
 
+    // 响应TriggerExit2D回调，并更新本对象状态。
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (hero == null || collision.GetComponent<PlayerActorView>() != hero)
@@ -137,11 +148,13 @@ public class WeaponPickupView : MonoBehaviour, IColorTimingSoundConsumer, IFrame
         UnsubscribeHero();
     }
 
+    // 组件停用时解除监听并停止临时流程。
     private void OnDisable()
     {
         UnsubscribeHero();
     }
 
+    // 设置In武器，并使后续流程使用最新状态。
     void SetInWeapon(bool enter)
     {
         if (hero != null && !pickingUp)
@@ -162,6 +175,7 @@ public class WeaponPickupView : MonoBehaviour, IColorTimingSoundConsumer, IFrame
 
     }
 
+    // 显示Tip并同步当前数据。
     public void ShowTip(int y)
     {
         if(y > 1)
@@ -174,12 +188,14 @@ public class WeaponPickupView : MonoBehaviour, IColorTimingSoundConsumer, IFrame
         }
     }
 
+    // 隐藏Tip并停止相关交互。
     public void HideTip()
     {
         tip2?.SetActive(false);
         tip1?.SetActive(false);
     }
 
+    // 尝试拾取，并通过返回值报告是否成功。
     void TryPickup()
     {
         if (!isEnter) return;
@@ -191,6 +207,7 @@ public class WeaponPickupView : MonoBehaviour, IColorTimingSoundConsumer, IFrame
                 pickingUp = true;
                 UnsubscribeHero();
                 if (frameworkRelease != null) frameworkRelease();
+                // 执行Destroy对应的主要流程。
                 else Destroy(gameObject);
             }
         }

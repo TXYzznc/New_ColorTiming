@@ -1,3 +1,6 @@
+// 文件职责：定义 玩家动作状态Machine，承担 玩家 模块中的对应职责。
+// 所属模块：ColorTiming / Domain / Player。
+
 using System;
 
 namespace ColorTiming.Player
@@ -38,6 +41,7 @@ namespace ColorTiming.Player
         public bool CanEvadeDamage => IsDashing && HasDashInvulnerability;
         public bool RejectsDamage => !IsAlive || HasAnimationInvulnerability || HitInvulnerabilityRemaining > 0f;
 
+        // 按当前时间步推进核心状态，并发布必要的状态变化。
         public void Tick(float deltaTime)
         {
             if (deltaTime < 0f)
@@ -48,6 +52,7 @@ namespace ColorTiming.Player
             HitInvulnerabilityRemaining = Math.Max(0f, HitInvulnerabilityRemaining - deltaTime);
         }
 
+        // 设置移动输入，并使后续流程使用最新状态。
         public void SetMove(float x, float y)
         {
             MoveX = x;
@@ -58,6 +63,7 @@ namespace ColorTiming.Player
             }
         }
 
+        // 执行开始冲刺对应的主要流程。
         public bool BeginDash()
         {
             if (State != PlayerActionState.Locomotion || IsSkillMoving)
@@ -70,6 +76,7 @@ namespace ColorTiming.Player
             return true;
         }
 
+        // 执行结束冲刺对应的主要流程。
         public void EndDash()
         {
             if (IsDashing)
@@ -79,6 +86,7 @@ namespace ColorTiming.Player
             HasDashInvulnerability = false;
         }
 
+        // 设置冲刺无敌状态，并使后续流程使用最新状态。
         public void SetDashInvulnerable(bool active)
         {
             // Animation Events may be delivered immediately before the Animator state-enter
@@ -87,6 +95,7 @@ namespace ColorTiming.Player
             HasDashInvulnerability = active && IsAlive;
         }
 
+        // 执行开始攻击对应的主要流程。
         public bool BeginAttack()
         {
             if (State != PlayerActionState.Locomotion || IsSkillMoving)
@@ -98,6 +107,7 @@ namespace ColorTiming.Player
             return true;
         }
 
+        // 执行结束攻击对应的主要流程。
         public void EndAttack()
         {
             if (IsAttacking)
@@ -106,6 +116,7 @@ namespace ColorTiming.Player
             }
         }
 
+        // 执行开始Hit对应的主要流程。
         public void BeginHit()
         {
             if (!IsAlive)
@@ -118,6 +129,7 @@ namespace ColorTiming.Player
             HitInvulnerabilityRemaining = HitInvulnerabilitySeconds;
         }
 
+        // 执行结束Hit对应的主要流程。
         public void EndHit()
         {
             if (IsHitStunned)
@@ -126,6 +138,7 @@ namespace ColorTiming.Player
             }
         }
 
+        // 设置技能移动状态，并使后续流程使用最新状态。
         public void SetSkillMoving(bool active)
         {
             if (IsAlive)
@@ -134,11 +147,13 @@ namespace ColorTiming.Player
             }
         }
 
+        // 设置动画无敌状态，并使后续流程使用最新状态。
         public void SetAnimationInvulnerable(bool active)
         {
             HasAnimationInvulnerability = active && IsAlive;
         }
 
+        // 执行Kill对应的主要流程。
         public void Kill()
         {
             State = PlayerActionState.Dead;

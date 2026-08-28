@@ -1,3 +1,6 @@
+// 文件职责：定义 玩家动画事件Relay，承担 玩家 模块中的对应职责。
+// 所属模块：ColorTiming / Presentation / Actors / Player。
+
 using Cinemachine;
 using ColorTiming.Combat;
 using System;
@@ -27,11 +30,13 @@ public class PlayerAnimationEventRelay : MonoBehaviour
     SpriteRenderer spriteRenderer;
     bool flip;
 
+    // 在首帧启动依赖就绪后的业务或表现流程。
     private void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
+    // 逐帧推进需要实时刷新的业务或表现状态。
     private void Update()
     {
 
@@ -54,11 +59,13 @@ public class PlayerAnimationEventRelay : MonoBehaviour
         }
     }
 
+    // 显示Hit颜色并同步当前数据。
     public void ShowHitColor()
     {
         _showTime = damageShowTime;
     }
 
+    // 显示Hit并同步当前数据。
     void ShowHit()
     {
         float _sp = flip ? -1 : 1;
@@ -81,6 +88,7 @@ public class PlayerAnimationEventRelay : MonoBehaviour
 
     float switchTime = 0.5f;
     WeaponColor colorType;
+    // 显示武器颜色并同步当前数据。
     public void ShowWeaponColor(WeaponIdentity weapon)
     {
         if (weapon.IsNormal) return;
@@ -90,6 +98,7 @@ public class PlayerAnimationEventRelay : MonoBehaviour
         _it = 0;
     }
 
+    // 显示颜色并同步当前数据。
     void ShowColor()
     {
         Color _c = Color.white;
@@ -115,12 +124,14 @@ public class PlayerAnimationEventRelay : MonoBehaviour
         spriteRenderer.color = _c;
     }
 
+    // 执行冲刺WD对应的主要流程。
     public void DashWD(int enter)
     {
         bool e = enter > 0;
         OnDashWD?.Invoke(e);
     }
 
+    // 执行冲刺结束对应的主要流程。
     public void DashEnd()
     {
 
@@ -128,11 +139,13 @@ public class PlayerAnimationEventRelay : MonoBehaviour
 
     }
 
+    // 执行攻击对应的主要流程。
     public void Attack(string parm)
     {
         OnAttack?.Invoke(parm);
     }
 
+    // 执行Hit对应的主要流程。
     public void Hit(int _e)
     {
         OnHit?.Invoke(_e);
@@ -152,12 +165,14 @@ public class PlayerAnimationEventRelay : MonoBehaviour
         }
     }
 
+    // 执行技能移动输入对应的主要流程。
     public void SkillMove(int _start)
     {
 
         OnSkillMove?.Invoke(_start > 0);
     }
 
+    // 执行Wudi对应的主要流程。
     public void Wudi(int _enter)
     {
         OnWudi?.Invoke(_enter > 0);

@@ -1,3 +1,6 @@
+// 文件职责：定义 ColorTiming资源ID，承担 Bootstrap 模块中的对应职责。
+// 所属模块：ColorTiming / Bootstrap。
+
 namespace ColorTiming.Bootstrap
 {
     /// <summary>
@@ -23,8 +26,11 @@ namespace ColorTiming.Bootstrap
         public const string ConfigResource = "Config";
         public const string DataTableResource = "DataTable";
 
+        // 执行实体对应的主要流程。
         public static string Entity(string relativeName) => EntityPrefix + relativeName;
+        // 执行UI对应的主要流程。
         public static string Ui(string relativeName) => UiPrefix + relativeName;
+        // 执行音效对应的主要流程。
         public static string Sound(string relativeName) => SoundPrefix + relativeName;
     }
 }

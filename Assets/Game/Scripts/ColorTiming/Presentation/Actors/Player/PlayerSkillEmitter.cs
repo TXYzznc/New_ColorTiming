@@ -1,3 +1,6 @@
+// 文件职责：定义 玩家技能Emitter，承担 玩家 模块中的对应职责。
+// 所属模块：ColorTiming / Presentation / Actors / Player。
+
 using System;
 using ColorTiming.Combat;
 using ColorTiming.Input;
@@ -28,21 +31,25 @@ public class PlayerSkillEmitter : MonoBehaviour, IGameInputConsumer, IGameplayPo
     IGameplayPointerWorld pointerWorld;
     ITransientEntityService transientEntities;
 
+    // 绑定Game输入依赖或事件监听。
     public void BindGameInput(IGameInput input)
     {
         gameInput = input ?? throw new ArgumentNullException(nameof(input));
     }
 
+    // 绑定Gameplay指针依赖或事件监听。
     public void BindGameplayPointer(IGameplayPointerWorld pointer)
     {
         pointerWorld = pointer ?? throw new ArgumentNullException(nameof(pointer));
     }
 
+    // 绑定TransientEntities依赖或事件监听。
     public void BindTransientEntities(ITransientEntityService entities)
     {
         transientEntities = entities ?? throw new ArgumentNullException(nameof(entities));
     }
 
+    // 响应Fire回调，并更新本对象状态。
     public void OnFire(WeaponIdentity weapon,float look,string parm)
     {
         int filp = look > 0 ? 1 : -1;
@@ -121,6 +128,7 @@ public class PlayerSkillEmitter : MonoBehaviour, IGameInputConsumer, IGameplayPo
     }
 
 
+    // 创建技能并完成必要的初始配置。
     void CreateSkill(GameObject sk_,WeaponIdentity weapon,Vector3 pos,int _filp,string parm,Transform append)
     {
         if (sk_ == null)

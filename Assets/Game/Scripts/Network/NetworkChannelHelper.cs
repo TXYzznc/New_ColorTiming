@@ -1,4 +1,7 @@
-﻿//------------------------------------------------------------
+﻿// 文件职责：连接 GF.Network 与项目 Protobuf 包的序列化流程。
+// 所属模块：Network。
+
+//------------------------------------------------------------
 // Game Framework
 // Copyright © 2013-2021 Jiang Yin. All rights reserved.
 // Homepage: https://gameframework.cn/
@@ -215,6 +218,7 @@ namespace GameFramework.Network
             return null;
         }
 
+        // 响应NetworkConnected回调，并更新本对象状态。
         private void OnNetworkConnected(object sender, GameEventArgs e)
         {
             UnityGameFramework.Runtime.NetworkConnectedEventArgs ne = (UnityGameFramework.Runtime.NetworkConnectedEventArgs)e;
@@ -226,6 +230,7 @@ namespace GameFramework.Network
             Log.Info("Network channel '{0}' connected, local address '{1}', remote address '{2}'.", ne.NetworkChannel.Name, ne.NetworkChannel.Socket.LocalEndPoint.ToString(), ne.NetworkChannel.Socket.RemoteEndPoint.ToString());
         }
 
+        // 响应NetworkClosed回调，并更新本对象状态。
         private void OnNetworkClosed(object sender, GameEventArgs e)
         {
             UnityGameFramework.Runtime.NetworkClosedEventArgs ne = (UnityGameFramework.Runtime.NetworkClosedEventArgs)e;
@@ -237,6 +242,7 @@ namespace GameFramework.Network
             Log.Info("Network channel '{0}' closed.", ne.NetworkChannel.Name);
         }
 
+        // 响应NetworkMissHeartBeat回调，并更新本对象状态。
         private void OnNetworkMissHeartBeat(object sender, GameEventArgs e)
         {
             UnityGameFramework.Runtime.NetworkMissHeartBeatEventArgs ne = (UnityGameFramework.Runtime.NetworkMissHeartBeatEventArgs)e;
@@ -255,6 +261,7 @@ namespace GameFramework.Network
             ne.NetworkChannel.Close();
         }
 
+        // 响应NetworkError回调，并更新本对象状态。
         private void OnNetworkError(object sender, GameEventArgs e)
         {
             UnityGameFramework.Runtime.NetworkErrorEventArgs ne = (UnityGameFramework.Runtime.NetworkErrorEventArgs)e;
@@ -268,6 +275,7 @@ namespace GameFramework.Network
             ne.NetworkChannel.Close();
         }
 
+        // 响应NetworkCustomError回调，并更新本对象状态。
         private void OnNetworkCustomError(object sender, GameEventArgs e)
         {
             UnityGameFramework.Runtime.NetworkCustomErrorEventArgs ne = (UnityGameFramework.Runtime.NetworkCustomErrorEventArgs)e;

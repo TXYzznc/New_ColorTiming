@@ -1,3 +1,5 @@
+// 文件职责：实现战斗技能 Skill_base 的运行时表现和回收行为。
+// 所属模块：ColorTiming / Presentation / Combat / Skills。
 
 using System;
 using ColorTiming.Combat;
@@ -25,11 +27,13 @@ public class Skill_base : MonoBehaviour, ITransientEntityConsumer, IFrameworkEnt
     Action frameworkRelease;
     ITransientEntityService transientEntities;
 
+    // 缓存本组件依赖，并完成不依赖外部服务的本地初始化。
     private void Awake()
     {
         configuredLife = life;
     }
 
+    // 设置技能数据，并使后续流程使用最新状态。
     public void SetSkillData(ActorId sourceActor, WeaponIdentity weapon, int facing, string parameter)
     {
         attackerId = sourceActor;
@@ -38,6 +42,7 @@ public class Skill_base : MonoBehaviour, ITransientEntityConsumer, IFrameworkEnt
         atkWeapon = weapon;
         hasDamagePayload = true;
     }
+    // 在首帧启动依赖就绪后的业务或表现流程。
     void Start()
     {
         if (!initializedForSpawn)
@@ -45,11 +50,13 @@ public class Skill_base : MonoBehaviour, ITransientEntityConsumer, IFrameworkEnt
             InitializeForSpawn();
         }
     }
+    // 执行ChildStart对应的主要流程。
     protected virtual void ChildStart()
     {
 
     }
 
+    // 逐帧推进需要实时刷新的业务或表现状态。
     private void Update()
     {
         if (cTime)
@@ -67,11 +74,13 @@ public class Skill_base : MonoBehaviour, ITransientEntityConsumer, IFrameworkEnt
         ChildUpdate();
     }
 
+    // 执行ChildUpdate对应的主要流程。
     protected virtual void ChildUpdate()
     {
 
     }
 
+    // 响应TriggerEnter2D回调，并更新本对象状态。
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(cTag != "" && cTag != collision.gameObject.tag) return;
@@ -81,11 +90,13 @@ public class Skill_base : MonoBehaviour, ITransientEntityConsumer, IFrameworkEnt
         OnHit(collision,gameObject);
     }
 
+    // 执行事件结束Destroy对应的主要流程。
     public void EventEnd_Destroy()
     {
         ReleaseSelf();
     }
 
+    // 响应Hit回调，并更新本对象状态。
     protected virtual void OnHit(Collider2D collision,GameObject ht)
     {
         //一个技能只传递一次伤害
@@ -133,21 +144,25 @@ public class Skill_base : MonoBehaviour, ITransientEntityConsumer, IFrameworkEnt
     }
 
 
+    // 绑定TransientEntities依赖或事件监听。
     public void BindTransientEntities(ITransientEntityService entities)
     {
         transientEntities = entities ?? throw new ArgumentNullException(nameof(entities));
     }
 
+    // 绑定FrameworkRelease依赖或事件监听。
     public void BindFrameworkRelease(Action release)
     {
         frameworkRelease = release;
     }
 
+    // 响应Framework实体Spawned回调，并更新本对象状态。
     public void OnFrameworkEntitySpawned()
     {
         InitializeForSpawn();
     }
 
+    // 响应Framework实体Despawned回调，并更新本对象状态。
     public void OnFrameworkEntityDespawned()
     {
         cTime = false;
@@ -159,6 +174,7 @@ public class Skill_base : MonoBehaviour, ITransientEntityConsumer, IFrameworkEnt
         parm = null;
     }
 
+    // 释放Self及其临时资源。
     protected void ReleaseSelf()
     {
         if (releasing)
@@ -177,6 +193,7 @@ public class Skill_base : MonoBehaviour, ITransientEntityConsumer, IFrameworkEnt
         }
     }
 
+    // 生成Transient并交给对应生命周期系统管理。
     protected int SpawnTransient(
         GameObject prefab,
         Vector3 position,
@@ -196,6 +213,7 @@ public class Skill_base : MonoBehaviour, ITransientEntityConsumer, IFrameworkEnt
         return transientEntities.Spawn(prefab.name, position, rotation, parent, configure);
     }
 
+    // 初始化For生成及其依赖关系。
     private void InitializeForSpawn()
     {
         life = configuredLife;

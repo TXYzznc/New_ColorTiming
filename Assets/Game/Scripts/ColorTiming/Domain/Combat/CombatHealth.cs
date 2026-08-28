@@ -1,3 +1,6 @@
+// 文件职责：定义 Combat生命值，承担 Combat 模块中的对应职责。
+// 所属模块：ColorTiming / Domain / Combat。
+
 using System;
 
 namespace ColorTiming.Combat
@@ -11,6 +14,7 @@ namespace ColorTiming.Combat
 
     public sealed class Health
     {
+        // 初始化生命值实例及其核心依赖。
         public Health(int maximum)
         {
             if (maximum <= 0)
@@ -26,6 +30,7 @@ namespace ColorTiming.Combat
         public int Current { get; private set; }
         public bool IsEmpty => Current == 0;
 
+        // 执行伤害对应的主要流程。
         public int Damage(int amount)
         {
             if (amount <= 0)
@@ -38,6 +43,7 @@ namespace ColorTiming.Combat
             return before - Current;
         }
 
+        // 执行Heal对应的主要流程。
         public int Heal(int amount)
         {
             if (amount <= 0)
@@ -63,6 +69,7 @@ namespace ColorTiming.Combat
     {
         private bool resultEmitted;
 
+        // 初始化玩家Vitality实例及其核心依赖。
         public PlayerVitality(int maximumHealth = 5)
         {
             Health = new Health(maximumHealth);
@@ -72,6 +79,7 @@ namespace ColorTiming.Combat
         public BattleResult Result { get; private set; } = BattleResult.InProgress;
         public event Action Defeated;
 
+        // 执行Take伤害对应的主要流程。
         public PlayerDamageResolution TakeDamage(int amount, bool invulnerable, bool instantKill = false)
         {
             if (Result != BattleResult.InProgress)
@@ -98,6 +106,7 @@ namespace ColorTiming.Combat
             return PlayerDamageResolution.Defeated;
         }
 
+        // 解析成功冲刺并返回可供上层使用的结果。
         public int ResolveSuccessfulDash()
         {
             return Result == BattleResult.InProgress ? Health.Heal(1) : 0;

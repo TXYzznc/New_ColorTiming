@@ -1,3 +1,6 @@
+// 文件职责：实现战斗技能 Sk_Bo2_dundi 的运行时表现和回收行为。
+// 所属模块：ColorTiming / Presentation / Combat / Skills。
+
 using Spine;
 using Spine.Unity;
 using System;
@@ -18,6 +21,7 @@ public class Sk_Bo2_dundi : MonoBehaviour, IFrameworkEntityParticipant
     public Boss2ActorView boss2_Controller;
     //public GameObject ins;
     // Start is called before the first frame update
+    // 在首帧启动依赖就绪后的业务或表现流程。
     void Start()
     {
         if (currentEntry == null)
@@ -30,6 +34,7 @@ public class Sk_Bo2_dundi : MonoBehaviour, IFrameworkEntityParticipant
         //entry.Event += AnimEvent;
     }
 
+    // 播放Anim对应的动画、音频或表现。
     void PlayAnim(string anim)
     {
         currentEntry = _s.AnimationState.SetAnimation(0, anim, false);
@@ -70,16 +75,19 @@ public class Sk_Bo2_dundi : MonoBehaviour, IFrameworkEntityParticipant
 
     }
 
+    // 绑定FrameworkRelease依赖或事件监听。
     public void BindFrameworkRelease(Action release)
     {
         frameworkRelease = release;
     }
 
+    // 响应Framework实体Spawned回调，并更新本对象状态。
     public void OnFrameworkEntitySpawned()
     {
         InitializeAnimation();
     }
 
+    // 响应Framework实体Despawned回调，并更新本对象状态。
     public void OnFrameworkEntityDespawned()
     {
         if (currentEntry != null)
@@ -89,6 +97,7 @@ public class Sk_Bo2_dundi : MonoBehaviour, IFrameworkEntityParticipant
         }
     }
 
+    // 初始化动画及其依赖关系。
     private void InitializeAnimation()
     {
         _s = _s != null ? _s : GetComponent<SkeletonAnimation>();

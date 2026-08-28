@@ -1,3 +1,6 @@
+// 文件职责：把旧版 Unity Input 读取转换为语义化游戏输入。
+// 所属模块：ColorTiming / Infrastructure / Unity / Input。
+
 using ColorTiming.Input;
 using UnityEngine;
 
@@ -18,6 +21,7 @@ namespace ColorTiming.Infrastructure.Unity.Input
         public bool AnyPressed => state.AnyPressed;
         public bool ConfirmPressed => state.ConfirmPressed;
 
+        // 逐帧推进需要实时刷新的业务或表现状态。
         private void Update()
         {
             state.AdvanceFrame(new GameInputFrame(
@@ -32,6 +36,7 @@ namespace ColorTiming.Infrastructure.Unity.Input
                 UnityEngine.Input.GetButtonDown("Submit") || UnityEngine.Input.GetButtonDown("Fire1")));
         }
 
+        // 执行ConsumeAnyPressForOverlay对应的主要流程。
         public bool ConsumeAnyPressForOverlay()
         {
             return state.ConsumeAnyPressForOverlay();

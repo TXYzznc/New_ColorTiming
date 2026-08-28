@@ -1,3 +1,6 @@
+// 文件职责：定义 弱点队列，承担 Combat 模块中的对应职责。
+// 所属模块：ColorTiming / Domain / Combat。
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,16 +29,19 @@ namespace ColorTiming.Combat
             ? segments[0]
             : throw new InvalidOperationException("The weakness queue is empty.");
 
+        // 创建Boss1并完成必要的初始配置。
         public static WeaknessQueue CreateBoss1(IRandomSource random)
         {
             return Create(random, 4, 3, 4, 0);
         }
 
+        // 创建Boss2并完成必要的初始配置。
         public static WeaknessQueue CreateBoss2(IRandomSource random)
         {
             return Create(random, 4, 4, 4, 3);
         }
 
+        // 执行Upcoming对应的主要流程。
         public IReadOnlyList<WeaponColor> Upcoming(int maximum = 7)
         {
             if (maximum < 0)
@@ -46,6 +52,7 @@ namespace ColorTiming.Combat
             return segments.Take(maximum).ToArray();
         }
 
+        // 移除当前项并清理相关引用。
         public WeaponColor RemoveCurrent()
         {
             var removed = Current;
@@ -53,8 +60,10 @@ namespace ColorTiming.Combat
             return removed;
         }
 
+        // 执行数量对应的主要流程。
         public int CountOf(WeaponColor color) => segments.Count(value => value == color);
 
+        // 创建并初始化新的实例。
         private static WeaknessQueue Create(
             IRandomSource random,
             int red,

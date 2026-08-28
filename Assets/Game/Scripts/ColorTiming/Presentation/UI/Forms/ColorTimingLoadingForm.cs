@@ -1,3 +1,6 @@
+// 文件职责：实现 ColorTiming加载 GF.UI 表单及其交互生命周期。
+// 所属模块：ColorTiming / Presentation / UI / Forms。
+
 using DG.Tweening;
 using ColorTiming.Presentation.UI.Contracts;
 using UnityEngine;
@@ -17,6 +20,7 @@ namespace ColorTiming.Presentation.UI.Forms
         private bool closing;
         private float displayedProgress;
 
+        // 在 GF UI 表单打开时接收参数并刷新显示。
         protected override void OnOpen(object userData)
         {
             closing = false;
@@ -35,6 +39,7 @@ namespace ColorTiming.Presentation.UI.Forms
             base.OnOpen(userData);
         }
 
+        // 在 GF UI 表单关闭时停止流程并清理临时状态。
         protected override void OnClose(bool isShutdown, object userData)
         {
             fadeTween?.Kill();
@@ -44,6 +49,7 @@ namespace ColorTiming.Presentation.UI.Forms
             base.OnClose(isShutdown, userData);
         }
 
+        // 设置进度，并使后续流程使用最新状态。
         public void SetProgress(float progress)
         {
             if (progressSlider != null)
@@ -53,6 +59,7 @@ namespace ColorTiming.Presentation.UI.Forms
             }
         }
 
+        // 执行完成AndClose对应的主要流程。
         public void CompleteAndClose()
         {
             if (closing)

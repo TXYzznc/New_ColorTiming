@@ -1,3 +1,5 @@
+// 文件职责：实现 Main菜单 GF.UI 表单及其交互生命周期。
+// 所属模块：ColorTiming / Presentation / UI / Forms。
 
 using UnityEngine;
 using UnityEngine.Audio;
@@ -23,17 +25,20 @@ public class MainMenuForm : UIFormBase, IColorTimingSceneFlowConsumer, IColorTim
     int bgmSoundId;
     public IUiSoundSink UiSound => uiSound;
 
+    // 绑定场景流程依赖或事件监听。
     public void BindSceneFlow(IColorTimingSceneFlow flow)
     {
         sceneFlow = flow ?? throw new ArgumentNullException(nameof(flow));
     }
 
+    // 绑定设置依赖或事件监听。
     public void BindSettings(IColorTimingSettings projectSettings)
     {
         settings = projectSettings ?? throw new ArgumentNullException(nameof(projectSettings));
         RefreshSettingsView();
     }
 
+    // 绑定运行时依赖或事件监听。
     public void BindRuntime(
         IColorTimingSceneFlow flow,
         IColorTimingSettings projectSettings,
@@ -48,6 +53,7 @@ public class MainMenuForm : UIFormBase, IColorTimingSceneFlowConsumer, IColorTim
         foreach (var consumer in GetComponentsInChildren<UiButtonSoundView>(true)) consumer.BindUiSound(uiSound);
     }
 
+    // 绑定音效Service依赖或事件监听。
     public void BindSoundService(IColorTimingSoundService projectSoundService)
     {
         soundService = projectSoundService ?? throw new ArgumentNullException(nameof(projectSoundService));
@@ -70,6 +76,7 @@ public class MainMenuForm : UIFormBase, IColorTimingSceneFlowConsumer, IColorTim
     public GameObject offTipButton;
     public GameObject openTipButton;
 
+    // 在 GF UI 表单打开时接收参数并刷新显示。
     protected override void OnOpen(object userData)
     {
         // GF.UI pools forms, so authored navigation state must be restored on every open.
@@ -82,6 +89,7 @@ public class MainMenuForm : UIFormBase, IColorTimingSceneFlowConsumer, IColorTim
         RefreshBgmPlayback();
     }
 
+    // 在 GF UI 表单关闭时停止流程并清理临时状态。
     protected override void OnClose(bool isShutdown, object userData)
     {
         videoSequence?.StopSequence();
@@ -89,6 +97,7 @@ public class MainMenuForm : UIFormBase, IColorTimingSceneFlowConsumer, IColorTim
         base.OnClose(isShutdown, userData);
     }
 
+    // 执行StartGameBtnDown对应的主要流程。
     public void StartGameBtnDown()
     {
 
@@ -96,46 +105,54 @@ public class MainMenuForm : UIFormBase, IColorTimingSceneFlowConsumer, IColorTim
         GoButtonBox.SetActive(true);
     }
 
+    // 执行BackStartBtnDown对应的主要流程。
     public void BackStartBtnDown()
     {
         StartBtnBox.SetActive(true);
         GoButtonBox.SetActive(false);
     }
 
+    // 设置tingBtnDwon，并使后续流程使用最新状态。
     public void SettingBtnDwon()
     {
         SettingButtonBox.SetActive(true);
         StartBtnBox.SetActive(false);
     }
 
+    // 执行Back设置BtnDwon对应的主要流程。
     public void BackSettingBtnDwon()
     {
         StartBtnBox.SetActive(true);
         SettingButtonBox.SetActive(false);
     }
 
+    // 执行GoTest1对应的主要流程。
     public void GoTest1()
     {
         sceneFlow?.TryLoad(ColorTimingSceneId.Boss1);
     }
 
 
+    // 执行GoTest2对应的主要流程。
     public void GoTest2()
     {
         sceneFlow?.TryLoad(ColorTimingSceneId.Boss2);
     }
 
+    // 执行ExitGameBtn对应的主要流程。
     public void ExitGameBtn()
     {
         GameEntry.Shutdown(ShutdownType.Quit);
     }
 
 
+    // 显示SystemSetUP并同步当前数据。
     public void ShowSystemSetUP()
     {
 
     }
 
+    // 设置BGM，并使后续流程使用最新状态。
     public void SetBGM(bool open)
     {
         if (settings != null)
@@ -146,6 +163,7 @@ public class MainMenuForm : UIFormBase, IColorTimingSceneFlowConsumer, IColorTim
         RefreshBgmPlayback();
     }
 
+    // 设置SFX，并使后续流程使用最新状态。
     public void SetSFX(bool open)
     {
         if (settings != null)
@@ -155,6 +173,7 @@ public class MainMenuForm : UIFormBase, IColorTimingSceneFlowConsumer, IColorTim
         SetToggleView(SFXBtn_Open, SFXBtn_Off, open);
     }
 
+    // 执行OffKeyTip对应的主要流程。
     public void OffKeyTip()
     {
         if (settings != null) settings.KeyTipsDisabled = true;
@@ -162,18 +181,21 @@ public class MainMenuForm : UIFormBase, IColorTimingSceneFlowConsumer, IColorTim
 
     }
 
+    // 打开KeyTip并传入本次使用参数。
     public void OpenKeyTip()
     {
         if (settings != null) settings.KeyTipsDisabled = false;
         SetOffTip(false);
     }
 
+    // 设置OffTip，并使后续流程使用最新状态。
     void SetOffTip(bool off)
     {
         offTipButton.SetActive(!off);
         openTipButton.SetActive(off);
     }
 
+    // 根据最新数据刷新设置视图。
     void RefreshSettingsView()
     {
         if (settings == null) return;
@@ -183,6 +205,7 @@ public class MainMenuForm : UIFormBase, IColorTimingSceneFlowConsumer, IColorTim
         RefreshBgmPlayback();
     }
 
+    // 根据最新数据刷新BgmPlayback。
     void RefreshBgmPlayback()
     {
         if (!isActiveAndEnabled || soundService == null || settings == null || !settings.BgmEnabled || bgm == null)
@@ -196,6 +219,7 @@ public class MainMenuForm : UIFormBase, IColorTimingSceneFlowConsumer, IColorTim
         }
     }
 
+    // 停止BgmPlayback并清理临时播放状态。
     void StopBgmPlayback()
     {
         if (bgmSoundId <= 0)
@@ -206,6 +230,7 @@ public class MainMenuForm : UIFormBase, IColorTimingSceneFlowConsumer, IColorTim
         bgmSoundId = 0;
     }
 
+    // 设置Toggle视图，并使后续流程使用最新状态。
     static void SetToggleView(GameObject openButton, GameObject offButton, bool enabled)
     {
         if (openButton != null) openButton.SetActive(!enabled);

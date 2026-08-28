@@ -1,3 +1,6 @@
+// 文件职责：提供 变换 相关的通用扩展方法。
+// 所属模块：Extension。
+
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
@@ -5,6 +8,7 @@ using UnityEngine;
 
 public static class TransformExtension
 {
+    // 执行DoBlink缩放对应的主要流程。
     public static void DoBlinkScale(this Transform node, float inScale, float outScale, float inDuration, float outDuration, TweenCallback onAnimComplete = null, object target = null)
     {
         var seq = DOTween.Sequence();
@@ -13,12 +17,14 @@ public static class TransformExtension
         seq.onComplete = onAnimComplete;
         seq.SetTarget(target);
     }
+    // 执行FindWithTag对应的主要流程。
     public static Transform FindWithTag(this Transform node, string tag)
     {
         Transform result = null;
         FindNodeByTag(node, tag, ref result);
         return result;
     }
+    // 执行FindChildrenWithTag对应的主要流程。
     public static List<Transform> FindChildrenWithTag(this Transform root, string tag)
     {
         List<Transform> result = new List<Transform>();

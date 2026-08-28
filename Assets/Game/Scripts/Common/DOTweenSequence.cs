@@ -1,3 +1,6 @@
+// 文件职责：提供可在 Inspector 配置并按顺序播放的 DOTween 动画组件。
+// 所属模块：Common。
+
 #if DOTWEEN
 using DG.Tweening;
 using System;
@@ -24,6 +27,7 @@ public class DOTweeSequenceInspector : Editor
     GUIContent m_ResetBtnContent;
     private GUILayoutOption m_btnHeight;
 
+    // 组件启用时注册监听并同步当前状态。
     private void OnEnable()
     {
         m_PlayBtnContent = EditorGUIUtility.TrIconContent("d_PlayButton@2x", "播放");
@@ -41,6 +45,7 @@ public class DOTweeSequenceInspector : Editor
         m_SequenceList.drawHeaderCallback = OnDrawSequenceHeader;
     }
 
+    // 响应检视面板GUI回调，并更新本对象状态。
     public override void OnInspectorGUI()
     {
         if (!EditorApplication.isPlaying)
@@ -82,10 +87,12 @@ public class DOTweeSequenceInspector : Editor
         base.OnInspectorGUI();
     }
 
+    // 响应Draw序列Header回调，并更新本对象状态。
     private void OnDrawSequenceHeader(Rect rect)
     {
         EditorGUI.LabelField(rect, "Animation Sequences");
     }
+    // 响应Draw序列项目回调，并更新本对象状态。
     private void OnDrawSequenceItem(Rect rect, int index, bool isActive, bool isFocused)
     {
         SerializedProperty element = m_Sequence.GetArrayElementAtIndex(index);
@@ -96,6 +103,7 @@ public class DOTweeSequenceInspector : Editor
 [CustomPropertyDrawer(typeof(SequenceAnimation))]
 public class SequenceTweenMoveDrawer : PropertyDrawer
 {
+    // 获取PropertyHeight。
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
     {
         var onPlay = property.FindPropertyRelative("OnPlay");
@@ -104,6 +112,7 @@ public class SequenceTweenMoveDrawer : PropertyDrawer
         return EditorGUIUtility.singleLineHeight * 11 + (property.isExpanded ? (EditorGUI.GetPropertyHeight(onPlay) + EditorGUI.GetPropertyHeight(onUpdate) + EditorGUI.GetPropertyHeight(onComplete)) : 0);
     }
 
+    // 响应GUI回调，并更新本对象状态。
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {
         EditorGUI.BeginProperty(position, label, property);
@@ -335,6 +344,7 @@ public class SequenceTweenMoveDrawer : PropertyDrawer
         EditorGUI.EndProperty();
     }
 
+    // 设置值From目标，并使后续流程使用最新状态。
     private void SetValueFromTarget(DOTweenType tweenType, SerializedProperty target, SerializedProperty value)
     {
         if (target.objectReferenceValue == null) return;
@@ -579,6 +589,7 @@ public class DOTweenSequence : MonoBehaviour
     [SerializeField] UnityEvent m_OnComplete = null;
 
     private Tween m_Tween;
+    // 缓存本组件依赖，并完成不依赖外部服务的本地初始化。
     private void Awake()
     {
         if (m_PlayOnAwake) DOPlay();
@@ -741,6 +752,7 @@ public class DOTweenSequence : MonoBehaviour
             }
         }
     }
+    // 创建Tween并完成必要的初始配置。
     private Tween CreateTween(bool reverse = false)
     {
         if (m_Sequence == null || m_Sequence.Length == 0)
@@ -801,27 +813,32 @@ public class DOTweenSequence : MonoBehaviour
         sequence.SetAutoKill(true);
         return sequence;
     }
+    // 启动当前配置的动画、音频或其他表现。
     public void Play()
     {
         DOPlay();
     }
+    // 执行DOPlay对应的主要流程。
     public Tween DOPlay()
     {
         m_Tween = CreateTween();
         return m_Tween?.Play();
     }
 
+    // 执行DORewind对应的主要流程。
     public Tween DORewind()
     {
         m_Tween = CreateTween(true);
         return m_Tween?.Play();
     }
 
+    // 执行DO完成对应的主要流程。
     public void DOComplete(bool withCallback = false)
     {
         m_Tween?.Complete(withCallback);
     }
 
+    // 执行DOKill对应的主要流程。
     public void DOKill()
     {
         m_Tween?.Kill();
@@ -892,6 +909,7 @@ public class DOTweenSequence : MonoBehaviour
         public UnityEvent OnPlay = null;
         public UnityEvent OnUpdate = null;
         public UnityEvent OnComplete = null;
+        // 创建Tween并完成必要的初始配置。
         public Tween CreateTween(bool reverse)
         {
             Tween result = null;
@@ -1336,6 +1354,7 @@ public class DOTweenSequence : MonoBehaviour
             }
             return result;
         }
+        // 获取EulerAnglesAngle。
         public static float GetEulerAnglesAngle(Vector3 euler1, Vector3 euler2)
         {
             // 计算差值

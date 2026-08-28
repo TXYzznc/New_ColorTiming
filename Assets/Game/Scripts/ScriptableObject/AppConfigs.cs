@@ -1,3 +1,6 @@
+// 文件职责：定义 AppConfigs，承担 ScriptableObject 模块中的对应职责。
+// 所属模块：ScriptableObject。
+
 using UnityEngine;
 using System.Threading.Tasks;
 
@@ -35,6 +38,7 @@ public class AppConfigs : ScriptableObject
 
     public string[] Procedures => mProcedures;
 
+    // 缓存本组件依赖，并完成不依赖外部服务的本地初始化。
     private void Awake()
     {
         mInstance = this;
@@ -56,6 +60,7 @@ public class AppConfigs : ScriptableObject
         return mInstance;
     }
 
+    // 在编辑器中重新加载配置单例。
     public static AppConfigs ReloadInstanceEditor()
     {
         var configAsset = UtilityBuiltin.AssetsPath.GetScriptableAsset("Core/AppConfigs");

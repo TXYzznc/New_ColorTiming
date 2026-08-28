@@ -1,3 +1,6 @@
+// 文件职责：定义 武器展示状态 数据及其状态语义。
+// 所属模块：ColorTiming / Presentation / UI / Models。
+
 using ColorTiming.Combat;
 
 namespace ColorTiming.Presentation.UI.Models
@@ -26,6 +29,7 @@ namespace ColorTiming.Presentation.UI.Models
         public int CursorIndex { get; }
         public bool UsesChargeHint { get; }
 
+        // 执行From对应的主要流程。
         public static WeaponPresentationState From(WeaponIdentity identity)
         {
             var iconIndex = identity.IsNormal

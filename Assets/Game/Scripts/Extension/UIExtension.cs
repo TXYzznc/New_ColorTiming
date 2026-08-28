@@ -1,4 +1,7 @@
-﻿using GameFramework;
+﻿// 文件职责：提供 UI 相关的通用扩展方法。
+// 所属模块：Extension。
+
+using GameFramework;
 using UnityEngine;
 using UnityGameFramework.Runtime;
 
@@ -8,6 +11,7 @@ using UnityGameFramework.Runtime;
 /// </summary>
 public static class UIExtension
 {
+    // 打开UI 表单并传入本次使用参数。
     public static int OpenUIForm(this UIComponent uiComponent, UIViews viewId, UIParams parameters = null)
     {
         if (GF.DataTable == null || !GF.DataTable.HasDataTable<UITable>() || !GF.DataTable.HasDataTable<UIGroupTable>())
@@ -36,6 +40,7 @@ public static class UIExtension
         return uiComponent.OpenUIForm(UtilityBuiltin.AssetsPath.GetUIFormPath(view.UIPrefab), group.Name, view.PauseCoveredUI, parameters);
     }
 
+    // 获取UI表单AssetName。
     public static string GetUIFormAssetName(this UIComponent uiComponent, UIViews viewId)
     {
         if (GF.DataTable == null || !GF.DataTable.HasDataTable<UITable>()) return string.Empty;
@@ -43,12 +48,14 @@ public static class UIExtension
         return view == null ? string.Empty : UtilityBuiltin.AssetsPath.GetUIFormPath(view.UIPrefab);
     }
 
+    // 执行HasUI表单对应的主要流程。
     public static bool HasUIForm(this UIComponent uiComponent, UIViews viewId)
     {
         string assetName = uiComponent.GetUIFormAssetName(viewId);
         return !string.IsNullOrEmpty(assetName) && uiComponent.HasUIForm(assetName);
     }
 
+    // 获取TopUI表单ID。
     public static int GetTopUIFormId(this UIComponent uiComponent)
     {
         int topId = -1;
@@ -64,6 +71,7 @@ public static class UIExtension
         return topId;
     }
 
+    // 执行Close对应的主要流程。
     public static void Close(this UIComponent uiComponent, int serialId)
     {
         if (uiComponent.IsLoadingUIForm(serialId) || !uiComponent.HasUIForm(serialId)) return;

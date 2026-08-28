@@ -1,4 +1,6 @@
-﻿
+﻿// 文件职责：封装 GF.UI 表单的绑定、动画、关闭和资源清理生命周期。
+// 所属模块：UI / Core。
+
 using UnityEngine;
 using GameFramework;
 using UnityGameFramework.Runtime;
@@ -105,6 +107,7 @@ public class UIFormBase : UIFormLogic, ISerializeFieldTool
             transforms[i].gameObject.layer = uiLayer;
         }
     }
+    // 在 GF UI 表单打开时接收参数并刷新显示。
     protected override void OnOpen(object userData)
     {
         base.OnOpen(userData);
@@ -122,6 +125,7 @@ public class UIFormBase : UIFormLogic, ISerializeFieldTool
 
     public bool CanCloseByInputModule => isOnEscape;
 
+    // 尝试CloseFrom输入Module，并通过返回值报告是否成功。
     public bool TryCloseFromInputModule()
     {
         if (!isOnEscape)
@@ -133,6 +137,7 @@ public class UIFormBase : UIFormLogic, ISerializeFieldTool
         return true;
     }
 
+    // 在 GF UI 表单关闭时停止流程并清理临时状态。
     protected override void OnClose(bool isShutdown, object userData)
     {
         if (!isShutdown)
@@ -145,6 +150,7 @@ public class UIFormBase : UIFormLogic, ISerializeFieldTool
         base.OnClose(isShutdown, userData);
     }
 
+    // 组件销毁时释放订阅、句柄和运行时资源。
     private void OnDestroy()
     {
         DestroyAllItemPool();
@@ -312,6 +318,7 @@ public class UIFormBase : UIFormLogic, ISerializeFieldTool
         }
     }
     [Obfuz.ObfuzIgnore]
+    // 关闭With动画并结束本次生命周期。
     public void CloseWithAnimation()
     {
         Interactable = false;
@@ -394,30 +401,36 @@ public class UIFormBase : UIFormLogic, ISerializeFieldTool
     }
 
     [Obfuz.ObfuzIgnore]
+    // 响应ClickClose回调，并更新本对象状态。
     public virtual void OnClickClose()
     {
         PlayClickSound();
         GF.UI.Close(this.UIForm.SerialId);
     }
     [Obfuz.ObfuzIgnore]
+    // 处理 UI 按钮点击并触发配置的反馈。
     public void ClickUIButton(string bt_tag)
     {
         PlayClickSound();
         OnButtonClick(this, bt_tag);
     }
     [Obfuz.ObfuzIgnore]
+    // 处理 UI 按钮点击并触发配置的反馈。
     public void ClickUIButton(Button btSelf)
     {
         PlayClickSound();
         OnButtonClick(this, btSelf);
     }
+    // 响应ButtonClick回调，并更新本对象状态。
     protected virtual void OnButtonClick(object sender, string btId)
     {
         Params.ButtonClickCallback?.Invoke(sender, btId);
     }
+    // 响应ButtonClick回调，并更新本对象状态。
     protected virtual void OnButtonClick(object sender, UnityEngine.UI.Button btSelf)
     {
     }
+    // 播放Click音效对应的动画、音频或表现。
     protected virtual void PlayClickSound()
     {
         if (!string.IsNullOrWhiteSpace(m_ClickSoundName))
@@ -448,6 +461,7 @@ public class SerializeFieldData
     public GameObject[] Targets;//关联的GameObject
     public string VarType;      //变量类型FullName,带有名字空间
     public int VarPrefix;//变量private/protect/public
+    // 初始化SerializeField数据实例及其核心依赖。
     public SerializeFieldData(string varName, GameObject[] targets = null)
     {
         VarName = varName;

@@ -1,3 +1,5 @@
+// 文件职责：实现战斗技能 Skill_Bo2_Atk2 的运行时表现和回收行为。
+// 所属模块：ColorTiming / Presentation / Combat / Skills。
 
 using System;
 using UnityEngine;
@@ -30,6 +32,7 @@ public class Skill_Bo2_Atk2 : Skill_base
     Quaternion initialZhiTuanRotation;
     Quaternion initialTrailRotation;
 
+    // 写入新的值并替换旧状态。
     public void Set(Vector3 target)
     {
         if (!initialPoseCaptured)

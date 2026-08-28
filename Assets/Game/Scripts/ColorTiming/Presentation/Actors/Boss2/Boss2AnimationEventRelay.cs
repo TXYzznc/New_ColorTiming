@@ -1,3 +1,6 @@
+// 文件职责：定义 Boss2动画事件Relay，承担 Boss2 模块中的对应职责。
+// 所属模块：ColorTiming / Presentation / Actors / Boss2。
+
 using Spine;
 using System;
 using ColorTiming.Combat;
@@ -23,16 +26,19 @@ public class Boss2AnimationEventRelay : MonoBehaviour, ITransientEntityConsumer,
     Transform playerTarget;
     ITransientEntityService transientEntities;
 
+    // 绑定TransientEntities依赖或事件监听。
     public void BindTransientEntities(ITransientEntityService entities)
     {
         transientEntities = entities ?? throw new ArgumentNullException(nameof(entities));
     }
 
+    // 绑定玩家目标依赖或事件监听。
     public void BindPlayerTarget(Transform target)
     {
         playerTarget = target != null ? target : throw new ArgumentNullException(nameof(target));
     }
 
+    // 在首帧启动依赖就绪后的业务或表现流程。
     private void Start()
     {
         soundManager1 = GetComponentInParent<Boss2SoundView>();
@@ -41,6 +47,7 @@ public class Boss2AnimationEventRelay : MonoBehaviour, ITransientEntityConsumer,
     float _it;
     float lerpSpeed = 10;
     float _showTime = -1;
+    // 逐帧推进需要实时刷新的业务或表现状态。
     private void Update()
     {
 
@@ -66,6 +73,7 @@ public class Boss2AnimationEventRelay : MonoBehaviour, ITransientEntityConsumer,
 
 
     }
+    // 执行GoAtk对应的主要流程。
     public void GoAtk(TrackEntry trackEntry, Spine.Event e)
     {
         GameObject wsk = null;
@@ -136,11 +144,13 @@ public class Boss2AnimationEventRelay : MonoBehaviour, ITransientEntityConsumer,
 
     }
 
+    // 执行Rutu对应的主要流程。
     public void Rutu()
     {
         soundManager1?.Play(Boss2SoundCue.HeadEnterBurrow);
     }
 
+    // 响应Hit回调，并更新本对象状态。
     public void OnHit()
     {
         soundManager1?.Play(Boss2SoundCue.Hit);
@@ -148,6 +158,7 @@ public class Boss2AnimationEventRelay : MonoBehaviour, ITransientEntityConsumer,
     }
 
 
+    // 显示Hit并同步当前数据。
     void ShowHit()
     {
         float _sp = flip ? -1 : 1;
@@ -181,6 +192,7 @@ public class Boss2AnimationEventRelay : MonoBehaviour, ITransientEntityConsumer,
     }
 
 
+    // 播放音效对应的动画、音频或表现。
     public void PlaySound(string atk)
     {
         switch (atk)

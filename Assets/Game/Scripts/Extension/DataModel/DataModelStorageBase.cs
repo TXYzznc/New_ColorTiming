@@ -1,4 +1,6 @@
-﻿
+﻿// 文件职责：定义 数据模型Storage基类，承担 数据模型 模块中的对应职责。
+// 所属模块：Extension / DataModel。
+
 using GameFramework;
 using UnityGameFramework.Runtime;
 namespace GameFramework
@@ -9,22 +11,26 @@ namespace GameFramework
     public abstract class DataModelStorageBase : DataModelBase
     {
         protected string StorageKey { get; private set; } = null;
+        // 初始化数据模型Storage基类实例及其核心依赖。
         public DataModelStorageBase()
         {
             StorageKey = this.GetType().FullName;
         }
+        // 响应Create回调，并更新本对象状态。
         protected override void OnCreate(RefParams userdata)
         {
             base.OnCreate(userdata);
             Load();
         }
 
+        // 响应Release回调，并更新本对象状态。
         protected override void OnRelease()
         {
             Save();
             base.OnRelease();
         }
 
+        // 执行Load对应的主要流程。
         private void Load()
         {
             if (Id != 0)

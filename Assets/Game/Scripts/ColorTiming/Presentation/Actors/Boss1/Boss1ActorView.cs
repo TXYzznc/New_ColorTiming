@@ -1,3 +1,6 @@
+// 文件职责：负责 Boss1Actor 的场景或界面表现。
+// 所属模块：ColorTiming / Presentation / Actors / Boss1。
+
 using Spine;
 using Spine.Unity;
 using System.Collections.Generic;
@@ -55,6 +58,7 @@ public class Boss1ActorView : MonoBehaviour, IBattleDamageReceiver
     bool sessionInitialized;
 
     /// <summary>Bound by the runtime-created battle composition root before Start.</summary>
+    // 绑定战斗会话依赖或事件监听。
     public void BindBattleSession(BattleSession session)
     {
         if (battleSession != null && !ReferenceEquals(battleSession, session))
@@ -64,6 +68,7 @@ public class Boss1ActorView : MonoBehaviour, IBattleDamageReceiver
         battleSession = session ?? throw new System.ArgumentNullException(nameof(session));
         TryInitializeSession();
     }
+    // 在首帧启动依赖就绪后的业务或表现流程。
     void Start()
     {
         boss1Anim = GetComponent<Boss1AnimationEventRelay>();
@@ -82,6 +87,7 @@ public class Boss1ActorView : MonoBehaviour, IBattleDamageReceiver
 
     }
 
+    // 尝试Initialize会话，并通过返回值报告是否成功。
     void TryInitializeSession()
     {
         if (sessionInitialized || !viewStarted || battleSession == null) return;
@@ -90,6 +96,7 @@ public class Boss1ActorView : MonoBehaviour, IBattleDamageReceiver
     }
 
     // Update is called once per frame
+    // 逐帧推进需要实时刷新的业务或表现状态。
     void Update()
     {
         if (attackCycle == null || battleSession == null
@@ -106,6 +113,7 @@ public class Boss1ActorView : MonoBehaviour, IBattleDamageReceiver
 
     bool ca1 = false;
     bool ca2 = false;
+    // 执行EnterCase对应的主要流程。
     public void EnterCase(int cI, bool enter)
     {
         if (cI == 1)
@@ -235,6 +243,7 @@ public class Boss1ActorView : MonoBehaviour, IBattleDamageReceiver
         trackEntry.End -= Entry_End;
     }
 
+    // 创建BossHP并完成必要的初始配置。
     void CreateBossHP()
     {
         if (battleSession == null || battleSession.Kind != BattleKind.Boss1)
@@ -284,6 +293,7 @@ public class Boss1ActorView : MonoBehaviour, IBattleDamageReceiver
 
     }
 
+    // 执行Receive伤害对应的主要流程。
     public void ReceiveDamage(BattleDamage damage)
     {
         if (battleSession == null)
@@ -364,6 +374,7 @@ public class Boss1ActorView : MonoBehaviour, IBattleDamageReceiver
 
     }
 
+    // 响应HP颜色回调，并更新本对象状态。
     void OnHPColor()
     {
         if(Boss1HP.Count > 0)
@@ -383,6 +394,7 @@ public class Boss1ActorView : MonoBehaviour, IBattleDamageReceiver
         SetHPColor(WeaponColor.Green, 0.2f);
     }
 
+    // 设置HP颜色，并使后续流程使用最新状态。
     void SetHPColor(WeaponColor color,float c)
     {
         switch (color)
@@ -413,6 +425,7 @@ public class Boss1ActorView : MonoBehaviour, IBattleDamageReceiver
         }
     }
 
+    // 设置HP颜色，并使后续流程使用最新状态。
     void SetHPColor(string _slot,float c)
     {
         var slot1 = skeletonAnimation1.skeleton.FindSlot(_slot);
@@ -429,6 +442,7 @@ public class Boss1ActorView : MonoBehaviour, IBattleDamageReceiver
 
     }
 
+    // 组件销毁时释放订阅、句柄和运行时资源。
     private void OnDestroy()
     {
         if (boss1Anim != null)
@@ -439,6 +453,7 @@ public class Boss1ActorView : MonoBehaviour, IBattleDamageReceiver
 
     private sealed class UnityRandomSource : IRandomSource
     {
+        // 执行Range对应的主要流程。
         public int Range(int minimumInclusive, int maximumExclusive)
         {
             return Random.Range(minimumInclusive, maximumExclusive);

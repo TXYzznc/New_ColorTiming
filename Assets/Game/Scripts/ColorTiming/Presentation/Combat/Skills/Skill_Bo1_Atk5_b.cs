@@ -1,3 +1,6 @@
+// 文件职责：实现战斗技能 Skill_Bo1_Atk5_b 的运行时表现和回收行为。
+// 所属模块：ColorTiming / Presentation / Combat / Skills。
+
 using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,6 +10,7 @@ public class Skill_Bo1_Atk5_b : Skill_base
 {
     public GameObject atk5_item;
 
+    // 执行ChildStart对应的主要流程。
     protected override void ChildStart()
     {
         //在周围一圈创建16个 技能，并设置其方向
@@ -17,6 +21,7 @@ public class Skill_Bo1_Atk5_b : Skill_base
         //Destroy(gameObject);
     }
 
+    // 创建项目并完成必要的初始配置。
     void CreateItem()
     {
         List<Vector2> dirs = new List<Vector2>();
@@ -42,6 +47,7 @@ public class Skill_Bo1_Atk5_b : Skill_base
     }
 
     bool tr = false;
+    // 执行ChildTrigger对应的主要流程。
     public void ChildTrigger(Collider2D collision)
     {
         if(tr || !gameObject) return;
@@ -53,6 +59,7 @@ public class Skill_Bo1_Atk5_b : Skill_base
     }
 
     int index = -1;
+    // 执行ZZZ对应的主要流程。
     public void ZZZ(int _int)
     {
         if(_int > index)
@@ -64,6 +71,7 @@ public class Skill_Bo1_Atk5_b : Skill_base
         }
     }
 
+    // 执行Wait结束对应的主要流程。
     public void WaitEnd()
     {
         ReleaseSelf();

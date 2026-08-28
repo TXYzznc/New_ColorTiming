@@ -1,3 +1,5 @@
+// 文件职责：负责 Boss弱点Pip 的场景或界面表现。
+// 所属模块：ColorTiming / Presentation / UI / Components。
 
 using ColorTiming.Combat;
 using UnityEngine;
@@ -28,6 +30,7 @@ public class BossWeaknessPipView : MonoBehaviour
     int index = 0;
     Image image;
 
+    // 设置Hp项目，并使后续流程使用最新状态。
     public void SetHpItem(WeaponColor color,int inx)
     {
         index = inx;
@@ -104,6 +107,7 @@ public class BossWeaknessPipView : MonoBehaviour
 
     }
 
+    // 显示Tip并同步当前数据。
     public void ShowTip(int ty)
     {
         if (ty > 1) {
@@ -115,6 +119,7 @@ public class BossWeaknessPipView : MonoBehaviour
         }
     }
 
+    // 隐藏Tip并停止相关交互。
     public void HideTip()
     {
         tip1?.SetActive(false);
@@ -124,6 +129,7 @@ public class BossWeaknessPipView : MonoBehaviour
     bool flip;
     float _it;
     float lerpSpeed = 3;
+    // 逐帧推进需要实时刷新的业务或表现状态。
     private void Update()
     {
         if (index == 0 && image != null)

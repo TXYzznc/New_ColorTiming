@@ -1,3 +1,6 @@
+// 文件职责：定义 ColorTiming场景流程，承担 流程 模块中的对应职责。
+// 所属模块：ColorTiming / Bootstrap / Flow。
+
 using System;
 
 namespace ColorTiming.Bootstrap.Flow
@@ -12,6 +15,7 @@ namespace ColorTiming.Bootstrap.Flow
         private bool disposed;
         private float transitionProgress;
 
+        // 初始化ColorTiming场景流程实例及其核心依赖。
         public ColorTimingSceneFlow(Action<ColorTimingSceneId> beginTransition)
         {
             this.beginTransition = beginTransition ?? throw new ArgumentNullException(nameof(beginTransition));
@@ -26,6 +30,7 @@ namespace ColorTiming.Bootstrap.Flow
         public ColorTimingSceneId CurrentScene => currentScene;
         public bool IsTransitioning => isTransitioning;
 
+        // 尝试Load，并通过返回值报告是否成功。
         public bool TryLoad(ColorTimingSceneId scene, bool forceReload = false)
         {
             ThrowIfDisposed();
@@ -51,6 +56,7 @@ namespace ColorTiming.Bootstrap.Flow
             }
         }
 
+        // 执行完成Transition对应的主要流程。
         internal void CompleteTransition(ColorTimingSceneId scene)
         {
             ThrowIfDisposed();
@@ -63,6 +69,7 @@ namespace ColorTiming.Bootstrap.Flow
             SceneChanged?.Invoke(scene);
         }
 
+        // 执行ReportTransition进度对应的主要流程。
         internal void ReportTransitionProgress(float progress)
         {
             ThrowIfDisposed();
@@ -80,6 +87,7 @@ namespace ColorTiming.Bootstrap.Flow
             TransitionProgress?.Invoke(clamped);
         }
 
+        // 执行失败Transition对应的主要流程。
         internal void FailTransition(ColorTimingSceneId scene, string errorMessage)
         {
             ThrowIfDisposed();
@@ -88,6 +96,7 @@ namespace ColorTiming.Bootstrap.Flow
             TransitionFailed?.Invoke(scene, errorMessage ?? string.Empty);
         }
 
+        // 释放本对象持有的订阅、服务和临时资源。
         public void Dispose()
         {
             if (disposed)

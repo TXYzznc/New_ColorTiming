@@ -1,3 +1,6 @@
+// 文件职责：定义 Game输入帧，承担 输入 模块中的对应职责。
+// 所属模块：ColorTiming / Input。
+
 using UnityEngine;
 
 namespace ColorTiming.Input

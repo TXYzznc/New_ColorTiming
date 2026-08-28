@@ -1,3 +1,6 @@
+// 文件职责：定义 UtilityEx，承担 Extension 模块中的对应职责。
+// 所属模块：Extension。
+
 using GameFramework;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,6 +9,7 @@ using UnityEngine.EventSystems;
 
 public partial class UtilityEx
 {
+    // 执行CheckNetwork对应的主要流程。
     public static bool CheckNetwork()
     {
         return Application.internetReachability != NetworkReachability.NotReachable;

@@ -1,3 +1,6 @@
+// 文件职责：负责 玩家生命值Pips 的场景或界面表现。
+// 所属模块：ColorTiming / Presentation / UI / Components。
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -16,10 +19,12 @@ public class PlayerHealthPipsView : MonoBehaviour
 
     public GameObject hpItem;
 
+    // 缓存本组件依赖，并完成不依赖外部服务的本地初始化。
     private void Awake()
     {
     }
 
+    // 执行Bind对应的主要流程。
     public void Bind(BattleSession battleSession)
     {
         if (session == battleSession && items.Count > 0) return;
@@ -30,16 +35,19 @@ public class PlayerHealthPipsView : MonoBehaviour
         SetHP();
     }
 
+    // 在首帧启动依赖就绪后的业务或表现流程。
     private void Start()
     {
         SetHP();
     }
 
+    // 响应快照变化回调，并更新本对象状态。
     private void OnSnapshotChanged(BattleSnapshot snapshot)
     {
         SetHP();
     }
 
+    // 设置HP，并使后续流程使用最新状态。
     void SetHP()
     {
         if (session == null)
@@ -70,6 +78,7 @@ public class PlayerHealthPipsView : MonoBehaviour
         }
     }
 
+    // 组件销毁时释放订阅、句柄和运行时资源。
     private void OnDestroy()
     {
         if (session != null) session.SnapshotChanged -= OnSnapshotChanged;

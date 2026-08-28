@@ -1,4 +1,6 @@
-﻿
+﻿// 文件职责：按配置预加载数据表、字典、字体和必要资源。
+// 所属模块：Procedures。
+
 using UnityEngine;
 using GameFramework.Event;
 using GameFramework.Procedure;
@@ -20,6 +22,7 @@ public class PreloadProcedure : ProcedureBase
     private bool preloadFailed;
     private string preloadFailureMessage;
     private bool eventsSubscribed;
+    // 响应Enter回调，并更新本对象状态。
     protected override void OnEnter(IFsm<IProcedureManager> procedureOwner)
     {
         base.OnEnter(procedureOwner);
@@ -39,6 +42,7 @@ public class PreloadProcedure : ProcedureBase
     }
 
 
+    // 响应Leave回调，并更新本对象状态。
     protected override void OnLeave(IFsm<IProcedureManager> procedureOwner, bool isShutdown)
     {
         if (!eventsSubscribed)
@@ -58,6 +62,7 @@ public class PreloadProcedure : ProcedureBase
     }
 
 
+    // 由 GF 生命周期逐帧推进当前对象状态。
     protected override void OnUpdate(IFsm<IProcedureManager> procedureOwner, float elapseSeconds, float realElapseSeconds)
     {
         base.OnUpdate(procedureOwner, elapseSeconds, realElapseSeconds);
@@ -213,6 +218,7 @@ public class PreloadProcedure : ProcedureBase
             FailPreload("AppConfigs.Load", exception.ToString());
         }
     }
+    // 加载ConfigsAnd数据Tables，并处理完成或失败结果。
     private async void LoadConfigsAndDataTables()
     {
         if (preloadFailed)
@@ -325,6 +331,7 @@ public class PreloadProcedure : ProcedureBase
         }
     }
 
+    // 响应LoadDic成功回调，并更新本对象状态。
     private void OnLoadDicSuccess(object sender, GameEventArgs e)
     {
         LoadDictionarySuccessEventArgs args = e as LoadDictionarySuccessEventArgs;
@@ -351,6 +358,7 @@ public class PreloadProcedure : ProcedureBase
         GFTrace.Success("Config", "Load.Success", null, GFTrace.Data("asset", args.ConfigAssetName));
     }
 
+    // 响应Load数据数据表成功回调，并更新本对象状态。
     private void OnLoadDataTableSuccess(object sender, GameEventArgs e)
     {
         var args = e as LoadDataTableSuccessEventArgs;
@@ -366,6 +374,7 @@ public class PreloadProcedure : ProcedureBase
         }
     }
 
+    // 响应LoadDic失败回调，并更新本对象状态。
     private void OnLoadDicFailure(object sender, GameEventArgs e)
     {
         var args = e as LoadDictionaryFailureEventArgs;
@@ -376,6 +385,7 @@ public class PreloadProcedure : ProcedureBase
         FailPreload("Localization.Load", args.ErrorMessage, GFTrace.Data("asset", args.DictionaryAssetName));
     }
 
+    // 响应Load数据数据表失败回调，并更新本对象状态。
     private void OnLoadDataTableFailure(object sender, GameEventArgs e)
     {
         var args = e as LoadDataTableFailureEventArgs;
@@ -386,6 +396,7 @@ public class PreloadProcedure : ProcedureBase
         FailPreload("DataTable.Load", args.ErrorMessage, GFTrace.Data("asset", args.DataTableAssetName));
     }
 
+    // 响应Load配置失败回调，并更新本对象状态。
     private void OnLoadConfigFailure(object sender, GameEventArgs e)
     {
         var args = e as LoadConfigFailureEventArgs;

@@ -1,9 +1,13 @@
-﻿using System;
+﻿// 文件职责：提供 动画 相关的通用扩展方法。
+// 所属模块：Extension / Animation。
+
+using System;
 using DG.Tweening;
 using UnityEngine;
 
 public static class AnimationExtension
 {
+    // 播放Backward对应的动画、音频或表现。
     public static void PlayBackward(this Animation animation, string name, Action onComplete = null)
     {
         var animState = animation[name];
@@ -17,6 +21,7 @@ public static class AnimationExtension
         if (onComplete != null) motionHandle.onComplete = () => { onComplete.Invoke(); };
     }
 
+    // 播放Forward对应的动画、音频或表现。
     public static void PlayForward(this Animation animation, string name, Action onComplete = null)
     {
         var animState = animation[name];

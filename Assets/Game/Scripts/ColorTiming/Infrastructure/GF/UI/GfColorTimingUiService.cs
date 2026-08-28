@@ -1,3 +1,6 @@
+// 文件职责：通过 GF.UI 打开、关闭并跟踪 ColorTiming 业务表单。
+// 所属模块：ColorTiming / Infrastructure / GF / UI。
+
 using System;
 using ColorTiming.Bootstrap.Flow;
 using ColorTiming.Combat;
@@ -36,6 +39,7 @@ namespace ColorTiming.Infrastructure.GF.UI
         bool loadingCompletionRequested;
         bool disposed;
 
+        // 初始化GfColorTimingUIService实例及其核心依赖。
         public GfColorTimingUiService(
             IGameTime gameTime,
             IColorTimingSceneFlow sceneFlow,
@@ -56,6 +60,7 @@ namespace ColorTiming.Infrastructure.GF.UI
 
         public bool IsPauseOpen => pauseFormId >= 0;
 
+        // 执行Toggle暂停对应的主要流程。
         public bool TogglePause()
         {
             ThrowIfDisposed();
@@ -78,6 +83,7 @@ namespace ColorTiming.Infrastructure.GF.UI
             return true;
         }
 
+        // 执行Present场景对应的主要流程。
         public void PresentScene(ColorTimingSceneId scene)
         {
             ThrowIfDisposed();
@@ -97,6 +103,7 @@ namespace ColorTiming.Infrastructure.GF.UI
             }
         }
 
+        // 显示战斗结果并同步当前数据。
         public bool ShowBattleResult(BattlePresentationResult result)
         {
             ThrowIfDisposed();
@@ -120,6 +127,7 @@ namespace ColorTiming.Infrastructure.GF.UI
             return false;
         }
 
+        // 显示战斗Hud并同步当前数据。
         public bool ShowBattleHud(BattleHudPresentation presentation)
         {
             ThrowIfDisposed();
@@ -141,6 +149,7 @@ namespace ColorTiming.Infrastructure.GF.UI
             return false;
         }
 
+        // 显示战斗Tutorial并同步当前数据。
         public bool ShowBattleTutorial(ColorTiming.Application.Battle.BattleSession session)
         {
             ThrowIfDisposed();
@@ -162,12 +171,14 @@ namespace ColorTiming.Infrastructure.GF.UI
             return false;
         }
 
+        // 恢复组件的默认配置或初始运行状态。
         public void Reset()
         {
             if (disposed) return;
             CloseTrackedForms();
         }
 
+        // 响应Start菜单Opened回调，并更新本对象状态。
         void OnStartMenuOpened(UIFormLogic logic)
         {
             if (logic is IColorTimingStartMenuForm form)
@@ -181,6 +192,7 @@ namespace ColorTiming.Infrastructure.GF.UI
             CloseStartMenu();
         }
 
+        // 响应战斗结果Opened回调，并更新本对象状态。
         void OnBattleResultOpened(UIFormLogic logic)
         {
             if (logic is IColorTimingBattleResultForm form)
@@ -193,6 +205,7 @@ namespace ColorTiming.Infrastructure.GF.UI
             CloseBattleResult();
         }
 
+        // 响应战斗HudOpened回调，并更新本对象状态。
         void OnBattleHudOpened(UIFormLogic logic)
         {
             if (logic is IColorTimingBattleHudForm form)
@@ -205,6 +218,7 @@ namespace ColorTiming.Infrastructure.GF.UI
             CloseBattleHud();
         }
 
+        // 响应战斗TutorialOpened回调，并更新本对象状态。
         void OnBattleTutorialOpened(UIFormLogic logic)
         {
             if (logic is IColorTimingBattleTutorialForm form)
@@ -217,6 +231,7 @@ namespace ColorTiming.Infrastructure.GF.UI
             CloseBattleTutorial();
         }
 
+        // 响应暂停Opened回调，并更新本对象状态。
         void OnPauseOpened(UIFormLogic logic)
         {
             if (logic is IColorTimingPauseForm form)
@@ -229,6 +244,7 @@ namespace ColorTiming.Infrastructure.GF.UI
             ClosePause();
         }
 
+        // 关闭暂停并结束本次生命周期。
         void ClosePause()
         {
             var serialId = pauseFormId;
@@ -240,6 +256,7 @@ namespace ColorTiming.Infrastructure.GF.UI
             ReleasePause();
         }
 
+        // 关闭Start菜单并结束本次生命周期。
         void CloseStartMenu()
         {
             var serialId = startMenuFormId;
@@ -250,6 +267,7 @@ namespace ColorTiming.Infrastructure.GF.UI
             }
         }
 
+        // 关闭战斗结果并结束本次生命周期。
         void CloseBattleResult()
         {
             var serialId = resultFormId;
@@ -261,6 +279,7 @@ namespace ColorTiming.Infrastructure.GF.UI
             ReleaseResult();
         }
 
+        // 关闭战斗Hud并结束本次生命周期。
         void CloseBattleHud()
         {
             var serialId = battleHudFormId;
@@ -271,6 +290,7 @@ namespace ColorTiming.Infrastructure.GF.UI
             }
         }
 
+        // 关闭战斗Tutorial并结束本次生命周期。
         void CloseBattleTutorial()
         {
             var serialId = battleTutorialFormId;
@@ -293,6 +313,7 @@ namespace ColorTiming.Infrastructure.GF.UI
             pendingTutorialSession = null;
         }
 
+        // 释放结果及其临时资源。
         void ReleaseResult()
         {
             resultFormId = -1;
@@ -300,12 +321,14 @@ namespace ColorTiming.Infrastructure.GF.UI
             resultPauseLease = null;
         }
 
+        // 关闭TrackedForms并结束本次生命周期。
         void CloseTrackedForms()
         {
             CloseTrackedGameplayForms();
             CloseLoading();
         }
 
+        // 关闭TrackedGameplayForms并结束本次生命周期。
         void CloseTrackedGameplayForms()
         {
             ClosePause();
@@ -330,6 +353,7 @@ namespace ColorTiming.Infrastructure.GF.UI
             }
         }
 
+        // 响应加载Opened回调，并更新本对象状态。
         void OnLoadingOpened(UIFormLogic logic)
         {
             if (logic is not IColorTimingLoadingForm form)
@@ -347,6 +371,7 @@ namespace ColorTiming.Infrastructure.GF.UI
             }
         }
 
+        // 关闭加载并结束本次生命周期。
         void CloseLoading()
         {
             var serialId = loadingFormId;
@@ -365,6 +390,7 @@ namespace ColorTiming.Infrastructure.GF.UI
             loadingCompletionRequested = false;
         }
 
+        // 释放暂停及其临时资源。
         void ReleasePause()
         {
             pauseMenuLease?.Dispose();
@@ -372,6 +398,7 @@ namespace ColorTiming.Infrastructure.GF.UI
             pauseFormId = -1;
         }
 
+        // 释放本对象持有的订阅、服务和临时资源。
         public void Dispose()
         {
             if (disposed) return;
@@ -383,18 +410,21 @@ namespace ColorTiming.Infrastructure.GF.UI
             disposed = true;
         }
 
+        // 响应TransitionStarted回调，并更新本对象状态。
         void OnTransitionStarted(ColorTimingSceneId scene)
         {
             CloseTrackedGameplayForms();
             BeginLoading();
         }
 
+        // 响应Transition进度回调，并更新本对象状态。
         void OnTransitionProgress(float progress)
         {
             loadingProgress = progress;
             loadingForm?.SetProgress(progress);
         }
 
+        // 响应场景变化回调，并更新本对象状态。
         void OnSceneChanged(ColorTimingSceneId scene)
         {
             loadingProgress = 1f;
@@ -403,6 +433,7 @@ namespace ColorTiming.Infrastructure.GF.UI
             loadingForm?.CompleteAndClose();
         }
 
+        // 响应TransitionFailed回调，并更新本对象状态。
         void OnTransitionFailed(ColorTimingSceneId scene, string error)
         {
             CloseLoading();

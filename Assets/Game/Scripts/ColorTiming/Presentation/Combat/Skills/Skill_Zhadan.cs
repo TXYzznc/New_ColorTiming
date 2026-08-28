@@ -1,3 +1,6 @@
+// 文件职责：实现战斗技能 Skill_Zhadan 的运行时表现和回收行为。
+// 所属模块：ColorTiming / Presentation / Combat / Skills。
+
 using Cinemachine;
 using System;
 using System.Collections;
@@ -10,6 +13,7 @@ public class Skill_Zhadan : Skill_base, IColorTimingSoundConsumer
 {
     IColorTimingSoundService soundService;
 
+    // 绑定音效Service依赖或事件监听。
     public void BindSoundService(IColorTimingSoundService service)
     {
         soundService = service ?? throw new ArgumentNullException(nameof(service));

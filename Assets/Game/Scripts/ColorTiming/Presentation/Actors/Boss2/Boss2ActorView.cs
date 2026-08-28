@@ -1,3 +1,6 @@
+// 文件职责：负责 Boss2Actor 的场景或界面表现。
+// 所属模块：ColorTiming / Presentation / Actors / Boss2。
+
 using Spine;
 using Spine.Unity;
 using System.Collections.Generic;
@@ -75,6 +78,7 @@ public class Boss2ActorView : MonoBehaviour, IBattleDamageReceiver, ITransientEn
     WeaknessSlotLedger slotLedger;
 
     /// <summary>Bound by the runtime-created battle composition root before Start.</summary>
+    // 绑定战斗会话依赖或事件监听。
     public void BindBattleSession(BattleSession session)
     {
         if (battleSession != null && !ReferenceEquals(battleSession, session))
@@ -85,16 +89,19 @@ public class Boss2ActorView : MonoBehaviour, IBattleDamageReceiver, ITransientEn
         TryInitializeSession();
     }
 
+    // 绑定TransientEntities依赖或事件监听。
     public void BindTransientEntities(ITransientEntityService entities)
     {
         transientEntities = entities ?? throw new ArgumentNullException(nameof(entities));
     }
 
+    // 绑定玩家目标依赖或事件监听。
     public void BindPlayerTarget(Transform target)
     {
         playerTarget = target != null ? target : throw new ArgumentNullException(nameof(target));
     }
 
+    // 在首帧启动依赖就绪后的业务或表现流程。
     void Start()
     {
         boss2Anim_s = GetComponent<Boss2AnimationEventRelay>();
@@ -105,6 +112,7 @@ public class Boss2ActorView : MonoBehaviour, IBattleDamageReceiver, ITransientEn
         TryInitializeSession();
     }
 
+    // 尝试Initialize会话，并通过返回值报告是否成功。
     void TryInitializeSession()
     {
         if (sessionInitialized || !viewStarted || battleSession == null) return;
@@ -114,6 +122,7 @@ public class Boss2ActorView : MonoBehaviour, IBattleDamageReceiver, ITransientEn
 
     bool attacking;
     // Update is called once per frame
+    // 逐帧推进需要实时刷新的业务或表现状态。
     void Update()
     {
         if (battleSession == null || playerTarget == null || death)
@@ -145,6 +154,7 @@ public class Boss2ActorView : MonoBehaviour, IBattleDamageReceiver, ITransientEn
     float dundiTime;
 
     float lastCaseDis;
+    // 按物理帧推进与刚体或碰撞相关的状态。
     private void FixedUpdate()
     {
         if (battleSession == null || playerTarget == null || death)
@@ -233,6 +243,7 @@ public class Boss2ActorView : MonoBehaviour, IBattleDamageReceiver, ITransientEn
 
     bool ca1 = false;
     bool ca2 = false;
+    // 执行EnterCase对应的主要流程。
     public void EnterCase(int cI, bool enter)
     {
         if (cI == 1)
@@ -365,6 +376,7 @@ public class Boss2ActorView : MonoBehaviour, IBattleDamageReceiver, ITransientEn
 
     }
 
+    // 创建BossHP并完成必要的初始配置。
     void CreateBossHP()
     {
         if (battleSession == null || battleSession.Kind != BattleKind.Boss2)
@@ -450,6 +462,7 @@ public class Boss2ActorView : MonoBehaviour, IBattleDamageReceiver, ITransientEn
 
     }
 
+    // 执行Receive伤害对应的主要流程。
     public void ReceiveDamage(BattleDamage damage)
     {
         if (battleSession == null)
@@ -540,6 +553,7 @@ public class Boss2ActorView : MonoBehaviour, IBattleDamageReceiver, ITransientEn
 
     }
 
+    // 响应HP颜色回调，并更新本对象状态。
     void OnHPColor()
     {
         if (Boss1HP.Count > 0)
@@ -557,6 +571,7 @@ public class Boss2ActorView : MonoBehaviour, IBattleDamageReceiver, ITransientEn
         SetHPColor(WeaponColor.Orange, 0.1f, 0.1f);
     }
 
+    // 设置HP颜色，并使后续流程使用最新状态。
     void SetHPColor(WeaponColor color,float c,float a)
     {
         var weaponColor = (WeaponColor)color;
@@ -578,6 +593,7 @@ public class Boss2ActorView : MonoBehaviour, IBattleDamageReceiver, ITransientEn
         }
     }
 
+    // 设置HP颜色，并使后续流程使用最新状态。
     void SetHPColor(string _slot,float c,float a)
     {
         //这个Boss不确定颜色骨骼名称
@@ -599,6 +615,7 @@ public class Boss2ActorView : MonoBehaviour, IBattleDamageReceiver, ITransientEn
     }
 
 
+    // 创建Dundi并完成必要的初始配置。
     public void CreateDundi()
     {
         if (!moveing || dundiObj == null) return;
@@ -614,6 +631,7 @@ public class Boss2ActorView : MonoBehaviour, IBattleDamageReceiver, ITransientEn
             null);
     }
 
+    // 设置r随机源移动输入，并使后续流程使用最新状态。
     void SetrRandomMove()
     {
         List<Vector3> rmV3 = new List<Vector3>();
@@ -636,6 +654,7 @@ public class Boss2ActorView : MonoBehaviour, IBattleDamageReceiver, ITransientEn
         randomMove = rmV3[Random.Range(0, rmV3.Count)];
     }
 
+    // 组件销毁时释放订阅、句柄和运行时资源。
     private void OnDestroy()
     {
         if (boss2Anim_s != null)
@@ -647,6 +666,7 @@ public class Boss2ActorView : MonoBehaviour, IBattleDamageReceiver, ITransientEn
 
     private sealed class UnityRandomSource : IRandomSource
     {
+        // 执行Range对应的主要流程。
         public int Range(int minimumInclusive, int maximumExclusive)
         {
             return Random.Range(minimumInclusive, maximumExclusive);

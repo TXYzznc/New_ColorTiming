@@ -1,3 +1,6 @@
+// 文件职责：实现 Boss2战斗 的核心业务规则。
+// 所属模块：ColorTiming / Domain / Bosses / Boss2。
+
 using System;
 
 namespace ColorTiming.Bosses.Boss2
@@ -19,6 +22,7 @@ namespace ColorTiming.Bosses.Boss2
 
     public static class Boss2ActionSelector
     {
+        // 根据当前规则选择本体。
         public static Boss2Action SelectHead(float distance, bool facingAway, float sample)
         {
             Validate(distance, sample);
@@ -29,6 +33,7 @@ namespace ColorTiming.Bosses.Boss2
             return distance < 9f ? Boss2Action.Melee : Boss2Action.Projectile;
         }
 
+        // 根据当前规则选择尾部。
         public static Boss2Action SelectTail(float distance, bool facingAway, float sample)
         {
             Validate(distance, sample);
@@ -57,6 +62,7 @@ namespace ColorTiming.Bosses.Boss2
         private int previousRemaining;
         private bool tailActivated;
 
+        // 初始化Boss2Phase协调器实例及其核心依赖。
         public Boss2PhaseCoordinator(int initialRemaining)
         {
             if (initialRemaining <= 0)
@@ -68,6 +74,7 @@ namespace ColorTiming.Bosses.Boss2
 
         public bool IsTailActive => tailActivated;
 
+        // 执行观察剩余数量对应的主要流程。
         public bool ObserveRemaining(int remaining)
         {
             if (remaining < 0 || remaining > previousRemaining)
@@ -89,6 +96,7 @@ namespace ColorTiming.Bosses.Boss2
     {
         public Boss2BurrowState State { get; private set; } = Boss2BurrowState.AboveGround;
 
+        // 执行开始进入阶段对应的主要流程。
         public bool BeginEntering()
         {
             if (State != Boss2BurrowState.AboveGround)
@@ -99,6 +107,7 @@ namespace ColorTiming.Bosses.Boss2
             return true;
         }
 
+        // 执行Enter隐藏状态Movement对应的主要流程。
         public bool EnterHiddenMovement()
         {
             if (State != Boss2BurrowState.Entering)
@@ -109,6 +118,7 @@ namespace ColorTiming.Bosses.Boss2
             return true;
         }
 
+        // 执行开始出现阶段对应的主要流程。
         public bool BeginEmerging()
         {
             if (State != Boss2BurrowState.HiddenMoving)
@@ -119,6 +129,7 @@ namespace ColorTiming.Bosses.Boss2
             return true;
         }
 
+        // 执行完成出现阶段对应的主要流程。
         public bool CompleteEmerging()
         {
             if (State != Boss2BurrowState.Emerging)
@@ -129,6 +140,7 @@ namespace ColorTiming.Bosses.Boss2
             return true;
         }
 
+        // 执行Interrupt对应的主要流程。
         public void Interrupt()
         {
             State = Boss2BurrowState.AboveGround;

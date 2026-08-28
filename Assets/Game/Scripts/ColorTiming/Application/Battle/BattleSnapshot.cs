@@ -1,3 +1,6 @@
+// 文件职责：定义 战斗快照 数据及其状态语义。
+// 所属模块：ColorTiming / Application / Battle。
+
 using System;
 using System.Collections.Generic;
 using ColorTiming.Combat;
@@ -57,6 +60,7 @@ namespace ColorTiming.Application.Battle
 
     public readonly struct BattlePresentationEvent
     {
+        // 初始化战斗展示事件实例及其核心依赖。
         public BattlePresentationEvent(BattlePresentationEventKind kind, WeaponColor color = WeaponColor.Red)
         {
             Kind = kind;

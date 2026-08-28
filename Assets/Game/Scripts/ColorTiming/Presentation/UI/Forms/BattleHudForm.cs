@@ -1,3 +1,6 @@
+// 文件职责：实现 战斗Hud GF.UI 表单及其交互生命周期。
+// 所属模块：ColorTiming / Presentation / UI / Forms。
+
 using System;
 using ColorTiming.Input;
 using ColorTiming.Presentation.UI.Components;
@@ -15,6 +18,7 @@ namespace ColorTiming.Presentation.UI.Forms
         [SerializeField] private Boss1HealthView boss1Health;
         [SerializeField] private Boss2HealthView boss2Health;
 
+        // 绑定运行时依赖或事件监听。
         public void BindRuntime(IGameInput gameInput, IColorTimingUiService uiService, BattleHudPresentation presentation)
         {
             if (gameInput == null) throw new ArgumentNullException(nameof(gameInput));
@@ -37,6 +41,7 @@ namespace ColorTiming.Presentation.UI.Forms
             boss2Health.Bind(isBoss1 ? null : presentation.Session);
         }
 
+        // 在 GF UI 表单关闭时停止流程并清理临时状态。
         protected override void OnClose(bool isShutdown, object userData)
         {
             if (heroInfo != null) heroInfo.BindSession(null);

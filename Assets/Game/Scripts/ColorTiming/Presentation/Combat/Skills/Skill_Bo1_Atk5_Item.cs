@@ -1,3 +1,6 @@
+// 文件职责：实现战斗技能 Skill_Bo1_Atk5_Item 的运行时表现和回收行为。
+// 所属模块：ColorTiming / Presentation / Combat / Skills。
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -25,6 +28,7 @@ public class Skill_Bo1_Atk5_Item : MonoBehaviour, ITransientEntityConsumer, IFra
     }
 
 
+    // 执行Cerate对应的主要流程。
     public void Cerate()
     {
         if (index > 6)
@@ -66,27 +70,32 @@ public class Skill_Bo1_Atk5_Item : MonoBehaviour, ITransientEntityConsumer, IFra
         //print("weisha shanchu le ?");
     }
 
+    // 绑定TransientEntities依赖或事件监听。
     public void BindTransientEntities(ITransientEntityService entities)
     {
         transientEntities = entities ?? throw new ArgumentNullException(nameof(entities));
     }
 
+    // 绑定FrameworkRelease依赖或事件监听。
     public void BindFrameworkRelease(Action release)
     {
         frameworkRelease = release;
     }
 
+    // 响应Framework实体Spawned回调，并更新本对象状态。
     public void OnFrameworkEntitySpawned()
     {
         releasing = false;
     }
 
+    // 响应Framework实体Despawned回调，并更新本对象状态。
     public void OnFrameworkEntityDespawned()
     {
         con = null;
         releasing = false;
     }
 
+    // 响应TriggerEnter2D回调，并更新本对象状态。
     private void OnTriggerEnter2D(Collider2D collision)
     {
         con?.ChildTrigger(collision);

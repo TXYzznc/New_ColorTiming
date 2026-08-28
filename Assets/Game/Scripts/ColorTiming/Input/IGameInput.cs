@@ -1,3 +1,6 @@
+// 文件职责：定义 Game输入 的依赖契约，供模块间解耦使用。
+// 所属模块：ColorTiming / Input。
+
 using UnityEngine;
 
 namespace ColorTiming.Input
@@ -14,6 +17,7 @@ namespace ColorTiming.Input
         bool AnyPressed { get; }
         bool ConfirmPressed { get; }
 
+        // 执行ConsumeAnyPressForOverlay对应的主要流程。
         bool ConsumeAnyPressForOverlay();
     }
 }

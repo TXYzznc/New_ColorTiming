@@ -1,9 +1,13 @@
+// 文件职责：定义 战斗契约，承担 Combat 模块中的对应职责。
+// 所属模块：ColorTiming / Domain / Combat。
+
 using System;
 
 namespace ColorTiming.Combat
 {
     public readonly struct CombatPoint
     {
+        // 初始化CombatPoint实例及其核心依赖。
         public CombatPoint(float x, float y)
         {
             X = x;
@@ -21,6 +25,7 @@ namespace ColorTiming.Combat
         public static readonly ActorId BossHead = new ActorId(2);
         public static readonly ActorId BossTail = new ActorId(3);
 
+        // 初始化ActorID实例及其核心依赖。
         public ActorId(int value)
         {
             if (value <= 0) throw new ArgumentOutOfRangeException(nameof(value));
@@ -54,6 +59,7 @@ namespace ColorTiming.Combat
     /// <summary>Unity-independent damage data submitted by a hitbox adapter.</summary>
     public readonly struct BattleDamage
     {
+        // 初始化战斗伤害实例及其核心依赖。
         public BattleDamage(
             ActorId attacker,
             ActorId target,

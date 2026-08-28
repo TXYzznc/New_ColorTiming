@@ -1,3 +1,6 @@
+// 文件职责：定义 数据模型Component，承担 数据模型 模块中的对应职责。
+// 所属模块：Extension / DataModel。
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,16 +23,19 @@ namespace GameFramework
                 return m_DataModels.Count;
             }
         }
+        // 缓存本组件依赖，并完成不依赖外部服务的本地初始化。
         protected override void Awake()
         {
             base.Awake();
             m_DataModels = new Dictionary<TypeIdPair, DataModelBase>(1024);
         }
+        // 在首帧启动依赖就绪后的业务或表现流程。
         private void Start()
         {
             GF.Event.Subscribe(GFEventArgs.EventId, OnGFEventCallback);
             m_IsSubscribedToQuitEvent = true;
         }
+        // 组件销毁时释放订阅、句柄和运行时资源。
         private void OnDestroy()
         {
             UnsubscribeFromQuitEvent();
@@ -37,6 +43,7 @@ namespace GameFramework
             ReleaseAll();
             m_DataModels.Clear();
         }
+        // 响应GF事件Callback回调，并更新本对象状态。
         private void OnGFEventCallback(object sender, GameEventArgs e)
         {
             var args = e as GFEventArgs;
@@ -294,6 +301,7 @@ namespace GameFramework
         /// <param name="dataRowType"></param>
         /// <param name="id"></param>
         /// <returns></returns>
+        // 获取OrCreate。
         public DataModelBase GetOrCreate(Type dataRowType, int id)
         {
             var result = GetDataModel(dataRowType, id);
@@ -310,6 +318,7 @@ namespace GameFramework
         /// <param name="dataRowTypeName"></param>
         /// <param name="id"></param>
         /// <returns></returns>
+        // 获取OrCreate。
         public DataModelBase GetOrCreate(string dataRowTypeName, int id)
         {
             return GetOrCreate(Utility.Assembly.GetType(dataRowTypeName), id);

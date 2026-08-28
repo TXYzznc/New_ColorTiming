@@ -1,3 +1,5 @@
+// 文件职责：定义 数据模型基类，承担 数据模型 模块中的对应职责。
+// 所属模块：Extension / DataModel。
 
 namespace GameFramework
 {
@@ -24,6 +26,7 @@ namespace GameFramework
             this.Userdata = userdata;
             OnCreate(userdata);
         }
+        // 清空当前保存的运行时状态，使对象可安全复用。
         public void Clear()
         {
             OnRelease();
@@ -31,11 +34,13 @@ namespace GameFramework
             ReleaseUserdata();
         }
 
+        // 停止服务并释放其管理的运行时资源。
         internal void Shutdown()
         {
             ReferencePool.Release(this);
         }
 
+        // 释放Userdata及其临时资源。
         protected void ReleaseUserdata()
         {
             if (Userdata != null)
