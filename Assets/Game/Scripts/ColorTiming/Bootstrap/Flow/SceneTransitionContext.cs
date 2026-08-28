@@ -1,4 +1,4 @@
-﻿// 文件职责：描述一次 ColorTiming 场景过渡的来源、目标和首次启动语义。
+// 文件职责：描述一次 ColorTiming 场景过渡的来源、目标和首次启动语义。
 // 所属模块：ColorTiming / Bootstrap / Flow。
 
 namespace ColorTiming.Bootstrap.Flow

@@ -21,12 +21,14 @@ public abstract class WeaponSpawnerView : MonoBehaviour, ITransientEntityConsume
 
     private readonly List<WeaponColor> activeColors = new List<WeaponColor>(10);
     private readonly List<Vector3> availablePositions = new List<Vector3>(16);
+    private readonly List<WeaponPickupView> trackedPickups = new List<WeaponPickupView>(10);
     private WeaponSpawnerRuntime runtime;
     private ITransientEntityService transientEntities;
     private int damageCount;
     private int tipCount;
     private BattleSession session;
     private int lastWeaknessCount = -1;
+    private int trackedWeaponChildCount = -1;
 
     // 创建Policy并完成必要的初始配置。
     protected abstract WeaponSpawnPolicy CreatePolicy(int activeLimit);
@@ -61,6 +63,7 @@ public abstract class WeaponSpawnerView : MonoBehaviour, ITransientEntityConsume
             wTime,
             CreatePolicy(limitCount),
             new UnityWeaponRandomSource());
+        RefreshPickupCache();
     }
 
     // 组件销毁时释放订阅、句柄和运行时资源。
@@ -119,9 +122,13 @@ public abstract class WeaponSpawnerView : MonoBehaviour, ITransientEntityConsume
             return;
         }
 
-        foreach (Transform child in weaponT)
+        EnsurePickupCacheCurrent();
+        foreach (var pickup in trackedPickups)
         {
-            child.GetComponent<WeaponPickupView>()?.HideTip();
+            if (pickup != null && pickup.HasWeapon)
+            {
+                pickup.HideTip();
+            }
         }
 
         damageCount++;
@@ -137,9 +144,9 @@ public abstract class WeaponSpawnerView : MonoBehaviour, ITransientEntityConsume
     private void CollectActiveColors()
     {
         activeColors.Clear();
-        foreach (Transform child in weaponT)
+        EnsurePickupCacheCurrent();
+        foreach (var pickup in trackedPickups)
         {
-            var pickup = child.GetComponent<WeaponPickupView>();
             if (pickup != null && pickup.HasWeapon)
             {
                 activeColors.Add(pickup.Weapon.Color);
@@ -170,6 +177,7 @@ public abstract class WeaponSpawnerView : MonoBehaviour, ITransientEntityConsume
                     return;
                 }
 
+                TrackPickup(pickup);
                 pickup.InitPickWeapon(identity);
             });
     }
@@ -177,12 +185,14 @@ public abstract class WeaponSpawnerView : MonoBehaviour, ITransientEntityConsume
     private Vector3 GetRandomPosition()
     {
         availablePositions.Clear();
+        EnsurePickupCacheCurrent();
         foreach (Transform anchor in transform)
         {
             var occupied = false;
-            foreach (Transform weapon in weaponT)
+            foreach (var pickup in trackedPickups)
             {
-                if (Vector2.Distance(anchor.position, weapon.position) < 1f)
+                if (pickup != null && pickup.HasWeapon
+                    && Vector2.Distance(anchor.position, pickup.transform.position) < 1f)
                 {
                     occupied = true;
                     break;
@@ -211,9 +221,9 @@ public abstract class WeaponSpawnerView : MonoBehaviour, ITransientEntityConsume
             return;
         }
 
-        foreach (Transform child in weaponT)
+        EnsurePickupCacheCurrent();
+        foreach (var pickup in trackedPickups)
         {
-            var pickup = child.GetComponent<WeaponPickupView>();
             if (pickup != null && pickup.HasWeapon && pickup.Weapon.Color == weakness)
             {
                 pickup.ShowTip(TutorialTipId);
@@ -221,6 +231,51 @@ public abstract class WeaponSpawnerView : MonoBehaviour, ITransientEntityConsume
                 return;
             }
         }
+    }
+
+    // 子对象结构没有变化时复用组件缓存，避免每帧对每个武器执行 GetComponent。
+    private void EnsurePickupCacheCurrent()
+    {
+        if (weaponT == null)
+        {
+            trackedPickups.Clear();
+            trackedWeaponChildCount = -1;
+            return;
+        }
+
+        if (trackedWeaponChildCount != weaponT.childCount)
+        {
+            RefreshPickupCache();
+        }
+    }
+
+    private void RefreshPickupCache()
+    {
+        trackedPickups.Clear();
+        if (weaponT == null)
+        {
+            trackedWeaponChildCount = -1;
+            return;
+        }
+
+        foreach (Transform child in weaponT)
+        {
+            if (child.TryGetComponent(out WeaponPickupView pickup))
+            {
+                trackedPickups.Add(pickup);
+            }
+        }
+
+        trackedWeaponChildCount = weaponT.childCount;
+    }
+
+    private void TrackPickup(WeaponPickupView pickup)
+    {
+        if (pickup != null && !trackedPickups.Contains(pickup))
+        {
+            trackedPickups.Add(pickup);
+        }
+        trackedWeaponChildCount = weaponT != null ? weaponT.childCount : -1;
     }
 
     private sealed class UnityWeaponRandomSource : IRandomSource

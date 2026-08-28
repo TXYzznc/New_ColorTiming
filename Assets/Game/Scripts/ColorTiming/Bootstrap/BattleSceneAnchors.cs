@@ -16,8 +16,15 @@ namespace ColorTiming.Bootstrap
         [Serializable]
         public struct SoundCue
         {
-            public AudioSource source;
-            public ColorTimingSoundChannel channel;
+            [SerializeField] AudioClip clip;
+            [SerializeField] ColorTimingSoundChannel channel;
+            [SerializeField] bool loop;
+            [SerializeField] Vector3 position;
+
+            public AudioClip Clip => clip;
+            public ColorTimingSoundChannel Channel => channel;
+            public bool Loop => loop;
+            public Vector3 Position => position;
         }
 
         [SerializeField] PlayerActorView hero;
@@ -45,6 +52,8 @@ namespace ColorTiming.Bootstrap
             if (gameplayCamera == null) throw new InvalidOperationException("BattleSceneAnchors requires a gameplay camera.");
             for (var i = 0; i < explicitBindings.Length; i++)
                 if (explicitBindings[i] == null) throw new InvalidOperationException($"BattleSceneAnchors binding {i} is missing.");
+            for (var i = 0; i < soundCues.Length; i++)
+                if (soundCues[i].Clip == null) throw new InvalidOperationException($"BattleSceneAnchors sound cue {i} is missing its clip.");
         }
     }
 }

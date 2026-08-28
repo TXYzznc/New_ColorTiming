@@ -33,6 +33,8 @@ public class BattlePlayerInfoView : MonoBehaviour, IGameInputConsumer, IColorTim
 
     WeaponIdentity nowWeapon;
     bool hasWeaponState;
+    int appliedCursorIndex = -1;
+    Texture2D appliedCursor;
     IGameInput gameInput;
     IColorTimingUiService uiService;
 
@@ -177,7 +179,15 @@ public class BattlePlayerInfoView : MonoBehaviour, IGameInputConsumer, IColorTim
     {
         if (TryGet(cursors, index, out var cursor))
         {
+            // 攻击按住状态会逐帧求值；只有光标资源真正变化时才调用 Unity 原生接口。
+            if (appliedCursorIndex == index && appliedCursor == cursor)
+            {
+                return;
+            }
+
             Cursor.SetCursor(cursor, Vector2.zero, CursorMode.Auto);
+            appliedCursorIndex = index;
+            appliedCursor = cursor;
         }
     }
 

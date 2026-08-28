@@ -91,16 +91,26 @@ namespace ColorTiming.Editor
             serialized.FindProperty("boss2").objectReferenceValue = boss2;
             serialized.FindProperty("gameplayCamera").objectReferenceValue = camera;
             WriteObjects(serialized.FindProperty("explicitBindings"), explicitBindings);
-            var cues = serialized.FindProperty("soundCues");
-            cues.arraySize = audioSources.Length;
-            for (var i = 0; i < audioSources.Length; i++)
+            if (audioSources.Length > 0)
             {
-                var source = audioSources[i];
-                var element = cues.GetArrayElementAtIndex(i);
-                element.FindPropertyRelative("source").objectReferenceValue = source;
-                element.FindPropertyRelative("channel").enumValueIndex = (int)ClassifyOnce(source);
+                var cues = serialized.FindProperty("soundCues");
+                cues.arraySize = audioSources.Length;
+                for (var i = 0; i < audioSources.Length; i++)
+                {
+                    var source = audioSources[i];
+                    var element = cues.GetArrayElementAtIndex(i);
+                    element.FindPropertyRelative("clip").objectReferenceValue = source.clip;
+                    element.FindPropertyRelative("channel").enumValueIndex = (int)ClassifyOnce(source);
+                    element.FindPropertyRelative("loop").boolValue = source.loop;
+                    element.FindPropertyRelative("position").vector3Value = source.transform.position;
+                }
             }
             serialized.ApplyModifiedPropertiesWithoutUndo();
+            foreach (var source in audioSources)
+            {
+                if (source.transform.parent == null && source.GetComponents<Component>().Length == 2)
+                    UnityEngine.Object.DestroyImmediate(source.gameObject);
+            }
             anchors.Validate(boss1 != null);
             EditorUtility.SetDirty(anchors);
             EditorSceneManager.MarkSceneDirty(scene);

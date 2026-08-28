@@ -1,0 +1,96 @@
+{
+  "status": "PASS",
+  "animator": {
+    "controller": "Assets/Game/Sprites/ColorTiming/Hero/Animations/Hero.controller",
+    "required_parameters": [
+      "Atk",
+      "Atk_x",
+      "Dash",
+      "Death",
+      "Hit",
+      "moveSpeed",
+      "moveV",
+      "switchWeapon",
+      "weaponType"
+    ],
+    "missing_parameters": [],
+    "atk_x_thresholds": [
+      "0.1"
+    ]
+  },
+  "state_machine_behaviours": {
+    "EnterAnimStateEvent": {
+      "guid": "a248c9c6fd6d4ee45949c4a43ad8e435",
+      "controller": "Assets/Game/Sprites/ColorTiming/Hero/Animations/Hero.controller",
+      "reference_count": 176
+    }
+  },
+  "animation_events": {
+    "Attack": {
+      "animation_event_count": 25,
+      "receiver": "Assets/Game/Scripts/ColorTiming/Presentation/Actors/Player/PlayerAnimationEventRelay.cs",
+      "receiver_method_exists": true
+    },
+    "PlayAuido": {
+      "animation_event_count": 35,
+      "receiver": "Assets/Game/Scripts/ColorTiming/Presentation/Actors/Player/PlayerSoundView.cs",
+      "receiver_method_exists": true
+    },
+    "PlayAuido_Random": {
+      "animation_event_count": 23,
+      "receiver": "Assets/Game/Scripts/ColorTiming/Presentation/Actors/Player/PlayerSoundView.cs",
+      "receiver_method_exists": true
+    },
+    "DashWD": {
+      "animation_event_count": 2,
+      "receiver": "Assets/Game/Scripts/ColorTiming/Presentation/Actors/Player/PlayerAnimationEventRelay.cs",
+      "receiver_method_exists": true
+    },
+    "DashEnd": {
+      "animation_event_count": 1,
+      "receiver": "Assets/Game/Scripts/ColorTiming/Presentation/Actors/Player/PlayerAnimationEventRelay.cs",
+      "receiver_method_exists": true
+    },
+    "SkillMove": {
+      "animation_event_count": 8,
+      "receiver": "Assets/Game/Scripts/ColorTiming/Presentation/Actors/Player/PlayerAnimationEventRelay.cs",
+      "receiver_method_exists": true
+    },
+    "Wudi": {
+      "animation_event_count": 13,
+      "receiver": "Assets/Game/Scripts/ColorTiming/Presentation/Actors/Player/PlayerAnimationEventRelay.cs",
+      "receiver_method_exists": true
+    },
+    "Hit": {
+      "animation_event_count": 3,
+      "receiver": "Assets/Game/Scripts/ColorTiming/Presentation/Actors/Player/PlayerAnimationEventRelay.cs",
+      "receiver_method_exists": true
+    },
+    "DeathOver": {
+      "animation_event_count": 2,
+      "receiver": "Assets/Game/Scripts/ColorTiming/Presentation/Actors/Player/PlayerDeathSequenceView.cs",
+      "receiver_method_exists": true
+    },
+    "EventEnd_Destroy": {
+      "animation_event_count": 5,
+      "receiver": "Assets/Game/Scripts/ColorTiming/Presentation/Combat/Skills/Skill_base.cs",
+      "receiver_method_exists": true
+    },
+    "OnFXEnd": {
+      "animation_event_count": 10,
+      "receiver": "Assets/Game/Scripts/ColorTiming/Presentation/Combat/Skills/HitFX_Base.cs",
+      "receiver_method_exists": true
+    },
+    "Cerate": {
+      "animation_event_count": 1,
+      "receiver": "Assets/Game/Scripts/ColorTiming/Presentation/Combat/Skills/Skill_Bo1_Atk5_Item.cs",
+      "receiver_method_exists": true
+    },
+    "End": {
+      "animation_event_count": 1,
+      "receiver": "Assets/Game/Scripts/ColorTiming/Presentation/Combat/Skills/Skill_Bo1_Atk5_Item.cs",
+      "receiver_method_exists": true
+    }
+  },
+  "failures": []
+}

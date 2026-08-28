@@ -419,6 +419,14 @@ public class PlayerActorView : MonoBehaviour, IBattleDamageReceiver, IGameInputC
 
     }
 
+    /// <summary>
+    /// 接收 Animator StateMachineBehaviour 的状态切换通知。
+    /// </summary>
+    internal void NotifyAnimationState(AnimatorStateInfo stateInfo, bool entered)
+    {
+        OnAnimStateEnter?.Invoke(stateInfo, entered);
+    }
+
     // 响应Anim状态EnterF回调，并更新本对象状态。
     private void OnAnimStateEnterF(AnimatorStateInfo stateInfo, bool enter)
     {

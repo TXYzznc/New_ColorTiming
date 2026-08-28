@@ -110,11 +110,9 @@ namespace ColorTiming.Bootstrap
             var cues = anchors.SoundCues;
             for (var i = 0; i < cues.Length; i++)
             {
-                var source = cues[i].source;
-                if (source == null || source.clip == null) continue;
-                source.Stop();
-                source.playOnAwake = false;
-                sound.Play(source.clip, cues[i].channel, source.transform.position, source.loop);
+                var cue = cues[i];
+                if (cue.Clip == null) continue;
+                sound.Play(cue.Clip, cue.Channel, cue.Position, cue.Loop);
             }
         }
 

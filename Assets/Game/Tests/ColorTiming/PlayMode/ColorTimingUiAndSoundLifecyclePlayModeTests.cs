@@ -74,6 +74,45 @@ namespace ColorTiming.Tests.PlayMode
 
         [UnityTest]
         [Timeout(90000)]
+        public IEnumerator StartMenuVideo_StopReleasesAndRestartRecreatesOutput()
+        {
+            yield return BootToStartMenu();
+
+            var sequence = Object.FindObjectOfType<MainMenuIntroSequence>(true);
+            Assert.That(sequence, Is.Not.Null);
+            sequence.RestartSequence();
+            yield return null;
+
+            var intro = sequence.GetComponent<VideoPlayer>();
+            var loop = sequence.loop2;
+            var display = sequence.VideoDisplay;
+            var firstOutput = intro.targetTexture;
+            Assert.That(firstOutput, Is.Not.Null);
+            Assert.That(display.texture, Is.SameAs(firstOutput));
+
+            sequence.StopSequence();
+            yield return null;
+
+            Assert.That(intro.targetTexture, Is.Null);
+            Assert.That(loop.targetTexture, Is.Null);
+            Assert.That(display.texture, Is.Null);
+            Assert.That(firstOutput == null, Is.True,
+                "Stopping the pooled MainMenu form must destroy its runtime RenderTexture.");
+
+            sequence.RestartSequence();
+            yield return null;
+
+            var recreatedOutput = intro.targetTexture;
+            Assert.That(recreatedOutput, Is.Not.Null);
+            Assert.That(ReferenceEquals(firstOutput, recreatedOutput), Is.False);
+            Assert.That(loop.targetTexture, Is.SameAs(recreatedOutput));
+            Assert.That(display.texture, Is.SameAs(recreatedOutput));
+            Assert.That(intro.gameObject.activeSelf, Is.True,
+                "Returning to MainMenu must replay the intro before switching to the loop video.");
+        }
+
+        [UnityTest]
+        [Timeout(90000)]
         public IEnumerator PauseForm_ReopensAndSceneExitReleasesPauseLease()
         {
             yield return BootToStartMenu();
@@ -256,6 +295,37 @@ namespace ColorTiming.Tests.PlayMode
                 "Scene-exit cleanup must also cancel in-flight ColorTiming sound loads.");
         }
 
+        [UnityTest]
+        [Timeout(90000)]
+        public IEnumerator BattleSceneAudio_UsesGfSoundWithoutAuthoredAudioSources()
+        {
+            yield return BootToStartMenu();
+
+            FindActive<MainMenuForm>().GoTest1();
+            yield return WaitForScene("Boss1", TransitionTimeout);
+            yield return WaitUntil(() => FindActive<BattlePlayerInfoView>() != null, 10f,
+                "Boss1 HUD did not bind before the audio lifecycle check.");
+
+            var service = Object.FindObjectOfType<GfColorTimingSoundService>(true);
+            Assert.That(service, Is.Not.Null);
+            yield return WaitUntil(() => GetLoadedSceneSoundCount(service) >= 2, 10f,
+                "Boss1 BGM and ambience did not finish loading and start through GF.Sound.");
+            Assert.That(CountAuthoredSceneAudioSources(SceneManager.GetSceneByName("Boss1")), Is.Zero,
+                "Boss1 must not retain authored AudioSource configuration objects.");
+
+            var hud = FindActive<BattlePlayerInfoView>();
+            hud.TogglePause();
+            yield return WaitUntil(() => FindActive<PauseMenuForm>() != null, 10f,
+                "Pause form did not open before the Boss2 audio lifecycle check.");
+            FindActive<PauseMenuForm>().GoNextLevel(2);
+            yield return WaitForScene("Boss2", TransitionTimeout);
+
+            yield return WaitUntil(() => GetLoadedSceneSoundCount(service) >= 1, 10f,
+                "Boss2 BGM did not finish loading and start through GF.Sound.");
+            Assert.That(CountAuthoredSceneAudioSources(SceneManager.GetSceneByName("Boss2")), Is.Zero,
+                "Boss2 must not retain authored AudioSource configuration objects.");
+        }
+
         static IEnumerator BootToStartMenu()
         {
             Time.timeScale = 1f;
@@ -303,6 +373,23 @@ namespace ColorTiming.Tests.PlayMode
             }
 
             return null;
+        }
+
+        static int GetLoadedSceneSoundCount(GfColorTimingSoundService service)
+        {
+            var sounds = (HashSet<int>)typeof(GfColorTimingSoundService)
+                .GetField("loadedSounds", BindingFlags.Instance | BindingFlags.NonPublic)
+                ?.GetValue(service);
+            return sounds?.Count ?? 0;
+        }
+
+        static int CountAuthoredSceneAudioSources(Scene scene)
+        {
+            var count = 0;
+            foreach (var root in scene.GetRootGameObjects())
+            foreach (var source in root.GetComponentsInChildren<AudioSource>(true))
+                if (source.clip != null) count++;
+            return count;
         }
     }
 }

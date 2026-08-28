@@ -152,6 +152,7 @@ public class MainMenuIntroSequence : MonoBehaviour
         }
         player?.Stop();
         loop2?.Stop();
+        ReleaseVideoOutput();
     }
 
     private void EnsureVideoOutput()
@@ -206,9 +207,29 @@ public class MainMenuIntroSequence : MonoBehaviour
     // 组件销毁时释放订阅、句柄和运行时资源。
     private void OnDestroy()
     {
+        ReleaseVideoOutput();
+    }
+
+    // GF.UI 会缓存已关闭的表单，因此不能等待 OnDestroy 才释放视频输出纹理。
+    // 释放前先解除 VideoPlayer 与 RawImage 的引用，确保返回主菜单时可以安全重建。
+    private void ReleaseVideoOutput()
+    {
         if (outputTexture == null)
         {
             return;
+        }
+
+        if (player != null && player.targetTexture == outputTexture)
+        {
+            player.targetTexture = null;
+        }
+        if (loop2 != null && loop2.targetTexture == outputTexture)
+        {
+            loop2.targetTexture = null;
+        }
+        if (videoDisplay != null && videoDisplay.texture == outputTexture)
+        {
+            videoDisplay.texture = null;
         }
 
         outputTexture.Release();

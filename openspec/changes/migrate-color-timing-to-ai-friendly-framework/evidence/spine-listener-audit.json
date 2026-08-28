@@ -23,169 +23,169 @@
   "missingRemovalPaths": [],
   "occurrences": [
     {
-      "file": "Assets/Game/Scripts/ColorTiming/Legacy/Boss1_Controller.cs",
-      "line": 158,
+      "file": "Assets/Game/Scripts/ColorTiming/Presentation/Actors/Boss1/Boss1ActorView.cs",
+      "line": 183,
       "event": "Complete",
       "operation": "+=",
       "handler": "Entry_Complete"
     },
     {
-      "file": "Assets/Game/Scripts/ColorTiming/Legacy/Boss1_Controller.cs",
-      "line": 159,
+      "file": "Assets/Game/Scripts/ColorTiming/Presentation/Actors/Boss1/Boss1ActorView.cs",
+      "line": 184,
       "event": "Event",
       "operation": "+=",
       "handler": "AnimEvent"
     },
     {
-      "file": "Assets/Game/Scripts/ColorTiming/Legacy/Boss1_Controller.cs",
-      "line": 160,
+      "file": "Assets/Game/Scripts/ColorTiming/Presentation/Actors/Boss1/Boss1ActorView.cs",
+      "line": 185,
       "event": "End",
       "operation": "+=",
       "handler": "Entry_End"
     },
     {
-      "file": "Assets/Game/Scripts/ColorTiming/Legacy/Boss1_Controller.cs",
-      "line": 216,
+      "file": "Assets/Game/Scripts/ColorTiming/Presentation/Actors/Boss1/Boss1ActorView.cs",
+      "line": 241,
       "event": "Event",
       "operation": "-=",
       "handler": "AnimEvent"
     },
     {
-      "file": "Assets/Game/Scripts/ColorTiming/Legacy/Boss1_Controller.cs",
-      "line": 217,
+      "file": "Assets/Game/Scripts/ColorTiming/Presentation/Actors/Boss1/Boss1ActorView.cs",
+      "line": 242,
       "event": "Complete",
       "operation": "-=",
       "handler": "Entry_Complete"
     },
     {
-      "file": "Assets/Game/Scripts/ColorTiming/Legacy/Boss1_Controller.cs",
-      "line": 218,
+      "file": "Assets/Game/Scripts/ColorTiming/Presentation/Actors/Boss1/Boss1ActorView.cs",
+      "line": 243,
       "event": "End",
       "operation": "-=",
       "handler": "Entry_End"
     },
     {
-      "file": "Assets/Game/Scripts/ColorTiming/Legacy/Boss2_Controller.cs",
-      "line": 263,
+      "file": "Assets/Game/Scripts/ColorTiming/Presentation/Actors/Boss2/Boss2ActorView.cs",
+      "line": 298,
       "event": "Complete",
       "operation": "+=",
       "handler": "Entry_Complete"
     },
     {
-      "file": "Assets/Game/Scripts/ColorTiming/Legacy/Boss2_Controller.cs",
-      "line": 264,
+      "file": "Assets/Game/Scripts/ColorTiming/Presentation/Actors/Boss2/Boss2ActorView.cs",
+      "line": 299,
       "event": "Event",
       "operation": "+=",
       "handler": "AnimEvent"
     },
     {
-      "file": "Assets/Game/Scripts/ColorTiming/Legacy/Boss2_Controller.cs",
-      "line": 265,
+      "file": "Assets/Game/Scripts/ColorTiming/Presentation/Actors/Boss2/Boss2ActorView.cs",
+      "line": 300,
       "event": "End",
       "operation": "+=",
       "handler": "Entry_End"
     },
     {
-      "file": "Assets/Game/Scripts/ColorTiming/Legacy/Boss2_Controller.cs",
-      "line": 304,
+      "file": "Assets/Game/Scripts/ColorTiming/Presentation/Actors/Boss2/Boss2ActorView.cs",
+      "line": 339,
       "event": "Complete",
       "operation": "-=",
       "handler": "Entry_Complete"
     },
     {
-      "file": "Assets/Game/Scripts/ColorTiming/Legacy/Boss2_Controller.cs",
-      "line": 318,
+      "file": "Assets/Game/Scripts/ColorTiming/Presentation/Actors/Boss2/Boss2ActorView.cs",
+      "line": 353,
       "event": "Complete",
       "operation": "-=",
       "handler": "Entry_Complete"
     },
     {
-      "file": "Assets/Game/Scripts/ColorTiming/Legacy/Boss2_Controller.cs",
-      "line": 496,
+      "file": "Assets/Game/Scripts/ColorTiming/Presentation/Actors/Boss2/Boss2ActorView.cs",
+      "line": 524,
       "event": "Event",
       "operation": "-=",
       "handler": "AnimEvent"
     },
     {
-      "file": "Assets/Game/Scripts/ColorTiming/Legacy/Boss2_Controller.cs",
-      "line": 497,
+      "file": "Assets/Game/Scripts/ColorTiming/Presentation/Actors/Boss2/Boss2ActorView.cs",
+      "line": 525,
       "event": "Complete",
       "operation": "-=",
       "handler": "Entry_Complete"
     },
     {
-      "file": "Assets/Game/Scripts/ColorTiming/Legacy/Boss2_Controller.cs",
-      "line": 498,
+      "file": "Assets/Game/Scripts/ColorTiming/Presentation/Actors/Boss2/Boss2ActorView.cs",
+      "line": 526,
       "event": "End",
       "operation": "-=",
       "handler": "Entry_End"
     },
     {
-      "file": "Assets/Game/Scripts/ColorTiming/Legacy/Boss2_Controller_w.cs",
-      "line": 172,
+      "file": "Assets/Game/Scripts/ColorTiming/Presentation/Actors/Boss2/Boss2TailActorView.cs",
+      "line": 201,
       "event": "Complete",
       "operation": "+=",
       "handler": "Entry_Complete"
     },
     {
-      "file": "Assets/Game/Scripts/ColorTiming/Legacy/Boss2_Controller_w.cs",
-      "line": 173,
+      "file": "Assets/Game/Scripts/ColorTiming/Presentation/Actors/Boss2/Boss2TailActorView.cs",
+      "line": 202,
       "event": "Event",
       "operation": "+=",
       "handler": "AnimEvent"
     },
     {
-      "file": "Assets/Game/Scripts/ColorTiming/Legacy/Boss2_Controller_w.cs",
-      "line": 174,
+      "file": "Assets/Game/Scripts/ColorTiming/Presentation/Actors/Boss2/Boss2TailActorView.cs",
+      "line": 203,
       "event": "End",
       "operation": "+=",
       "handler": "Entry_End"
     },
     {
-      "file": "Assets/Game/Scripts/ColorTiming/Legacy/Boss2_Controller_w.cs",
-      "line": 198,
+      "file": "Assets/Game/Scripts/ColorTiming/Presentation/Actors/Boss2/Boss2TailActorView.cs",
+      "line": 227,
       "event": "Complete",
       "operation": "-=",
       "handler": "Entry_Complete"
     },
     {
-      "file": "Assets/Game/Scripts/ColorTiming/Legacy/Boss2_Controller_w.cs",
-      "line": 254,
+      "file": "Assets/Game/Scripts/ColorTiming/Presentation/Actors/Boss2/Boss2TailActorView.cs",
+      "line": 284,
       "event": "Event",
       "operation": "-=",
       "handler": "AnimEvent"
     },
     {
-      "file": "Assets/Game/Scripts/ColorTiming/Legacy/Boss2_Controller_w.cs",
-      "line": 255,
+      "file": "Assets/Game/Scripts/ColorTiming/Presentation/Actors/Boss2/Boss2TailActorView.cs",
+      "line": 285,
       "event": "Complete",
       "operation": "-=",
       "handler": "Entry_Complete"
     },
     {
-      "file": "Assets/Game/Scripts/ColorTiming/Legacy/Boss2_Controller_w.cs",
-      "line": 256,
+      "file": "Assets/Game/Scripts/ColorTiming/Presentation/Actors/Boss2/Boss2TailActorView.cs",
+      "line": 286,
       "event": "End",
       "operation": "-=",
       "handler": "Entry_End"
     },
     {
-      "file": "Assets/Game/Scripts/ColorTiming/Legacy/Skill/Sk_Bo2_dundi.cs",
-      "line": 37,
-      "event": "Complete",
-      "operation": "+=",
-      "handler": "Entry_Complete"
-    },
-    {
-      "file": "Assets/Game/Scripts/ColorTiming/Legacy/Skill/Sk_Bo2_dundi.cs",
+      "file": "Assets/Game/Scripts/ColorTiming/Presentation/Combat/Skills/Sk_Bo2_dundi.cs",
       "line": 42,
       "event": "Complete",
+      "operation": "+=",
+      "handler": "Entry_Complete"
+    },
+    {
+      "file": "Assets/Game/Scripts/ColorTiming/Presentation/Combat/Skills/Sk_Bo2_dundi.cs",
+      "line": 47,
+      "event": "Complete",
       "operation": "-=",
       "handler": "Entry_Complete"
     },
     {
-      "file": "Assets/Game/Scripts/ColorTiming/Legacy/Skill/Sk_Bo2_dundi.cs",
-      "line": 87,
+      "file": "Assets/Game/Scripts/ColorTiming/Presentation/Combat/Skills/Sk_Bo2_dundi.cs",
+      "line": 95,
       "event": "Complete",
       "operation": "-=",
       "handler": "Entry_Complete"

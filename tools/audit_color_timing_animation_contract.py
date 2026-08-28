@@ -22,33 +22,25 @@ REQUIRED_PARAMETERS = {
 }
 
 RECEIVERS = {
-    "Attack": "Assets/Game/Scripts/ColorTiming/Legacy/HeroAnimStae.cs",
-    "PlayAuido": "Assets/Game/Scripts/ColorTiming/Legacy/HeroSoundManager.cs",
-    "PlayAuido_Random": "Assets/Game/Scripts/ColorTiming/Legacy/HeroSoundManager.cs",
-    "DashWD": "Assets/Game/Scripts/ColorTiming/Legacy/HeroAnimStae.cs",
-    "DashEnd": "Assets/Game/Scripts/ColorTiming/Legacy/HeroAnimStae.cs",
-    "SkillMove": "Assets/Game/Scripts/ColorTiming/Legacy/HeroAnimStae.cs",
-    "Wudi": "Assets/Game/Scripts/ColorTiming/Legacy/HeroAnimStae.cs",
-    "Hit": "Assets/Game/Scripts/ColorTiming/Legacy/HeroAnimStae.cs",
-    "DeathOver": "Assets/Game/Scripts/ColorTiming/Legacy/Death_sc_Over.cs",
-    "EventEnd_Destroy": "Assets/Game/Scripts/ColorTiming/Legacy/Skill/Skill_base.cs",
-    "OnFXEnd": "Assets/Game/Scripts/ColorTiming/Legacy/Skill/HitFX_Base.cs",
-    "Cerate": "Assets/Game/Scripts/ColorTiming/Legacy/Skill/Skill_Bo1_Atk5_Item.cs",
-    "End": "Assets/Game/Scripts/ColorTiming/Legacy/Skill/Skill_Bo1_Atk5_Item.cs",
+    "Attack": "Assets/Game/Scripts/ColorTiming/Presentation/Actors/Player/PlayerAnimationEventRelay.cs",
+    "PlayAuido": "Assets/Game/Scripts/ColorTiming/Presentation/Actors/Player/PlayerSoundView.cs",
+    "PlayAuido_Random": "Assets/Game/Scripts/ColorTiming/Presentation/Actors/Player/PlayerSoundView.cs",
+    "DashWD": "Assets/Game/Scripts/ColorTiming/Presentation/Actors/Player/PlayerAnimationEventRelay.cs",
+    "DashEnd": "Assets/Game/Scripts/ColorTiming/Presentation/Actors/Player/PlayerAnimationEventRelay.cs",
+    "SkillMove": "Assets/Game/Scripts/ColorTiming/Presentation/Actors/Player/PlayerAnimationEventRelay.cs",
+    "Wudi": "Assets/Game/Scripts/ColorTiming/Presentation/Actors/Player/PlayerAnimationEventRelay.cs",
+    "Hit": "Assets/Game/Scripts/ColorTiming/Presentation/Actors/Player/PlayerAnimationEventRelay.cs",
+    "DeathOver": "Assets/Game/Scripts/ColorTiming/Presentation/Actors/Player/PlayerDeathSequenceView.cs",
+    "EventEnd_Destroy": "Assets/Game/Scripts/ColorTiming/Presentation/Combat/Skills/Skill_base.cs",
+    "OnFXEnd": "Assets/Game/Scripts/ColorTiming/Presentation/Combat/Skills/HitFX_Base.cs",
+    "Cerate": "Assets/Game/Scripts/ColorTiming/Presentation/Combat/Skills/Skill_Bo1_Atk5_Item.cs",
+    "End": "Assets/Game/Scripts/ColorTiming/Presentation/Combat/Skills/Skill_Bo1_Atk5_Item.cs",
 }
 
 BEHAVIOURS = {
     "EnterAnimStateEvent": (
-        "Assets/Game/Scripts/ColorTiming/Legacy/Anim/EnterAnimStateEvent.cs.meta",
-        "Assets/Game/Sprites/ColorTiming/Hero/Anim/Hero Animator Controller.controller",
-    ),
-    "RestXuli": (
-        "Assets/Game/Scripts/ColorTiming/Legacy/Anim/RestXuli.cs.meta",
-        "Assets/Game/Sprites/ColorTiming/Hero/Anim/HeroTest.controller",
-    ),
-    "Xuli": (
-        "Assets/Game/Scripts/ColorTiming/Legacy/Anim/Xuli.cs.meta",
-        "Assets/Game/Sprites/ColorTiming/Hero/Anim/HeroTest.controller",
+        "Assets/Game/Scripts/ColorTiming/Presentation/Actors/Player/EnterAnimStateEvent.cs.meta",
+        "Assets/Game/Sprites/ColorTiming/Hero/Animations/Hero.controller",
     ),
 }
 
@@ -65,7 +57,7 @@ def main() -> int:
     root = args.root.resolve()
     failures: list[str] = []
 
-    controller_path = root / "Assets/Game/Sprites/ColorTiming/Hero/Anim/Hero Animator Controller.controller"
+    controller_path = root / "Assets/Game/Sprites/ColorTiming/Hero/Animations/Hero.controller"
     controller = read(controller_path)
     parameters = set(re.findall(r"^\s*- m_Name: (\S+)\s*$", controller, re.MULTILINE))
     missing_parameters = sorted(REQUIRED_PARAMETERS - parameters)

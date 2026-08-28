@@ -7,7 +7,9 @@ using ColorTiming.Bootstrap;
 using ColorTiming.Combat;
 using ColorTiming.Presentation.Audio;
 using GameFramework;
+using GameFramework.Event;
 using UnityEngine;
+using UnityGameFramework.Runtime;
 
 namespace ColorTiming.Infrastructure.GF.Audio
 {
@@ -16,9 +18,12 @@ namespace ColorTiming.Infrastructure.GF.Audio
     {
         readonly HashSet<int> sceneSounds = new HashSet<int>();
         readonly HashSet<int> gameplaySounds = new HashSet<int>();
+        readonly HashSet<int> loadedSounds = new HashSet<int>();
+        readonly Dictionary<int, string> soundDescriptions = new Dictionary<int, string>();
         readonly List<int> staleGameplaySounds = new List<int>();
         IGameTime gameTime;
         bool gameplayPaused;
+        bool eventsSubscribed;
 
         // 执行Initialize对应的主要流程。
         public void Initialize(IGameTime time)
@@ -26,6 +31,7 @@ namespace ColorTiming.Infrastructure.GF.Audio
             if (gameTime != null) gameTime.ScaleChanged -= OnScaleChanged;
             gameTime = time ?? throw new ArgumentNullException(nameof(time));
             gameTime.ScaleChanged += OnScaleChanged;
+            SubscribeSoundEvents();
             OnScaleChanged(gameTime.EffectiveScale);
         }
 
@@ -46,6 +52,13 @@ namespace ColorTiming.Infrastructure.GF.Audio
             if (serialId > 0)
             {
                 sceneSounds.Add(serialId);
+                soundDescriptions[serialId] = $"clip={clip.name} channel={channel} loop={loop}";
+                Log.Info(
+                    "[ColorTiming.Audio] action=PlayRequested result=Accepted serialId={0} clip={1} channel={2} loop={3}",
+                    serialId,
+                    clip.name,
+                    channel,
+                    loop);
                 if (IsGameplay(channel))
                 {
                     gameplaySounds.Add(serialId);
@@ -55,12 +68,24 @@ namespace ColorTiming.Infrastructure.GF.Audio
                     }
                 }
             }
+            else
+            {
+                Log.Warning(
+                    "[ColorTiming.Audio] action=PlayRequested result=Rejected clip={0} channel={1} loop={2}",
+                    clip.name,
+                    channel,
+                    loop);
+            }
             return serialId;
         }
 
         // 执行ResetTrackedSounds对应的主要流程。
         public void ResetTrackedSounds()
         {
+            if (sceneSounds.Count > 0)
+            {
+                Log.Info("[ColorTiming.Audio] action=ResetTrackedSounds count={0}", sceneSounds.Count);
+            }
             if (global::GF.Sound != null)
             {
                 foreach (var serialId in sceneSounds)
@@ -71,6 +96,8 @@ namespace ColorTiming.Infrastructure.GF.Audio
 
             sceneSounds.Clear();
             gameplaySounds.Clear();
+            loadedSounds.Clear();
+            soundDescriptions.Clear();
         }
 
         // 执行Stop对应的主要流程。
@@ -82,8 +109,14 @@ namespace ColorTiming.Infrastructure.GF.Audio
             }
 
             global::GF.Sound?.StopSound(serialId);
+            if (soundDescriptions.TryGetValue(serialId, out var description))
+            {
+                Log.Info("[ColorTiming.Audio] action=Stop serialId={0} {1}", serialId, description);
+            }
             sceneSounds.Remove(serialId);
             gameplaySounds.Remove(serialId);
+            loadedSounds.Remove(serialId);
+            soundDescriptions.Remove(serialId);
         }
 
         // 根据当前配置构建RelativeName。
@@ -133,6 +166,8 @@ namespace ColorTiming.Infrastructure.GF.Audio
             {
                 gameplaySounds.Remove(serialId);
                 sceneSounds.Remove(serialId);
+                loadedSounds.Remove(serialId);
+                soundDescriptions.Remove(serialId);
             }
             staleGameplaySounds.Clear();
         }
@@ -162,9 +197,63 @@ namespace ColorTiming.Infrastructure.GF.Audio
                 || channel == ColorTimingSoundChannel.Environment;
         }
 
+        void SubscribeSoundEvents()
+        {
+            if (eventsSubscribed || global::GF.Event == null)
+            {
+                return;
+            }
+
+            global::GF.Event.Subscribe(PlaySoundSuccessEventArgs.EventId, OnPlaySoundSuccess);
+            global::GF.Event.Subscribe(PlaySoundFailureEventArgs.EventId, OnPlaySoundFailure);
+            eventsSubscribed = true;
+        }
+
+        void OnPlaySoundSuccess(object sender, GameEventArgs eventArgs)
+        {
+            var args = (PlaySoundSuccessEventArgs)eventArgs;
+            if (!soundDescriptions.TryGetValue(args.SerialId, out var description))
+            {
+                return;
+            }
+
+            loadedSounds.Add(args.SerialId);
+            Log.Info(
+                "[ColorTiming.Audio] action=PlayStarted result=Success serialId={0} loadDuration={1:0.000}s {2}",
+                args.SerialId,
+                args.Duration,
+                description);
+        }
+
+        void OnPlaySoundFailure(object sender, GameEventArgs eventArgs)
+        {
+            var args = (PlaySoundFailureEventArgs)eventArgs;
+            if (!soundDescriptions.TryGetValue(args.SerialId, out var description))
+            {
+                return;
+            }
+
+            Log.Error(
+                "[ColorTiming.Audio] action=PlayStarted result=Failure serialId={0} errorCode={1} error={2} {3}",
+                args.SerialId,
+                args.ErrorCode,
+                args.ErrorMessage,
+                description);
+            sceneSounds.Remove(args.SerialId);
+            gameplaySounds.Remove(args.SerialId);
+            loadedSounds.Remove(args.SerialId);
+            soundDescriptions.Remove(args.SerialId);
+        }
+
         // 组件销毁时释放订阅、句柄和运行时资源。
         private void OnDestroy()
         {
+            if (eventsSubscribed && global::GF.Event != null)
+            {
+                global::GF.Event.Unsubscribe(PlaySoundSuccessEventArgs.EventId, OnPlaySoundSuccess);
+                global::GF.Event.Unsubscribe(PlaySoundFailureEventArgs.EventId, OnPlaySoundFailure);
+                eventsSubscribed = false;
+            }
             if (gameTime != null) gameTime.ScaleChanged -= OnScaleChanged;
             gameTime = null;
             ResetTrackedSounds();
