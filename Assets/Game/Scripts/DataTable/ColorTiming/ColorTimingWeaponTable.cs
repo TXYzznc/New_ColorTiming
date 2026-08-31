@@ -15,9 +15,9 @@ using UnityGameFramework.Runtime;
 [Obfuz.ObfuzIgnore(Obfuz.ObfuzScope.TypeName | Obfuz.ObfuzScope.MethodName)]
 #endif
 /// <summary>
-/// UI table
+/// ColorTiming weapon resource and presentation table
 /// </summary>
-public class UITable : DataRowBase
+public class ColorTimingWeaponTable : DataRowBase
 {
 	private int m_Id = 0;
 	/// <summary>
@@ -29,45 +29,72 @@ public class UITable : DataRowBase
     }
 
         /// <summary>
-        /// Display order relative to group
+        /// WeaponColor
         /// </summary>
-        public int SortOrder
+        public int Color
         {
             get;
             private set;
         }
 
         /// <summary>
-        /// UI prefab name
+        /// WeaponType
         /// </summary>
-        public string UIPrefab
+        public int Type
         {
             get;
             private set;
         }
 
         /// <summary>
-        /// Hide covered UI in the same group
+        /// Authored animator parameter value
         /// </summary>
-        public bool PauseCoveredUI
+        public int AnimatorIndex
         {
             get;
             private set;
         }
 
         /// <summary>
-        /// UI group id
+        /// Authored HUD icon index
         /// </summary>
-        public int UIGroupId
+        public int IconIndex
         {
             get;
             private set;
         }
 
         /// <summary>
-        /// Allow close by back input
+        /// Authored cursor index
         /// </summary>
-        public bool EscapeClose
+        public int CursorIndex
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// Whether charge hint is shown
+        /// </summary>
+        public bool UsesChargeHint
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// GF animator controller asset name
+        /// </summary>
+        public string ControllerAsset
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// Skill config id
+        /// </summary>
+        public int SkillId
         {
             get;
             private set;
@@ -85,11 +112,14 @@ public class UITable : DataRowBase
             index++;
             m_Id = int.Parse(columnStrings[index++]);
             index++;
-            SortOrder = int.Parse(columnStrings[index++]);
-            UIPrefab = columnStrings[index++];
-            PauseCoveredUI = bool.Parse(columnStrings[index++]);
-            UIGroupId = int.Parse(columnStrings[index++]);
-            EscapeClose = bool.Parse(columnStrings[index++]);
+            Color = int.Parse(columnStrings[index++]);
+            Type = int.Parse(columnStrings[index++]);
+            AnimatorIndex = int.Parse(columnStrings[index++]);
+            IconIndex = int.Parse(columnStrings[index++]);
+            CursorIndex = int.Parse(columnStrings[index++]);
+            UsesChargeHint = bool.Parse(columnStrings[index++]);
+            ControllerAsset = columnStrings[index++];
+            SkillId = int.Parse(columnStrings[index++]);
 
             return true;
         }
@@ -101,11 +131,14 @@ public class UITable : DataRowBase
                 using (BinaryReader binaryReader = new BinaryReader(memoryStream, Encoding.UTF8))
                 {
                     m_Id = binaryReader.Read7BitEncodedInt32();
-                    SortOrder = binaryReader.Read7BitEncodedInt32();
-                    UIPrefab = binaryReader.ReadString();
-                    PauseCoveredUI = binaryReader.ReadBoolean();
-                    UIGroupId = binaryReader.Read7BitEncodedInt32();
-                    EscapeClose = binaryReader.ReadBoolean();
+                    Color = binaryReader.Read7BitEncodedInt32();
+                    Type = binaryReader.Read7BitEncodedInt32();
+                    AnimatorIndex = binaryReader.Read7BitEncodedInt32();
+                    IconIndex = binaryReader.Read7BitEncodedInt32();
+                    CursorIndex = binaryReader.Read7BitEncodedInt32();
+                    UsesChargeHint = binaryReader.ReadBoolean();
+                    ControllerAsset = binaryReader.ReadString();
+                    SkillId = binaryReader.Read7BitEncodedInt32();
                 }
             }
 

@@ -15,9 +15,9 @@ using UnityGameFramework.Runtime;
 [Obfuz.ObfuzIgnore(Obfuz.ObfuzScope.TypeName | Obfuz.ObfuzScope.MethodName)]
 #endif
 /// <summary>
-/// UI table
+/// ColorTiming semantic sound cue table
 /// </summary>
-public class UITable : DataRowBase
+public class ColorTimingSoundCueTable : DataRowBase
 {
 	private int m_Id = 0;
 	/// <summary>
@@ -29,45 +29,63 @@ public class UITable : DataRowBase
     }
 
         /// <summary>
-        /// Display order relative to group
+        /// Semantic cue id
         /// </summary>
-        public int SortOrder
+        public string CueId
         {
             get;
             private set;
         }
 
         /// <summary>
-        /// UI prefab name
+        /// Animation event key
         /// </summary>
-        public string UIPrefab
+        public string AnimationEventKey
         {
             get;
             private set;
         }
 
         /// <summary>
-        /// Hide covered UI in the same group
+        /// GF audio asset name
         /// </summary>
-        public bool PauseCoveredUI
+        public string AssetName
         {
             get;
             private set;
         }
 
         /// <summary>
-        /// UI group id
+        /// GF sound group
         /// </summary>
-        public int UIGroupId
+        public string SoundGroup
         {
             get;
             private set;
         }
 
         /// <summary>
-        /// Allow close by back input
+        /// Loop playback
         /// </summary>
-        public bool EscapeClose
+        public bool Loop
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// Cue volume
+        /// </summary>
+        public float Volume
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// Playback priority
+        /// </summary>
+        public int Priority
         {
             get;
             private set;
@@ -85,11 +103,13 @@ public class UITable : DataRowBase
             index++;
             m_Id = int.Parse(columnStrings[index++]);
             index++;
-            SortOrder = int.Parse(columnStrings[index++]);
-            UIPrefab = columnStrings[index++];
-            PauseCoveredUI = bool.Parse(columnStrings[index++]);
-            UIGroupId = int.Parse(columnStrings[index++]);
-            EscapeClose = bool.Parse(columnStrings[index++]);
+            CueId = columnStrings[index++];
+            AnimationEventKey = columnStrings[index++];
+            AssetName = columnStrings[index++];
+            SoundGroup = columnStrings[index++];
+            Loop = bool.Parse(columnStrings[index++]);
+            Volume = float.Parse(columnStrings[index++]);
+            Priority = int.Parse(columnStrings[index++]);
 
             return true;
         }
@@ -101,11 +121,13 @@ public class UITable : DataRowBase
                 using (BinaryReader binaryReader = new BinaryReader(memoryStream, Encoding.UTF8))
                 {
                     m_Id = binaryReader.Read7BitEncodedInt32();
-                    SortOrder = binaryReader.Read7BitEncodedInt32();
-                    UIPrefab = binaryReader.ReadString();
-                    PauseCoveredUI = binaryReader.ReadBoolean();
-                    UIGroupId = binaryReader.Read7BitEncodedInt32();
-                    EscapeClose = binaryReader.ReadBoolean();
+                    CueId = binaryReader.ReadString();
+                    AnimationEventKey = binaryReader.ReadString();
+                    AssetName = binaryReader.ReadString();
+                    SoundGroup = binaryReader.ReadString();
+                    Loop = binaryReader.ReadBoolean();
+                    Volume = binaryReader.ReadSingle();
+                    Priority = binaryReader.Read7BitEncodedInt32();
                 }
             }
 

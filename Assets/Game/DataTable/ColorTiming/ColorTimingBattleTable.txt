@@ -1,0 +1,6 @@
+#	ColorTiming battle and scene flow table
+#	Id		SceneId	SceneAsset	BattleKind	PlayerId	BossId	WeaponSpawnRuleId	NextSceneId	RetrySceneId	VictoryDelay	TutorialId	BgmCueId	CameraMinSize	CameraMaxSize	CameraDistanceRange	CameraStartDistance
+#	int		int	string	int	int	int	int	int	int	float	int	string	float	float	float	float
+#		Note	ColorTimingSceneId	GF scene resource name	BattleKind	Player config id	Boss config id	Weapon spawn rule id	Next scene after victory	Retry scene	Victory transition delay seconds	Tutorial theme id	Semantic BGM cue id	Minimum orthographic size	Maximum orthographic size	Distance mapped to zoom	Distance before zoom starts
+	1	Battle config id	1	Boss1	0	1	1	1	2	1	1	1	battle.boss1.bgm	8	12	5	5
+	2		2	Boss2	1	1	2	2	0	2	0	2	battle.boss2.bgm	8	14	10	5

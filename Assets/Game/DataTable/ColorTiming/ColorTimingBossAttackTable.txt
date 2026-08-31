@@ -1,0 +1,15 @@
+#	ColorTiming weighted boss attack table
+#	Id		BossId	ActorPart	DistanceZone	AttackId	Weight	DisallowRepeat	FallbackAttackId	AnimationKey	SoundCueId	SkillId	AnimationEventKey
+#	int		int	string	int	int	float	bool	int	string	string	int	string
+#		Note	Boss config id	Body Head or Tail	Boss1DistanceZone	Attack/action id	Selection weight	Whether this attack may repeat	Fallback attack id	Animation semantic key	Sound cue id	Skill config id	Serialized animation event key
+	101	Attack rule row id	1	Body	0	2	0.35	False	0	attack2	boss1.attack-2	102	attack
+	102		1	Body	0	1	0.25	False	0	attack1	boss1.attack-1	101	attack
+	103		1	Body	0	3	0.27	False	0	attack3	boss1.attack-3	103	attack
+	104		1	Body	0	4	0.13	False	0	attack4	boss1.attack-4	104	attack
+	105		1	Body	1	6	0.35	False	0	attack6	boss1.attack-6	106	attack
+	106		1	Body	1	1	0.25	False	0	attack1	boss1.attack-1	101	attack
+	107		1	Body	1	3	0.27	False	0	attack3	boss1.attack-3	103	attack
+	108		1	Body	1	4	0.13	False	0	attack4	boss1.attack-4	104	attack
+	109		1	Body	2	3	0.4	False	0	attack3	boss1.attack-3	103	attack
+	110		1	Body	2	4	0.35	False	0	attack4	boss1.attack-4	104	attack
+	111		1	Body	2	5	0.25	True	3	attack5	boss1.attack-5	105	atk5

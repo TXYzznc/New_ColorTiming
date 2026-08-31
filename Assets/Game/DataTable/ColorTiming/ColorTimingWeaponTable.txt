@@ -1,0 +1,26 @@
+#	ColorTiming weapon resource and presentation table
+#	Id		Color	Type	AnimatorIndex	IconIndex	CursorIndex	UsesChargeHint	ControllerAsset	SkillId
+#	int		int	int	int	int	int	bool	string	int
+#		Note	WeaponColor	WeaponType	Authored animator parameter value	Authored HUD icon index	Authored cursor index	Whether charge hint is shown	GF animator controller asset name	Skill config id
+	1	Weapon config id	0	0	0	18	0	False	Assets/Game/Sprites/ColorTiming/Hero/Animations/RuntimeCandidates/Hero_Base.controller	0
+	2		0	1	1	0	1	False	Assets/Game/Sprites/ColorTiming/Hero/Animations/RuntimeCandidates/Hero_Red_Scissors.controller	1
+	3		0	2	2	1	1	True	Assets/Game/Sprites/ColorTiming/Hero/Animations/RuntimeCandidates/Hero_Red_Hammer.controller	2
+	4		0	3	3	2	1	False	Assets/Game/Sprites/ColorTiming/Hero/Animations/RuntimeCandidates/Hero_Red_Bomb.controller	3
+	5		0	4	4	3	1	False	Assets/Game/Sprites/ColorTiming/Hero/Animations/RuntimeCandidates/Hero_Red_Knife.controller	4
+	6		0	5	5	4	1	True	Assets/Game/Sprites/ColorTiming/Hero/Animations/RuntimeCandidates/Hero_Red_Axe.controller	5
+	7		0	6	6	5	1	False	Assets/Game/Sprites/ColorTiming/Hero/Animations/RuntimeCandidates/Hero_Red_Airplane.controller	6
+	8		1	1	7	6	2	False	Assets/Game/Sprites/ColorTiming/Hero/Animations/RuntimeCandidates/Hero_Green_Scissors.controller	1
+	9		1	2	8	7	2	True	Assets/Game/Sprites/ColorTiming/Hero/Animations/RuntimeCandidates/Hero_Green_Hammer.controller	2
+	10		1	3	9	8	2	False	Assets/Game/Sprites/ColorTiming/Hero/Animations/RuntimeCandidates/Hero_Green_Bomb.controller	3
+	11		1	4	10	9	2	False	Assets/Game/Sprites/ColorTiming/Hero/Animations/RuntimeCandidates/Hero_Green_Knife.controller	4
+	12		1	5	11	10	2	True	Assets/Game/Sprites/ColorTiming/Hero/Animations/RuntimeCandidates/Hero_Green_Axe.controller	5
+	13		1	6	12	11	2	False	Assets/Game/Sprites/ColorTiming/Hero/Animations/RuntimeCandidates/Hero_Green_Airplane.controller	6
+	14		2	1	13	12	3	False	Assets/Game/Sprites/ColorTiming/Hero/Animations/RuntimeCandidates/Hero_Purple_Scissors.controller	1
+	15		2	2	14	13	3	True	Assets/Game/Sprites/ColorTiming/Hero/Animations/RuntimeCandidates/Hero_Purple_Hammer.controller	2
+	16		2	3	15	14	3	False	Assets/Game/Sprites/ColorTiming/Hero/Animations/RuntimeCandidates/Hero_Purple_Bomb.controller	3
+	17		2	4	16	15	3	False	Assets/Game/Sprites/ColorTiming/Hero/Animations/RuntimeCandidates/Hero_Purple_Knife.controller	4
+	18		2	5	17	16	3	True	Assets/Game/Sprites/ColorTiming/Hero/Animations/RuntimeCandidates/Hero_Purple_Axe.controller	5
+	19		2	6	18	17	3	False	Assets/Game/Sprites/ColorTiming/Hero/Animations/RuntimeCandidates/Hero_Purple_Airplane.controller	6
+	20		3	4	22	21	4	False	Assets/Game/Sprites/ColorTiming/Hero/Animations/RuntimeCandidates/Hero_Orange_Knife.controller	4
+	21		3	5	23	22	4	True	Assets/Game/Sprites/ColorTiming/Hero/Animations/RuntimeCandidates/Hero_Orange_Axe.controller	5
+	22		3	6	24	23	4	False	Assets/Game/Sprites/ColorTiming/Hero/Animations/RuntimeCandidates/Hero_Orange_Airplane.controller	6

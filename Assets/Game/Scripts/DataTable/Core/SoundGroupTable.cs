@@ -1,6 +1,3 @@
-﻿// 文件职责：定义 音效分组 数据表的行结构与解析规则。
-// 所属模块：DataTable / Core。
-
 //------------------------------------------------------------
 //------------------------------------------------------------
 // 此文件由工具自动生成，请勿直接修改。
@@ -24,7 +21,7 @@ public class SoundGroupTable : DataRowBase
 {
 	private int m_Id = 0;
 	/// <summary>
-    /// 
+    ///
     /// </summary>
     public override int Id
     {
@@ -76,7 +73,6 @@ public class SoundGroupTable : DataRowBase
             private set;
         }
 
-        // 解析数据Row并写入当前数据结构。
         public override bool ParseDataRow(string dataRowString, object userData)
         {
             string[] columnStrings = dataRowString.Split(DataTableExtension.DataSplitSeparators);
@@ -98,7 +94,6 @@ public class SoundGroupTable : DataRowBase
             return true;
         }
 
-        // 解析数据Row并写入当前数据结构。
         public override bool ParseDataRow(byte[] dataRowBytes, int startIndex, int length, object userData)
         {
             using (MemoryStream memoryStream = new MemoryStream(dataRowBytes, startIndex, length, false))

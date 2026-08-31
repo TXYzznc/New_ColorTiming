@@ -1,0 +1,45 @@
+#	ColorTiming semantic sound cue table
+#	Id		CueId	AnimationEventKey	AssetName	SoundGroup	Loop	Volume	Priority
+#	int		string	string	string	string	bool	float	int
+#		Note	Semantic cue id	Animation event key	GF audio asset name	GF sound group	Loop playback	Cue volume	Playback priority
+	1	Sound cue row id	boss1.hit	hit	Assets/Game/Audio/ColorTiming/boss_being_hit.WAV	Boss	False	1	0
+	2		boss1.attack-ready	atkReady	Assets/Game/Audio/ColorTiming/boss_eyes_light.WAV	Boss	False	1	0
+	3		boss1.attack-end	atkEnd	Assets/Game/Audio/ColorTiming/boss_throat_knife_under_neck.wav	Boss	False	1	0
+	4		boss1.attack-1	atk1	Assets/Game/Audio/ColorTiming/boss_hack_needle.WAV	Boss	False	1	0
+	5		boss1.attack-2	atk2	Assets/Game/Audio/ColorTiming/boss_beat_puppet.WAV	Boss	False	1	0
+	6		boss1.attack-3	atk3_1	Assets/Game/Audio/ColorTiming/boss_chop_big_knife_twice.WAV	Boss	False	1	0
+	7		boss1.attack-4	atk4	Assets/Game/Audio/ColorTiming/attack4.WAV	Boss	False	1	0
+	8		boss1.attack-5	atk5	Assets/Game/Audio/ColorTiming/boss_big_move.WAV	Boss	False	1	0
+	9		boss1.attack-6	atk6	Assets/Game/Audio/ColorTiming/boss_jab_needle.WAV	Boss	False	1	0
+	10		boss2.hit	hit	Assets/Game/Audio/ColorTiming/boss_being_hit.WAV	Boss	False	1	0
+	11		boss2.head.enter-burrow	rt_t	Assets/Game/Audio/ColorTiming/boss_head_hiding_in_the_ground.WAV	Boss	False	1	0
+	12		boss2.head.exit-burrow	ct_t	Assets/Game/Audio/ColorTiming/boss_head_out_of_the_soil.WAV	Boss	False	1	0
+	13		boss2.tail.enter-burrow	rt_w	Assets/Game/Audio/ColorTiming/boss_tail_comes_into_the_soil.WAV	Boss	False	1	0
+	14		boss2.tail.exit-burrow	ct_w	Assets/Game/Audio/ColorTiming/boss_tail_comes_out_of_the_soil.WAV	Boss	False	1	0
+	15		boss2.head.attack-1	atk1_t	Assets/Game/Audio/ColorTiming/boss_head_gnaw.WAV	Boss	False	1	0
+	16		boss2.head.attack-2	atk2_t	Assets/Game/Audio/ColorTiming/boss_head_shoot_the_ball.wav	Boss	False	1	0
+	17		boss2.tail.attack-1	atk1_w	Assets/Game/Audio/ColorTiming/boss_stab_with_the_tail.WAV	Boss	False	1	0
+	18		boss2.tail.attack-2	atk2_w	Assets/Game/Audio/ColorTiming/boss_fast_stab_with_the_tail.WAV	Boss	False	1	0
+	19		battle.boss1.bgm		Assets/Game/Audio/ColorTiming/BGM/第一章bgm0526.wav	BGM	True	1	0
+	20		battle.boss1.ambience		Assets/Game/Audio/ColorTiming/amb_cave.wav	Environment	True	1	0
+	21		battle.boss2.bgm		Assets/Game/Audio/ColorTiming/BGM/第二章bgm0526.wav	BGM	True	1	0
+	22		player.pickup		Assets/Game/Audio/ColorTiming/equipping_weapon.wav	Player	False	1	0
+	23		player.drop		Assets/Game/Audio/ColorTiming/disarm_weapon.wav	Player	False	1	0
+	24		player.boss1.dash.1		Assets/Game/Audio/ColorTiming/sprint_run_001.WAV	Player	False	1	0
+	25		player.boss1.dash.2		Assets/Game/Audio/ColorTiming/sprint_run_002.WAV	Player	False	1	0
+	26		player.boss1.move.1		Assets/Game/Audio/ColorTiming/blanket_walk-001.wav	Player	False	1	0
+	27		player.boss1.move.2		Assets/Game/Audio/ColorTiming/blanket_walk-002.wav	Player	False	1	0
+	28		player.boss1.move.3		Assets/Game/Audio/ColorTiming/blanket_walk-003.wav	Player	False	1	0
+	29		player.boss1.move.4		Assets/Game/Audio/ColorTiming/blanket_walk-004.wav	Player	False	1	0
+	30		player.boss1.move-override.1		Assets/Game/Audio/ColorTiming/grass_walk_001.WAV	Player	False	1	0
+	31		player.boss1.move-override.2		Assets/Game/Audio/ColorTiming/grass_walk_002.WAV	Player	False	1	0
+	32		player.boss1.move-override.3		Assets/Game/Audio/ColorTiming/grass_walk_003.WAV	Player	False	1	0
+	33		player.boss1.move-override.4		Assets/Game/Audio/ColorTiming/grass_walk_004.WAV	Player	False	1	0
+	34		player.boss2.dash.1		Assets/Game/Audio/ColorTiming/sprint_run_001.WAV	Player	False	1	0
+	35		player.boss2.dash.2		Assets/Game/Audio/ColorTiming/sprint_run_002.WAV	Player	False	1	0
+	36		player.boss2.dash.3		Assets/Game/Audio/ColorTiming/sprint_run-003.wav	Player	False	1	0
+	37		player.boss2.move.1		Assets/Game/Audio/ColorTiming/paper_walk-001.WAV	Player	False	1	0
+	38		player.boss2.move.2		Assets/Game/Audio/ColorTiming/paper_walk-003.WAV	Player	False	1	0
+	39		player.boss2.move.3		Assets/Game/Audio/ColorTiming/paper_walk-004.WAV	Player	False	1	0
+	40		menu.bgm		Assets/Game/Audio/ColorTiming/BGM/菜单第三版.wav	BGM	True	1	0
+	41		skill.explosion		Assets/Game/Audio/ColorTiming/bomb_burst.WAV	Boss	False	1	0

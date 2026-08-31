@@ -1,0 +1,5 @@
+#	ColorTiming shared presentation tuning table
+#	Id		LoadingFadeDuration	TransitionDefaultDuration	TransitionMinimumDuration	TransitionMaximumDuration	TransitionHistoryWeight	SceneProgressWeight	PreparationProgressWeight	ProgressBuckets	TutorialDismissDelay	PlayerPipSpacing	PlayerPipAlternateOffset	BossPipFloatSpeed	BossPipMinY	BossPipMaxY	MainMenuIntroTimeout	PickupFadeDuration	ResultFadeSpeed	HeldNormalCursorIndex	PauseCursorIndex
+#	int		float	float	float	float	float	float	float	int	float	float	float	float	float	float	float	float	float	int	int
+#		Note	Loading fade duration	Default transition estimate	Minimum transition estimate	Maximum transition estimate	Observed-duration history weight	Scene load progress weight	Resource preparation progress weight	Progress log bucket count	Earliest tutorial dismiss time	Player HP pip spacing	Alternate pip row offset	Highlighted boss pip speed	Highlighted boss pip minimum Y	Highlighted boss pip maximum Y	Intro timeout	Weapon pickup fade duration	Battle result fade speed	Held normal attack cursor index	Pause cursor index
+	1	Presentation profile id	0.5	2	0.25	20	0.35	0.55	0.35	20	2	35	-33	3	10	20	10	1	1	5	6

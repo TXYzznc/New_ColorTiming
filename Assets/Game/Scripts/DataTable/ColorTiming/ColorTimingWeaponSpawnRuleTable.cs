@@ -15,9 +15,9 @@ using UnityGameFramework.Runtime;
 [Obfuz.ObfuzIgnore(Obfuz.ObfuzScope.TypeName | Obfuz.ObfuzScope.MethodName)]
 #endif
 /// <summary>
-/// UI table
+/// ColorTiming weapon spawn rule entries
 /// </summary>
-public class UITable : DataRowBase
+public class ColorTimingWeaponSpawnRuleTable : DataRowBase
 {
 	private int m_Id = 0;
 	/// <summary>
@@ -29,45 +29,72 @@ public class UITable : DataRowBase
     }
 
         /// <summary>
-        /// Display order relative to group
+        /// Spawn rule id
         /// </summary>
-        public int SortOrder
+        public int RuleId
         {
             get;
             private set;
         }
 
         /// <summary>
-        /// UI prefab name
+        /// Spawn cadence
         /// </summary>
-        public string UIPrefab
+        public float SpawnInterval
         {
             get;
             private set;
         }
 
         /// <summary>
-        /// Hide covered UI in the same group
+        /// Active weapon limit
         /// </summary>
-        public bool PauseCoveredUI
+        public int ActiveLimit
         {
             get;
             private set;
         }
 
         /// <summary>
-        /// UI group id
+        /// Weakness guarantee threshold
         /// </summary>
-        public int UIGroupId
+        public int GuaranteeThreshold
         {
             get;
             private set;
         }
 
         /// <summary>
-        /// Allow close by back input
+        /// Minimum distance to an occupied anchor
         /// </summary>
-        public bool EscapeClose
+        public float MinimumAnchorDistance
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// Damage count after which tips stop
+        /// </summary>
+        public int TutorialDamageLimit
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// Allowed WeaponColor
+        /// </summary>
+        public int Color
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// Allowed WeaponType
+        /// </summary>
+        public int Type
         {
             get;
             private set;
@@ -85,11 +112,14 @@ public class UITable : DataRowBase
             index++;
             m_Id = int.Parse(columnStrings[index++]);
             index++;
-            SortOrder = int.Parse(columnStrings[index++]);
-            UIPrefab = columnStrings[index++];
-            PauseCoveredUI = bool.Parse(columnStrings[index++]);
-            UIGroupId = int.Parse(columnStrings[index++]);
-            EscapeClose = bool.Parse(columnStrings[index++]);
+            RuleId = int.Parse(columnStrings[index++]);
+            SpawnInterval = float.Parse(columnStrings[index++]);
+            ActiveLimit = int.Parse(columnStrings[index++]);
+            GuaranteeThreshold = int.Parse(columnStrings[index++]);
+            MinimumAnchorDistance = float.Parse(columnStrings[index++]);
+            TutorialDamageLimit = int.Parse(columnStrings[index++]);
+            Color = int.Parse(columnStrings[index++]);
+            Type = int.Parse(columnStrings[index++]);
 
             return true;
         }
@@ -101,11 +131,14 @@ public class UITable : DataRowBase
                 using (BinaryReader binaryReader = new BinaryReader(memoryStream, Encoding.UTF8))
                 {
                     m_Id = binaryReader.Read7BitEncodedInt32();
-                    SortOrder = binaryReader.Read7BitEncodedInt32();
-                    UIPrefab = binaryReader.ReadString();
-                    PauseCoveredUI = binaryReader.ReadBoolean();
-                    UIGroupId = binaryReader.Read7BitEncodedInt32();
-                    EscapeClose = binaryReader.ReadBoolean();
+                    RuleId = binaryReader.Read7BitEncodedInt32();
+                    SpawnInterval = binaryReader.ReadSingle();
+                    ActiveLimit = binaryReader.Read7BitEncodedInt32();
+                    GuaranteeThreshold = binaryReader.Read7BitEncodedInt32();
+                    MinimumAnchorDistance = binaryReader.ReadSingle();
+                    TutorialDamageLimit = binaryReader.Read7BitEncodedInt32();
+                    Color = binaryReader.Read7BitEncodedInt32();
+                    Type = binaryReader.Read7BitEncodedInt32();
                 }
             }
 
