@@ -132,6 +132,7 @@ public class WeaponPickupView : MonoBehaviour, IColorTimingSoundConsumer, IFrame
 
         UnsubscribeHero();
         hero = enteringHero;
+        hero.PreloadWeaponAnimation(Weapon);
         hero.OnPickUPWeapon.AddListener(TryPickup);
         SetInWeapon(true);
     }

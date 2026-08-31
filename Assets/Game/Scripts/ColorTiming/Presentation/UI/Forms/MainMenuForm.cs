@@ -140,14 +140,24 @@ public class MainMenuForm : UIFormBase, IColorTimingSceneFlowConsumer, IColorTim
     // 执行GoTest1对应的主要流程。
     public void GoTest1()
     {
-        sceneFlow?.TryLoad(ColorTimingSceneId.Boss1);
+        bool accepted = sceneFlow?.TryLoad(ColorTimingSceneId.Boss1) ?? false;
+        Log.Info(
+            "[ColorTiming.SceneFlow] action=MainMenu.Request target=Boss1 result={0} frame={1} realtime={2:0.000}",
+            accepted ? "Accepted" : "Rejected",
+            Time.frameCount,
+            Time.realtimeSinceStartup);
     }
 
 
     // 执行GoTest2对应的主要流程。
     public void GoTest2()
     {
-        sceneFlow?.TryLoad(ColorTimingSceneId.Boss2);
+        bool accepted = sceneFlow?.TryLoad(ColorTimingSceneId.Boss2) ?? false;
+        Log.Info(
+            "[ColorTiming.SceneFlow] action=MainMenu.Request target=Boss2 result={0} frame={1} realtime={2:0.000}",
+            accepted ? "Accepted" : "Rejected",
+            Time.frameCount,
+            Time.realtimeSinceStartup);
     }
 
     // 执行ExitGameBtn对应的主要流程。

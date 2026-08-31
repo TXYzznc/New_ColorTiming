@@ -30,3 +30,9 @@
 - Boss1、Boss2 纹理的 Windows 平台导入设置。
 - 少量已确认的业务 Update/FixedUpdate 热路径。
 - 性能采样、视觉验收、听感验收及回退记录。
+
+## Hero 动画常驻内存治理（A+B）
+
+Hero 当前单一 AnimatorController 直接引用所有武器逐帧动画，是 Boss 场景在未使用多数武器时仍保留大量纹理的结构性风险。本变更采用两阶段改造：先新增基础动作与武器专用的运行时 Controller／Prefab 组合，并在武器即将生成时后台预热；验证行为与资源事件等价后，再直接精简原 Hero AnimatorController 的依赖。原始贴图、Animation Clip、Spine 数据及 Animation／Spine／UnityEvent 的名称和时机不改变。
+
+不引入 Addressables。项目继续使用既有 GF Resource／AssetBundle 体系，资源加载、取消和释放必须由明确拥有者管理。最终验收以 Windows Development Player、1920×1080 为准：Boss 战稳定 60 FPS，武器生成、拾取和首次攻击不发生可感知同步加载，Boss2 峰值纹理内存目标不高于 1 GB。

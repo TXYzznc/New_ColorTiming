@@ -7,6 +7,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
+using ColorTiming.Combat;
 using ColorTiming.Presentation.Entities;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -139,6 +140,7 @@ public class Boss1AnimationEventRelay : MonoBehaviour, ITransientEntityConsumer
                     throw new InvalidOperationException("Boss1 transient entities were not bound by the composition root.");
                 }
 
+                int facing = transform.localScale.x >= 0f ? 1 : -1;
                 transientEntities.Spawn(
                     wsk.name,
                     wmao.transform.position,
@@ -149,6 +151,24 @@ public class Boss1AnimationEventRelay : MonoBehaviour, ITransientEntityConsumer
                         instance.transform.localPosition = wsk.transform.localPosition;
                         instance.transform.localRotation = wsk.transform.localRotation;
                         instance.transform.localScale = wsk.transform.localScale;
+
+                        var skill = instance.GetComponent<Skill_base>();
+                        if (skill == null)
+                        {
+                            Debug.LogError(
+                                $"[ColorTiming.Combat][Boss1SkillSpawn] action=Configure result=missing-skill attack={e.String} entity={instance.name}",
+                                instance);
+                            return;
+                        }
+
+                        skill.SetSkillData(
+                            ActorId.BossHead,
+                            new WeaponIdentity(WeaponColor.Red, WeaponType.Normal),
+                            facing,
+                            string.Empty);
+                        Debug.Log(
+                            $"[ColorTiming.Combat][Boss1SkillSpawn] action=Configure result=success attack={e.String} entity={instance.name} attacker={ActorId.BossHead} weapon={WeaponColor.Red}",
+                            instance);
                     });
 
             }

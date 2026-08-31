@@ -38,7 +38,11 @@ namespace ColorTiming.Infrastructure.GF.UI
         float loadingProgress;
         int loadingProgressLogBucket = -1;
         bool loadingCompletionRequested;
+        SceneTransitionContext pendingTransitionPresentation;
+        bool transitionPresentationPending;
         bool disposed;
+
+        public event Action<SceneTransitionContext> TransitionPresentationReady;
 
         // 初始化GfColorTimingUIService实例及其核心依赖。
         public GfColorTimingUiService(
@@ -375,6 +379,7 @@ namespace ColorTiming.Infrastructure.GF.UI
             if (loadingFormId < 0)
             {
                 UnityEngine.Debug.LogError("Failed to open the ColorTiming loading GF.UI form.");
+                SignalTransitionPresentationReady("LoadingOpenRejected");
             }
         }
 
@@ -385,6 +390,7 @@ namespace ColorTiming.Infrastructure.GF.UI
             {
                 UnityEngine.Debug.LogError("ColorTiming loading prefab must implement IColorTimingLoadingForm.");
                 CloseLoading("InvalidLoadingForm");
+                SignalTransitionPresentationReady("InvalidLoadingForm");
                 return;
             }
 
@@ -395,6 +401,7 @@ namespace ColorTiming.Infrastructure.GF.UI
                 loadingProgress,
                 loadingCompletionRequested);
             loadingForm.SetProgress(loadingProgress);
+            SignalTransitionPresentationReady("LoadingFormOpened");
             if (loadingCompletionRequested)
             {
                 loadingForm.CompleteAndClose();
@@ -461,12 +468,35 @@ namespace ColorTiming.Infrastructure.GF.UI
                 context.IsInitialTransition,
                 shouldPresentLoading ? "OpenLoading" : "SkipLoading.InitialStartMenu");
             CloseTrackedGameplayForms();
+            pendingTransitionPresentation = context;
+            transitionPresentationPending = true;
             if (shouldPresentLoading)
             {
                 BeginLoading();
+                return;
             }
+            SignalTransitionPresentationReady("InitialStartMenuSkipsLoading");
         }
 
+        // 在 Loading 已打开或允许降级时通知场景流开始实际切换。
+        void SignalTransitionPresentationReady(string reason)
+        {
+            if (!transitionPresentationPending)
+            {
+                return;
+            }
+
+            transitionPresentationPending = false;
+            Log.Info(
+                "[ColorTiming.UIFlow] action=Transition.PresentationReady reason={0} target={1} frame={2} realtime={3:0.000}",
+                reason,
+                pendingTransitionPresentation.TargetScene,
+                UnityEngine.Time.frameCount,
+                UnityEngine.Time.realtimeSinceStartup);
+            TransitionPresentationReady?.Invoke(pendingTransitionPresentation);
+        }
+
+        // 根据首场景例外判定本次转换是否需要显示项目 Loading 表单。
         internal static bool ShouldPresentLoading(SceneTransitionContext context)
         {
             return !context.IsInitialTransition || context.TargetScene != ColorTimingSceneId.StartMenu;

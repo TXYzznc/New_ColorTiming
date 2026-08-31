@@ -23,10 +23,19 @@ namespace ColorTiming.Bootstrap
     public sealed class BattleRuntimeContext : MonoBehaviour
     {
         BattleSession session;
+        PlayerActorView hero;
         IColorTimingUiService ui;
         IColorTimingSceneFlow sceneFlow;
         Coroutine pendingTransition;
+        Coroutine resourcePreparation;
         bool resultHandled;
+
+        /// <summary>Reports the resource-preparation slice of the battle loading flow in [0, 1].</summary>
+        public event Action<float> ResourcePreparationProgress;
+        /// <summary>Raised only after the battle session is ready to accept gameplay input.</summary>
+        public event Action ResourcePreparationCompleted;
+        /// <summary>Raised when a required battle resource cannot be prepared.</summary>
+        public event Action<string> ResourcePreparationFailed;
 
         public BattleSession Session => session;
 
@@ -41,9 +50,52 @@ namespace ColorTiming.Bootstrap
             IColorTimingSoundService sound,
             IColorTimingUiService uiService)
         {
-            if (session != null) throw new InvalidOperationException("BattleRuntimeContext is already initialized.");
+            if (session != null || resourcePreparation != null) throw new InvalidOperationException("BattleRuntimeContext is already initialized.");
             if (anchors == null) throw new ArgumentNullException(nameof(anchors));
             anchors.Validate(sceneId == ColorTimingSceneId.Boss1);
+            resourcePreparation = StartCoroutine(PrepareAndInitialize(
+                anchors, sceneId, input, gameTime, entities, flow, settings, sound, uiService));
+        }
+
+        IEnumerator PrepareAndInitialize(
+            BattleSceneAnchors anchors,
+            ColorTimingSceneId sceneId,
+            IGameInput input,
+            IGameTime gameTime,
+            ITransientEntityService entities,
+            IColorTimingSceneFlow flow,
+            IColorTimingSettings settings,
+            IColorTimingSoundService sound,
+            IColorTimingUiService uiService)
+        {
+            var loadContext = anchors.CreateLoadContext($"{sceneId}.Initial");
+            var weapons = loadContext.RequiredWeapons;
+            hero = anchors.Hero;
+            Debug.Log($"[ColorTiming.BattleLoad] action=Prepare.Begin context={loadContext.Id} controllers={weapons.Count}", this);
+            ResourcePreparationProgress?.Invoke(0f);
+            hero.PreloadWeaponAnimations(weapons);
+            var previousReadyCount = -1;
+            while (!hero.AreWeaponAnimationsReady(weapons)
+                   && !hero.HasWeaponAnimationPreloadFailure(weapons))
+            {
+                int readyCount = hero.GetReadyWeaponAnimationCount(weapons);
+                if (readyCount != previousReadyCount)
+                {
+                    previousReadyCount = readyCount;
+                    ResourcePreparationProgress?.Invoke(weapons.Count == 0 ? 1f : (float)readyCount / weapons.Count);
+                }
+                yield return null;
+            }
+
+            resourcePreparation = null;
+            if (hero.HasWeaponAnimationPreloadFailure(weapons))
+            {
+                const string error = "Battle resource preparation failed: at least one Hero weapon controller could not load.";
+                Debug.LogError(error, this);
+                ResourcePreparationFailed?.Invoke(error);
+                yield break;
+            }
+
             sceneFlow = flow ?? throw new ArgumentNullException(nameof(flow));
             ui = uiService ?? throw new ArgumentNullException(nameof(uiService));
             session = new BattleSession(
@@ -60,7 +112,68 @@ namespace ColorTiming.Bootstrap
 
             ui.ShowBattleHud(new BattleHudPresentation(session));
             ui.ShowBattleTutorial(session);
+            ResourcePreparationProgress?.Invoke(1f);
+            Debug.Log($"[ColorTiming.BattleLoad] action=Prepare.Completed context={loadContext.Id}", this);
+            ResourcePreparationCompleted?.Invoke();
         }
+
+        /// <summary>
+        /// Prepares an incoming level or wave while retaining the currently active battle
+        /// context. The caller owns its Loading presentation and may activate the new level
+        /// only from <paramref name="completed"/>.
+        /// </summary>
+        public bool TryPrepareResourceContext(
+            BattleLoadContext loadContext,
+            Action<float> progress,
+            Action completed,
+            Action<string> failed)
+        {
+            if (loadContext == null) throw new ArgumentNullException(nameof(loadContext));
+            if (session == null || resourcePreparation != null) return false;
+            resourcePreparation = StartCoroutine(PrepareResourceContext(loadContext, progress, completed, failed));
+            return true;
+        }
+
+        IEnumerator PrepareResourceContext(
+            BattleLoadContext loadContext,
+            Action<float> progress,
+            Action completed,
+            Action<string> failed)
+        {
+            var weapons = loadContext.RequiredWeapons;
+            Debug.Log($"[ColorTiming.BattleLoad] action=Prepare.Begin context={loadContext.Id} controllers={weapons.Count}", this);
+            progress?.Invoke(0f);
+            if (hero == null)
+            {
+                resourcePreparation = null;
+                failed?.Invoke($"Battle load context '{loadContext.Id}' has no Hero resource target.");
+                yield break;
+            }
+
+            hero.PreloadWeaponAnimations(weapons);
+            var previousReadyCount = -1;
+            while (!hero.AreWeaponAnimationsReady(weapons) && !hero.HasWeaponAnimationPreloadFailure(weapons))
+            {
+                int readyCount = hero.GetReadyWeaponAnimationCount(weapons);
+                if (readyCount != previousReadyCount)
+                {
+                    previousReadyCount = readyCount;
+                    progress?.Invoke(weapons.Count == 0 ? 1f : (float)readyCount / weapons.Count);
+                }
+                yield return null;
+            }
+
+            resourcePreparation = null;
+            if (hero.HasWeaponAnimationPreloadFailure(weapons))
+            {
+                failed?.Invoke($"Battle load context '{loadContext.Id}' could not load all Hero weapon controllers.");
+                yield break;
+            }
+            progress?.Invoke(1f);
+            Debug.Log($"[ColorTiming.BattleLoad] action=Prepare.Completed context={loadContext.Id}", this);
+            completed?.Invoke();
+        }
+
 
         // 执行Show对应的主要流程。
         void Show(BattlePresentationResult result)
@@ -139,6 +252,7 @@ namespace ColorTiming.Bootstrap
         void OnDestroy()
         {
             if (pendingTransition != null) StopCoroutine(pendingTransition);
+            if (resourcePreparation != null) StopCoroutine(resourcePreparation);
             if (session != null)
             {
                 session.PresentationRequested -= OnPresentationRequested;

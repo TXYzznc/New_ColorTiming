@@ -26,7 +26,12 @@ namespace ColorTiming.Tests.EditMode
         {
             var runtime = new WeaponSpawnerRuntime(
                 5f,
-                WeaponSpawnPolicy.Boss1(),
+                new WeaponSpawnPolicy(new[]
+                {
+                    new WeaponIdentity(WeaponColor.Red, CombatWeaponType.Scissors),
+                    new WeaponIdentity(WeaponColor.Green, CombatWeaponType.Hammer),
+                    new WeaponIdentity(WeaponColor.Purple, CombatWeaponType.Bomb),
+                }, activeLimit: 5),
                 new SeededRandomSource(17));
             var active = new List<WeaponColor>
             {

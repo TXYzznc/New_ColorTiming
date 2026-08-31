@@ -470,8 +470,13 @@ public class Boss2ActorView : MonoBehaviour, IBattleDamageReceiver, ITransientEn
             return;
         }
 
-        var wasTailActive = battleSession.Snapshot.BossTailActive;
+        var before = battleSession.Snapshot;
+        var wasTailActive = before.BossTailActive;
+        var expectedColor = before.Weaknesses.Count > 0 ? before.Weaknesses[0].ToString() : "None";
         var resolution = battleSession.ApplyBossDamage(damage);
+        Debug.Log(
+            $"[ColorTiming.Combat][BossDamage] action=Resolve boss=Boss2Head result={resolution} attacker={damage.Attacker} weapon={damage.Weapon.Color} expected={expectedColor} remaining={battleSession.Snapshot.Weaknesses.Count}",
+            this);
         if (resolution == BossDamageResolution.RejectedWrongColor)
         {
             print("颜色不同，不造成伤害");

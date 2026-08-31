@@ -18,6 +18,7 @@ using ColorTiming.Presentation.Camera;
 using ColorTiming.Settings;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityGameFramework.Runtime;
 
 namespace ColorTiming.Bootstrap
 {
@@ -35,6 +36,7 @@ namespace ColorTiming.Bootstrap
         private GfColorTimingSettings settings;
         private GfColorTimingSoundService soundService;
         private GfColorTimingUiService uiService;
+        private ColorTimingTransitionScheduler transitionScheduler;
         private BattleRuntimeContext battleRuntime;
         private bool initialized;
         private bool disposed;
@@ -63,17 +65,24 @@ namespace ColorTiming.Bootstrap
             UnityEngine.Object.DontDestroyOnLoad(inputHost);
             gameInput = inputHost.AddComponent<LegacyGameInputAdapter>();
             gameTime = inputHost.AddComponent<UnityGameTimeAdapter>();
+            transitionScheduler = inputHost.AddComponent<ColorTimingTransitionScheduler>();
             soundService = inputHost.AddComponent<GfColorTimingSoundService>();
             soundService.Initialize(gameTime);
             transientEntities = new GfTransientEntityService(soundService);
             settings = new GfColorTimingSettings();
             uiService = new GfColorTimingUiService(gameTime, sceneFlow, settings, gameInput, soundService);
+            uiService.TransitionPresentationReady += OnTransitionPresentationReady;
             sceneFlow.TransitionStarted += OnTransitionStarted;
             initialized = true;
         }
 
         // 绑定场景依赖或事件监听。
-        internal void BindScene(Scene scene, ColorTimingSceneId sceneId)
+        internal void BindScene(
+            Scene scene,
+            ColorTimingSceneId sceneId,
+            Action<float> reportPreparationProgress,
+            Action completePreparation,
+            Action<string> failPreparation)
         {
             ThrowIfDisposed();
             if (!initialized || gameInput == null)
@@ -92,8 +101,12 @@ namespace ColorTiming.Bootstrap
             uiService.PresentScene(sceneId);
             if (sceneId == ColorTimingSceneId.Boss1 || sceneId == ColorTimingSceneId.Boss2)
             {
-                InstallBattleRuntime(scene, sceneId);
+                InstallBattleRuntime(scene, sceneId, reportPreparationProgress, completePreparation, failPreparation);
+                return;
             }
+
+            reportPreparationProgress?.Invoke(1f);
+            completePreparation?.Invoke();
         }
 
         // 执行完成场景Transition对应的主要流程。
@@ -128,6 +141,10 @@ namespace ColorTiming.Bootstrap
             disposed = true;
             initialized = false;
             sceneFlow.TransitionStarted -= OnTransitionStarted;
+            if (uiService != null)
+            {
+                uiService.TransitionPresentationReady -= OnTransitionPresentationReady;
+            }
             ColorTimingUrpCameraStack.Reset();
             uiService?.Dispose();
             uiService = null;
@@ -146,6 +163,7 @@ namespace ColorTiming.Bootstrap
                 transientEntities = null;
                 settings = null;
                 soundService = null;
+                transitionScheduler = null;
             }
             sceneFlow.Dispose();
         }
@@ -159,7 +177,32 @@ namespace ColorTiming.Bootstrap
             soundService?.ResetTrackedSounds();
         }
 
-        private void InstallBattleRuntime(Scene scene, ColorTimingSceneId sceneId)
+        // 在 Loading 表单可见后延迟派发场景切换，避免 UI 异步打开被立即卸载的场景抢占。
+        private void OnTransitionPresentationReady(SceneTransitionContext context)
+        {
+            Log.Info(
+                "[ColorTiming.SceneFlow] action=Transition.Dispatch.Schedule target={0} frame={1} realtime={2:0.000}",
+                context.TargetScene,
+                Time.frameCount,
+                Time.realtimeSinceStartup);
+            transitionScheduler?.Schedule(() =>
+            {
+                bool accepted = sceneFlow.BeginPendingTransition();
+                Log.Info(
+                    "[ColorTiming.SceneFlow] action=Transition.Dispatch.Begin target={0} result={1} frame={2} realtime={3:0.000}",
+                    context.TargetScene,
+                    accepted ? "Accepted" : "Ignored",
+                    Time.frameCount,
+                    Time.realtimeSinceStartup);
+            });
+        }
+
+        private void InstallBattleRuntime(
+            Scene scene,
+            ColorTimingSceneId sceneId,
+            Action<float> reportPreparationProgress,
+            Action completePreparation,
+            Action<string> failPreparation)
         {
             var anchors = scene.GetRootGameObjects()
                 .Select(root => root.GetComponent<BattleSceneAnchors>())
@@ -169,6 +212,9 @@ namespace ColorTiming.Bootstrap
             var host = new GameObject("BattleRuntimeContext (Clone)");
             SceneManager.MoveGameObjectToScene(host, scene);
             battleRuntime = host.AddComponent<BattleRuntimeContext>();
+            battleRuntime.ResourcePreparationProgress += progress => reportPreparationProgress?.Invoke(progress);
+            battleRuntime.ResourcePreparationCompleted += () => completePreparation?.Invoke();
+            battleRuntime.ResourcePreparationFailed += error => failPreparation?.Invoke(error);
             battleRuntime.Initialize(
                 anchors, sceneId, gameInput, gameTime, transientEntities,
                 sceneFlow, settings, soundService, uiService);

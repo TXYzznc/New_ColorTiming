@@ -169,6 +169,8 @@ Assets/Game/Font/Common/SIMHEI SDF.asset
 /ColorTiming-Audio.zip
 /ColorTiming-Sprites.zip
 /ColorTiming-Video.zip
+/AB
+/BuildApp
 
 # Local Codex artifact-tool workspaces and exported verification copies.
 /.codex-tmp/

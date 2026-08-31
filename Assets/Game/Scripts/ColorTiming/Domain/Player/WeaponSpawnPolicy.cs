@@ -70,25 +70,21 @@ namespace ColorTiming.Player
 
     public sealed class WeaponSpawnPolicy
     {
-        private readonly WeaponColor[] allowedColors;
-        private readonly CombatWeaponType[] allowedTypes;
+        private readonly WeaponIdentity[] allowedWeapons;
         private readonly int activeLimit;
         private readonly int guaranteeThreshold;
 
         // 初始化武器生成Policy实例及其核心依赖。
         public WeaponSpawnPolicy(
-            IEnumerable<WeaponColor> allowedColors,
-            IEnumerable<CombatWeaponType> allowedTypes,
+            IEnumerable<WeaponIdentity> allowedWeapons,
             int activeLimit,
             int guaranteeThreshold = 3)
         {
-            this.allowedColors = allowedColors?.Distinct().ToArray()
-                ?? throw new ArgumentNullException(nameof(allowedColors));
-            this.allowedTypes = allowedTypes?.Where(type => type != CombatWeaponType.Normal).Distinct().ToArray()
-                ?? throw new ArgumentNullException(nameof(allowedTypes));
-            if (this.allowedColors.Length == 0 || this.allowedTypes.Length == 0)
+            this.allowedWeapons = allowedWeapons?.Where(weapon => !weapon.IsNormal).Distinct().ToArray()
+                ?? throw new ArgumentNullException(nameof(allowedWeapons));
+            if (this.allowedWeapons.Length == 0)
             {
-                throw new ArgumentException("Weapon spawning needs at least one color and one non-normal type.");
+                throw new ArgumentException("Weapon spawning needs at least one supported non-normal weapon.");
             }
             if (activeLimit <= 0 || guaranteeThreshold < 0)
             {
@@ -97,24 +93,6 @@ namespace ColorTiming.Player
 
             this.activeLimit = activeLimit;
             this.guaranteeThreshold = guaranteeThreshold;
-        }
-
-        // 执行Boss1对应的主要流程。
-        public static WeaponSpawnPolicy Boss1(int activeLimit = 5)
-        {
-            return new WeaponSpawnPolicy(
-                new[] { WeaponColor.Red, WeaponColor.Green, WeaponColor.Purple },
-                new[] { CombatWeaponType.Scissors, CombatWeaponType.Hammer, CombatWeaponType.Bomb },
-                activeLimit);
-        }
-
-        // 执行Boss2对应的主要流程。
-        public static WeaponSpawnPolicy Boss2(int activeLimit = 10)
-        {
-            return new WeaponSpawnPolicy(
-                new[] { WeaponColor.Red, WeaponColor.Green, WeaponColor.Purple, WeaponColor.Orange },
-                new[] { CombatWeaponType.Knife, CombatWeaponType.Axe, CombatWeaponType.Airplane },
-                activeLimit);
         }
 
         // 执行Decide对应的主要流程。
@@ -136,13 +114,12 @@ namespace ColorTiming.Player
                 return default;
             }
 
+            var matchingWeakness = allowedWeapons.Where(weapon => weapon.Color == currentWeakness).ToArray();
             var mustGuaranteeWeakness = activeColors.Count >= guaranteeThreshold
-                && !activeColors.Contains(currentWeakness);
-            var color = mustGuaranteeWeakness
-                ? currentWeakness
-                : allowedColors[random.Range(0, allowedColors.Length)];
-            var type = allowedTypes[random.Range(0, allowedTypes.Length)];
-            return new WeaponSpawnDecision(true, new WeaponIdentity(color, type));
+                && !activeColors.Contains(currentWeakness)
+                && matchingWeakness.Length > 0;
+            var candidates = mustGuaranteeWeakness ? matchingWeakness : allowedWeapons;
+            return new WeaponSpawnDecision(true, candidates[random.Range(0, candidates.Length)]);
         }
     }
 }

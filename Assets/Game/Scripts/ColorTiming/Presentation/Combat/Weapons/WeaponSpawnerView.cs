@@ -1,6 +1,7 @@
 // 文件职责：负责 武器Spawner 的场景或界面表现。
 // 所属模块：ColorTiming / Presentation / Combat / Weapons。
 
+using Array = System.Array;
 using System.Collections.Generic;
 using ColorTiming.Application.Battle;
 using ColorTiming.Combat;
@@ -14,8 +15,7 @@ using UnityEngine;
 /// </summary>
 public abstract class WeaponSpawnerView : MonoBehaviour, ITransientEntityConsumer, IBattleSessionConsumer
 {
-    public int limitCount = 5;
-    public float wTime = 5f;
+    [SerializeField] private WeaponSpawnRuleAsset spawnRule;
     public GameObject weaponItem;
     public Transform weaponT;
 
@@ -30,9 +30,13 @@ public abstract class WeaponSpawnerView : MonoBehaviour, ITransientEntityConsume
     private int lastWeaknessCount = -1;
     private int trackedWeaponChildCount = -1;
 
-    // 创建Policy并完成必要的初始配置。
-    protected abstract WeaponSpawnPolicy CreatePolicy(int activeLimit);
     protected abstract int TutorialTipId { get; }
+
+    /// <summary>Exposes the authored weapon set for scene-level presentation preloading.</summary>
+    public IReadOnlyList<WeaponIdentity> GetSupportedWeapons()
+    {
+        return spawnRule != null ? spawnRule.GetSupportedWeapons() : Array.Empty<WeaponIdentity>();
+    }
 
     // 绑定战斗会话依赖或事件监听。
     public void BindBattleSession(BattleSession battleSession)
@@ -52,16 +56,16 @@ public abstract class WeaponSpawnerView : MonoBehaviour, ITransientEntityConsume
     // 在首帧启动依赖就绪后的业务或表现流程。
     protected virtual void Start()
     {
-        if (wTime <= 0f)
+        if (spawnRule == null || spawnRule.SpawnInterval <= 0f)
         {
-            Debug.LogError($"{name}: weapon spawn interval must be positive.", this);
+            Debug.LogError($"{name}: a valid WeaponSpawnRuleAsset must be assigned.", this);
             enabled = false;
             return;
         }
 
         runtime = new WeaponSpawnerRuntime(
-            wTime,
-            CreatePolicy(limitCount),
+            spawnRule.SpawnInterval,
+            spawnRule.CreatePolicy(),
             new UnityWeaponRandomSource());
         RefreshPickupCache();
     }

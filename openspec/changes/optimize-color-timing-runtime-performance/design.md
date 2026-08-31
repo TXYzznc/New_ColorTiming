@@ -32,3 +32,29 @@ Editor 采样受编辑器自身和 REST 服务影响，只用于同环境前后�
 - MainMenu 关闭时立即停止 VideoPlayer、解除 `VideoPlayer.targetTexture` 与 `RawImage.texture` 引用并释放运行时 RenderTexture。
 - GF.UI 池化表单可以保留运行时 RawImage 节点；再次打开时只重建 RenderTexture 并重新绑定。
 - 若重新打开后未重播开场、循环视频无法接管或显示黑屏，则本项验收失败并整体回退。
+
+## Hero 武器动画资源治理（A+B）
+
+### 资源边界
+
+- 常驻基础包只包含玩家待机、移动、Dash、受击、死亡、参数和既有状态行为；不得再直接引用武器逐帧 Animation Clip。
+- 每种武器形成独立的动画包，包含攻击状态、该武器专用特效所需的最小资源和现有事件入口。武器即将生成时由其生成器请求预热；拾取、攻击和事件回调路径不得发起同步加载。
+- `PlayerActorView` 保持输入、会话和 Animator 参数契约；新增适配层只负责在安全状态安装已就绪的武器动画组合。攻击、Dash、受击、死亡或场景释放期间禁止切换。
+- 每项已加载资源由场景运行时上下文持有可取消租约。武器丢弃、实体回收或场景释放会归还租约；仅在没有使用者时调用 GF Resource 卸载。不得在高频 Update 中调用卸载或强制全局 UnloadUnusedAssets。
+
+### 两阶段切换
+
+1. **A：平行运行时组合。** 新建基础/武器 Controller 与运行时映射，保留原 Hero Controller 作为回退；通过资源依赖、状态参数、Animation Event、Spine Event、Prefab 和完整战斗回归证明等价。
+2. **B：原 Controller 精简。** 只有 A 的 Player 验收通过后，才从原 Hero Controller 移除武器 Clip 依赖并把场景引用切到精简结构。每次资产编辑前记录依赖清单，失败时回退该批 Controller/Pefab 变更。
+
+### 武器生成规则来源
+
+- 武器生成器不再通过 Boss 类型选择硬编码策略；它只消费 `WeaponSpawnRuleAsset`。
+- 每条规则显式列出可用的 `WeaponColor + WeaponType` 组合，并配置生成间隔、同屏上限和弱点保底阈值。显式条目避免请求没有对应美术动画的组合。
+- 动画预热器后续也以同一条目作为资源映射键：新增 Boss、小怪或规则变体只替换配置资产，不新增运行时代码分支。
+
+### 验收与回退
+
+- 原始贴图、Animation Clip、Spine 数据与事件名称/时机保持不变；Controller 和 Prefab 的允许差异必须被记录并可由 Unity 序列化审计解释。
+- 在 Windows Development Player 的 1920×1080 下采集 StartMenu、Boss1、Boss2 的峰值纹理内存、总分配内存、平均/低分位帧率和关键交互帧时间。
+- 任意武器首次生成、拾取或攻击出现可感知卡顿、丢失状态事件或视觉差异时，停止 B 阶段并回退到 A 的已验证 Controller 组合。

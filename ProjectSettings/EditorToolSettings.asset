@@ -17,12 +17,13 @@ MonoBehaviour:
   CompressImgToolOutputDir: 
   CompressImgToolKeys:
   - tinypngkey
-  CompressImgToolItemList: []
+  CompressImgToolItemList:
+  - {fileID: 102900000, guid: d0813b721bc10ca4eba9e9b01bb39ea3, type: 3}
   CompressImgToolOffline: 1
   CompressImgToolFastLv: 1
   CompressImgToolQualityLv: 80
   CompressImgToolQualityMinLv: 0
-  CompressImgMode: 0
+  CompressImgMode: 1
   FontCroppingCharSetsOutput: 
   FontCroppingCharSetsFile: 
   ChatGPTKey: 

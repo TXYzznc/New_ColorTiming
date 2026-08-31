@@ -11,6 +11,12 @@
 - [x] 7. 对每组纹理执行 1080p 画面验收和内存复测
 - [x] 8. 优化 Cursor 重复设置和 WeaponSpawner 每帧组件查询
 - [x] 8.1 恢复 Hero Animator 状态行为兼容脚本，并验证 Boss1 运行时 Missing Script 为 0
-- [ ] 8.2 重新设计 Hero 逐帧动画资源的按武器加载与释放方案；禁止继续使用当前 Unity 2022 SpriteAtlas 原生打包路径
+- [x] 8.2 记录 Hero Controller、Clip、Prefab、Animation Event 与资源依赖的实施前基线；证据见 `evidence/hero-animation-baseline.json`，并提供 Editor 校验器；禁止继续使用当前 Unity 2022 SpriteAtlas 原生打包路径
+- [x] 8.2.1 将 Boss 固定武器生成逻辑迁移到 `WeaponSpawnRuleAsset`；保留当前 9/12 组合法美术组合，并完成场景引用与 EditMode 回归
+- [x] 8.3 建立基础动作与武器专用 Controller／Prefab 组合，以及按武器映射配置；22 个 Controller 已进入 `Animation.dat`
+- [ ] 8.4 以 GF Resource／AssetBundle 实现可取消的武器资源预热、租约与释放；拾取和攻击路径不得同步加载（资源包收录与冷启动已验证，完整交互仍待验收）
+- [ ] 8.5 验证 A 阶段：所有武器、Dash、受击、死亡、场景往返、对象池、Animation／Spine／UnityEvent 和资源依赖审计
+- [ ] 8.6 仅在 A 阶段通过后精简原 Hero Controller 的武器依赖，更新场景／Prefab 引用并记录允许差异
+- [ ] 8.7 验证 B 阶段：Windows Development Player 的 Boss1/Boss2 峰值内存、60 FPS、关键交互帧时间及完整产品回归（Package 发布与冷启动已通过，Boss 流程待测）
 - [ ] 9. 完成 Console、EditMode、PlayMode、场景功能和性能回归
 - [ ] 10. 汇总逐项变更、收益、风险及回退说明

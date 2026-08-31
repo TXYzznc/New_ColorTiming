@@ -41,7 +41,7 @@ namespace ColorTiming.Tests.EditMode
         [Test]
         public void Boss1SpawnGuaranteesMissingCurrentColorAtThreshold()
         {
-            var policy = WeaponSpawnPolicy.Boss1();
+            var policy = CreateBoss1Policy();
             var decision = policy.Decide(
                 new[] { WeaponColor.Red, WeaponColor.Red, WeaponColor.Green },
                 WeaponColor.Purple,
@@ -57,7 +57,7 @@ namespace ColorTiming.Tests.EditMode
         [Test]
         public void Boss2SpawnSupportsOrangeAndOnlyBoss2Families()
         {
-            var policy = WeaponSpawnPolicy.Boss2();
+            var policy = CreateBoss2Policy();
             var decision = policy.Decide(
                 new[] { WeaponColor.Red, WeaponColor.Green, WeaponColor.Purple },
                 WeaponColor.Orange,
@@ -72,7 +72,7 @@ namespace ColorTiming.Tests.EditMode
         [Test]
         public void SpawnAtLimitProducesNoDecision()
         {
-            var policy = WeaponSpawnPolicy.Boss1(activeLimit: 2);
+            var policy = new WeaponSpawnPolicy(Boss1Weapons(), activeLimit: 2);
             var decision = policy.Decide(
                 new[] { WeaponColor.Red, WeaponColor.Green },
                 WeaponColor.Purple,
@@ -91,5 +91,29 @@ namespace ColorTiming.Tests.EditMode
             Assert.That(clock.Tick(1.1f), Is.True);
             Assert.That(clock.Tick(0f), Is.False);
         }
+
+        private static WeaponSpawnPolicy CreateBoss1Policy() => new WeaponSpawnPolicy(Boss1Weapons(), activeLimit: 5);
+        private static WeaponSpawnPolicy CreateBoss2Policy() => new WeaponSpawnPolicy(Boss2Weapons(), activeLimit: 10);
+
+        private static WeaponIdentity[] Boss1Weapons() => new[]
+        {
+            new WeaponIdentity(WeaponColor.Red, CombatWeaponType.Scissors),
+            new WeaponIdentity(WeaponColor.Red, CombatWeaponType.Hammer),
+            new WeaponIdentity(WeaponColor.Red, CombatWeaponType.Bomb),
+            new WeaponIdentity(WeaponColor.Green, CombatWeaponType.Scissors),
+            new WeaponIdentity(WeaponColor.Green, CombatWeaponType.Hammer),
+            new WeaponIdentity(WeaponColor.Green, CombatWeaponType.Bomb),
+            new WeaponIdentity(WeaponColor.Purple, CombatWeaponType.Scissors),
+            new WeaponIdentity(WeaponColor.Purple, CombatWeaponType.Hammer),
+            new WeaponIdentity(WeaponColor.Purple, CombatWeaponType.Bomb),
+        };
+
+        private static WeaponIdentity[] Boss2Weapons() => new[]
+        {
+            new WeaponIdentity(WeaponColor.Red, CombatWeaponType.Knife),
+            new WeaponIdentity(WeaponColor.Green, CombatWeaponType.Axe),
+            new WeaponIdentity(WeaponColor.Purple, CombatWeaponType.Airplane),
+            new WeaponIdentity(WeaponColor.Orange, CombatWeaponType.Knife),
+        };
     }
 }

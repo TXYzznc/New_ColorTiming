@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Video;
@@ -16,6 +15,7 @@ public class MainMenuIntroSequence : MonoBehaviour
 
     VideoPlayer player;
     Coroutine switchRoutine;
+    Coroutine introPrepareRoutine;
     RenderTexture outputTexture;
     RawImage videoDisplay;
 
@@ -25,6 +25,10 @@ public class MainMenuIntroSequence : MonoBehaviour
     void Awake()
     {
         player = GetComponent<VideoPlayer>();
+        if (player != null)
+        {
+            player.playOnAwake = false;
+        }
     }
 
     // 组件启用时注册监听并同步当前状态。
@@ -43,6 +47,11 @@ public class MainMenuIntroSequence : MonoBehaviour
         {
             StopCoroutine(switchRoutine);
             switchRoutine = null;
+        }
+        if (introPrepareRoutine != null)
+        {
+            StopCoroutine(introPrepareRoutine);
+            introPrepareRoutine = null;
         }
     }
 
@@ -134,11 +143,9 @@ public class MainMenuIntroSequence : MonoBehaviour
 
         gameObject.SetActive(true);
         EnsureVideoOutput();
-        if (player != null)
+        if (player != null && introPrepareRoutine == null)
         {
-            player.Stop();
-            player.time = 0d;
-            player.Play();
+            introPrepareRoutine = StartCoroutine(PrepareAndPlayIntro());
         }
     }
 
@@ -152,7 +159,37 @@ public class MainMenuIntroSequence : MonoBehaviour
         }
         player?.Stop();
         loop2?.Stop();
+        if (introPrepareRoutine != null)
+        {
+            StopCoroutine(introPrepareRoutine);
+            introPrepareRoutine = null;
+        }
         ReleaseVideoOutput();
+    }
+
+    IEnumerator PrepareAndPlayIntro()
+    {
+        player.Stop();
+        player.time = 0d;
+        player.Prepare();
+        var prepareDeadline = Time.realtimeSinceStartup + LoopPrepareTimeout;
+        while (!player.isPrepared && Time.realtimeSinceStartup < prepareDeadline)
+        {
+            yield return null;
+        }
+
+        if (!player.isPrepared)
+        {
+            Debug.LogError("[ColorTiming.Video] action=Intro.Prepare result=Timeout; starting playback as fallback.", player);
+        }
+        else
+        {
+            Debug.Log(
+                $"[ColorTiming.Video] action=Intro.Prepare result=Success frame={Time.frameCount} realtime={Time.realtimeSinceStartup:0.000}");
+        }
+
+        player.Play();
+        introPrepareRoutine = null;
     }
 
     private void EnsureVideoOutput()

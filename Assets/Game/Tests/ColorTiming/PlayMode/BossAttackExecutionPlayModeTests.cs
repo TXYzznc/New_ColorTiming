@@ -54,6 +54,10 @@ namespace ColorTiming.Tests.PlayMode
             "burrowFlow",
             BindingFlags.Instance | BindingFlags.NonPublic);
 
+        static readonly FieldInfo SkillHasDamagePayload = typeof(Skill_base).GetField(
+            "hasDamagePayload",
+            BindingFlags.Instance | BindingFlags.NonPublic);
+
         [UnityTest]
         [Timeout(180000)]
         public IEnumerator Boss1_AllSixAttacksPlayAndDispatchTheirAuthoredSpineEvents()
@@ -67,6 +71,7 @@ namespace ColorTiming.Tests.PlayMode
             Assert.That(boss, Is.Not.Null);
             Assert.That(presentation, Is.Not.Null);
             Assert.That(PlayBoss1Animation, Is.Not.Null);
+            Assert.That(SkillHasDamagePayload, Is.Not.Null);
             var session = FindActive<BattleRuntimeContext>()?.Session;
             Assert.That(session, Is.Not.Null);
             // Keep the authored Spine tracks and callbacks live while preventing the
@@ -255,6 +260,11 @@ namespace ColorTiming.Tests.PlayMode
                         if (entity.gameObject.name.StartsWith(expected, StringComparison.Ordinal))
                         {
                             seenEntities.Add(expected);
+                            var skill = entity.GetComponent<Skill_base>();
+                            Assert.That(skill, Is.Not.Null,
+                                $"{animationName} spawned {expected} without a Skill_base damage adapter.");
+                            Assert.That((bool)SkillHasDamagePayload.GetValue(skill), Is.True,
+                                $"{animationName} spawned {expected} without Boss1 damage payload.");
                         }
                     }
                 }

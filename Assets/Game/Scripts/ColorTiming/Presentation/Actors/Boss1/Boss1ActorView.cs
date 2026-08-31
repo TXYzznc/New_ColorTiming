@@ -41,7 +41,7 @@ public class Boss1ActorView : MonoBehaviour, IBattleDamageReceiver
     const string animName_Atk2 = "attack_2_test1_60fps";
     const string animName_Atk3 = "attack_3_test2_60fps";
     const string animName_Atk4 = "attack_4_test1_60fps";
-    // Spine2 contains an earlier visual-only draft and the authored event-bearing attack.
+    // Spine2 contains the authored visual version of Attack5.
     const string animName_Atk5 = "attack_5_test1_60fps2";
     const string animName_Atk6 = "attack_6_60fps";
 
@@ -157,21 +157,21 @@ public class Boss1ActorView : MonoBehaviour, IBattleDamageReceiver
 
     void AnimPlay(string animName, bool loop)
     {
-        SkeletonAnimation _skAni = null;
-        //已弃用sp2
+        SkeletonAnimation _skAni;
         if (animName == animName_Atk5)
         {
             _skAni = skeletonAnimation2;
             skeletonAnimation1.gameObject.SetActive(false);
             skeletonAnimation_tip.gameObject.SetActive(false);
-
             skeletonAnimation2.gameObject.SetActive(true);
-            //skeletonAnimation2.Start();
         }
         else
         {
             _skAni = skeletonAnimation1;
+            skeletonAnimation1.gameObject.SetActive(true);
+            skeletonAnimation_tip.gameObject.SetActive(true);
             skeletonAnimation_tip.AnimationState.SetAnimation(0, animName, loop);
+            skeletonAnimation2.gameObject.SetActive(false);
         }
 
 
@@ -301,7 +301,12 @@ public class Boss1ActorView : MonoBehaviour, IBattleDamageReceiver
             return;
         }
 
+        var before = battleSession.Snapshot;
+        var expectedColor = before.Weaknesses.Count > 0 ? before.Weaknesses[0].ToString() : "None";
         var resolution = battleSession.ApplyBossDamage(damage);
+        Debug.Log(
+            $"[ColorTiming.Combat][BossDamage] action=Resolve boss=Boss1 result={resolution} attacker={damage.Attacker} weapon={damage.Weapon.Color} expected={expectedColor} remaining={battleSession.Snapshot.Weaknesses.Count}",
+            this);
         if (resolution == BossDamageResolution.RejectedWrongColor)
         {
             print("颜色不同，不造成伤害");

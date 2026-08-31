@@ -1,0 +1,79 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ab6a59c883640747b019417fc6b0500, type: 3}
+  m_Name: HeroWeaponAnimationCatalog
+  m_EditorClassIdentifier: 
+  baseControllerAssetName: Assets/Game/Sprites/ColorTiming/Hero/Animations/RuntimeCandidates/Hero_Base.controller
+  entries:
+  - color: 0
+    type: 1
+    controllerAssetName: Assets/Game/Sprites/ColorTiming/Hero/Animations/RuntimeCandidates/Hero_Red_Scissors.controller
+  - color: 0
+    type: 2
+    controllerAssetName: Assets/Game/Sprites/ColorTiming/Hero/Animations/RuntimeCandidates/Hero_Red_Hammer.controller
+  - color: 0
+    type: 3
+    controllerAssetName: Assets/Game/Sprites/ColorTiming/Hero/Animations/RuntimeCandidates/Hero_Red_Bomb.controller
+  - color: 0
+    type: 4
+    controllerAssetName: Assets/Game/Sprites/ColorTiming/Hero/Animations/RuntimeCandidates/Hero_Red_Knife.controller
+  - color: 0
+    type: 5
+    controllerAssetName: Assets/Game/Sprites/ColorTiming/Hero/Animations/RuntimeCandidates/Hero_Red_Axe.controller
+  - color: 0
+    type: 6
+    controllerAssetName: Assets/Game/Sprites/ColorTiming/Hero/Animations/RuntimeCandidates/Hero_Red_Airplane.controller
+  - color: 1
+    type: 1
+    controllerAssetName: Assets/Game/Sprites/ColorTiming/Hero/Animations/RuntimeCandidates/Hero_Green_Scissors.controller
+  - color: 1
+    type: 2
+    controllerAssetName: Assets/Game/Sprites/ColorTiming/Hero/Animations/RuntimeCandidates/Hero_Green_Hammer.controller
+  - color: 1
+    type: 3
+    controllerAssetName: Assets/Game/Sprites/ColorTiming/Hero/Animations/RuntimeCandidates/Hero_Green_Bomb.controller
+  - color: 1
+    type: 4
+    controllerAssetName: Assets/Game/Sprites/ColorTiming/Hero/Animations/RuntimeCandidates/Hero_Green_Knife.controller
+  - color: 1
+    type: 5
+    controllerAssetName: Assets/Game/Sprites/ColorTiming/Hero/Animations/RuntimeCandidates/Hero_Green_Axe.controller
+  - color: 1
+    type: 6
+    controllerAssetName: Assets/Game/Sprites/ColorTiming/Hero/Animations/RuntimeCandidates/Hero_Green_Airplane.controller
+  - color: 2
+    type: 1
+    controllerAssetName: Assets/Game/Sprites/ColorTiming/Hero/Animations/RuntimeCandidates/Hero_Purple_Scissors.controller
+  - color: 2
+    type: 2
+    controllerAssetName: Assets/Game/Sprites/ColorTiming/Hero/Animations/RuntimeCandidates/Hero_Purple_Hammer.controller
+  - color: 2
+    type: 3
+    controllerAssetName: Assets/Game/Sprites/ColorTiming/Hero/Animations/RuntimeCandidates/Hero_Purple_Bomb.controller
+  - color: 2
+    type: 4
+    controllerAssetName: Assets/Game/Sprites/ColorTiming/Hero/Animations/RuntimeCandidates/Hero_Purple_Knife.controller
+  - color: 2
+    type: 5
+    controllerAssetName: Assets/Game/Sprites/ColorTiming/Hero/Animations/RuntimeCandidates/Hero_Purple_Axe.controller
+  - color: 2
+    type: 6
+    controllerAssetName: Assets/Game/Sprites/ColorTiming/Hero/Animations/RuntimeCandidates/Hero_Purple_Airplane.controller
+  - color: 3
+    type: 4
+    controllerAssetName: Assets/Game/Sprites/ColorTiming/Hero/Animations/RuntimeCandidates/Hero_Orange_Knife.controller
+  - color: 3
+    type: 5
+    controllerAssetName: Assets/Game/Sprites/ColorTiming/Hero/Animations/RuntimeCandidates/Hero_Orange_Axe.controller
+  - color: 3
+    type: 6
+    controllerAssetName: Assets/Game/Sprites/ColorTiming/Hero/Animations/RuntimeCandidates/Hero_Orange_Airplane.controller

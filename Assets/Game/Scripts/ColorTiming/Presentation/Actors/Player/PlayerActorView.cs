@@ -2,6 +2,7 @@
 // 所属模块：ColorTiming / Presentation / Actors / Player。
 
 using System;
+using System.Collections.Generic;
 using ColorTiming.Application.Battle;
 using ColorTiming.Combat;
 using ColorTiming.Input;
@@ -9,6 +10,7 @@ using ColorTiming.Player;
 using ColorTiming.Presentation.Combat;
 using ColorTiming.Presentation.UI.Contracts;
 using Unity.VisualScripting;
+using GameFramework.Resource;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
@@ -29,6 +31,7 @@ public class PlayerActorView : MonoBehaviour, IBattleDamageReceiver, IGameInputC
     [FormerlySerializedAs("WeaponControSystem_2")]
     public Boss2WeaponSpawnerView boss2WeaponSpawner;
     public GameObject deathShow;
+    [SerializeField] private HeroWeaponAnimationCatalogAsset weaponAnimationCatalog;
 
 
     public int heroMaxHP = 5;
@@ -77,6 +80,14 @@ public class PlayerActorView : MonoBehaviour, IBattleDamageReceiver, IGameInputC
     IGameplayPointerWorld pointerWorld;
     IGameTime gameTime;
     IDisposable hitSlowMotion;
+    readonly Dictionary<WeaponIdentity, RuntimeAnimatorController> loadedWeaponControllers =
+        new Dictionary<WeaponIdentity, RuntimeAnimatorController>();
+    readonly HashSet<WeaponIdentity> loadingWeaponControllers = new HashSet<WeaponIdentity>();
+    readonly HashSet<WeaponIdentity> failedWeaponControllers = new HashSet<WeaponIdentity>();
+    RuntimeAnimatorController activeWeaponController;
+    WeaponIdentity? pendingControllerWeapon;
+    int weaponInstallVersion;
+    bool resourceContextReleased;
 
     /// <summary>Bound by the runtime-created battle composition root before Start.</summary>
     // 绑定战斗会话依赖或事件监听。
@@ -134,6 +145,11 @@ public class PlayerActorView : MonoBehaviour, IBattleDamageReceiver, IGameInputC
 
         heroFrireSystem = GetComponent<PlayerSkillEmitter>();
         soundManager = GetComponentInChildren<PlayerSoundView>();
+        activeWeaponController = animator != null ? animator.runtimeAnimatorController : null;
+        if (nowweapon.IsNormal && activeWeaponController != null)
+        {
+            loadedWeaponControllers[nowweapon] = activeWeaponController;
+        }
         viewStarted = true;
         TryInitializeSession();
         //animator.GetCurrentAnimatorStateInfo
@@ -145,6 +161,7 @@ public class PlayerActorView : MonoBehaviour, IBattleDamageReceiver, IGameInputC
         if (sessionInitialized || !viewStarted || battleSession == null) return;
         sessionInitialized = true;
         nowweapon = inventory.Current;
+        PreloadWeaponAnimation(nowweapon);
         OnDamage_Event?.Invoke();
         OnSetHP_Event?.Invoke();
         OnSwitchWeapon?.Invoke(nowweapon);
@@ -180,7 +197,10 @@ public class PlayerActorView : MonoBehaviour, IBattleDamageReceiver, IGameInputC
     // 逐帧推进需要实时刷新的业务或表现状态。
     void Update()
     {
-        if (playerState == null || !playerState.IsAlive || !(Time.timeScale > 0))
+        // BattleRuntimeContext deliberately delays session binding until all required
+        // controllers are preloaded. Do not consume input or tick gameplay during that gate.
+        if (!sessionInitialized || battleSession == null || playerState == null
+            || !playerState.IsAlive || !(Time.timeScale > 0))
         {
             attackInputGate?.Reset();
             return;
@@ -237,6 +257,8 @@ public class PlayerActorView : MonoBehaviour, IBattleDamageReceiver, IGameInputC
         {
             DisWeapon(false);
         }
+
+        TryInstallPendingWeaponController();
 
     }
 
@@ -389,14 +411,179 @@ public class PlayerActorView : MonoBehaviour, IBattleDamageReceiver, IGameInputC
     }
     void SwitchWeapon(WeaponIdentity weapon)
     {
-        //print(weapon.GetIntType());
-
         nowweapon = weapon;
-        animator.SetInteger(animPramName_WeaponType, nowweapon.ToLegacyAnimatorIndex());
+        pendingControllerWeapon = weapon;
+        weaponInstallVersion++;
+        if (weaponAnimationCatalog != null)
+        {
+            if (!loadedWeaponControllers.TryGetValue(weapon, out var controller))
+            {
+                PreloadWeaponAnimation(weapon);
+                return;
+            }
+        }
 
+        TryInstallPendingWeaponController();
+    }
+
+    /// <summary>Starts loading a candidate controller before the pickup input can be used.</summary>
+    public void PreloadWeaponAnimation(WeaponIdentity weapon)
+    {
+        if (resourceContextReleased || weaponAnimationCatalog == null || loadedWeaponControllers.ContainsKey(weapon)
+            || !loadingWeaponControllers.Add(weapon))
+        {
+            return;
+        }
+
+        if (!weaponAnimationCatalog.TryGetControllerAssetName(weapon, out string assetName)
+            || GFBuiltin.Resource == null)
+        {
+            loadingWeaponControllers.Remove(weapon);
+            return;
+        }
+
+        GFBuiltin.Resource.LoadAsset(assetName, typeof(RuntimeAnimatorController), new LoadAssetCallbacks(
+            (loadedAssetName, asset, duration, userData) =>
+            {
+                loadingWeaponControllers.Remove(weapon);
+                if (!(asset is RuntimeAnimatorController controller)) return;
+                if (resourceContextReleased)
+                {
+                    GFBuiltin.Resource?.UnloadAsset(controller);
+                    return;
+                }
+                failedWeaponControllers.Remove(weapon);
+                loadedWeaponControllers[weapon] = controller;
+                // A resource callback may arrive during attack, dash or hit. It only marks
+                // the candidate ready; Update installs it at an authored idle boundary.
+            },
+            (failedAssetName, status, errorMessage, userData) =>
+            {
+                loadingWeaponControllers.Remove(weapon);
+                if (resourceContextReleased) return;
+                failedWeaponControllers.Add(weapon);
+                Debug.LogError($"Player animation preload failed: {weapon} ({status}) {errorMessage}", this);
+            }));
+    }
+
+    public void PreloadWeaponAnimations(IReadOnlyList<WeaponIdentity> weapons)
+    {
+        if (weapons == null) return;
+        for (var index = 0; index < weapons.Count; index++) PreloadWeaponAnimation(weapons[index]);
+    }
+
+    public bool AreWeaponAnimationsReady(IReadOnlyList<WeaponIdentity> weapons)
+    {
+        if (weapons == null || weaponAnimationCatalog == null) return true;
+        for (var index = 0; index < weapons.Count; index++)
+        {
+            if (!loadedWeaponControllers.ContainsKey(weapons[index])) return false;
+        }
+        return true;
+    }
+
+    public int GetReadyWeaponAnimationCount(IReadOnlyList<WeaponIdentity> weapons)
+    {
+        if (weapons == null) return 0;
+        if (weaponAnimationCatalog == null) return weapons.Count;
+        var readyCount = 0;
+        for (var i = 0; i < weapons.Count; i++)
+        {
+            if (loadedWeaponControllers.ContainsKey(weapons[i])) readyCount++;
+        }
+        return readyCount;
+    }
+
+    public bool HasWeaponAnimationPreloadFailure(IReadOnlyList<WeaponIdentity> weapons)
+    {
+        if (weapons == null || weaponAnimationCatalog == null) return false;
+        for (var index = 0; index < weapons.Count; index++)
+        {
+            if (failedWeaponControllers.Contains(weapons[index])) return true;
+        }
+        return false;
+    }
+
+    private void ApplyWeaponController(RuntimeAnimatorController controller)
+    {
+        if (animator == null || controller == null || ReferenceEquals(activeWeaponController, controller)) return;
+        animator.runtimeAnimatorController = controller;
+        animator.Rebind();
+        activeWeaponController = controller;
+    }
+
+    private void TryInstallPendingWeaponController()
+    {
+        if (!pendingControllerWeapon.HasValue || animator == null || !CanInstallWeaponController())
+        {
+            return;
+        }
+
+        WeaponIdentity weapon = pendingControllerWeapon.Value;
+        RuntimeAnimatorController controller = null;
+        if (weaponAnimationCatalog != null
+            && !loadedWeaponControllers.TryGetValue(weapon, out controller))
+        {
+            return;
+        }
+
+        int installVersion = weaponInstallVersion;
+        if (weaponAnimationCatalog != null)
+        {
+            ApplyWeaponController(controller);
+        }
+
+        if (installVersion != weaponInstallVersion || !pendingControllerWeapon.HasValue
+            || !pendingControllerWeapon.Value.Equals(weapon))
+        {
+            return;
+        }
+
+        animator.SetLayerWeight(0, 1f);
+        if (animator.layerCount > 1) animator.SetLayerWeight(1, 0f);
+        animator.SetFloat(animPramName_MoveSpeed, 0f);
+        animator.SetFloat(animPramName_Atk_x, 0f);
+        ApplyWeaponAnimatorParameters();
+        pendingControllerWeapon = null;
+        Debug.Log($"[ColorTiming.HeroAnimation] action=ControllerInstalled weapon={weapon} version={installVersion}", this);
+    }
+
+    private bool CanInstallWeaponController()
+    {
+        if (playerState == null || !playerState.IsAlive || playerState.IsDashing
+            || playerState.IsAttacking || playerState.IsHitStunned || playerState.IsSkillMoving
+            || inputMove.sqrMagnitude > 0.0001f || animator.IsInTransition(0))
+        {
+            return false;
+        }
+
+        if (animator.layerCount > 1 && animator.GetLayerWeight(1) > 0.001f)
+        {
+            return false;
+        }
+
+        return animator.GetCurrentAnimatorStateInfo(0).IsName("Daiji");
+    }
+
+    private void ReleasePreloadedWeaponControllers()
+    {
+        var released = new List<WeaponIdentity>();
+        foreach (var pair in loadedWeaponControllers)
+        {
+            if (!ReferenceEquals(pair.Value, activeWeaponController) && !pair.Key.IsNormal)
+            {
+                GFBuiltin.Resource?.UnloadAsset(pair.Value);
+                released.Add(pair.Key);
+            }
+        }
+        foreach (WeaponIdentity weapon in released) loadedWeaponControllers.Remove(weapon);
+    }
+
+    private void ApplyWeaponAnimatorParameters()
+    {
+        animator.SetInteger(animPramName_WeaponType, nowweapon.ToLegacyAnimatorIndex());
         animator.SetTrigger(animPramName_SwitchWeapon);
         OnSwitchWeapon?.Invoke(nowweapon);
-
     }
     //做一个丢弃武器功能  //接通BOSS 攻击
     void DisWeapon(bool dis)
@@ -496,14 +683,27 @@ public class PlayerActorView : MonoBehaviour, IBattleDamageReceiver, IGameInputC
 
     public void ReceiveDamage(BattleDamage damage)
     {
-        if (playerState == null || battleSession == null || playerState.RejectsDamage)
+        if (playerState == null || battleSession == null)
         {
-            //print("冲刺期间无敌");
+            Debug.LogWarning(
+                $"[ColorTiming.Combat][PlayerDamage] action=Resolve result=missing-state attacker={damage.Attacker}",
+                this);
+            return;
+        }
+
+        if (playerState.RejectsDamage)
+        {
+            Debug.Log(
+                $"[ColorTiming.Combat][PlayerDamage] action=Resolve result=rejected-invulnerable attacker={damage.Attacker} state={playerState.State} remainingInvulnerability={playerState.HitInvulnerabilityRemaining:F2}",
+                this);
             return;
         }
 
         if (playerState.CanEvadeDamage)
         {
+            Debug.Log(
+                $"[ColorTiming.Combat][PlayerDamage] action=Resolve result=evaded attacker={damage.Attacker} state={playerState.State}",
+                this);
             gameTime?.Pulse(0.45f, 0.3f);
             //加一个闪避成功回一滴血
             if (battleSession.ResolveSuccessfulDash() > 0)
@@ -516,6 +716,9 @@ public class PlayerActorView : MonoBehaviour, IBattleDamageReceiver, IGameInputC
         //parm.Contains()
         var heldWeapon = inventory.Current;
         var resolution = battleSession.ApplyPlayerDamage(damage);
+        Debug.Log(
+            $"[ColorTiming.Combat][PlayerDamage] action=Resolve result={resolution} attacker={damage.Attacker} state={playerState.State}",
+            this);
 
         if (resolution == PlayerDamageResolution.Damaged)
         {
@@ -594,6 +797,8 @@ public class PlayerActorView : MonoBehaviour, IBattleDamageReceiver, IGameInputC
     // 组件销毁时释放订阅、句柄和运行时资源。
     private void OnDestroy()
     {
+        resourceContextReleased = true;
+        pendingControllerWeapon = null;
         OnAnimStateEnter.RemoveListener(OnAnimStateEnterF);
         if (heroAnimState != null)
         {
@@ -607,5 +812,6 @@ public class PlayerActorView : MonoBehaviour, IBattleDamageReceiver, IGameInputC
         }
         hitSlowMotion?.Dispose();
         hitSlowMotion = null;
+        ReleasePreloadedWeaponControllers();
     }
 }

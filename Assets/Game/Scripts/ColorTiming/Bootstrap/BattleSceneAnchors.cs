@@ -2,6 +2,8 @@
 // 所属模块：ColorTiming / Bootstrap。
 
 using System;
+using System.Collections.Generic;
+using ColorTiming.Combat;
 using ColorTiming.Presentation.Audio;
 using UnityEngine;
 
@@ -40,6 +42,31 @@ namespace ColorTiming.Bootstrap
         public Camera GameplayCamera => gameplayCamera;
         public MonoBehaviour[] ExplicitBindings => explicitBindings;
         public SoundCue[] SoundCues => soundCues;
+
+        /// <summary>Collects the configured weapon sets without coupling the bootstrap to a boss type.</summary>
+        public IReadOnlyList<WeaponIdentity> GetSupportedWeapons()
+        {
+            var result = new List<WeaponIdentity>();
+            var spawners = GetComponentsInChildren<WeaponSpawnerView>(true);
+            for (var i = 0; i < spawners.Length; i++)
+            {
+                var weapons = spawners[i].GetSupportedWeapons();
+                for (var j = 0; j < weapons.Count; j++)
+                {
+                    if (!result.Contains(weapons[j])) result.Add(weapons[j]);
+                }
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Creates a reusable, configuration-derived resource request. Level and wave code
+        /// can use the same API without requiring a Unity scene reload.
+        /// </summary>
+        public BattleLoadContext CreateLoadContext(string contextId)
+        {
+            return new BattleLoadContext(contextId, GetSupportedWeapons());
+        }
 
         // 执行Validate对应的主要流程。
         public void Validate(bool expectBoss1)

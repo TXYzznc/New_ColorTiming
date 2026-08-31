@@ -12,6 +12,7 @@ namespace ColorTiming.Bootstrap.Flow
         private ColorTimingSceneId pendingScene;
         private bool hasCurrentScene;
         private bool isTransitioning;
+        private bool transitionDispatchRequested;
         private bool disposed;
         private float transitionProgress;
 
@@ -41,18 +42,40 @@ namespace ColorTiming.Bootstrap.Flow
 
             pendingScene = scene;
             isTransitioning = true;
+            transitionDispatchRequested = false;
             transitionProgress = 0f;
             var context = new SceneTransitionContext(hasCurrentScene ? currentScene : (ColorTimingSceneId?)null, scene);
-            TransitionStarted?.Invoke(context);
-
             try
             {
-                beginTransition(scene);
+                TransitionStarted?.Invoke(context);
                 return true;
             }
             catch
             {
                 isTransitioning = false;
+                throw;
+            }
+        }
+
+        // 在 Loading 表单已呈现后开始实际场景卸载与加载，避免 UI 打开异步操作被场景切换抢占。
+        internal bool BeginPendingTransition()
+        {
+            ThrowIfDisposed();
+            if (!isTransitioning || transitionDispatchRequested)
+            {
+                return false;
+            }
+
+            transitionDispatchRequested = true;
+            try
+            {
+                beginTransition(pendingScene);
+                return true;
+            }
+            catch
+            {
+                isTransitioning = false;
+                transitionDispatchRequested = false;
                 throw;
             }
         }

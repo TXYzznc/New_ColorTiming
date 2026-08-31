@@ -83,7 +83,7 @@ public class Skill_base : MonoBehaviour, ITransientEntityConsumer, IFrameworkEnt
     // 响应TriggerEnter2D回调，并更新本对象状态。
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(cTag != "" && cTag != collision.gameObject.tag) return;
+        if (!MatchesTargetTag(collision)) return;
 
         //print(gameObject.name + "检测到进入:" + collision.gameObject.name);
 
@@ -120,7 +120,8 @@ public class Skill_base : MonoBehaviour, ITransientEntityConsumer, IFrameworkEnt
                 fx.transform.localScale = new Vector3(filp, 1, 1);
             }
         }
-        var receiver = collision.GetComponent<IBattleDamageReceiver>();
+        var receiver = collision.GetComponent<IBattleDamageReceiver>()
+                       ?? collision.GetComponentInParent<IBattleDamageReceiver>();
         //print("xxxxx" + i_);
         //collision.contacts[0].point;
 
@@ -130,17 +131,46 @@ public class Skill_base : MonoBehaviour, ITransientEntityConsumer, IFrameworkEnt
         Vector2 v2 = Vector2.zero;
         if (hitinfo) v2 = hitinfo.point;
         //用skill位置发射射线？
-        if (receiver != null && hasDamagePayload)
+        if (receiver == null)
         {
-            receiver.ReceiveDamage(new BattleDamage(
-                attackerId,
-                receiver.DamageActorId,
-                atkWeapon,
-                new CombatPoint(v2.x, v2.y),
-                damageParm));
+            Debug.LogWarning(
+                $"[ColorTiming.Combat][SkillHit] action=ResolveReceiver result=missing-receiver skill={name} target={collision.name}",
+                collision);
+            return;
         }
 
+        if (!hasDamagePayload)
+        {
+            Debug.LogError(
+                $"[ColorTiming.Combat][SkillHit] action=Deliver result=missing-payload skill={name} target={collision.name} receiver={receiver.DamageActorId}",
+                this);
+            return;
+        }
+
+        var damage = new BattleDamage(
+            attackerId,
+            receiver.DamageActorId,
+            atkWeapon,
+            new CombatPoint(v2.x, v2.y),
+            damageParm);
+        receiver.ReceiveDamage(damage);
+        Debug.Log(
+            $"[ColorTiming.Combat][SkillHit] action=Deliver result=sent skill={name} attacker={damage.Attacker} target={damage.Target} weapon={damage.Weapon.Color}",
+            this);
+
         //collision.
+    }
+
+    private bool MatchesTargetTag(Collider2D collision)
+    {
+        if (string.IsNullOrEmpty(cTag)) return true;
+
+        for (var target = collision.transform; target != null; target = target.parent)
+        {
+            if (target.CompareTag(cTag)) return true;
+        }
+
+        return false;
     }
 
 
