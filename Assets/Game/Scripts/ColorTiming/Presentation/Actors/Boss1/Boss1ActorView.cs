@@ -8,14 +8,18 @@ using System.Linq;
 using ColorTiming.Application.Battle;
 using ColorTiming.Bosses.Boss1;
 using ColorTiming.Combat;
+using ColorTiming.Bootstrap.Flow;
+using ColorTiming.Configuration;
 using ColorTiming.Presentation.Combat;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.U2D;
 
-public class Boss1ActorView : MonoBehaviour, IBattleDamageReceiver
+public class Boss1ActorView : MonoBehaviour, IBattleDamageReceiver, IBossBattleSessionConsumer,
+    IColorTimingConfigurationConsumer
 {
     public ActorId DamageActorId => ActorId.BossHead;
+    public BattleKind BattleKind => ColorTiming.Combat.BattleKind.Boss1;
 
     //boss血量
     //public int hpCount;
@@ -56,6 +60,15 @@ public class Boss1ActorView : MonoBehaviour, IBattleDamageReceiver
     BattleSession battleSession;
     bool viewStarted;
     bool sessionInitialized;
+    ColorTimingBossTable bossConfiguration;
+
+    public void BindConfiguration(IColorTimingConfiguration configuration, ColorTimingSceneId sceneId)
+    {
+        var battle = configuration?.GetBattle(sceneId) ?? throw new System.ArgumentNullException(nameof(configuration));
+        bossConfiguration = configuration.GetBoss(battle.BossId);
+        attackSelector = new Boss1AttackSelector(configuration.CreateBoss1AttackRules(battle.BossId));
+        attackCycle = new Boss1AttackCycle(bossConfiguration.InitialCooldown);
+    }
 
     /// <summary>Bound by the runtime-created battle composition root before Start.</summary>
     // 绑定战斗会话依赖或事件监听。
@@ -72,8 +85,6 @@ public class Boss1ActorView : MonoBehaviour, IBattleDamageReceiver
     void Start()
     {
         boss1Anim = GetComponent<Boss1AnimationEventRelay>();
-        attackSelector = new Boss1AttackSelector();
-        attackCycle = new Boss1AttackCycle(3f);
         //skeletonAnimation1 = GetComponentInChildren<SkeletonAnimation>();
         AnimPlay(animName_idle, true);
         //skeletonAnimation1.Start();
@@ -99,7 +110,7 @@ public class Boss1ActorView : MonoBehaviour, IBattleDamageReceiver
     // 逐帧推进需要实时刷新的业务或表现状态。
     void Update()
     {
-        if (attackCycle == null || battleSession == null
+        if (attackCycle == null || attackSelector == null || battleSession == null
             || battleSession.Snapshot.Lifecycle != BattleLifecycle.Running)
         {
             return;
@@ -229,7 +240,7 @@ public class Boss1ActorView : MonoBehaviour, IBattleDamageReceiver
             //skeletonAnimation1.Start();
         }
 
-        attackCycle.CompleteAttack(Random.Range(2.0f, 5.0f));
+        attackCycle.CompleteAttack(Random.Range(bossConfiguration.NextCooldownMin, bossConfiguration.NextCooldownMax));
         AnimPlay(animName_idle, true);
         OnHPColor();
         battleSession.SetBossDamageable(true);

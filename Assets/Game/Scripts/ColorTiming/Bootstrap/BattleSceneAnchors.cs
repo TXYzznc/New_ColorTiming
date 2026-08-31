@@ -3,8 +3,10 @@
 
 using System;
 using System.Collections.Generic;
+using ColorTiming.Application.Battle;
 using ColorTiming.Combat;
 using ColorTiming.Presentation.Audio;
+using Cinemachine;
 using UnityEngine;
 
 namespace ColorTiming.Bootstrap
@@ -16,32 +18,39 @@ namespace ColorTiming.Bootstrap
     public sealed class BattleSceneAnchors : MonoBehaviour
     {
         [Serializable]
-        public struct SoundCue
+        public sealed class PlayerSetup
         {
-            [SerializeField] AudioClip clip;
-            [SerializeField] ColorTimingSoundChannel channel;
-            [SerializeField] bool loop;
-            [SerializeField] Vector3 position;
+            [SerializeField] private PlayerActorView _prefab;
+            [SerializeField] private Vector3 _spawnPosition;
+            [SerializeField] private WeaponSpawnerView _weaponSpawner;
+            [SerializeField] private CinemachineVirtualCamera _virtualCamera;
+            [SerializeField] private Transform _cameraTarget;
+            [SerializeField] private PlayerDeathSequenceView _deathSequence;
 
-            public AudioClip Clip => clip;
-            public ColorTimingSoundChannel Channel => channel;
-            public bool Loop => loop;
-            public Vector3 Position => position;
+            public PlayerActorView Prefab => _prefab;
+            public Vector3 SpawnPosition => _spawnPosition;
+            public WeaponSpawnerView WeaponSpawner => _weaponSpawner;
+            public CinemachineVirtualCamera VirtualCamera => _virtualCamera;
+            public Transform CameraTarget => _cameraTarget;
+            public PlayerDeathSequenceView DeathSequence => _deathSequence;
+
+            public void Validate()
+            {
+                if (_prefab == null) throw new InvalidOperationException("Player setup requires a Player Prefab.");
+                if (_weaponSpawner == null) throw new InvalidOperationException("Player setup requires a WeaponSpawnerView.");
+                if (_virtualCamera == null) throw new InvalidOperationException("Player setup requires a CinemachineVirtualCamera.");
+                if (_cameraTarget == null) throw new InvalidOperationException("Player setup requires a Boss camera target.");
+                if (_deathSequence == null) throw new InvalidOperationException("Player setup requires a PlayerDeathSequenceView.");
+            }
         }
 
-        [SerializeField] PlayerActorView hero;
-        [SerializeField] Boss1ActorView boss1;
-        [SerializeField] Boss2ActorView boss2;
+        [SerializeField] private PlayerSetup player = new PlayerSetup();
         [SerializeField] Camera gameplayCamera;
         [SerializeField] MonoBehaviour[] explicitBindings = Array.Empty<MonoBehaviour>();
-        [SerializeField] SoundCue[] soundCues = Array.Empty<SoundCue>();
 
-        public PlayerActorView Hero => hero;
-        public Boss1ActorView Boss1 => boss1;
-        public Boss2ActorView Boss2 => boss2;
+        public PlayerSetup Player => player;
         public Camera GameplayCamera => gameplayCamera;
         public MonoBehaviour[] ExplicitBindings => explicitBindings;
-        public SoundCue[] SoundCues => soundCues;
 
         /// <summary>Collects the configured weapon sets without coupling the bootstrap to a boss type.</summary>
         public IReadOnlyList<WeaponIdentity> GetSupportedWeapons()
@@ -69,18 +78,27 @@ namespace ColorTiming.Bootstrap
         }
 
         // 执行Validate对应的主要流程。
-        public void Validate(bool expectBoss1)
+        public void Validate(BattleKind expectedBattle)
         {
-            if (hero == null) throw new InvalidOperationException("BattleSceneAnchors requires one PlayerActorView.");
-            if ((boss1 != null) == (boss2 != null))
-                throw new InvalidOperationException("BattleSceneAnchors requires exactly one supported boss.");
-            if (expectBoss1 != (boss1 != null))
-                throw new InvalidOperationException("BattleSceneAnchors boss does not match the loaded scene.");
+            player.Validate();
             if (gameplayCamera == null) throw new InvalidOperationException("BattleSceneAnchors requires a gameplay camera.");
+            var bossCount = 0;
+            IBossBattleSessionConsumer boss = null;
             for (var i = 0; i < explicitBindings.Length; i++)
-                if (explicitBindings[i] == null) throw new InvalidOperationException($"BattleSceneAnchors binding {i} is missing.");
-            for (var i = 0; i < soundCues.Length; i++)
-                if (soundCues[i].Clip == null) throw new InvalidOperationException($"BattleSceneAnchors sound cue {i} is missing its clip.");
+            {
+                var binding = explicitBindings[i];
+                if (binding == null) throw new InvalidOperationException($"BattleSceneAnchors binding {i} is missing.");
+                if (binding is IBossBattleSessionConsumer candidate)
+                {
+                    boss = candidate;
+                    bossCount++;
+                }
+            }
+            if (bossCount != 1)
+                throw new InvalidOperationException($"BattleSceneAnchors requires exactly one boss session consumer; found {bossCount}.");
+            if (boss.BattleKind != expectedBattle)
+                throw new InvalidOperationException(
+                    $"BattleSceneAnchors boss kind {boss.BattleKind} does not match loaded battle {expectedBattle}.");
         }
     }
 }

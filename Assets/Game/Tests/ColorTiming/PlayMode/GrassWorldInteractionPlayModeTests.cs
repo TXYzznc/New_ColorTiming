@@ -33,6 +33,7 @@ namespace ColorTiming.Tests.PlayMode
             yield return BootToStartMenu();
             FindActive<MainMenuForm>().GoTest1();
             yield return WaitForScene("Boss1", TransitionTimeout);
+            yield return ColorTimingPlayModeBoot.WaitForBattleReady("Boss1", TransitionTimeout);
 
             var hero = FindActive<PlayerActorView>();
             var heroCollider = hero.GetComponentsInChildren<Collider2D>(true)
@@ -52,9 +53,9 @@ namespace ColorTiming.Tests.PlayMode
             var animator = grass.GetComponent<Animator>();
             Assert.That(grass.audioClips, Is.Not.Empty.And.All.Not.Null,
                 "Grass rustle clips must have no missing references.");
-            Assert.That(heroSound.rMoveAudio, Is.Not.Empty.And.All.Not.Null);
-            Assert.That(heroSound.rMove_Overwrite_Audio, Is.Not.Empty.And.All.Not.Null,
-                "The repaired grass-footstep override list must have no missing references.");
+            Assert.That(heroSound.MoveCueCount, Is.GreaterThan(0));
+            Assert.That(heroSound.MoveOverrideCueCount, Is.GreaterThan(0),
+                "Boss1 must configure grass-footstep override cues.");
             Assert.That(animator, Is.Not.Null);
             Assert.That(animator.parameters.Any(parameter =>
                 parameter.name == "Trigger" && parameter.type == AnimatorControllerParameterType.Trigger), Is.True);
@@ -76,17 +77,15 @@ namespace ColorTiming.Tests.PlayMode
 
             sound.Reset();
             heroSound.PlayAuido_Random("move");
-            Assert.That(sound.Calls, Has.Count.EqualTo(1));
-            Assert.That(sound.Calls[0].Channel, Is.EqualTo(ColorTimingSoundChannel.Player));
-            Assert.That(heroSound.rMove_Overwrite_Audio, Does.Contain(sound.Calls[0].Clip));
+            Assert.That(sound.Cues, Has.Count.EqualTo(1));
+            Assert.That(sound.Cues[0], Does.StartWith("player.boss1.move-override."));
 
             ExitGrass.Invoke(grass, new object[] { heroCollider });
             Assert.That(heroSound.moveCase, Does.Not.Contain(grass.gameObject.name));
             sound.Reset();
             heroSound.PlayAuido_Random("move");
-            Assert.That(sound.Calls, Has.Count.EqualTo(1));
-            Assert.That(sound.Calls[0].Channel, Is.EqualTo(ColorTimingSoundChannel.Player));
-            Assert.That(heroSound.rMoveAudio, Does.Contain(sound.Calls[0].Clip));
+            Assert.That(sound.Cues, Has.Count.EqualTo(1));
+            Assert.That(sound.Cues[0], Does.StartWith("player.boss1.move."));
 
             var hud = FindActive<BattlePlayerInfoView>();
             hud.TogglePause();
@@ -137,11 +136,18 @@ namespace ColorTiming.Tests.PlayMode
         sealed class RecordingSoundService : IColorTimingSoundService
         {
             public readonly List<Call> Calls = new List<Call>();
+            public readonly List<string> Cues = new List<string>();
 
             public int Play(AudioClip clip, ColorTimingSoundChannel channel, Vector3 position, bool loop = false)
             {
                 Calls.Add(new Call(clip, channel));
                 return Calls.Count;
+            }
+
+            public int PlayCue(string cueId, Vector3 position)
+            {
+                Cues.Add(cueId);
+                return Cues.Count;
             }
 
             public void ResetTrackedSounds()
@@ -156,6 +162,7 @@ namespace ColorTiming.Tests.PlayMode
             public void Reset()
             {
                 Calls.Clear();
+                Cues.Clear();
             }
         }
 

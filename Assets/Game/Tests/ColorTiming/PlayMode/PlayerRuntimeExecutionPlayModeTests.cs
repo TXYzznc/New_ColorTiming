@@ -31,19 +31,25 @@ namespace ColorTiming.Tests.PlayMode
         public IEnumerator SemanticInput_PickupHitDashDeathAndAnimationRestartExecuteInBoss1()
         {
             yield return BootToStartMenu();
-            FindActive<MainMenuForm>().GoTest1();
-            yield return WaitForScene("Boss1", TransitionTimeout);
-
-            var hero = FindActive<PlayerActorView>();
-            var input = new MutableGameInput();
             var settings = new GfColorTimingSettings();
             var originalKeyTips = settings.KeyTipsDisabled;
-            Assert.That(hero, Is.Not.Null);
-            Assert.That(PlayerState, Is.Not.Null);
-
             settings.KeyTipsDisabled = true;
             try
             {
+                FindActive<MainMenuForm>().GoTest1();
+                yield return WaitForScene("Boss1", TransitionTimeout);
+                yield return ColorTimingPlayModeBoot.WaitForBattleReady("Boss1", TransitionTimeout);
+
+                var hero = FindActive<PlayerActorView>();
+                var input = new MutableGameInput();
+                Assert.That(hero, Is.Not.Null);
+                Assert.That(hero.name, Is.EqualTo("Player(Clone)"));
+                Assert.That(
+                    UnityEngine.Object.FindObjectsOfType<PlayerActorView>(true)
+                        .Count(candidate => candidate.gameObject.scene.name == "Boss1"),
+                    Is.EqualTo(1),
+                    "Boss1 must contain exactly one runtime-created Player and no static Hero.");
+                Assert.That(PlayerState, Is.Not.Null);
                 hero.BindGameInput(input);
                 hero.BindGameplayPointer(new FixedPointerWorld(hero.transform.position + Vector3.right));
                 var state = (PlayerActionStateMachine)PlayerState.GetValue(hero);
@@ -129,7 +135,7 @@ namespace ColorTiming.Tests.PlayMode
                     (Vector2)hero.transform.position + Vector2.left, "player-contract-death"));
                 Assert.That(hero.heroHP, Is.Zero);
                 Assert.That(state.IsAlive, Is.False);
-                Assert.That(hero.deathShow.activeSelf, Is.True);
+                Assert.That(hero.DeathPresentation.activeSelf, Is.True);
                 Assert.That(hero.GetComponent<PlayerCameraLifecycleView>().enabled, Is.False);
 
                 yield return WaitUntil(
@@ -139,7 +145,9 @@ namespace ColorTiming.Tests.PlayMode
                                      && candidate.heroHP == candidate.heroMaxHP),
                     20f,
                     "Death animation event did not restart Boss1 with a fresh full-health hero.");
+                yield return ColorTimingPlayModeBoot.WaitForBattleReady("Boss1", TransitionTimeout);
                 Assert.That(SceneManager.GetActiveScene().name, Is.EqualTo("Boss1"));
+                Assert.That(FindActive<PlayerActorView>().name, Is.EqualTo("Player(Clone)"));
 
                 var restartedHud = FindActive<BattlePlayerInfoView>();
                 Assert.That(restartedHud, Is.Not.Null);

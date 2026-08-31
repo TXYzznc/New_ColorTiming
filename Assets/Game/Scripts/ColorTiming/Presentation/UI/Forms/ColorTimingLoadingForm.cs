@@ -2,6 +2,7 @@
 // 所属模块：ColorTiming / Presentation / UI / Forms。
 
 using DG.Tweening;
+using ColorTiming.Configuration;
 using ColorTiming.Presentation.UI.Contracts;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,7 +11,8 @@ using UnityGameFramework.Runtime;
 namespace ColorTiming.Presentation.UI.Forms
 {
     /// <summary>Project-wide GF.UI form for product scene transitions.</summary>
-    public sealed class ColorTimingLoadingForm : UIFormBase, IColorTimingLoadingForm
+    public sealed class ColorTimingLoadingForm : UIFormBase, IColorTimingLoadingForm,
+        IColorTimingPresentationConfigurationConsumer
     {
         [SerializeField] private GameObject progressRoot;
         [SerializeField] private Slider progressSlider;
@@ -20,6 +22,11 @@ namespace ColorTiming.Presentation.UI.Forms
         private Tween fadeTween;
         private bool closing;
         private float displayedProgress;
+
+        public void BindPresentationConfiguration(ColorTimingPresentationTable configuration)
+        {
+            fadeDuration = configuration.LoadingFadeDuration;
+        }
 
         // 在 GF UI 表单打开时接收参数并刷新显示。
         protected override void OnOpen(object userData)

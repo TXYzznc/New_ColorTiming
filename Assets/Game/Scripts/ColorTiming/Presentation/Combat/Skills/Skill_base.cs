@@ -3,13 +3,15 @@
 
 using System;
 using ColorTiming.Combat;
+using ColorTiming.Configuration;
 using ColorTiming.Presentation.Combat;
 using ColorTiming.Presentation.Entities;
 using UnityEngine;
 
-public class Skill_base : MonoBehaviour, ITransientEntityConsumer, IFrameworkEntityParticipant
+public class Skill_base : MonoBehaviour, ITransientEntityConsumer, IFrameworkEntityParticipant,
+    IColorTimingSkillConfigurationConsumer
 {
-    public float life = 1;
+    [NonSerialized] public float life = 1f;
     public GameObject HitFX;
 
     public string cTag;
@@ -26,6 +28,17 @@ public class Skill_base : MonoBehaviour, ITransientEntityConsumer, IFrameworkEnt
     float configuredLife;
     Action frameworkRelease;
     ITransientEntityService transientEntities;
+
+    public void BindSkillConfiguration(ColorTimingSkillTable configuration)
+    {
+        if (configuration == null) throw new ArgumentNullException(nameof(configuration));
+        configuredLife = configuration.Lifetime;
+        life = configuredLife;
+        damageParm = configuration.InstantKill ? "miaosha" : string.Empty;
+        OnSkillConfigurationApplied(configuration);
+    }
+
+    protected virtual void OnSkillConfigurationApplied(ColorTimingSkillTable configuration) { }
 
     // 缓存本组件依赖，并完成不依赖外部服务的本地初始化。
     private void Awake()
@@ -241,6 +254,33 @@ public class Skill_base : MonoBehaviour, ITransientEntityConsumer, IFrameworkEnt
         }
 
         return transientEntities.Spawn(prefab.name, position, rotation, parent, configure);
+    }
+
+    /// <summary>
+    /// 将当前技能的攻击来源、武器和动画事件参数传递给运行时生成的子技能。
+    /// 子技能仍保留自己预制体上配置的碰撞标签、伤害参数与生命周期。
+    /// </summary>
+    protected T ConfigureNestedSkill<T>(GameObject instance) where T : Skill_base
+    {
+        if (instance == null)
+        {
+            throw new ArgumentNullException(nameof(instance));
+        }
+        if (!hasDamagePayload)
+        {
+            throw new InvalidOperationException(
+                $"Skill '{name}' cannot configure a nested skill before its damage payload is assigned.");
+        }
+
+        var nestedSkill = instance.GetComponentInChildren<T>(true);
+        if (nestedSkill == null)
+        {
+            throw new InvalidOperationException(
+                $"Transient entity '{instance.name}' does not contain the expected skill '{typeof(T).Name}'.");
+        }
+
+        nestedSkill.SetSkillData(attackerId, atkWeapon, filp, parm);
+        return nestedSkill;
     }
 
     // 初始化For生成及其依赖关系。

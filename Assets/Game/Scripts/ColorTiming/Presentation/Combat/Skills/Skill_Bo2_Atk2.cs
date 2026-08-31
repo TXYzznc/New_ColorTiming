@@ -2,6 +2,7 @@
 // 所属模块：ColorTiming / Presentation / Combat / Skills。
 
 using System;
+using ColorTiming.Configuration;
 using UnityEngine;
 
 public class Skill_Bo2_Atk2 : Skill_base
@@ -13,7 +14,7 @@ public class Skill_Bo2_Atk2 : Skill_base
     public Transform yin;
     public GameObject luodianINS;
 
-    public float flySpeed = 15;
+    float flySpeed = 15f;
 
     sk_bo2_luodian luodian;
     Vector3 targetPos;
@@ -27,10 +28,25 @@ public class Skill_Bo2_Atk2 : Skill_base
 
     float maxH;
     float endDelay = -1f;
+    float configuredEndDelay = 0.5f;
+    float arrivalEpsilon = 0.01f;
+    float arcSpeed = 50f;
+    float peakRatio = 0.75f;
+    float riseMultiplier = 0.25f;
     bool initialPoseCaptured;
     Vector3 initialPaoLocalPosition;
     Quaternion initialZhiTuanRotation;
     Quaternion initialTrailRotation;
+
+    protected override void OnSkillConfigurationApplied(ColorTimingSkillTable configuration)
+    {
+        flySpeed = configuration.Speed;
+        arrivalEpsilon = configuration.ArrivalEpsilon;
+        configuredEndDelay = configuration.EndDelay;
+        arcSpeed = configuration.PatternA;
+        peakRatio = configuration.PatternB;
+        riseMultiplier = configuration.PatternC;
+    }
 
     // 写入新的值并替换旧状态。
     public void Set(Vector3 target)
@@ -102,8 +118,7 @@ public class Skill_Bo2_Atk2 : Skill_base
         if (!ok)
         {
 
-            float speed = 50;
-            if (_dis < 0.01f)
+            if (_dis < arrivalEpsilon)
             {
                 //到达
                 ok = true;
@@ -115,12 +130,12 @@ public class Skill_Bo2_Atk2 : Skill_base
                 yin.gameObject.SetActive(false);
                 GetComponent<PolygonCollider2D>().enabled = true;
 
-                endDelay = 0.5f;
+                endDelay = configuredEndDelay;
 
             }
             else
             {
-                float _d = dis * 0.75f ;
+                float _d = dis * peakRatio;
                 Vector3 aix = _dis  < _d ? Vector3.up:Vector3.down;
                 //把前1/4的飞行作为向上飞行。
 
@@ -133,7 +148,7 @@ public class Skill_Bo2_Atk2 : Skill_base
                     float _f = Mathf.Abs(_dis - _dd) / _dd;
                     float fg = Mathf.Lerp(0, 1, _f);
 
-                    pao.transform.localPosition += aix * Time.fixedDeltaTime * fg * speed * 0.25f;
+                    pao.transform.localPosition += aix * Time.fixedDeltaTime * fg * arcSpeed * riseMultiplier;
 
                 }
                 else
@@ -145,7 +160,7 @@ public class Skill_Bo2_Atk2 : Skill_base
                     float fg = Mathf.Lerp(0,1,_f);
 
                     //zhituan.transform.localPosition = new Vector3(0, fg, 0);
-                    pao.transform.localPosition += aix * Time.fixedDeltaTime  * fg * (speed * 0.5f);
+                    pao.transform.localPosition += aix * Time.fixedDeltaTime  * fg * (arcSpeed * riseMultiplier * 2f);
                 }
             }
 

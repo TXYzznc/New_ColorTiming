@@ -14,6 +14,7 @@ namespace ColorTiming.Editor
     public static class ColorTimingBattleHudPrefabMigration
     {
         private const string BattleHudPrefabPath = "Assets/Game/Prefabs/UI/ColorTiming/Game/BattleHud.prefab";
+        private const string BossHealthItemPrefabPath = "Assets/Game/Prefabs/UI/ColorTiming/BossHP_Item.prefab";
         private const string HeroHealthContainerPrefabPath = "Assets/Game/Prefabs/UI/ColorTiming/P_HPBox.prefab";
         private static readonly string[] BattleScenePaths =
         {
@@ -108,18 +109,31 @@ namespace ColorTiming.Editor
                 rootRect.localScale = Vector3.one;
                 var heroInfo = root.GetComponentInChildren<BattlePlayerInfoView>(true);
                 var heroHealth = root.GetComponentInChildren<PlayerHealthPipsView>(true);
-                var boss1Health = root.GetComponentInChildren<Boss1HealthView>(true);
-                var boss2Health = root.GetComponentInChildren<Boss2HealthView>(true);
-                Assert(heroInfo != null && heroHealth != null && boss1Health != null && boss2Health != null,
+                var bossHealth = root.GetComponentInChildren<BossHealthView>(true);
+                if (bossHealth == null)
+                {
+                    var bossSlot = Find(root.transform, "Slot_BossHP");
+                    Assert(bossSlot != null, "Battle HUD Boss HP slot is missing.");
+                    bossHealth = bossSlot.gameObject.AddComponent<BossHealthView>();
+                    var hpItem = AssetDatabase.LoadAssetAtPath<GameObject>(BossHealthItemPrefabPath);
+                    Assert(hpItem != null, "Boss HP item prefab is missing.");
+                    var serializedHealth = new SerializedObject(bossHealth);
+                    serializedHealth.FindProperty("hpItem").objectReferenceValue = hpItem;
+                    serializedHealth.ApplyModifiedPropertiesWithoutUndo();
+                }
+                Assert(heroInfo != null && heroHealth != null && bossHealth != null,
                     "Battle HUD must contain each serialized presentation component.");
-                SeparateBossHealthSlots(ref boss1Health, ref boss2Health);
-                RemoveAuthoredBossHealthItems(boss1Health.transform);
-                RemoveAuthoredBossHealthItems(boss2Health.transform);
+                bossHealth.name = "Slot_BossHP";
+                var duplicateBossSlot = Find(root.transform, "Slot_Boss2HP");
+                if (duplicateBossSlot != null && duplicateBossSlot != bossHealth.transform)
+                {
+                    UnityEngine.Object.DestroyImmediate(duplicateBossSlot.gameObject);
+                }
+                RemoveAuthoredBossHealthItems(bossHealth.transform);
                 var serializedForm = new SerializedObject(form);
                 serializedForm.FindProperty("heroInfo").objectReferenceValue = heroInfo;
                 serializedForm.FindProperty("heroHealth").objectReferenceValue = heroHealth;
-                serializedForm.FindProperty("boss1Health").objectReferenceValue = boss1Health;
-                serializedForm.FindProperty("boss2Health").objectReferenceValue = boss2Health;
+                serializedForm.FindProperty("bossHealth").objectReferenceValue = bossHealth;
                 serializedForm.ApplyModifiedPropertiesWithoutUndo();
                 EditorUtility.SetDirty(root);
                 PrefabUtility.SaveAsPrefabAsset(root, BattleHudPrefabPath);
@@ -148,21 +162,17 @@ namespace ColorTiming.Editor
                     "BattleHud semantic panel names are incomplete.");
                 Assert(Find(root.transform, "Img_CharacterPortrait") != null && Find(root.transform, "Img_WeaponHint") != null
                     && Find(root.transform, "Img_ChargeWeaponHint") != null && Find(root.transform, "Slot_HeroHP") != null
-                    && Find(root.transform, "Slot_Boss1HP") != null && Find(root.transform, "Slot_Boss2HP") != null,
+                    && Find(root.transform, "Slot_BossHP") != null && Find(root.transform, "Slot_Boss1HP") == null
+                    && Find(root.transform, "Slot_Boss2HP") == null,
                     "BattleHud semantic content names are incomplete.");
                 var serializedForm = new SerializedObject(form);
                 Assert(serializedForm.FindProperty("heroInfo").objectReferenceValue != null
                     && serializedForm.FindProperty("heroHealth").objectReferenceValue != null
-                    && serializedForm.FindProperty("boss1Health").objectReferenceValue != null
-                    && serializedForm.FindProperty("boss2Health").objectReferenceValue != null,
+                    && serializedForm.FindProperty("bossHealth").objectReferenceValue != null,
                     "BattleHudForm references are incomplete.");
-                var boss1Health = root.GetComponentInChildren<Boss1HealthView>(true);
-                var boss2Health = root.GetComponentInChildren<Boss2HealthView>(true);
-                Assert(boss1Health != null && boss2Health != null
-                    && boss1Health.transform != boss2Health.transform
-                    && boss1Health.transform.name == "Slot_Boss1HP"
-                    && boss2Health.transform.name == "Slot_Boss2HP"
-                    && boss1Health.transform.childCount == 0 && boss2Health.transform.childCount == 0,
+                var bossHealth = root.GetComponentInChildren<BossHealthView>(true);
+                Assert(bossHealth != null && bossHealth.transform.name == "Slot_BossHP"
+                    && bossHealth.transform.childCount == 0,
                     "BattleHud must not serialize Boss HP items; controllers create them at runtime.");
             }
             finally
@@ -315,41 +325,6 @@ namespace ColorTiming.Editor
             {
                 UnityEngine.Object.DestroyImmediate(container.GetChild(index).gameObject);
             }
-        }
-
-        private static void SeparateBossHealthSlots(
-            ref Boss1HealthView boss1Health,
-            ref Boss2HealthView boss2Health)
-        {
-            if (boss1Health.transform != boss2Health.transform)
-            {
-                boss1Health.name = "Slot_Boss1HP";
-                boss2Health.name = "Slot_Boss2HP";
-                return;
-            }
-
-            var boss1Slot = (RectTransform)boss1Health.transform;
-            boss1Slot.name = "Slot_Boss1HP";
-            var boss2SlotObject = new GameObject("Slot_Boss2HP", typeof(RectTransform));
-            boss2SlotObject.layer = boss1Slot.gameObject.layer;
-            var boss2Slot = (RectTransform)boss2SlotObject.transform;
-            boss2Slot.SetParent(boss1Slot.parent, false);
-            CopyRectTransform(boss1Slot, boss2Slot);
-            var replacement = boss2SlotObject.AddComponent<Boss2HealthView>();
-            replacement.HPItem = boss2Health.HPItem;
-            UnityEngine.Object.DestroyImmediate(boss2Health);
-            boss2Health = replacement;
-        }
-
-        private static void CopyRectTransform(RectTransform source, RectTransform destination)
-        {
-            destination.anchorMin = source.anchorMin;
-            destination.anchorMax = source.anchorMax;
-            destination.anchoredPosition = source.anchoredPosition;
-            destination.sizeDelta = source.sizeDelta;
-            destination.pivot = source.pivot;
-            destination.localRotation = source.localRotation;
-            destination.localScale = source.localScale;
         }
 
         private static void RenamePath(Transform root, string path, string newName)

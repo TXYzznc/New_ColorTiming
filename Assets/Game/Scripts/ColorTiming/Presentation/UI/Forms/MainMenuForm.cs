@@ -9,13 +9,14 @@ using ColorTiming.Presentation.UI.Components;
 using ColorTiming.Presentation.UI.Contracts;
 using ColorTiming.Settings;
 using ColorTiming.Presentation.Audio;
+using ColorTiming.Configuration;
 using GameFramework;
 using UnityGameFramework.Runtime;
 
 namespace ColorTiming.Presentation.UI.Forms
 {
 public class MainMenuForm : UIFormBase, IColorTimingSceneFlowConsumer, IColorTimingSettingsConsumer, IColorTimingSoundConsumer,
-    IColorTimingStartMenuForm
+    IColorTimingStartMenuForm, IColorTimingPresentationConfigurationConsumer
 {
     IColorTimingSceneFlow sceneFlow;
     IColorTimingSettings settings;
@@ -24,6 +25,12 @@ public class MainMenuForm : UIFormBase, IColorTimingSceneFlowConsumer, IColorTim
     UiSoundView uiSound;
     int bgmSoundId;
     public IUiSoundSink UiSound => uiSound;
+
+    public void BindPresentationConfiguration(ColorTimingPresentationTable configuration)
+    {
+        videoSequence ??= GetComponentInChildren<MainMenuIntroSequence>(true);
+        videoSequence?.Configure(configuration.MainMenuIntroTimeout);
+    }
 
     // 绑定场景流程依赖或事件监听。
     public void BindSceneFlow(IColorTimingSceneFlow flow)
@@ -65,7 +72,6 @@ public class MainMenuForm : UIFormBase, IColorTimingSceneFlowConsumer, IColorTim
     public GameObject SettingButtonBox;
 
     public AudioMixer AudioMixer;
-    [SerializeField] AudioClip bgm;
 
     public GameObject BGMBtn_Open;
     public GameObject BGMBtn_Off;
@@ -229,14 +235,14 @@ public class MainMenuForm : UIFormBase, IColorTimingSceneFlowConsumer, IColorTim
     // 根据最新数据刷新BgmPlayback。
     void RefreshBgmPlayback()
     {
-        if (!isActiveAndEnabled || soundService == null || settings == null || !settings.BgmEnabled || bgm == null)
+        if (!isActiveAndEnabled || soundService == null || settings == null || !settings.BgmEnabled)
         {
             StopBgmPlayback();
             return;
         }
         if (bgmSoundId <= 0)
         {
-            bgmSoundId = soundService.Play(bgm, ColorTimingSoundChannel.BGM, transform.position, true);
+            bgmSoundId = soundService.PlayCue("menu.bgm", transform.position);
         }
     }
 

@@ -8,10 +8,21 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using ColorTiming.Presentation.Audio;
+using ColorTiming.Configuration;
 
 public class Skill_Zhadan : Skill_base, IColorTimingSoundConsumer
 {
     IColorTimingSoundService soundService;
+    float arrivalEpsilon = 0.01f;
+    string explosionCueId;
+
+    protected override void OnSkillConfigurationApplied(ColorTimingSkillTable configuration)
+    {
+        speed = configuration.Speed;
+        arrivalEpsilon = configuration.ArrivalEpsilon;
+        bUseCurve = configuration.UseCurve;
+        explosionCueId = configuration.SoundCueId;
+    }
 
     // 绑定音效Service依赖或事件监听。
     public void BindSoundService(IColorTimingSoundService service)
@@ -20,12 +31,10 @@ public class Skill_Zhadan : Skill_base, IColorTimingSoundConsumer
     }
     //控制飞向目标点，到达目标后播放爆炸，并开启伤害
 
-    public float speed = 10;
+    float speed = 10f;
     //高度系数
-    public bool bUseCurve;
+    bool bUseCurve;
     float dis = 0;
-
-    public AudioClip baozhaAudio;
 
     Vector3  targetPos = Vector3.zero;
     Animator animator;
@@ -87,7 +96,7 @@ public class Skill_Zhadan : Skill_base, IColorTimingSoundConsumer
         float _dis = Vector3.Distance(transform.position, targetPos);
 
 
-        if ( _dis < 0.01f && !ok)
+        if (_dis < arrivalEpsilon && !ok)
         {
             //print("已到达目标点");
             if (animator != null) {
@@ -97,7 +106,7 @@ public class Skill_Zhadan : Skill_base, IColorTimingSoundConsumer
                 circleCollider2D.enabled = true;
                 ok = true;
 
-                soundService?.Play(baozhaAudio, ColorTimingSoundChannel.Boss, transform.position);
+                if (!string.IsNullOrWhiteSpace(explosionCueId)) soundService?.PlayCue(explosionCueId, transform.position);
             }
 
             CinemachineImpulseSource impulseSource = GetComponent<CinemachineImpulseSource>();

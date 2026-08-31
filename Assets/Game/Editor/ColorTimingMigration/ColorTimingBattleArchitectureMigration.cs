@@ -50,11 +50,8 @@ namespace ColorTiming.Editor
                 .SelectMany(root => root.GetComponentsInChildren<MonoBehaviour>(true))
                 .Where(value => value != null)
                 .ToArray();
-            var hero = Single<PlayerActorView>(behaviours, path);
-            var boss1 = behaviours.OfType<Boss1ActorView>().SingleOrDefault();
-            var boss2 = behaviours.OfType<Boss2ActorView>().SingleOrDefault();
-            if ((boss1 != null) == (boss2 != null))
-                throw new InvalidOperationException($"{path} must contain exactly one supported boss.");
+            var boss = behaviours.OfType<IBossBattleSessionConsumer>().SingleOrDefault()
+                       ?? throw new InvalidOperationException($"{path} must contain exactly one boss session consumer.");
             var camera = scene.GetRootGameObjects()
                 .SelectMany(root => root.GetComponentsInChildren<Camera>(true))
                 .FirstOrDefault(value => value.CompareTag("MainCamera"))
@@ -86,9 +83,6 @@ namespace ColorTiming.Editor
                 .ToArray();
 
             var serialized = new SerializedObject(anchors);
-            serialized.FindProperty("hero").objectReferenceValue = hero;
-            serialized.FindProperty("boss1").objectReferenceValue = boss1;
-            serialized.FindProperty("boss2").objectReferenceValue = boss2;
             serialized.FindProperty("gameplayCamera").objectReferenceValue = camera;
             WriteObjects(serialized.FindProperty("explicitBindings"), explicitBindings);
             if (audioSources.Length > 0)
@@ -111,7 +105,7 @@ namespace ColorTiming.Editor
                 if (source.transform.parent == null && source.GetComponents<Component>().Length == 2)
                     UnityEngine.Object.DestroyImmediate(source.gameObject);
             }
-            anchors.Validate(boss1 != null);
+            anchors.Validate(boss.BattleKind);
             EditorUtility.SetDirty(anchors);
             EditorSceneManager.MarkSceneDirty(scene);
             EditorSceneManager.SaveScene(scene);
@@ -140,13 +134,6 @@ namespace ColorTiming.Editor
             return source.gameObject.name.IndexOf("BGM", StringComparison.OrdinalIgnoreCase) >= 0
                 ? ColorTimingSoundChannel.BGM
                 : ColorTimingSoundChannel.Environment;
-        }
-
-        static T Single<T>(IEnumerable<MonoBehaviour> behaviours, string path) where T : MonoBehaviour
-        {
-            var values = behaviours.OfType<T>().ToArray();
-            if (values.Length != 1) throw new InvalidOperationException($"{path} expected one {typeof(T).Name}, found {values.Length}.");
-            return values[0];
         }
 
         static void WriteObjects(SerializedProperty property, UnityEngine.Object[] values)

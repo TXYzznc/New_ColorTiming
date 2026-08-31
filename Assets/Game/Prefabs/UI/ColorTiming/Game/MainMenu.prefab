@@ -2418,7 +2418,6 @@ MonoBehaviour:
   GoButtonBox: {fileID: 4067427703652053281}
   SettingButtonBox: {fileID: 1850711477380873967}
   AudioMixer: {fileID: 24100000, guid: 2547335fee2327d41a26bfa9764b5a98, type: 2}
-  bgm: {fileID: 8300000, guid: a8667e4ea29972f459e432a914998d9b, type: 3}
   BGMBtn_Open: {fileID: 3088032249534597421}
   BGMBtn_Off: {fileID: 7907743855104720498}
   SFXBtn_Open: {fileID: 305929194828080548}

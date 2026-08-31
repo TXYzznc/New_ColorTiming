@@ -7,6 +7,7 @@
         "ColorTiming.Application",
         "UnityGameFramework.Runtime",
         "GameFramework",
+        "Cinemachine",
         "Unity.UGUI",
         "Builtin.Editor",
         "UnityEditor.TestRunner"

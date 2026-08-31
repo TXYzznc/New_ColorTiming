@@ -2,6 +2,7 @@
 // 所属模块：ColorTiming / Domain / Bosses / Boss1。
 
 using System;
+using ColorTiming.Configuration;
 
 namespace ColorTiming.Bosses.Boss1
 {
@@ -37,6 +38,13 @@ namespace ColorTiming.Bosses.Boss1
 
     public sealed class Boss1AttackSelector
     {
+        private readonly Boss1AttackRules rules;
+
+        public Boss1AttackSelector(Boss1AttackRules rules)
+        {
+            this.rules = rules ?? throw new ArgumentNullException(nameof(rules));
+        }
+
         public Boss1Attack? LastAttack { get; private set; }
 
         // 执行Select对应的主要流程。
@@ -47,32 +55,24 @@ namespace ColorTiming.Bosses.Boss1
                 throw new ArgumentOutOfRangeException(nameof(sample));
             }
 
-            Boss1Attack selected;
-            switch (zone)
+            var candidates = rules.For(zone);
+            var cumulative = 0f;
+            var selected = candidates[candidates.Count - 1];
+            for (var index = 0; index < candidates.Count; index++)
             {
-                case Boss1DistanceZone.Near:
-                    selected = sample < 0.35f ? Boss1Attack.Attack2
-                        : sample < 0.6f ? Boss1Attack.Attack1
-                        : sample < 0.87f ? Boss1Attack.Attack3
-                        : Boss1Attack.Attack4;
+                cumulative += candidates[index].Weight;
+                if (sample < cumulative)
+                {
+                    selected = candidates[index];
                     break;
-                case Boss1DistanceZone.Middle:
-                    selected = sample < 0.35f ? Boss1Attack.Attack6
-                        : sample < 0.6f ? Boss1Attack.Attack1
-                        : sample < 0.87f ? Boss1Attack.Attack3
-                        : Boss1Attack.Attack4;
-                    break;
-                default:
-                    selected = sample < 0.4f ? Boss1Attack.Attack3
-                        : sample < 0.75f ? Boss1Attack.Attack4
-                        : LastAttack != Boss1Attack.Attack5
-                            ? Boss1Attack.Attack5
-                            : Boss1Attack.Attack3;
-                    break;
+                }
             }
 
-            LastAttack = selected;
-            return selected;
+            var attack = selected.DisallowRepeat && LastAttack == selected.Attack
+                ? selected.Fallback
+                : selected.Attack;
+            LastAttack = attack;
+            return attack;
         }
     }
 

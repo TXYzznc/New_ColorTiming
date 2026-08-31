@@ -19,6 +19,12 @@ public class PlayerDeathSequenceView : MonoBehaviour, IColorTimingSceneFlowConsu
     }
     public Transform hero;
 
+    /// <summary>绑定当前战斗动态创建的 Player；传入 null 时清理离场引用。</summary>
+    public void ConfigureHero(Transform player)
+    {
+        hero = player;
+    }
+
     public string reStartScene = "Boss1";
     CinemachineVirtualCamera virtualCamera;
 
@@ -44,6 +50,7 @@ public class PlayerDeathSequenceView : MonoBehaviour, IColorTimingSceneFlowConsu
     // 逐帧推进需要实时刷新的业务或表现状态。
     private void Update()
     {
+        if (hero == null) return;
         if(_st > 0)
         {
             _st -= Time.deltaTime;

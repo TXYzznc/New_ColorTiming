@@ -5,9 +5,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using ColorTiming.Presentation.Entities;
+using ColorTiming.Configuration;
 using UnityEngine;
 
-public class sk_bo2_luodian : MonoBehaviour, IFrameworkEntityParticipant
+public class sk_bo2_luodian : MonoBehaviour, IFrameworkEntityParticipant, IColorTimingSkillConfigurationConsumer
 {
     Transform cseF;
     SpriteRenderer sp;
@@ -21,6 +22,20 @@ public class sk_bo2_luodian : MonoBehaviour, IFrameworkEntityParticipant
     float releaseDelay = -1f;
     Action frameworkRelease;
     bool releasing;
+    float baseInterval = 0.3f;
+    float intervalStep = 0.05f;
+    float minimumInterval = 0.05f;
+    float pulseSpeed = 5f;
+    float configuredReleaseDelay = 0.5f;
+
+    public void BindSkillConfiguration(ColorTimingSkillTable configuration)
+    {
+        baseInterval = configuration.PatternA;
+        intervalStep = configuration.PatternB;
+        minimumInterval = configuration.PatternB;
+        pulseSpeed = configuration.PatternC;
+        configuredReleaseDelay = configuration.EndDelay;
+    }
     // 设置CaseF，并使后续流程使用最新状态。
     public void SetCaseF(Transform _c)
     {
@@ -47,9 +62,9 @@ public class sk_bo2_luodian : MonoBehaviour, IFrameworkEntityParticipant
         }
         else
         {
-            float tf = 0.3f;
-            tf -= count * 0.05f;
-            tf = tf > 0.05f ? tf : 0.05f;
+            float tf = baseInterval;
+            tf -= count * intervalStep;
+            tf = tf > minimumInterval ? tf : minimumInterval;
 
             if (fTime > tf)
             {
@@ -64,7 +79,7 @@ public class sk_bo2_luodian : MonoBehaviour, IFrameworkEntityParticipant
             }
 
             //print(tf);
-            fTime += Time.deltaTime * _f * tf * 5;
+            fTime += Time.deltaTime * _f * tf * pulseSpeed;
 
             float fg = Mathf.Lerp(0, 1, fTime / tf);
 
@@ -124,7 +139,7 @@ public class sk_bo2_luodian : MonoBehaviour, IFrameworkEntityParticipant
     // 设置Wait结束，并使后续流程使用最新状态。
     public void SetWaitEnd()
     {
-        releaseDelay = 0.5f;
+        releaseDelay = configuredReleaseDelay;
     }
 
     // 释放实体及其临时资源。

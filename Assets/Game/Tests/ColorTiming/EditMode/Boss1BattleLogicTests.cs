@@ -33,13 +33,13 @@ namespace ColorTiming.Tests.EditMode
             float sample,
             Boss1Attack expected)
         {
-            Assert.That(new Boss1AttackSelector().Select(zone, sample), Is.EqualTo(expected));
+            Assert.That(new Boss1AttackSelector(TestConfigurationFactory.Boss1Attacks()).Select(zone, sample), Is.EqualTo(expected));
         }
 
         [Test]
         public void FarZone_DoesNotSelectAttack5TwiceInARow()
         {
-            var selector = new Boss1AttackSelector();
+            var selector = new Boss1AttackSelector(TestConfigurationFactory.Boss1Attacks());
 
             Assert.That(selector.Select(Boss1DistanceZone.Far, 0.9f), Is.EqualTo(Boss1Attack.Attack5));
             Assert.That(selector.Select(Boss1DistanceZone.Far, 0.9f), Is.EqualTo(Boss1Attack.Attack3));

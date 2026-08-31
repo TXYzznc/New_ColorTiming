@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using ColorTiming.Bootstrap;
 using ColorTiming.Combat;
+using ColorTiming.Configuration;
 using ColorTiming.Presentation.Audio;
 using GameFramework;
 using GameFramework.Event;
@@ -22,17 +23,45 @@ namespace ColorTiming.Infrastructure.GF.Audio
         readonly Dictionary<int, string> soundDescriptions = new Dictionary<int, string>();
         readonly List<int> staleGameplaySounds = new List<int>();
         IGameTime gameTime;
+        IColorTimingConfiguration configuration;
         bool gameplayPaused;
         bool eventsSubscribed;
 
         // 执行Initialize对应的主要流程。
-        public void Initialize(IGameTime time)
+        public void Initialize(IGameTime time, IColorTimingConfiguration configurationSource)
         {
             if (gameTime != null) gameTime.ScaleChanged -= OnScaleChanged;
             gameTime = time ?? throw new ArgumentNullException(nameof(time));
+            configuration = configurationSource ?? throw new ArgumentNullException(nameof(configurationSource));
             gameTime.ScaleChanged += OnScaleChanged;
             SubscribeSoundEvents();
             OnScaleChanged(gameTime.EffectiveScale);
+        }
+
+        public int PlayCue(string cueId, Vector3 position)
+        {
+            if (configuration == null || global::GF.Sound == null) return 0;
+            var cue = configuration.GetSoundCue(cueId);
+            if (string.IsNullOrWhiteSpace(cue.AssetName) || string.IsNullOrWhiteSpace(cue.SoundGroup))
+                throw new GameFrameworkException($"Sound cue '{cueId}' has incomplete playback configuration.");
+            if (GFBuiltin.Resource == null
+                || GFBuiltin.Resource.HasAsset(cue.AssetName) == GameFramework.Resource.HasAssetResult.NotExist)
+            {
+                Log.Error("[ColorTiming.Audio] action=PlayCue result=MissingAsset cue={0} asset={1}", cueId, cue.AssetName);
+                return 0;
+            }
+
+            var parameters = ReferencePool.Acquire<GameFramework.Sound.PlaySoundParams>();
+            parameters.Clear();
+            parameters.Loop = cue.Loop;
+            parameters.VolumeInSoundGroup = cue.Volume;
+            parameters.Priority = cue.Priority;
+            var serialId = global::GF.Sound.PlaySound(cue.AssetName, cue.SoundGroup, 0, parameters, position);
+            Track(serialId, cueId.StartsWith("battle.", StringComparison.Ordinal) ? ColorTimingSoundChannel.BGM :
+                cueId.StartsWith("player.", StringComparison.Ordinal) ? ColorTimingSoundChannel.Player :
+                ColorTimingSoundChannel.Boss,
+                $"cue={cueId} asset={cue.AssetName} group={cue.SoundGroup} loop={cue.Loop}");
+            return serialId;
         }
 
         // 启动当前配置的动画、音频或其他表现。
@@ -51,22 +80,13 @@ namespace ColorTiming.Infrastructure.GF.Audio
                 loop);
             if (serialId > 0)
             {
-                sceneSounds.Add(serialId);
-                soundDescriptions[serialId] = $"clip={clip.name} channel={channel} loop={loop}";
+                Track(serialId, channel, $"clip={clip.name} channel={channel} loop={loop}");
                 Log.Info(
                     "[ColorTiming.Audio] action=PlayRequested result=Accepted serialId={0} clip={1} channel={2} loop={3}",
                     serialId,
                     clip.name,
                     channel,
                     loop);
-                if (IsGameplay(channel))
-                {
-                    gameplaySounds.Add(serialId);
-                    if (gameplayPaused)
-                    {
-                        ApplyToGameplaySound(serialId, global::GF.Sound.PauseSound);
-                    }
-                }
             }
             else
             {
@@ -77,6 +97,16 @@ namespace ColorTiming.Infrastructure.GF.Audio
                     loop);
             }
             return serialId;
+        }
+
+        void Track(int serialId, ColorTimingSoundChannel channel, string description)
+        {
+            if (serialId <= 0) return;
+            sceneSounds.Add(serialId);
+            soundDescriptions[serialId] = description;
+            if (!IsGameplay(channel)) return;
+            gameplaySounds.Add(serialId);
+            if (gameplayPaused) ApplyToGameplaySound(serialId, global::GF.Sound.PauseSound);
         }
 
         // 执行ResetTrackedSounds对应的主要流程。
@@ -256,6 +286,7 @@ namespace ColorTiming.Infrastructure.GF.Audio
             }
             if (gameTime != null) gameTime.ScaleChanged -= OnScaleChanged;
             gameTime = null;
+            configuration = null;
             ResetTrackedSounds();
             staleGameplaySounds.Clear();
         }

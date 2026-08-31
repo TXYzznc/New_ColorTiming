@@ -4,6 +4,7 @@
 using System;
 using ColorTiming.Bootstrap.Flow;
 using ColorTiming.Combat;
+using ColorTiming.Configuration;
 using ColorTiming.Input;
 using ColorTiming.Presentation.Audio;
 using ColorTiming.Presentation.UI.Contracts;
@@ -22,6 +23,7 @@ namespace ColorTiming.Infrastructure.GF.UI
         readonly IColorTimingSettings settings;
         readonly IGameInput gameInput;
         readonly IColorTimingSoundService soundService;
+        readonly IColorTimingConfiguration configuration;
         IDisposable pauseMenuLease;
         IDisposable resultPauseLease;
         int pauseFormId = -1;
@@ -50,13 +52,15 @@ namespace ColorTiming.Infrastructure.GF.UI
             IColorTimingSceneFlow sceneFlow,
             IColorTimingSettings settings,
             IGameInput gameInput,
-            IColorTimingSoundService soundService)
+            IColorTimingSoundService soundService,
+            IColorTimingConfiguration configuration)
         {
             this.gameTime = gameTime ?? throw new ArgumentNullException(nameof(gameTime));
             this.sceneFlow = sceneFlow ?? throw new ArgumentNullException(nameof(sceneFlow));
             this.settings = settings ?? throw new ArgumentNullException(nameof(settings));
             this.gameInput = gameInput ?? throw new ArgumentNullException(nameof(gameInput));
             this.soundService = soundService ?? throw new ArgumentNullException(nameof(soundService));
+            this.configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
             this.sceneFlow.TransitionStarted += OnTransitionStarted;
             this.sceneFlow.TransitionProgress += OnTransitionProgress;
             this.sceneFlow.SceneChanged += OnSceneChanged;
@@ -196,6 +200,7 @@ namespace ColorTiming.Infrastructure.GF.UI
         // 响应Start菜单Opened回调，并更新本对象状态。
         void OnStartMenuOpened(UIFormLogic logic)
         {
+            BindPresentationConfiguration(logic);
             if (logic is IColorTimingStartMenuForm form)
             {
                 form.BindRuntime(sceneFlow, settings, soundService);
@@ -214,6 +219,7 @@ namespace ColorTiming.Infrastructure.GF.UI
         // 响应战斗结果Opened回调，并更新本对象状态。
         void OnBattleResultOpened(UIFormLogic logic)
         {
+            BindPresentationConfiguration(logic);
             if (logic is IColorTimingBattleResultForm form)
             {
                 form.BindRuntime(sceneFlow, gameInput, pendingResult);
@@ -227,9 +233,10 @@ namespace ColorTiming.Infrastructure.GF.UI
         // 响应战斗HudOpened回调，并更新本对象状态。
         void OnBattleHudOpened(UIFormLogic logic)
         {
+            BindPresentationConfiguration(logic);
             if (logic is IColorTimingBattleHudForm form)
             {
-                form.BindRuntime(gameInput, this, pendingBattleHud);
+                form.BindRuntime(gameInput, this, configuration, pendingBattleHud);
                 return;
             }
 
@@ -240,6 +247,7 @@ namespace ColorTiming.Infrastructure.GF.UI
         // 响应战斗TutorialOpened回调，并更新本对象状态。
         void OnBattleTutorialOpened(UIFormLogic logic)
         {
+            BindPresentationConfiguration(logic);
             if (logic is IColorTimingBattleTutorialForm form)
             {
                 form.BindRuntime(pendingTutorialSession, gameInput, gameTime, settings);
@@ -386,6 +394,7 @@ namespace ColorTiming.Infrastructure.GF.UI
         // 响应加载Opened回调，并更新本对象状态。
         void OnLoadingOpened(UIFormLogic logic)
         {
+            BindPresentationConfiguration(logic);
             if (logic is not IColorTimingLoadingForm form)
             {
                 UnityEngine.Debug.LogError("ColorTiming loading prefab must implement IColorTimingLoadingForm.");
@@ -406,6 +415,12 @@ namespace ColorTiming.Infrastructure.GF.UI
             {
                 loadingForm.CompleteAndClose();
             }
+        }
+
+        void BindPresentationConfiguration(UIFormLogic logic)
+        {
+            if (logic is IColorTimingPresentationConfigurationConsumer consumer)
+                consumer.BindPresentationConfiguration(configuration.Presentation);
         }
 
         // 关闭加载并结束本次生命周期。

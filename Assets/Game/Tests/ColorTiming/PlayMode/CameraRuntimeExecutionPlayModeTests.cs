@@ -35,6 +35,7 @@ namespace ColorTiming.Tests.PlayMode
             yield return BootToStartMenu();
             FindActive<MainMenuForm>().GoTest1();
             yield return WaitForScene("Boss1", TransitionTimeout);
+            yield return ColorTimingPlayModeBoot.WaitForBattleReady("Boss1", TransitionTimeout);
 
             var mainCamera = Camera.main;
             var parallax = UnityEngine.Object.FindObjectsOfType<CameraParallaxView>(true)

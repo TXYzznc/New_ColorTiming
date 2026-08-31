@@ -7,13 +7,17 @@ using System;
 using ColorTiming.Application.Battle;
 using ColorTiming.Bosses.Boss2;
 using ColorTiming.Combat;
+using ColorTiming.Bootstrap.Flow;
+using ColorTiming.Configuration;
 using ColorTiming.Presentation.Actors;
+using ColorTiming.Presentation.Audio;
 using ColorTiming.Presentation.Entities;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
-public class Boss2TailActorView : MonoBehaviour, ITransientEntityConsumer, IBattleSessionConsumer, IPlayerTargetConsumer
+public class Boss2TailActorView : MonoBehaviour, ITransientEntityConsumer, IBattleSessionConsumer, IPlayerTargetConsumer,
+    IColorTimingConfigurationConsumer
 {
     Transform playerTarget;
     BattleSession battleSession;
@@ -39,9 +43,9 @@ public class Boss2TailActorView : MonoBehaviour, ITransientEntityConsumer, IBatt
     const string animName_Atk2 = "attack_2";
 
 
-    public float moveSpeed = 25;
+    float moveSpeed;
 
-    float atkCD = 1;
+    float atkCD;
     bool attacking;
     bool moveing;
     float moveOkTimeing;
@@ -49,9 +53,20 @@ public class Boss2TailActorView : MonoBehaviour, ITransientEntityConsumer, IBatt
     bool first;
 
     PolygonCollider2D PolygonCollider2D;
-    Boss2SoundView soundManager;
+    BossSoundView soundManager;
     Boss2BurrowFlow burrowFlow;
     ITransientEntityService transientEntities;
+    Boss2ActionRules actionRules;
+    ColorTimingBossTable bossConfiguration;
+
+    public void BindConfiguration(IColorTimingConfiguration configuration, ColorTimingSceneId sceneId)
+    {
+        var battle = configuration?.GetBattle(sceneId) ?? throw new ArgumentNullException(nameof(configuration));
+        bossConfiguration = configuration.GetBoss(battle.BossId);
+        actionRules = configuration.CreateBoss2ActionRules(battle.BossId);
+        moveSpeed = bossConfiguration.TailMoveSpeed;
+        atkCD = bossConfiguration.TailInitialCooldown;
+    }
 
     public bool IsStoppedForBattleEnd { get; private set; }
 
@@ -78,7 +93,7 @@ public class Boss2TailActorView : MonoBehaviour, ITransientEntityConsumer, IBatt
     private void Start()
     {
         PolygonCollider2D = GetComponent<PolygonCollider2D>();
-        soundManager = GetComponentInParent<Boss2SoundView>();
+        soundManager = GetComponentInParent<BossSoundView>();
         burrowFlow = new Boss2BurrowFlow();
 
         //transform.position = hero.transform.position;
@@ -126,9 +141,8 @@ public class Boss2TailActorView : MonoBehaviour, ITransientEntityConsumer, IBatt
 
             //从当前位置移动到hero位置
             float _dis = Vector2.Distance(transform.position, playerTarget.position);
-            float _fd = first ? 5 : 10;
-            float _fdt = first ? 0.5f : 2f;
-            if (_dis < 5)
+            float _fdt = first ? bossConfiguration.TailFirstRevealDelay : bossConfiguration.TailRevealDelay;
+            if (_dis < bossConfiguration.TailArrivalDistance)
             {
 
                 PolygonCollider2D.enabled = true;
@@ -138,7 +152,7 @@ public class Boss2TailActorView : MonoBehaviour, ITransientEntityConsumer, IBatt
 
                     sprite.gameObject.SetActive(true);
                     moveOkTimeing += Time.fixedDeltaTime;
-                    float _f = Mathf.Lerp(0,1,moveOkTimeing / 0.5f);
+                    float _f = Mathf.Lerp(0,1,moveOkTimeing / bossConfiguration.TailFadeDuration);
 
 
                     sprite.color = new Color(1, 1, 1, _f);
@@ -171,7 +185,7 @@ public class Boss2TailActorView : MonoBehaviour, ITransientEntityConsumer, IBatt
         //当与玩家的距离超过 N时，优先使用钻地。 并将其设置到角色脚下
         float _dis = Vector2.Distance(playerTarget.position, transform.position);
         bool b = transform.position.x - playerTarget.position.x > 0 ? transform.localScale.x < 0 : transform.localScale.x > 0;
-        var action = Boss2ActionSelector.SelectTail(_dis, b, Random.value);
+        var action = Boss2ActionSelector.SelectTail(_dis, b, Random.value, actionRules);
         if (action == Boss2Action.Burrow)
         {
             moveOkTimeing = 0;
@@ -203,17 +217,17 @@ public class Boss2TailActorView : MonoBehaviour, ITransientEntityConsumer, IBatt
         entry.End += Entry_End;
         if(animName == animName_Rutu)
         {
-            soundManager?.Play(Boss2SoundCue.TailEnterBurrow);
+            soundManager?.TryPlay(Boss2SoundCues.TailEnterBurrow, transform.position);
         }else if(animName == animName_Chutu)
         {
-            soundManager?.Play(Boss2SoundCue.TailExitBurrow);
+            soundManager?.TryPlay(Boss2SoundCues.TailExitBurrow, transform.position);
         }else if(animName == animName_Atk1)
         {
-            soundManager?.Play(Boss2SoundCue.TailAttack1);
+            soundManager?.TryPlay(Boss2SoundCues.TailAttack1, transform.position);
         }
         else if (animName == animName_Atk2)
         {
-            soundManager?.Play(Boss2SoundCue.TailAttack2);
+            soundManager?.TryPlay(Boss2SoundCues.TailAttack2, transform.position);
         }
 
 
@@ -246,7 +260,7 @@ public class Boss2TailActorView : MonoBehaviour, ITransientEntityConsumer, IBatt
             }
             AnimPlay(animName_idle, true);
             attacking = false;
-            atkCD = Random.Range(1.0f, 2.5f);
+            atkCD = Random.Range(bossConfiguration.TailNextCooldownMin, bossConfiguration.TailNextCooldownMax);
         }
 
 

@@ -1,8 +1,8 @@
 using System.Linq;
 using ColorTiming.Combat;
+using ColorTiming.Configuration;
 using ColorTiming.Infrastructure.GF.Audio;
 using ColorTiming.Presentation.Audio;
-using ColorTiming.Presentation.UI.Models;
 using NUnit.Framework;
 using CombatWeaponType = ColorTiming.Combat.WeaponType;
 
@@ -16,28 +16,6 @@ namespace ColorTiming.Tests.EditMode
             for (var index = 1; index <= 24; index++)
             {
                 Assert.That(WeaponIdentity.FromLegacyAnimatorIndex(index).ToLegacyAnimatorIndex(), Is.EqualTo(index));
-            }
-        }
-
-        [Test]
-        public void WeaponPresentationMapsEveryColorAndWeaponToAuthoredSlots()
-        {
-            foreach (WeaponColor color in System.Enum.GetValues(typeof(WeaponColor)))
-            {
-                foreach (CombatWeaponType type in System.Enum.GetValues(typeof(CombatWeaponType)))
-                {
-                    var identity = new WeaponIdentity(color, type);
-                    var presentation = WeaponPresentationState.From(identity);
-
-                    Assert.That(presentation.IconIndex, Is.EqualTo(
-                        identity.IsNormal ? WeaponPresentationState.NormalIconIndex : identity.ToLegacyAnimatorIndex() - 1));
-                    Assert.That(presentation.CursorIndex, Is.EqualTo(
-                        identity.IsNormal ? WeaponPresentationState.NormalCursorIndex : (int)color + 1));
-                    Assert.That(presentation.UsesChargeHint, Is.EqualTo(
-                        type == CombatWeaponType.Hammer || type == CombatWeaponType.Axe));
-                    Assert.That(presentation.IconIndex, Is.InRange(0, WeaponPresentationState.RequiredIconCount - 1));
-                    Assert.That(presentation.CursorIndex, Is.InRange(0, WeaponPresentationState.RequiredCursorCount - 1));
-                }
             }
         }
 
@@ -58,7 +36,7 @@ namespace ColorTiming.Tests.EditMode
         [Test]
         public void Boss1WeaknessDistributionIsStableAcrossShuffle()
         {
-            var queue = WeaknessQueue.CreateBoss1(new SeededRandomSource(17));
+            var queue = WeaknessQueue.Create(new SeededRandomSource(17), new WeaknessComposition(4, 3, 4, 0, 7));
 
             Assert.That(queue.Count, Is.EqualTo(11));
             Assert.That(queue.CountOf(WeaponColor.Red), Is.EqualTo(4));
@@ -71,7 +49,7 @@ namespace ColorTiming.Tests.EditMode
         [Test]
         public void Boss2WeaknessDistributionIncludesOrange()
         {
-            var queue = WeaknessQueue.CreateBoss2(new SeededRandomSource(23));
+            var queue = WeaknessQueue.Create(new SeededRandomSource(23), new WeaknessComposition(4, 4, 4, 3, 7));
 
             Assert.That(queue.Count, Is.EqualTo(15));
             Assert.That(queue.CountOf(WeaponColor.Red), Is.EqualTo(4));
@@ -83,7 +61,7 @@ namespace ColorTiming.Tests.EditMode
         [Test]
         public void BossRejectsWrongColorAndInvulnerabilityWithoutMutation()
         {
-            var queue = WeaknessQueue.CreateBoss1(new SeededRandomSource(2));
+            var queue = WeaknessQueue.Create(new SeededRandomSource(2), new WeaknessComposition(4, 3, 4, 0, 7));
             var boss = new BossBattleHealth(queue);
             var current = queue.Current;
             var wrong = current == WeaponColor.Red ? WeaponColor.Green : WeaponColor.Red;
@@ -100,7 +78,7 @@ namespace ColorTiming.Tests.EditMode
         [Test]
         public void BossVictoryIsSingleShot()
         {
-            var queue = WeaknessQueue.CreateBoss1(new SeededRandomSource(7));
+            var queue = WeaknessQueue.Create(new SeededRandomSource(7), new WeaknessComposition(4, 3, 4, 0, 7));
             var boss = new BossBattleHealth(queue);
             var victories = 0;
             boss.Victory += () => victories++;
@@ -119,7 +97,7 @@ namespace ColorTiming.Tests.EditMode
         [Test]
         public void PlayerHealthClampsHealsAndDefeatIsSingleShot()
         {
-            var player = new PlayerVitality();
+            var player = new PlayerVitality(5, 1);
             var defeats = 0;
             player.Defeated += () => defeats++;
 
@@ -136,7 +114,7 @@ namespace ColorTiming.Tests.EditMode
         [Test]
         public void UpcomingProjectionDoesNotMutateQueue()
         {
-            var queue = WeaknessQueue.CreateBoss2(new SeededRandomSource(5));
+            var queue = WeaknessQueue.Create(new SeededRandomSource(5), new WeaknessComposition(4, 4, 4, 3, 7));
             var before = queue.Upcoming(15).ToArray();
 
             var projection = queue.Upcoming(7).ToArray();

@@ -4,7 +4,8 @@
   "references": [
     "Hotfix",
     "ColorTiming.Domain",
-    "ColorTiming.Application"
+    "ColorTiming.Application",
+    "Cinemachine"
   ],
   "includePlatforms": [
     "Editor"

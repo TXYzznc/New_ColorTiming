@@ -11,8 +11,14 @@ namespace ColorTiming.Presentation.UI.Components
 {
 public class PlayerHealthPipsView : MonoBehaviour
 {
-    const float ItemSpacing = 35f;
-    const float AlternateRowOffset = -33f;
+    float itemSpacing;
+    float alternateRowOffset;
+
+    public void Configure(float spacing, float rowOffset)
+    {
+        itemSpacing = spacing;
+        alternateRowOffset = rowOffset;
+    }
 
     BattleSession session;
     public BattleSession Session => session;
@@ -59,7 +65,7 @@ public class PlayerHealthPipsView : MonoBehaviour
         {
             var active = i < session.Snapshot.PlayerHealth;
             items[i].gameObject.SetActive(active);
-            items[i].SetHeroHPItem(i, ItemSpacing, AlternateRowOffset);
+            items[i].SetHeroHPItem(i, itemSpacing, alternateRowOffset);
         }
     }
 

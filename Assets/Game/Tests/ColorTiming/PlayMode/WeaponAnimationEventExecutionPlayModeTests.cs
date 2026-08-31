@@ -46,14 +46,15 @@ namespace ColorTiming.Tests.PlayMode
         public IEnumerator EveryAuthoredWeaponColorExecutesAnimationEventThroughGfEntity()
         {
             yield return BootToStartMenu();
-            FindActive<MainMenuForm>().GoTest1();
-            yield return WaitForScene("Boss1", TransitionTimeout);
-
             var settings = new GfColorTimingSettings();
             var originalKeyTips = settings.KeyTipsDisabled;
             settings.KeyTipsDisabled = true;
             try
             {
+                FindActive<MainMenuForm>().GoTest1();
+                yield return WaitForScene("Boss1", TransitionTimeout);
+                yield return ColorTimingPlayModeBoot.WaitForBattleReady("Boss1", TransitionTimeout);
+
                 var boss1Hero = FindActive<PlayerActorView>();
                 yield return VerifySceneWeaponSet(
                     boss1Hero,
@@ -66,6 +67,7 @@ namespace ColorTiming.Tests.PlayMode
                     "Boss1 weapon contract could not open the pause form.");
                 FindActive<PauseMenuForm>().GoNextLevel(2);
                 yield return WaitForScene("Boss2", TransitionTimeout);
+                yield return ColorTimingPlayModeBoot.WaitForBattleReady("Boss2", TransitionTimeout);
 
                 var boss2Hero = FindActive<PlayerActorView>();
                 yield return VerifySceneWeaponSet(

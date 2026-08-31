@@ -5,6 +5,7 @@ using System;
 using ColorTiming.Bosses.Boss2;
 using ColorTiming.Combat;
 using ColorTiming.Player;
+using ColorTiming.Configuration;
 
 namespace ColorTiming.Application.Battle
 {
@@ -20,20 +21,23 @@ namespace ColorTiming.Application.Battle
         private long version;
         private bool disposed;
         private bool tailActive;
+        private readonly int damagePerHit;
 
         // 初始化战斗会话实例及其核心依赖。
-        public BattleSession(BattleKind kind, IRandomSource random, int playerMaximumHealth = 5)
+        public BattleSession(BattleRulesConfiguration configuration, IRandomSource random)
         {
+            if (configuration == null) throw new ArgumentNullException(nameof(configuration));
             if (random == null) throw new ArgumentNullException(nameof(random));
-            Kind = kind;
-            PlayerActions = new PlayerActionStateMachine();
+            Kind = configuration.Kind;
+            PlayerActions = new PlayerActionStateMachine(configuration.Player.HitInvulnerabilitySeconds);
             Inventory = new PlayerWeaponInventory();
-            playerVitality = new PlayerVitality(playerMaximumHealth);
-            var weaknesses = kind == BattleKind.Boss1
-                ? WeaknessQueue.CreateBoss1(random)
-                : WeaknessQueue.CreateBoss2(random);
+            playerVitality = new PlayerVitality(configuration.Player.MaximumHealth, configuration.Player.DashHeal);
+            damagePerHit = configuration.Player.DamagePerHit;
+            var weaknesses = WeaknessQueue.Create(random, configuration.Weaknesses);
             bossHealth = new BossBattleHealth(weaknesses);
-            boss2Phase = kind == BattleKind.Boss2 ? new Boss2PhaseCoordinator(weaknesses.Count) : null;
+            boss2Phase = Kind == BattleKind.Boss2
+                ? new Boss2PhaseCoordinator(weaknesses.Count, configuration.TailActivationRemaining)
+                : null;
             Lifecycle = BattleLifecycle.Running;
             Inventory.Changed += OnWeaponChanged;
             Snapshot = BuildSnapshot();
@@ -141,14 +145,19 @@ namespace ColorTiming.Application.Battle
         public bool TryPickup(WeaponIdentity weapon)
         {
             EnsureMutable();
-            return Lifecycle == BattleLifecycle.Running && Inventory.TryPickup(weapon);
+            return Lifecycle == BattleLifecycle.Running
+                   && PlayerActions.CanInteractWithWeapons
+                   && Inventory.TryPickup(weapon);
         }
 
         // 尝试丢弃，并通过返回值报告是否成功。
         public bool TryDrop(out WeaponIdentity weapon)
         {
             EnsureMutable();
-            return Inventory.TryDrop(out weapon);
+            weapon = Inventory.Current;
+            return Lifecycle == BattleLifecycle.Running
+                   && PlayerActions.CanInteractWithWeapons
+                   && Inventory.TryDrop(out weapon);
         }
 
         // 执行Consume攻击武器对应的主要流程。
@@ -163,7 +172,7 @@ namespace ColorTiming.Application.Battle
         {
             EnsureMutable();
             if (damage.Target != ActorId.Player) throw new ArgumentException("Damage target is not the player.", nameof(damage));
-            var resolution = playerVitality.TakeDamage(1, PlayerActions.RejectsDamage, damage.IsInstantKill);
+            var resolution = playerVitality.TakeDamage(damagePerHit, PlayerActions.RejectsDamage, damage.IsInstantKill);
             if (resolution != PlayerDamageResolution.Damaged && resolution != PlayerDamageResolution.Defeated) return resolution;
 
             Inventory.TryDrop(out _);

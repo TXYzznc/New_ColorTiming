@@ -7,9 +7,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using ColorTiming.Bootstrap.Flow;
+using ColorTiming.Configuration;
 using UnityEngine.Events;
 
-public class PlayerAnimationEventRelay : MonoBehaviour
+public class PlayerAnimationEventRelay : MonoBehaviour, IColorTimingConfigurationConsumer
 {
     public UnityEvent OnDashEnd;
 
@@ -22,6 +24,14 @@ public class PlayerAnimationEventRelay : MonoBehaviour
     public float damageShowTime = 1f;
     float _showTime;
     public float lerpSpeed = 10;
+
+    public void BindConfiguration(IColorTimingConfiguration configuration, ColorTimingSceneId sceneId)
+    {
+        var battle = configuration.GetBattle(sceneId);
+        var player = configuration.GetPlayer(battle.PlayerId);
+        damageShowTime = player.HitInvulnerability;
+        lerpSpeed = player.HitAnimatorSpeed;
+    }
     float _it;
 
     float _showColor;

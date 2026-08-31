@@ -11,7 +11,9 @@ namespace ColorTiming.Presentation.UI.Components
 {
 public class MainMenuIntroSequence : MonoBehaviour
 {
-    const float LoopPrepareTimeout = 10f;
+    float loopPrepareTimeout = 10f;
+
+    public void Configure(float timeout) => loopPrepareTimeout = Mathf.Max(0.1f, timeout);
 
     VideoPlayer player;
     Coroutine switchRoutine;
@@ -78,7 +80,7 @@ public class MainMenuIntroSequence : MonoBehaviour
         loop2.time = 0d;
         loop2.Prepare();
 
-        var prepareDeadline = Time.realtimeSinceStartup + LoopPrepareTimeout;
+        var prepareDeadline = Time.realtimeSinceStartup + loopPrepareTimeout;
         while (!loop2.isPrepared && Time.realtimeSinceStartup < prepareDeadline)
         {
             yield return null;
@@ -93,7 +95,7 @@ public class MainMenuIntroSequence : MonoBehaviour
         }
 
         loop2.Play();
-        var playbackDeadline = Time.realtimeSinceStartup + LoopPrepareTimeout;
+        var playbackDeadline = Time.realtimeSinceStartup + loopPrepareTimeout;
         while ((!loop2.isPlaying || loop2.texture == null) && Time.realtimeSinceStartup < playbackDeadline)
         {
             yield return null;
@@ -172,7 +174,7 @@ public class MainMenuIntroSequence : MonoBehaviour
         player.Stop();
         player.time = 0d;
         player.Prepare();
-        var prepareDeadline = Time.realtimeSinceStartup + LoopPrepareTimeout;
+        var prepareDeadline = Time.realtimeSinceStartup + loopPrepareTimeout;
         while (!player.isPrepared && Time.realtimeSinceStartup < prepareDeadline)
         {
             yield return null;

@@ -5,6 +5,7 @@ using Spine;
 using System;
 using ColorTiming.Combat;
 using ColorTiming.Presentation.Actors;
+using ColorTiming.Presentation.Audio;
 using ColorTiming.Presentation.Entities;
 using UnityEngine;
 
@@ -19,10 +20,8 @@ public class Boss2AnimationEventRelay : MonoBehaviour, ITransientEntityConsumer,
     public Transform mao1;
     public Transform mao2;
 
-    public MeshRenderer meshRenderer1;
-
-
-    Boss2SoundView soundManager1;
+    BossSoundView soundManager1;
+    BossHitFlashView hitFlash;
     Transform playerTarget;
     ITransientEntityService transientEntities;
 
@@ -41,37 +40,8 @@ public class Boss2AnimationEventRelay : MonoBehaviour, ITransientEntityConsumer,
     // 在首帧启动依赖就绪后的业务或表现流程。
     private void Start()
     {
-        soundManager1 = GetComponentInParent<Boss2SoundView>();
-    }
-    bool flip;
-    float _it;
-    float lerpSpeed = 10;
-    float _showTime = -1;
-    // 逐帧推进需要实时刷新的业务或表现状态。
-    private void Update()
-    {
-
-        if (_showTime > 0)
-        {
-            _showTime -= Time.deltaTime;
-            //print(_showTime);
-
-            ShowHit();
-
-        }
-        else
-        {
-            MaterialPropertyBlock mpb = new MaterialPropertyBlock();
-            //mpb.SetColor("_Black", Color.black);
-            mpb.SetFloat("_FillPhase", 0);
-
-            meshRenderer1.SetPropertyBlock(mpb);
-            //skeletonAnimation1?.skeleton?.SetColor(Color.white);
-            //skeletonAnimation2?.skeleton?.SetColor(Color.white);
-            //print("sssssssssssss");
-        }
-
-
+        soundManager1 = GetComponentInParent<BossSoundView>();
+        hitFlash = GetComponentInParent<BossHitFlashView>();
     }
     // 执行GoAtk对应的主要流程。
     public void GoAtk(TrackEntry trackEntry, Spine.Event e)
@@ -98,7 +68,7 @@ public class Boss2AnimationEventRelay : MonoBehaviour, ITransientEntityConsumer,
                         : string.Empty;
                     break;
                 case "atk0":
-                    soundManager1?.Play(Boss2SoundCue.HeadExitBurrow);
+                    soundManager1?.TryPlay(Boss2SoundCues.HeadExitBurrow);
                     wsk = sk0;
                     wmao = mao0;
                     break;
@@ -147,48 +117,14 @@ public class Boss2AnimationEventRelay : MonoBehaviour, ITransientEntityConsumer,
     // 执行Rutu对应的主要流程。
     public void Rutu()
     {
-        soundManager1?.Play(Boss2SoundCue.HeadEnterBurrow);
+        soundManager1?.TryPlay(Boss2SoundCues.HeadEnterBurrow);
     }
 
     // 响应Hit回调，并更新本对象状态。
     public void OnHit()
     {
-        soundManager1?.Play(Boss2SoundCue.Hit);
-        _showTime = 0.2f;
-    }
-
-
-    // 显示Hit并同步当前数据。
-    void ShowHit()
-    {
-        float _sp = flip ? -1 : 1;
-        _it += (Time.deltaTime * lerpSpeed * _sp);
-
-        Color _c = new Color(_it, _it, _it, _it);
-
-        MaterialPropertyBlock mpb = new MaterialPropertyBlock();
-        //mpb.SetColor("_Black", _c);
-        mpb.SetFloat("_FillPhase", _it);
-        meshRenderer1.SetPropertyBlock(mpb);
-        // meshRenderer1.material.SetColor("Dark Color", _c);
-
-
-        //print(_c);
-
-        //print(_it);
-        //skeletonAnimation1?.skeleton?.SetColor(_c);
-        //skeletonAnimation2?.skeleton?.SetColor(_c);
-
-
-        if (flip)
-        {
-            //检查
-            if (_it < 0) flip = false;
-        }
-        else
-        {
-            if (_it > 1) flip = true;
-        }
+        soundManager1?.TryPlay(Boss2SoundCues.Hit);
+        hitFlash?.Play();
     }
 
 
@@ -198,10 +134,10 @@ public class Boss2AnimationEventRelay : MonoBehaviour, ITransientEntityConsumer,
         switch (atk)
         {
             case "atk1":
-                soundManager1?.Play(Boss2SoundCue.HeadAttack1);
+                soundManager1?.TryPlay(Boss2SoundCues.HeadAttack1);
                 break;
             case "atk2":
-                soundManager1?.Play(Boss2SoundCue.HeadAttack2);
+                soundManager1?.TryPlay(Boss2SoundCues.HeadAttack2);
                 break;
             //case "atk0":
             //    soundManager1?.PlayBoss2Sound("ct_t");

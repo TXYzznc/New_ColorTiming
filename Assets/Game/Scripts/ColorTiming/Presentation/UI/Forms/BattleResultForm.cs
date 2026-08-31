@@ -4,6 +4,7 @@
 using System;
 using ColorTiming.Bootstrap.Flow;
 using ColorTiming.Input;
+using ColorTiming.Configuration;
 using ColorTiming.Presentation.UI.Contracts;
 using ColorTiming.Presentation.UI.Models;
 using UnityEngine;
@@ -12,7 +13,8 @@ using UnityEngine.UI;
 namespace ColorTiming.Presentation.UI.Forms
 {
 /// <summary>Shared GF.UI presentation for final victory and defeat results.</summary>
-public sealed class BattleResultForm : UIFormBase, IColorTimingBattleResultForm
+public sealed class BattleResultForm : UIFormBase, IColorTimingBattleResultForm,
+    IColorTimingPresentationConfigurationConsumer
 {
     [SerializeField] Image victory;
     [SerializeField] GameObject defeat;
@@ -20,6 +22,10 @@ public sealed class BattleResultForm : UIFormBase, IColorTimingBattleResultForm
     IColorTimingSceneFlow sceneFlow;
     IGameInput gameInput;
     float fade;
+    float fadeSpeed;
+
+    public void BindPresentationConfiguration(ColorTimingPresentationTable configuration) =>
+        fadeSpeed = configuration.ResultFadeSpeed;
 
     // 绑定运行时依赖或事件监听。
     public void BindRuntime(
@@ -47,7 +53,7 @@ public sealed class BattleResultForm : UIFormBase, IColorTimingBattleResultForm
     {
         if (victory != null && victory.gameObject.activeSelf && fade < 1f)
         {
-            fade = Mathf.Min(1f, fade + Time.unscaledDeltaTime);
+            fade = Mathf.Min(1f, fade + Time.unscaledDeltaTime * fadeSpeed);
             victory.color = new Color(1f, 1f, 1f, fade);
         }
 

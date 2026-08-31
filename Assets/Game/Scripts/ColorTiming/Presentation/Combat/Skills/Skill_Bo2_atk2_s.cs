@@ -4,10 +4,27 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using ColorTiming.Configuration;
 
 public class Skill_Bo2_atk2_s : Skill_base
 {
     public GameObject b;
+    float spacing = 3.5f;
+    float jitter = 2f;
+    float startOffsetX = 7f;
+    float startOffsetY = 5f;
+    int countX = 5;
+    int countY = 4;
+
+    protected override void OnSkillConfigurationApplied(ColorTimingSkillTable configuration)
+    {
+        spacing = configuration.PatternA;
+        jitter = configuration.PatternB;
+        startOffsetX = configuration.PatternC;
+        startOffsetY = configuration.EndDelay;
+        countX = configuration.CountA;
+        countY = configuration.CountB;
+    }
 
     // 执行ChildStart对应的主要流程。
     protected override void ChildStart()
@@ -24,13 +41,14 @@ public class Skill_Bo2_atk2_s : Skill_base
         Vector3 targetPos = new Vector3(x, y, 0);
 
         //在目标位置 周围随机创建
-        Vector3 stPos = targetPos - new Vector3(7, 5, 0);
+        Vector3 stPos = targetPos - new Vector3(startOffsetX, startOffsetY, 0);
 
-        for (int _x = 0; _x < 5; _x++)
+        for (int _x = 0; _x < countX; _x++)
         {
-            for (int _y = 0; _y < 4; _y++)
+            for (int _y = 0; _y < countY; _y++)
             {
-                Vector3 _p = new Vector3(Random.Range(-2.0f, 2.0f) + _x * 3.5f, Random.Range(-2.0f, 2.0f) + _y * 3.5f, 0);
+                Vector3 _p = new Vector3(Random.Range(-jitter, jitter) + _x * spacing,
+                    Random.Range(-jitter, jitter) + _y * spacing, 0);
                 _p += stPos;
 
                 SpawnTransient(
@@ -38,7 +56,7 @@ public class Skill_Bo2_atk2_s : Skill_base
                     transform.position,
                     Quaternion.identity,
                     null,
-                    instance => instance.GetComponent<Skill_Bo2_Atk2>()?.Set(_p));
+                    instance => ConfigureNestedSkill<Skill_Bo2_Atk2>(instance).Set(_p));
             }
         }
 
@@ -47,7 +65,7 @@ public class Skill_Bo2_atk2_s : Skill_base
             transform.position,
             Quaternion.identity,
             null,
-            instance => instance.GetComponent<Skill_Bo2_Atk2>()?.Set(targetPos));
+            instance => ConfigureNestedSkill<Skill_Bo2_Atk2>(instance).Set(targetPos));
 
         ReleaseSelf();
     }

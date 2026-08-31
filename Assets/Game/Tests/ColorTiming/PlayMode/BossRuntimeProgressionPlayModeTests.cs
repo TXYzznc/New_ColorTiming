@@ -28,6 +28,7 @@ namespace ColorTiming.Tests.PlayMode
             Assert.That(menu, Is.Not.Null);
             menu.GoTest1();
             yield return WaitForScene("Boss1", TransitionTimeout);
+            yield return ColorTimingPlayModeBoot.WaitForBattleReady("Boss1", TransitionTimeout);
 
             var boss1 = FindActive<Boss1ActorView>();
             Assert.That(boss1, Is.Not.Null);
@@ -54,6 +55,7 @@ namespace ColorTiming.Tests.PlayMode
             Assert.That(boss1Colors.SetEquals(new[] { WeaponColor.Red, WeaponColor.Green, WeaponColor.Purple }), Is.True,
                 "Boss1 runtime queue must exercise all three authored colors.");
             yield return WaitForScene("Boss2", TransitionTimeout);
+            yield return ColorTimingPlayModeBoot.WaitForBattleReady("Boss2", TransitionTimeout);
 
             var boss2 = FindActive<Boss2ActorView>();
             var tail = Object.FindObjectsOfType<Boss2TailActorView>(true).Single();

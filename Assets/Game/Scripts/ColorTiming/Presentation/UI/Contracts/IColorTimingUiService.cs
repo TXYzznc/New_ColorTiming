@@ -71,6 +71,7 @@ namespace ColorTiming.Presentation.UI.Contracts
         void BindRuntime(
             ColorTiming.Input.IGameInput gameInput,
             IColorTimingUiService uiService,
+            ColorTiming.Configuration.IColorTimingConfiguration configuration,
             BattleHudPresentation presentation);
     }
 

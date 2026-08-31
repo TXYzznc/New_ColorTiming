@@ -8,7 +8,7 @@ namespace ColorTiming.Tests.EditMode
         [Test]
         public void Dash_CapturesFacingAndVerticalInput_AndBlocksMovement()
         {
-            var state = new PlayerActionStateMachine();
+            var state = new PlayerActionStateMachine(1f);
             state.SetMove(-0.75f, 0.4f);
 
             Assert.That(state.BeginDash(), Is.True);
@@ -28,7 +28,7 @@ namespace ColorTiming.Tests.EditMode
         [Test]
         public void DashInvulnerabilitySignal_MayArriveBeforeAnimatorStateEntry()
         {
-            var state = new PlayerActionStateMachine();
+            var state = new PlayerActionStateMachine(1f);
 
             state.SetDashInvulnerable(true);
             Assert.That(state.CanEvadeDamage, Is.False);
@@ -43,7 +43,7 @@ namespace ColorTiming.Tests.EditMode
         [Test]
         public void HitStun_HasOneSecondDamageRejection_IndependentOfAnimationExit()
         {
-            var state = new PlayerActionStateMachine();
+            var state = new PlayerActionStateMachine(1f);
             state.BeginHit();
             state.EndHit();
 
@@ -57,7 +57,7 @@ namespace ColorTiming.Tests.EditMode
         [Test]
         public void Death_ClearsTransientFlags_AndPermanentlyBlocksActions()
         {
-            var state = new PlayerActionStateMachine();
+            var state = new PlayerActionStateMachine(1f);
             state.SetAnimationInvulnerable(true);
             state.SetSkillMoving(true);
 
@@ -73,7 +73,7 @@ namespace ColorTiming.Tests.EditMode
         [Test]
         public void AttackGate_PreservesResumeGuardAndHeldAnimatorContract()
         {
-            var gate = new PlayerAttackInputGate();
+            var gate = new PlayerAttackInputGate(0.2f, 0.1f);
             gate.Tick(0.2f);
             Assert.That(gate.ShouldTrigger(true, false), Is.False);
             Assert.That(gate.HeldAnimatorValue(true), Is.EqualTo(0f));
@@ -82,7 +82,6 @@ namespace ColorTiming.Tests.EditMode
             Assert.That(gate.ShouldTrigger(true, false), Is.True);
             Assert.That(gate.ShouldTrigger(true, true), Is.False);
             Assert.That(gate.HeldAnimatorValue(true), Is.EqualTo(1f));
-            Assert.That(PlayerAttackInputGate.HeldAnimatorThreshold, Is.EqualTo(0.1f));
 
             gate.Reset();
             Assert.That(gate.IsReady, Is.False);

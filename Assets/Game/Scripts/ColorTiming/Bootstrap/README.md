@@ -2,7 +2,7 @@
 
 负责 ColorTiming 运行时组合、场景锚点和启动流程。
 
-直接脚本：`BattleRuntimeContext.cs`、`BattleSceneAnchors.cs`、`ColorTimingCompositionRoot.cs`、`ColorTimingResourceIds.cs`、`ColorTimingStartupProcedure.cs`。
+直接脚本：`BattlePlayerManager.cs`、`BattleRuntimeContext.cs`、`BattleSceneAnchors.cs`、`ColorTimingCompositionRoot.cs`、`ColorTimingResourceIds.cs`、`ColorTimingStartupProcedure.cs`。
 
 子目录：`Flow`。
 

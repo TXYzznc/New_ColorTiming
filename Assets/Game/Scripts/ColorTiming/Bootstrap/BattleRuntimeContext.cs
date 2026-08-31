@@ -6,6 +6,7 @@ using System.Collections;
 using ColorTiming.Application.Battle;
 using ColorTiming.Bootstrap.Flow;
 using ColorTiming.Combat;
+using ColorTiming.Configuration;
 using ColorTiming.Infrastructure.Unity.Input;
 using ColorTiming.Input;
 using ColorTiming.Presentation.Audio;
@@ -24,11 +25,14 @@ namespace ColorTiming.Bootstrap
     {
         BattleSession session;
         PlayerActorView hero;
+        BattlePlayerManager playerManager;
         IColorTimingUiService ui;
         IColorTimingSceneFlow sceneFlow;
         Coroutine pendingTransition;
         Coroutine resourcePreparation;
         bool resultHandled;
+        IColorTimingConfiguration configuration;
+        ColorTimingBattleTable battleConfiguration;
 
         /// <summary>Reports the resource-preparation slice of the battle loading flow in [0, 1].</summary>
         public event Action<float> ResourcePreparationProgress;
@@ -38,6 +42,8 @@ namespace ColorTiming.Bootstrap
         public event Action<string> ResourcePreparationFailed;
 
         public BattleSession Session => session;
+        /// <summary>依赖绑定和首批必要资源准备完成后，战斗才可接受玩法输入。</summary>
+        public bool IsReady { get; private set; }
 
         public void Initialize(
             BattleSceneAnchors anchors,
@@ -48,11 +54,24 @@ namespace ColorTiming.Bootstrap
             IColorTimingSceneFlow flow,
             IColorTimingSettings settings,
             IColorTimingSoundService sound,
-            IColorTimingUiService uiService)
+            IColorTimingUiService uiService,
+            IColorTimingConfiguration config)
         {
             if (session != null || resourcePreparation != null) throw new InvalidOperationException("BattleRuntimeContext is already initialized.");
             if (anchors == null) throw new ArgumentNullException(nameof(anchors));
-            anchors.Validate(sceneId == ColorTimingSceneId.Boss1);
+            configuration = config ?? throw new ArgumentNullException(nameof(config));
+            battleConfiguration = configuration.GetBattle(sceneId);
+            IsReady = false;
+            var battleKind = (BattleKind)battleConfiguration.BattleKind;
+            anchors.Validate(battleKind);
+            playerManager = new BattlePlayerManager();
+            hero = playerManager.Spawn(anchors, new PlayerCameraConfiguration(
+                battleConfiguration.CameraMinSize,
+                battleConfiguration.CameraMaxSize,
+                battleConfiguration.CameraDistanceRange,
+                battleConfiguration.CameraStartDistance));
+            hero.BindConfiguration(configuration, sceneId);
+            anchors.Player.WeaponSpawner.BindConfiguration(configuration, sceneId);
             resourcePreparation = StartCoroutine(PrepareAndInitialize(
                 anchors, sceneId, input, gameTime, entities, flow, settings, sound, uiService));
         }
@@ -68,9 +87,10 @@ namespace ColorTiming.Bootstrap
             IColorTimingSoundService sound,
             IColorTimingUiService uiService)
         {
-            var loadContext = anchors.CreateLoadContext($"{sceneId}.Initial");
+            var loadContext = new BattleLoadContext(
+                $"{sceneId}.Initial",
+                configuration.GetWeaponSpawnRule(battleConfiguration.WeaponSpawnRuleId).AllowedWeapons);
             var weapons = loadContext.RequiredWeapons;
-            hero = anchors.Hero;
             Debug.Log($"[ColorTiming.BattleLoad] action=Prepare.Begin context={loadContext.Id} controllers={weapons.Count}", this);
             ResourcePreparationProgress?.Invoke(0f);
             hero.PreloadWeaponAnimations(weapons);
@@ -98,21 +118,17 @@ namespace ColorTiming.Bootstrap
 
             sceneFlow = flow ?? throw new ArgumentNullException(nameof(flow));
             ui = uiService ?? throw new ArgumentNullException(nameof(uiService));
-            session = new BattleSession(
-                sceneId == ColorTimingSceneId.Boss1 ? BattleKind.Boss1 : BattleKind.Boss2,
-                new UnityRandomSource());
+            session = new BattleSession(configuration.CreateBattleRules(sceneId), new UnityRandomSource());
             session.PresentationRequested += OnPresentationRequested;
 
-            anchors.Hero.BindBattleSession(session);
-            anchors.Boss1?.BindBattleSession(session);
-            anchors.Boss2?.BindBattleSession(session);
             var pointer = new GameplayPointerWorldAdapter(() => anchors.GameplayCamera);
-            BindExplicit(anchors, input, gameTime, entities, flow, settings, sound, uiService, pointer);
-            StartSoundCues(anchors, sound);
+            BindExplicit(anchors, sceneId, input, gameTime, entities, flow, settings, sound, uiService, pointer);
+            StartSoundCues(sceneId, battleConfiguration, sound);
 
             ui.ShowBattleHud(new BattleHudPresentation(session));
             ui.ShowBattleTutorial(session);
             ResourcePreparationProgress?.Invoke(1f);
+            IsReady = true;
             Debug.Log($"[ColorTiming.BattleLoad] action=Prepare.Completed context={loadContext.Id}", this);
             ResourcePreparationCompleted?.Invoke();
         }
@@ -190,6 +206,7 @@ namespace ColorTiming.Bootstrap
 
         void BindExplicit(
             BattleSceneAnchors anchors,
+            ColorTimingSceneId sceneId,
             IGameInput input,
             IGameTime gameTime,
             ITransientEntityService entities,
@@ -199,10 +216,32 @@ namespace ColorTiming.Bootstrap
             IColorTimingUiService uiService,
             IGameplayPointerWorld pointer)
         {
-            var bindings = anchors.ExplicitBindings;
-            for (var i = 0; i < bindings.Length; i++)
+            BindAll(
+                anchors.ExplicitBindings,
+                sceneId, input, gameTime, entities, flow, settings, sound, uiService, pointer, anchors.GameplayCamera);
+            BindAll(
+                playerManager.RuntimeBindings,
+                sceneId, input, gameTime, entities, flow, settings, sound, uiService, pointer, anchors.GameplayCamera);
+        }
+
+        void BindAll(
+            System.Collections.Generic.IReadOnlyList<MonoBehaviour> bindings,
+            ColorTimingSceneId sceneId,
+            IGameInput input,
+            IGameTime gameTime,
+            ITransientEntityService entities,
+            IColorTimingSceneFlow flow,
+            IColorTimingSettings settings,
+            IColorTimingSoundService sound,
+            IColorTimingUiService uiService,
+            IGameplayPointerWorld pointer,
+            Camera gameplayCamera)
+        {
+            for (var i = 0; i < bindings.Count; i++)
             {
                 var binding = bindings[i];
+                if (binding is IColorTimingConfigurationConsumer configurationConsumer)
+                    configurationConsumer.BindConfiguration(configuration, sceneId);
                 if (binding is IGameInputConsumer inputConsumer) inputConsumer.BindGameInput(input);
                 if (binding is IBattleSessionConsumer sessionConsumer) sessionConsumer.BindBattleSession(session);
                 if (binding is IGameTimeConsumer timeConsumer) timeConsumer.BindGameTime(gameTime);
@@ -212,21 +251,17 @@ namespace ColorTiming.Bootstrap
                 if (binding is IColorTimingSoundConsumer soundConsumer) soundConsumer.BindSoundService(sound);
                 if (binding is IColorTimingUiConsumer uiConsumer) uiConsumer.BindUiService(uiService);
                 if (binding is IGameplayPointerConsumer pointerConsumer) pointerConsumer.BindGameplayPointer(pointer);
-                if (binding is IGameplayCameraConsumer cameraConsumer) cameraConsumer.BindGameplayCamera(anchors.GameplayCamera);
-                if (binding is IPlayerDamageSignalConsumer damageConsumer) damageConsumer.BindPlayerDamageSignal(anchors.Hero);
-                if (binding is IPlayerTargetConsumer targetConsumer) targetConsumer.BindPlayerTarget(anchors.Hero.transform);
+                if (binding is IGameplayCameraConsumer cameraConsumer) cameraConsumer.BindGameplayCamera(gameplayCamera);
+                if (binding is IPlayerDamageSignalConsumer damageConsumer) damageConsumer.BindPlayerDamageSignal(hero);
+                if (binding is IPlayerTargetConsumer targetConsumer) targetConsumer.BindPlayerTarget(hero.transform);
             }
         }
 
-        static void StartSoundCues(BattleSceneAnchors anchors, IColorTimingSoundService sound)
+        static void StartSoundCues(ColorTimingSceneId sceneId, ColorTimingBattleTable battle,
+            IColorTimingSoundService sound)
         {
-            var cues = anchors.SoundCues;
-            for (var i = 0; i < cues.Length; i++)
-            {
-                var cue = cues[i];
-                if (cue.Clip == null) continue;
-                sound.Play(cue.Clip, cue.Channel, cue.Position, cue.Loop);
-            }
+            if (!string.IsNullOrWhiteSpace(battle.BgmCueId)) sound.PlayCue(battle.BgmCueId, Vector3.zero);
+            if (sceneId == ColorTimingSceneId.Boss1) sound.PlayCue("battle.boss1.ambience", Vector3.zero);
         }
 
         // 响应展示请求回调，并更新本对象状态。
@@ -243,14 +278,18 @@ namespace ColorTiming.Bootstrap
         // 加载Boss2AfterDelay，并处理完成或失败结果。
         IEnumerator LoadBoss2AfterDelay()
         {
-            yield return new WaitForSecondsRealtime(1f);
+            yield return new WaitForSecondsRealtime(battleConfiguration.VictoryDelay);
             pendingTransition = null;
-            sceneFlow.TryLoad(ColorTimingSceneId.Boss2);
+            if (Enum.IsDefined(typeof(ColorTimingSceneId), battleConfiguration.NextSceneId))
+                sceneFlow.TryLoad((ColorTimingSceneId)battleConfiguration.NextSceneId);
+            else
+                ui.ShowBattleResult(BattlePresentationResult.FinalVictory);
         }
 
         // 组件销毁时释放订阅、句柄和运行时资源。
         void OnDestroy()
         {
+            IsReady = false;
             if (pendingTransition != null) StopCoroutine(pendingTransition);
             if (resourcePreparation != null) StopCoroutine(resourcePreparation);
             if (session != null)
@@ -259,6 +298,11 @@ namespace ColorTiming.Bootstrap
                 session.Dispose();
                 session = null;
             }
+            playerManager?.Dispose();
+            playerManager = null;
+            hero = null;
+            configuration = null;
+            battleConfiguration = null;
         }
 
         sealed class UnityRandomSource : IRandomSource

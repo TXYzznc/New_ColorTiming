@@ -129,7 +129,9 @@ namespace ColorTiming.Tests.PlayMode
 
             if (!SceneManager.GetSceneByName("StartMenu").isLoaded)
             {
-                throw new TimeoutException("ColorTiming did not recover StartMenu before the PlayMode test timeout.");
+                throw new TimeoutException(
+                    "ColorTiming did not recover StartMenu before the PlayMode test timeout.\n" +
+                    DescribeFrameworkState("EnsureStartMenu.Timeout"));
             }
             yield return WaitForProductSceneTransitions();
         }
@@ -195,6 +197,38 @@ namespace ColorTiming.Tests.PlayMode
                 throw new TimeoutException(
                     "ColorTiming product scenes did not finish loading/unloading between PlayMode tests.");
             }
+        }
+
+        /// <summary>
+        /// 等待活动战斗场景完成资源预载和显式依赖绑定。
+        /// 场景进入 Active 状态本身不代表其中的玩法对象已经可以接受输入。
+        /// </summary>
+        public static IEnumerator WaitForBattleReady(string sceneName, float timeout = 20f)
+        {
+            var deadline = Time.realtimeSinceStartup + timeout;
+            BattleRuntimeContext context = null;
+            while (Time.realtimeSinceStartup < deadline)
+            {
+                var contexts = UnityEngine.Object.FindObjectsOfType<BattleRuntimeContext>(true);
+                for (var i = 0; i < contexts.Length; i++)
+                {
+                    var candidate = contexts[i];
+                    if (candidate.gameObject.scene.name == sceneName && candidate.IsReady)
+                    {
+                        context = candidate;
+                        break;
+                    }
+                }
+
+                if (context != null)
+                {
+                    yield break;
+                }
+                yield return null;
+            }
+
+            throw new TimeoutException(
+                $"Battle scene '{sceneName}' did not reach its runtime-ready boundary before timeout.");
         }
 
         static bool HasPendingSceneTransition(string[] sceneAssets)

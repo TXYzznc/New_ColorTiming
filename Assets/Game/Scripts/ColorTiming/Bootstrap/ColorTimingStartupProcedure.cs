@@ -2,6 +2,7 @@
 // 所属模块：ColorTiming / Bootstrap。
 
 using ColorTiming.Bootstrap.Flow;
+using System;
 using GameFramework;
 using GameFramework.Event;
 using GameFramework.Fsm;
@@ -14,12 +15,13 @@ namespace ColorTiming.Bootstrap
     [Obfuz.ObfuzIgnore(Obfuz.ObfuzScope.TypeName)]
     public sealed class ColorTimingStartupProcedure : ProcedureBase, IFrameworkStartupProcedure
     {
-        private const float DefaultTransitionDuration = 2f;
-        private const float MinimumTransitionDuration = 0.25f;
-        private const float MaximumTransitionDuration = 20f;
-        private const float DurationHistoryWeight = 0.35f;
-        private const float SceneLoadProgressWeight = 0.55f;
-        private const float ResourcePreparationWeight = 0.35f;
+        private float defaultTransitionDuration;
+        private float minimumTransitionDuration;
+        private float maximumTransitionDuration;
+        private float durationHistoryWeight;
+        private float sceneLoadProgressWeight;
+        private float resourcePreparationWeight;
+        private int progressBuckets;
 
         private ColorTimingCompositionRoot compositionRoot;
         private ColorTimingSceneId loadingScene;
@@ -40,19 +42,36 @@ namespace ColorTiming.Bootstrap
         {
             base.OnEnter(procedureOwner);
 
-            SubscribeEvents();
-            compositionRoot = new ColorTimingCompositionRoot(BeginSceneTransition);
-            compositionRoot.Initialize();
-            Log.Info("[ColorTiming.Startup] action=InitialScene.Request target=StartMenu");
-            bool accepted = compositionRoot.SceneFlow.TryLoad(ColorTimingSceneId.StartMenu);
-            Log.Info(
-                "[ColorTiming.Startup] action=InitialScene.Request result={0} target=StartMenu hasCurrentScene={1} isTransitioning={2}",
-                accepted ? "Accepted" : "Rejected",
-                compositionRoot.SceneFlow.HasCurrentScene,
-                compositionRoot.SceneFlow.IsTransitioning);
-            if (!accepted)
+            try
             {
-                Log.Error("ColorTiming failed to request its initial StartMenu scene.");
+                SubscribeEvents();
+                compositionRoot = new ColorTimingCompositionRoot(BeginSceneTransition);
+                compositionRoot.Initialize();
+                var presentation = compositionRoot.Configuration.Presentation;
+                defaultTransitionDuration = presentation.TransitionDefaultDuration;
+                minimumTransitionDuration = presentation.TransitionMinimumDuration;
+                maximumTransitionDuration = presentation.TransitionMaximumDuration;
+                durationHistoryWeight = presentation.TransitionHistoryWeight;
+                sceneLoadProgressWeight = presentation.SceneProgressWeight;
+                resourcePreparationWeight = presentation.PreparationProgressWeight;
+                progressBuckets = presentation.ProgressBuckets;
+                Log.Info("[ColorTiming.Startup] action=InitialScene.Request target=StartMenu");
+                bool accepted = compositionRoot.SceneFlow.TryLoad(ColorTimingSceneId.StartMenu);
+                Log.Info(
+                    "[ColorTiming.Startup] action=InitialScene.Request result={0} target=StartMenu hasCurrentScene={1} isTransitioning={2}",
+                    accepted ? "Accepted" : "Rejected",
+                    compositionRoot.SceneFlow.HasCurrentScene,
+                    compositionRoot.SceneFlow.IsTransitioning);
+                if (!accepted)
+                {
+                    Log.Error("ColorTiming failed to request its initial StartMenu scene.");
+                }
+            }
+            catch (Exception exception)
+            {
+                Log.Error("[ColorTiming.Startup] action=Initialize result=Failed error={0}", exception);
+                UnityEngine.Debug.LogException(exception);
+                throw;
             }
         }
 
@@ -75,8 +94,8 @@ namespace ColorTiming.Bootstrap
             }
 
             float elapsed = UnityEngine.Time.realtimeSinceStartup - transitionStartedRealtime;
-            float sampledProgress = SceneLoadProgressWeight * UnityEngine.Mathf.Clamp01(elapsed / estimatedTransitionDuration);
-            int progressBucket = UnityEngine.Mathf.Clamp(UnityEngine.Mathf.FloorToInt(sampledProgress * 20f), 0, 19);
+            float sampledProgress = sceneLoadProgressWeight * UnityEngine.Mathf.Clamp01(elapsed / estimatedTransitionDuration);
+            int progressBucket = UnityEngine.Mathf.Clamp(UnityEngine.Mathf.FloorToInt(sampledProgress * progressBuckets), 0, progressBuckets - 1);
             if (progressBucket > lastTimeSampleProgressLogBucket)
             {
                 lastTimeSampleProgressLogBucket = progressBucket;
@@ -233,7 +252,7 @@ namespace ColorTiming.Bootstrap
 
             lastSceneLoadProgress = args.Progress;
             sceneLoadProgressSampleCount++;
-            int progressBucket = UnityEngine.Mathf.Clamp(UnityEngine.Mathf.FloorToInt(args.Progress * 20f), 0, 19);
+            int progressBucket = UnityEngine.Mathf.Clamp(UnityEngine.Mathf.FloorToInt(args.Progress * progressBuckets), 0, progressBuckets - 1);
             if (progressBucket > lastSceneProgressLogBucket)
             {
                 lastSceneProgressLogBucket = progressBucket;
@@ -280,8 +299,8 @@ namespace ColorTiming.Bootstrap
 
         private void OnBattleResourcePreparationProgress(float preparationProgress)
         {
-            float combinedProgress = SceneLoadProgressWeight
-                + ResourcePreparationWeight * UnityEngine.Mathf.Clamp01(preparationProgress);
+            float combinedProgress = sceneLoadProgressWeight
+                + resourcePreparationWeight * UnityEngine.Mathf.Clamp01(preparationProgress);
             compositionRoot.ReportSceneTransitionProgress(combinedProgress);
         }
 
@@ -327,16 +346,16 @@ namespace ColorTiming.Bootstrap
         private float GetEstimatedTransitionDuration(ColorTimingSceneId scene)
         {
             string key = $"ColorTiming.Loading.EstimatedDuration.{scene}";
-            return UnityEngine.Mathf.Clamp(global::GF.Setting.GetFloat(key, DefaultTransitionDuration),
-                MinimumTransitionDuration,
-                MaximumTransitionDuration);
+            return UnityEngine.Mathf.Clamp(global::GF.Setting.GetFloat(key, defaultTransitionDuration),
+                minimumTransitionDuration,
+                maximumTransitionDuration);
         }
 
         private void UpdateEstimatedTransitionDuration()
         {
             float observedDuration = UnityEngine.Time.realtimeSinceStartup - transitionStartedRealtime;
-            float updatedDuration = UnityEngine.Mathf.Lerp(estimatedTransitionDuration, observedDuration, DurationHistoryWeight);
-            updatedDuration = UnityEngine.Mathf.Clamp(updatedDuration, MinimumTransitionDuration, MaximumTransitionDuration);
+            float updatedDuration = UnityEngine.Mathf.Lerp(estimatedTransitionDuration, observedDuration, durationHistoryWeight);
+            updatedDuration = UnityEngine.Mathf.Clamp(updatedDuration, minimumTransitionDuration, maximumTransitionDuration);
             string key = $"ColorTiming.Loading.EstimatedDuration.{loadingScene}";
             global::GF.Setting.SetFloat(key, updatedDuration);
             GFBuiltin.Setting.Save();

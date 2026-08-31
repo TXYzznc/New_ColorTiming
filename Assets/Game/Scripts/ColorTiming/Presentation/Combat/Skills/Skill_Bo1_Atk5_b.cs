@@ -5,10 +5,21 @@ using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using ColorTiming.Configuration;
 
 public class Skill_Bo1_Atk5_b : Skill_base
 {
     public GameObject atk5_item;
+    int burstCount = 16;
+    float burstRadius = 1.8f;
+    float burstStartAngle = -180f;
+
+    protected override void OnSkillConfigurationApplied(ColorTimingSkillTable configuration)
+    {
+        burstCount = configuration.CountA;
+        burstRadius = configuration.PatternA;
+        burstStartAngle = configuration.PatternB;
+    }
 
     // 执行ChildStart对应的主要流程。
     protected override void ChildStart()
@@ -27,11 +38,11 @@ public class Skill_Bo1_Atk5_b : Skill_base
         List<Vector2> dirs = new List<Vector2>();
         //传入角度和半径
         //FunctionLibrary.GetPositionOnCircle();
-        int _c = 16;
+        int _c = burstCount;
         for (int i = 0;i<_c;i++)
         {
-            float ang = -180 + (i * (180 / _c));
-            dirs.Add(FunctionLibrary.GetPositionOnCircle(ang,1.8f));
+            float ang = burstStartAngle + (i * (180 / _c));
+            dirs.Add(FunctionLibrary.GetPositionOnCircle(ang, burstRadius));
         }
         foreach (Vector2 dir in dirs)
         {

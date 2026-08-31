@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using ColorTiming.Bootstrap;
+using ColorTiming.Configuration;
 using ColorTiming.Presentation.Audio;
 using ColorTiming.Presentation.Entities;
 using UnityEngine;
@@ -19,11 +20,13 @@ namespace ColorTiming.Infrastructure.GF.Entity
     {
         private readonly HashSet<int> activeEntityIds = new HashSet<int>();
         private readonly IColorTimingSoundService soundService;
+        private readonly IColorTimingConfiguration configuration;
 
         // 初始化GfTransient实体Service实例及其核心依赖。
-        public GfTransientEntityService(IColorTimingSoundService soundService)
+        public GfTransientEntityService(IColorTimingSoundService soundService, IColorTimingConfiguration configuration)
         {
             this.soundService = soundService ?? throw new ArgumentNullException(nameof(soundService));
+            this.configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
         }
 
         // 执行生成对应的主要流程。
@@ -66,6 +69,9 @@ namespace ColorTiming.Infrastructure.GF.Entity
                 {
                     consumer.BindSoundService(soundService);
                 }
+                if (configuration.TryGetSkillByEntity(prefabName, out var skillConfiguration))
+                    foreach (var consumer in behaviours.OfType<IColorTimingSkillConfigurationConsumer>())
+                        consumer.BindSkillConfiguration(skillConfiguration);
                 configure?.Invoke(logic.gameObject);
             };
 

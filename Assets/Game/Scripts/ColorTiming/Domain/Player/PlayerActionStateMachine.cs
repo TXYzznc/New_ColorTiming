@@ -20,7 +20,13 @@ namespace ColorTiming.Player
     /// </summary>
     public sealed class PlayerActionStateMachine
     {
-        private const float HitInvulnerabilitySeconds = 1f;
+        private readonly float hitInvulnerabilitySeconds;
+
+        public PlayerActionStateMachine(float hitInvulnerabilitySeconds)
+        {
+            if (hitInvulnerabilitySeconds < 0f) throw new ArgumentOutOfRangeException(nameof(hitInvulnerabilitySeconds));
+            this.hitInvulnerabilitySeconds = hitInvulnerabilitySeconds;
+        }
 
         public PlayerActionState State { get; private set; } = PlayerActionState.Locomotion;
         public int FacingX { get; private set; } = 1;
@@ -38,6 +44,8 @@ namespace ColorTiming.Player
         public bool IsHitStunned => State == PlayerActionState.HitStun;
         public bool CanMove => State == PlayerActionState.Locomotion && !IsSkillMoving;
         public bool CanAcceptCombatInput => IsAlive && !IsHitStunned;
+        /// <summary>手动拾取/丢弃只在普通移动状态有效；攻击中的请求直接忽略且不排队。</summary>
+        public bool CanInteractWithWeapons => State == PlayerActionState.Locomotion && !IsSkillMoving;
         public bool CanEvadeDamage => IsDashing && HasDashInvulnerability;
         public bool RejectsDamage => !IsAlive || HasAnimationInvulnerability || HitInvulnerabilityRemaining > 0f;
 
@@ -126,7 +134,7 @@ namespace ColorTiming.Player
 
             State = PlayerActionState.HitStun;
             IsSkillMoving = false;
-            HitInvulnerabilityRemaining = HitInvulnerabilitySeconds;
+            HitInvulnerabilityRemaining = hitInvulnerabilitySeconds;
         }
 
         // 执行结束Hit对应的主要流程。

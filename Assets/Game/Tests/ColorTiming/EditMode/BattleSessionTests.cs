@@ -13,7 +13,7 @@ namespace ColorTiming.Tests.EditMode
         [TestCase(BattleKind.Boss2, 15)]
         public void Constructor_CreatesExpectedWeaknessCount(BattleKind kind, int expected)
         {
-            using var session = new BattleSession(kind, new SeededRandomSource(7));
+            using var session = new BattleSession(TestConfigurationFactory.Battle(kind), new SeededRandomSource(7));
             Assert.That(session.Snapshot.Weaknesses.Count, Is.EqualTo(expected));
             Assert.That(session.Snapshot.PlayerHealth, Is.EqualTo(5));
             Assert.That(session.Snapshot.Lifecycle, Is.EqualTo(BattleLifecycle.Running));
@@ -22,7 +22,7 @@ namespace ColorTiming.Tests.EditMode
         [Test]
         public void WrongColor_DoesNotMutateBossState()
         {
-            using var session = new BattleSession(BattleKind.Boss1, new SeededRandomSource(3));
+            using var session = new BattleSession(TestConfigurationFactory.Battle(BattleKind.Boss1), new SeededRandomSource(3));
             var before = session.Snapshot;
             var wrong = Enum.GetValues(typeof(WeaponColor)).Cast<WeaponColor>()
                 .First(color => color != before.Weaknesses[0]);
@@ -34,7 +34,7 @@ namespace ColorTiming.Tests.EditMode
         [Test]
         public void CorrectColors_EmitOneTerminalVictory()
         {
-            using var session = new BattleSession(BattleKind.Boss1, new SeededRandomSource(11));
+            using var session = new BattleSession(TestConfigurationFactory.Battle(BattleKind.Boss1), new SeededRandomSource(11));
             var wins = 0;
             session.PresentationRequested += message =>
             {
@@ -53,7 +53,7 @@ namespace ColorTiming.Tests.EditMode
         [Test]
         public void PlayerDamage_DropsWeaponAndEndsExactlyOnce()
         {
-            using var session = new BattleSession(BattleKind.Boss1, new SeededRandomSource(2), 1);
+            using var session = new BattleSession(TestConfigurationFactory.Battle(BattleKind.Boss1, 1), new SeededRandomSource(2));
             Assert.That(session.TryPickup(new WeaponIdentity(WeaponColor.Green, CombatWeaponType.Hammer)), Is.True);
             var losses = 0;
             session.PresentationRequested += message =>
@@ -73,7 +73,7 @@ namespace ColorTiming.Tests.EditMode
         [Test]
         public void Dispose_IsIdempotentAndRejectsLaterCommands()
         {
-            var session = new BattleSession(BattleKind.Boss2, new SeededRandomSource(1));
+            var session = new BattleSession(TestConfigurationFactory.Battle(BattleKind.Boss2), new SeededRandomSource(1));
             session.Dispose();
             session.Dispose();
             Assert.That(session.Snapshot.Lifecycle, Is.EqualTo(BattleLifecycle.Disposed));

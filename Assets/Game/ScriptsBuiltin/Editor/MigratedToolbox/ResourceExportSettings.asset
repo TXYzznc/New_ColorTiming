@@ -11,7 +11,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4d4d1f9a9d9e4a9d8f7c6b5a4e3d2c1b, type: 3}
   m_Name: ResourceExportSettings
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   groups:
   - name: "\u7F8E\u672F\u8D44\u6E90"
     selected: 0
@@ -30,7 +30,7 @@ MonoBehaviour:
     - Assets/Game/Scripts/DataTable
     - Assets/Game/Tests
   - name: "\u9879\u76EE\u8865\u5145\u8D44\u6E90_\u975E\u5DF2\u5BFC\u51FA\u7F8E\u672F"
-    selected: 1
+    selected: 0
     assetPaths:
     - Assets/Editor
     - Assets/Game/Editor

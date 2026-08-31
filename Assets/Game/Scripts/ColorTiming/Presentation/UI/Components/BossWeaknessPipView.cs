@@ -128,7 +128,16 @@ public class BossWeaknessPipView : MonoBehaviour
 
     bool flip;
     float _it;
-    float lerpSpeed = 3;
+    float lerpSpeed;
+    float minimumY;
+    float maximumY;
+
+    public void Configure(float speed, float minY, float maxY)
+    {
+        lerpSpeed = speed;
+        minimumY = minY;
+        maximumY = maxY;
+    }
     // 逐帧推进需要实时刷新的业务或表现状态。
     private void Update()
     {
@@ -138,7 +147,7 @@ public class BossWeaknessPipView : MonoBehaviour
             _it += (Time.deltaTime * lerpSpeed * _sp);
             //print(_it);
             //在区间浮动
-            float s = Mathf.Lerp(10, 20, _it);
+            float s = Mathf.Lerp(minimumY, maximumY, _it);
             image.transform.localPosition = new Vector3(0, s, 0);
 
             ///print(_it);

@@ -10,6 +10,8 @@ using System;
 using ColorTiming.Application.Battle;
 using ColorTiming.Bosses.Boss2;
 using ColorTiming.Combat;
+using ColorTiming.Bootstrap.Flow;
+using ColorTiming.Configuration;
 using ColorTiming.Presentation.Entities;
 using ColorTiming.Presentation.Combat;
 using ColorTiming.Presentation.Actors;
@@ -18,9 +20,11 @@ using UnityEngine.Events;
 using UnityEngine.U2D;
 using Random = UnityEngine.Random;
 
-public class Boss2ActorView : MonoBehaviour, IBattleDamageReceiver, ITransientEntityConsumer, IPlayerTargetConsumer
+public class Boss2ActorView : MonoBehaviour, IBattleDamageReceiver, ITransientEntityConsumer, IPlayerTargetConsumer,
+    IBossBattleSessionConsumer, IColorTimingConfigurationConsumer
 {
     public ActorId DamageActorId => ActorId.BossHead;
+    public BattleKind BattleKind => ColorTiming.Combat.BattleKind.Boss2;
 
     //boss血量
     //public int hpCount;
@@ -76,6 +80,17 @@ public class Boss2ActorView : MonoBehaviour, IBattleDamageReceiver, ITransientEn
     Boss2BurrowFlow burrowFlow;
     ITransientEntityService transientEntities;
     WeaknessSlotLedger slotLedger;
+    ColorTimingBossTable bossConfiguration;
+    Boss2ActionRules actionRules;
+
+    public void BindConfiguration(IColorTimingConfiguration configuration, ColorTimingSceneId sceneId)
+    {
+        var battle = configuration?.GetBattle(sceneId) ?? throw new ArgumentNullException(nameof(configuration));
+        bossConfiguration = configuration.GetBoss(battle.BossId);
+        actionRules = configuration.CreateBoss2ActionRules(battle.BossId);
+        atkCD = bossConfiguration.InitialCooldown;
+        moveSpeed = bossConfiguration.MoveSpeed;
+    }
 
     /// <summary>Bound by the runtime-created battle composition root before Start.</summary>
     // 绑定战斗会话依赖或事件监听。
@@ -168,7 +183,7 @@ public class Boss2ActorView : MonoBehaviour, IBattleDamageReceiver, ITransientEn
 
             //float _dis = Vector2.Distance(transform.position, hero.transform.position);
             float _dis = Vector2.Distance(transform.position, randomMove);
-            if (_dis < 1)
+            if (_dis < bossConfiguration.ArrivalDistance)
             {
                 //进入准备钻出程序
                 waitMoveEnd = true;
@@ -178,13 +193,13 @@ public class Boss2ActorView : MonoBehaviour, IBattleDamageReceiver, ITransientEn
             if (waitMoveEnd)
             {
 
-                if (moveOkTimeing < 1)
+                if (moveOkTimeing < bossConfiguration.HeadEmergenceDelay)
                 {
                     moveOkTimeing += Time.fixedDeltaTime;
                     dundiTime -= Time.fixedDeltaTime;
                     if (dundiTime < 0)
                     {
-                        dundiTime = 0.3f;
+                        dundiTime = bossConfiguration.TrailTimeInterval;
                         CreateDundi();
                     }
                     //float _f = Mathf.Lerp(0, 1, moveOkTimeing / 1);
@@ -214,7 +229,7 @@ public class Boss2ActorView : MonoBehaviour, IBattleDamageReceiver, ITransientEn
 
                 if (lastCaseDis > 0)
                 {
-                    if (lastCaseDis - _dis > 1.5f)
+                    if (lastCaseDis - _dis > bossConfiguration.TrailDistanceInterval)
                     {
                         CreateDundi();
                         lastCaseDis = _dis;
@@ -268,7 +283,7 @@ public class Boss2ActorView : MonoBehaviour, IBattleDamageReceiver, ITransientEn
         attacking = true;
         float _dis = Vector2.Distance(playerTarget.position, transform.position);
         bool b = transform.position.x - playerTarget.position.x < 0 ? transform.localScale.x < 0 : transform.localScale.x > 0;
-        var action = Boss2ActionSelector.SelectHead(_dis, b, Random.value);
+        var action = Boss2ActionSelector.SelectHead(_dis, b, Random.value, actionRules);
         switch (action)
         {
             case Boss2Action.Burrow:
@@ -371,7 +386,7 @@ public class Boss2ActorView : MonoBehaviour, IBattleDamageReceiver, ITransientEn
             attacking = false;
             AnimPlay(animName_idle, true);
             OnHPColor();
-            atkCD = Random.Range(1.5f, 3.0f);
+            atkCD = Random.Range(bossConfiguration.NextCooldownMin, bossConfiguration.NextCooldownMax);
         }
 
     }
@@ -643,7 +658,7 @@ public class Boss2ActorView : MonoBehaviour, IBattleDamageReceiver, ITransientEn
         foreach (Transform item in randomMoveT)
         {
             float _d =  Vector2.Distance(item.position,transform.position);
-            if (_d > 5)
+            if (_d > bossConfiguration.RelocationMinDistance)
             {
                 rmV3.Add(item.position);
             }

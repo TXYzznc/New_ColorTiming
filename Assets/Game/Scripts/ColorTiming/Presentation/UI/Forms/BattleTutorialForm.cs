@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using ColorTiming.Application.Battle;
 using ColorTiming.Combat;
+using ColorTiming.Configuration;
 using ColorTiming.Input;
 using ColorTiming.Presentation.UI.Contracts;
 using ColorTiming.Settings;
@@ -15,7 +16,8 @@ using CombatWeaponType = ColorTiming.Combat.WeaponType;
 namespace ColorTiming.Presentation.UI.Forms
 {
     /// <summary>GF.UI-owned first-use weapon tutorial for one active battle.</summary>
-    public sealed class BattleTutorialForm : UIFormBase, IColorTimingBattleTutorialForm
+    public sealed class BattleTutorialForm : UIFormBase, IColorTimingBattleTutorialForm,
+        IColorTimingPresentationConfigurationConsumer
     {
         [SerializeField] private GameObject tipContent;
         [SerializeField] private Image weaponTipImage;
@@ -29,6 +31,10 @@ namespace ColorTiming.Presentation.UI.Forms
         private IColorTimingSettings settings;
         private IDisposable pauseLease;
         private float earliestDismissTime;
+        private float dismissDelay;
+
+        public void BindPresentationConfiguration(ColorTimingPresentationTable configuration) =>
+            dismissDelay = configuration.TutorialDismissDelay;
 
         // 绑定运行时依赖或事件监听。
         public void BindRuntime(BattleSession runtimeSession, IGameInput input, IGameTime time, IColorTimingSettings projectSettings)
@@ -92,7 +98,7 @@ namespace ColorTiming.Presentation.UI.Forms
 
             weaponTipImage.sprite = weaponTips[index];
             tipContent.SetActive(true);
-            earliestDismissTime = Time.unscaledTime + 2f;
+            earliestDismissTime = Time.unscaledTime + dismissDelay;
             ReleasePause();
             pauseLease = gameTime.Acquire(0f);
         }

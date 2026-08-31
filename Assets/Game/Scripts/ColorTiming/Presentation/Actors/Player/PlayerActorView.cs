@@ -5,37 +5,36 @@ using System;
 using System.Collections.Generic;
 using ColorTiming.Application.Battle;
 using ColorTiming.Combat;
+using ColorTiming.Bootstrap.Flow;
+using ColorTiming.Configuration;
 using ColorTiming.Input;
 using ColorTiming.Player;
 using ColorTiming.Presentation.Combat;
+using ColorTiming.Presentation.PlayerAnimation;
 using ColorTiming.Presentation.UI.Contracts;
 using Unity.VisualScripting;
 using GameFramework.Resource;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Serialization;
 
-public class PlayerActorView : MonoBehaviour, IBattleDamageReceiver, IGameInputConsumer, IGameplayPointerConsumer,
-    IGameTimeConsumer, IPlayerDamageSignal
+public class PlayerActorView : MonoBehaviour, IBattleSessionConsumer, IBattleDamageReceiver, IGameInputConsumer, IGameplayPointerConsumer,
+    IGameTimeConsumer, IPlayerDamageSignal, IColorTimingConfigurationConsumer
 {
     public event Action Damaged;
     public ActorId DamageActorId => ActorId.Player;
-    public float moveSpeed = 3.0f;
-    public float dashSpeed = 5.0f;
+    [NonSerialized] public float moveSpeed = 3.0f;
+    [NonSerialized] public float dashSpeed = 5.0f;
 
 
     public GameObject characterSprite;
     public Animator animator;
-    [FormerlySerializedAs("weaponControSystem")]
-    public Boss1WeaponSpawnerView boss1WeaponSpawner;
-    [FormerlySerializedAs("WeaponControSystem_2")]
-    public Boss2WeaponSpawnerView boss2WeaponSpawner;
-    public GameObject deathShow;
-    [SerializeField] private HeroWeaponAnimationCatalogAsset weaponAnimationCatalog;
+    [SerializeField] private WeaponSpawnerView weaponSpawner;
+    [SerializeField] private GameObject deathShow;
 
 
-    public int heroMaxHP = 5;
+    [NonSerialized] public int heroMaxHP = 5;
     public int heroHP => battleSession != null ? battleSession.Snapshot.PlayerHealth : heroMaxHP;
+    public GameObject DeathPresentation => deathShow;
     public UnityEvent OnSetHP_Event;
     public UnityEvent OnDamage_Event;
     public UnityEvent OnPickUPWeapon;
@@ -58,14 +57,10 @@ public class PlayerActorView : MonoBehaviour, IBattleDamageReceiver, IGameInputC
     AnimatorStateInfo nowAnimStateInfo;
     //动画器跳转事件，1.状态名称 2.true=进入，false=退出
     public UnityEvent<AnimatorStateInfo, bool> OnAnimStateEnter;
-    const string animPramName_MoveSpeed = "moveSpeed";
-    const string animPramName_MoveV= "moveV";
     const string animPramNmae_Dash = "Dash";
     const string animPramName_Atk = "Atk";
     const string animPramName_Atk_x = "Atk_x";
-    const string animPramName_WeaponType = "weaponType";
     const string animPramName_SwitchWeapon = "switchWeapon";
-    const string animPramName_Hit = "Hit";
 
     PlayerSkillEmitter heroFrireSystem;
     PlayerAnimationEventRelay heroAnimState;
@@ -84,10 +79,34 @@ public class PlayerActorView : MonoBehaviour, IBattleDamageReceiver, IGameInputC
         new Dictionary<WeaponIdentity, RuntimeAnimatorController>();
     readonly HashSet<WeaponIdentity> loadingWeaponControllers = new HashSet<WeaponIdentity>();
     readonly HashSet<WeaponIdentity> failedWeaponControllers = new HashSet<WeaponIdentity>();
-    RuntimeAnimatorController activeWeaponController;
-    WeaponIdentity? pendingControllerWeapon;
-    int weaponInstallVersion;
+    IPlayerAnimationDriver animationDriver;
+    MecanimPlayerAnimationDriver mecanimAnimationDriver;
+    bool inventorySubscribed;
     bool resourceContextReleased;
+    IColorTimingConfiguration configuration;
+    ColorTimingPlayerTable playerConfiguration;
+
+    public void BindConfiguration(IColorTimingConfiguration config, ColorTimingSceneId sceneId)
+    {
+        configuration = config ?? throw new ArgumentNullException(nameof(config));
+        var battle = configuration.GetBattle(sceneId);
+        playerConfiguration = configuration.GetPlayer(battle.PlayerId);
+        moveSpeed = playerConfiguration.MoveSpeed;
+        dashSpeed = playerConfiguration.DashSpeed;
+        skillMoveSpeed = playerConfiguration.SkillMoveSpeed;
+        heroMaxHP = playerConfiguration.MaximumHealth;
+    }
+
+    /// <summary>由 BattlePlayerManager 注入不能保存在 Player Prefab 内的场景引用。</summary>
+    public void ConfigureSceneReferences(WeaponSpawnerView sceneWeaponSpawner, GameObject deathPresentation)
+    {
+        weaponSpawner = sceneWeaponSpawner != null
+            ? sceneWeaponSpawner
+            : throw new ArgumentNullException(nameof(sceneWeaponSpawner));
+        deathShow = deathPresentation != null
+            ? deathPresentation
+            : throw new ArgumentNullException(nameof(deathPresentation));
+    }
 
     /// <summary>Bound by the runtime-created battle composition root before Start.</summary>
     // 绑定战斗会话依赖或事件监听。
@@ -100,6 +119,11 @@ public class PlayerActorView : MonoBehaviour, IBattleDamageReceiver, IGameInputC
         battleSession = session ?? throw new ArgumentNullException(nameof(session));
         playerState = session.PlayerActions;
         inventory = session.Inventory;
+        if (!inventorySubscribed)
+        {
+            inventory.Changed += OnInventoryWeaponChanged;
+            inventorySubscribed = true;
+        }
         TryInitializeSession();
     }
 
@@ -124,7 +148,11 @@ public class PlayerActorView : MonoBehaviour, IBattleDamageReceiver, IGameInputC
     // 在首帧启动依赖就绪后的业务或表现流程。
     void Start()
     {
-        attackInputGate = new PlayerAttackInputGate();
+        if (playerConfiguration == null)
+            throw new InvalidOperationException("Player configuration must be bound before Start.");
+        attackInputGate = new PlayerAttackInputGate(
+            playerConfiguration.AttackResumeGuard,
+            playerConfiguration.HeldAnimatorThreshold);
         body = GetComponent<Rigidbody2D>();
 
         heroAnimState = characterSprite.GetComponent<PlayerAnimationEventRelay>();
@@ -145,10 +173,17 @@ public class PlayerActorView : MonoBehaviour, IBattleDamageReceiver, IGameInputC
 
         heroFrireSystem = GetComponent<PlayerSkillEmitter>();
         soundManager = GetComponentInChildren<PlayerSoundView>();
-        activeWeaponController = animator != null ? animator.runtimeAnimatorController : null;
-        if (nowweapon.IsNormal && activeWeaponController != null)
+        var initialWeapon = inventory != null ? inventory.Current : nowweapon;
+        var initialController = animator != null ? animator.runtimeAnimatorController : null;
+        mecanimAnimationDriver = new MecanimPlayerAnimationDriver(animator, initialWeapon, initialController);
+        animationDriver = mecanimAnimationDriver;
+        if (initialWeapon.IsNormal && initialController != null)
         {
-            loadedWeaponControllers[nowweapon] = activeWeaponController;
+            loadedWeaponControllers[initialWeapon] = initialController;
+        }
+        foreach (var pair in loadedWeaponControllers)
+        {
+            mecanimAnimationDriver.RegisterController(pair.Key, pair.Value);
         }
         viewStarted = true;
         TryInitializeSession();
@@ -161,6 +196,7 @@ public class PlayerActorView : MonoBehaviour, IBattleDamageReceiver, IGameInputC
         if (sessionInitialized || !viewStarted || battleSession == null) return;
         sessionInitialized = true;
         nowweapon = inventory.Current;
+        animationDriver.RequestWeapon(nowweapon);
         PreloadWeaponAnimation(nowweapon);
         OnDamage_Event?.Invoke();
         OnSetHP_Event?.Invoke();
@@ -233,7 +269,7 @@ public class PlayerActorView : MonoBehaviour, IBattleDamageReceiver, IGameInputC
                 // Accept the intent in the authoritative session before asking Animator to
                 // present it. Animator callbacks remain a fallback for authored transitions.
                 dashVector = new Vector2(playerState.FacingX, playerState.DashY);
-                animator.SetTrigger(animPramNmae_Dash);
+                animationDriver.RequestDash();
             }
         }
 
@@ -243,17 +279,15 @@ public class PlayerActorView : MonoBehaviour, IBattleDamageReceiver, IGameInputC
         {
             if (attackInputGate.ShouldTrigger(gameInput.AttackPressed, playerState.IsAttacking))
             {
-                animator.SetTrigger(animPramName_Atk);
+                animationDriver.RequestAttack();
             }
 
-            animator.SetFloat(
-                animPramName_Atk_x,
-                attackInputGate.HeldAnimatorValue(gameInput.AttackHeld));
+            animationDriver.SetAttackHeld(attackInputGate.HeldAnimatorValue(gameInput.AttackHeld));
         }
 
 
 
-        if (gameInput.DropPressed)
+        if (gameInput.DropPressed && playerState.CanInteractWithWeapons)
         {
             DisWeapon(false);
         }
@@ -297,7 +331,8 @@ public class PlayerActorView : MonoBehaviour, IBattleDamageReceiver, IGameInputC
 
     void Move()
     {
-        animator.SetFloat(animPramName_MoveSpeed, inputMove.magnitude * 10);
+        var hasMovementInput = inputMove.sqrMagnitude > 0.0001f;
+        animationDriver.SetLocomotion(inputMove.magnitude, hasMovementInput);
         if (!playerState.CanMove)
             return;//冲刺中不允移动
 
@@ -305,14 +340,7 @@ public class PlayerActorView : MonoBehaviour, IBattleDamageReceiver, IGameInputC
         Vector2 _move = Vector2.zero;
         if (!Mathf.Approximately(inputMove.x, 0) || (!Mathf.Approximately(inputMove.y, 0)))
         {
-            if (nowweapon.Type == ColorTiming.Combat.WeaponType.Hammer
-                || nowweapon.Type == ColorTiming.Combat.WeaponType.Axe)
-            {
-                animator.SetLayerWeight(1, 1);
-                animator.SetLayerWeight(0, 0);
-            }
-
-            if (inputMove.magnitude > 0.1f)
+            if (inputMove.magnitude > playerConfiguration.MovementDeadzone)
             {
                 _move = inputMove.normalized;
 
@@ -324,22 +352,10 @@ public class PlayerActorView : MonoBehaviour, IBattleDamageReceiver, IGameInputC
 
 
         }
-        else
-        {
-            if (nowweapon.Type == ColorTiming.Combat.WeaponType.Hammer
-                || nowweapon.Type == ColorTiming.Combat.WeaponType.Axe)
-            {
-                animator.SetLayerWeight(1, 0);
-                animator.SetLayerWeight(0, 1);
-            }
-
-        }
-
-
         //print(characterController.velocity.magnitude); //这个值没有停止
         //print(inputMove.magnitude);
         //print(_move.magnitude);
-        animator.SetFloat(animPramName_MoveSpeed, _move.magnitude * 10);
+        animationDriver.SetLocomotion(_move.magnitude, hasMovementInput);
 
 
     }
@@ -352,7 +368,9 @@ public class PlayerActorView : MonoBehaviour, IBattleDamageReceiver, IGameInputC
             //始终为横向赋值
             _dashMove.x = _dashMove.x > 0 ? 1 : -1;
             //检查纵向是否有值
-            if (_dashMove.y != 0) _dashMove.y = _dashMove.y > 0 ? 0.5f : -0.5f;
+            if (_dashMove.y != 0) _dashMove.y = _dashMove.y > 0
+                ? playerConfiguration.DashVerticalScale
+                : -playerConfiguration.DashVerticalScale;
             //Vector2 _dashMove =
             _dashMove = _dashMove * dashSpeed * Time.deltaTime;
             _dashMove = transform.position + new Vector3(_dashMove.x, _dashMove.y);
@@ -395,6 +413,8 @@ public class PlayerActorView : MonoBehaviour, IBattleDamageReceiver, IGameInputC
 
     void Attack(string parm)
     {
+        // 受击可能先于迟到的 Animation Event 中断攻击；失效事件不得再生成技能伤害。
+        if (playerState == null || !playerState.IsAttacking) return;
         heroFrireSystem?.OnFire(nowweapon, characterSprite.transform.localScale.x,parm);
     }
 
@@ -404,19 +424,17 @@ public class PlayerActorView : MonoBehaviour, IBattleDamageReceiver, IGameInputC
         if (battleSession == null || !battleSession.TryPickup(weapon))
             return false;
 
-        SwitchWeapon(inventory.Current);
         soundManager?.Play(PlayerSoundCue.PickupWeapon);
 
         return true;
     }
-    void SwitchWeapon(WeaponIdentity weapon)
+    void RequestWeaponPresentation(WeaponIdentity weapon)
     {
         nowweapon = weapon;
-        pendingControllerWeapon = weapon;
-        weaponInstallVersion++;
-        if (weaponAnimationCatalog != null)
+        animationDriver?.RequestWeapon(weapon);
+        if (configuration != null)
         {
-            if (!loadedWeaponControllers.TryGetValue(weapon, out var controller))
+            if (!loadedWeaponControllers.ContainsKey(weapon))
             {
                 PreloadWeaponAnimation(weapon);
                 return;
@@ -429,18 +447,21 @@ public class PlayerActorView : MonoBehaviour, IBattleDamageReceiver, IGameInputC
     /// <summary>Starts loading a candidate controller before the pickup input can be used.</summary>
     public void PreloadWeaponAnimation(WeaponIdentity weapon)
     {
-        if (resourceContextReleased || weaponAnimationCatalog == null || loadedWeaponControllers.ContainsKey(weapon)
+        if (resourceContextReleased || configuration == null || loadedWeaponControllers.ContainsKey(weapon)
             || !loadingWeaponControllers.Add(weapon))
         {
             return;
         }
 
-        if (!weaponAnimationCatalog.TryGetControllerAssetName(weapon, out string assetName)
-            || GFBuiltin.Resource == null)
+        string assetName;
+        try { assetName = configuration.GetWeapon(weapon).ControllerAsset; }
+        catch (Exception exception)
         {
             loadingWeaponControllers.Remove(weapon);
+            Debug.LogError($"Player weapon configuration missing for {weapon}: {exception.Message}", this);
             return;
         }
+        if (GFBuiltin.Resource == null) { loadingWeaponControllers.Remove(weapon); return; }
 
         GFBuiltin.Resource.LoadAsset(assetName, typeof(RuntimeAnimatorController), new LoadAssetCallbacks(
             (loadedAssetName, asset, duration, userData) =>
@@ -454,8 +475,9 @@ public class PlayerActorView : MonoBehaviour, IBattleDamageReceiver, IGameInputC
                 }
                 failedWeaponControllers.Remove(weapon);
                 loadedWeaponControllers[weapon] = controller;
+                mecanimAnimationDriver?.RegisterController(weapon, controller);
                 // A resource callback may arrive during attack, dash or hit. It only marks
-                // the candidate ready; Update installs it at an authored idle boundary.
+                // the candidate ready; Update installs it at a stable locomotion boundary.
             },
             (failedAssetName, status, errorMessage, userData) =>
             {
@@ -474,7 +496,7 @@ public class PlayerActorView : MonoBehaviour, IBattleDamageReceiver, IGameInputC
 
     public bool AreWeaponAnimationsReady(IReadOnlyList<WeaponIdentity> weapons)
     {
-        if (weapons == null || weaponAnimationCatalog == null) return true;
+        if (weapons == null || configuration == null) return true;
         for (var index = 0; index < weapons.Count; index++)
         {
             if (!loadedWeaponControllers.ContainsKey(weapons[index])) return false;
@@ -485,7 +507,7 @@ public class PlayerActorView : MonoBehaviour, IBattleDamageReceiver, IGameInputC
     public int GetReadyWeaponAnimationCount(IReadOnlyList<WeaponIdentity> weapons)
     {
         if (weapons == null) return 0;
-        if (weaponAnimationCatalog == null) return weapons.Count;
+        if (configuration == null) return weapons.Count;
         var readyCount = 0;
         for (var i = 0; i < weapons.Count; i++)
         {
@@ -496,7 +518,7 @@ public class PlayerActorView : MonoBehaviour, IBattleDamageReceiver, IGameInputC
 
     public bool HasWeaponAnimationPreloadFailure(IReadOnlyList<WeaponIdentity> weapons)
     {
-        if (weapons == null || weaponAnimationCatalog == null) return false;
+        if (weapons == null || configuration == null) return false;
         for (var index = 0; index < weapons.Count; index++)
         {
             if (failedWeaponControllers.Contains(weapons[index])) return true;
@@ -504,65 +526,35 @@ public class PlayerActorView : MonoBehaviour, IBattleDamageReceiver, IGameInputC
         return false;
     }
 
-    private void ApplyWeaponController(RuntimeAnimatorController controller)
-    {
-        if (animator == null || controller == null || ReferenceEquals(activeWeaponController, controller)) return;
-        animator.runtimeAnimatorController = controller;
-        animator.Rebind();
-        activeWeaponController = controller;
-    }
-
     private void TryInstallPendingWeaponController()
     {
-        if (!pendingControllerWeapon.HasValue || animator == null || !CanInstallWeaponController())
+        if (animationDriver == null || playerState == null || !animationDriver.HasPendingWeaponPresentation)
         {
             return;
         }
 
-        WeaponIdentity weapon = pendingControllerWeapon.Value;
-        RuntimeAnimatorController controller = null;
-        if (weaponAnimationCatalog != null
-            && !loadedWeaponControllers.TryGetValue(weapon, out controller))
+        var weapon = animationDriver.RequestedWeapon;
+        if (configuration != null && loadedWeaponControllers.TryGetValue(weapon, out var controller))
+        {
+            mecanimAnimationDriver.RegisterController(weapon, controller);
+        }
+
+        var attackHeld = gameInput != null && attackInputGate != null
+            ? attackInputGate.HeldAnimatorValue(gameInput.AttackHeld)
+            : 0f;
+        if (!animationDriver.TrySynchronizeWeapon(
+                playerState.State,
+                playerState.IsSkillMoving,
+                inputMove.magnitude,
+                attackHeld))
         {
             return;
         }
 
-        int installVersion = weaponInstallVersion;
-        if (weaponAnimationCatalog != null)
-        {
-            ApplyWeaponController(controller);
-        }
-
-        if (installVersion != weaponInstallVersion || !pendingControllerWeapon.HasValue
-            || !pendingControllerWeapon.Value.Equals(weapon))
-        {
-            return;
-        }
-
-        animator.SetLayerWeight(0, 1f);
-        if (animator.layerCount > 1) animator.SetLayerWeight(1, 0f);
-        animator.SetFloat(animPramName_MoveSpeed, 0f);
-        animator.SetFloat(animPramName_Atk_x, 0f);
-        ApplyWeaponAnimatorParameters();
-        pendingControllerWeapon = null;
-        Debug.Log($"[ColorTiming.HeroAnimation] action=ControllerInstalled weapon={weapon} version={installVersion}", this);
-    }
-
-    private bool CanInstallWeaponController()
-    {
-        if (playerState == null || !playerState.IsAlive || playerState.IsDashing
-            || playerState.IsAttacking || playerState.IsHitStunned || playerState.IsSkillMoving
-            || inputMove.sqrMagnitude > 0.0001f || animator.IsInTransition(0))
-        {
-            return false;
-        }
-
-        if (animator.layerCount > 1 && animator.GetLayerWeight(1) > 0.001f)
-        {
-            return false;
-        }
-
-        return animator.GetCurrentAnimatorStateInfo(0).IsName("Daiji");
+        OnSwitchWeapon?.Invoke(animationDriver.PresentedWeapon);
+        Debug.Log(
+            $"[ColorTiming.HeroAnimation] action=ControllerInstalled weapon={weapon} version={mecanimAnimationDriver.RequestVersion}",
+            this);
     }
 
     private void ReleasePreloadedWeaponControllers()
@@ -570,7 +562,7 @@ public class PlayerActorView : MonoBehaviour, IBattleDamageReceiver, IGameInputC
         var released = new List<WeaponIdentity>();
         foreach (var pair in loadedWeaponControllers)
         {
-            if (!ReferenceEquals(pair.Value, activeWeaponController) && !pair.Key.IsNormal)
+            if (!ReferenceEquals(pair.Value, mecanimAnimationDriver?.ActiveController) && !pair.Key.IsNormal)
             {
                 GFBuiltin.Resource?.UnloadAsset(pair.Value);
                 released.Add(pair.Key);
@@ -579,15 +571,14 @@ public class PlayerActorView : MonoBehaviour, IBattleDamageReceiver, IGameInputC
         foreach (WeaponIdentity weapon in released) loadedWeaponControllers.Remove(weapon);
     }
 
-    private void ApplyWeaponAnimatorParameters()
+    private void OnInventoryWeaponChanged(WeaponIdentity weapon)
     {
-        animator.SetInteger(animPramName_WeaponType, nowweapon.ToLegacyAnimatorIndex());
-        animator.SetTrigger(animPramName_SwitchWeapon);
-        OnSwitchWeapon?.Invoke(nowweapon);
+        RequestWeaponPresentation(weapon);
     }
     //做一个丢弃武器功能  //接通BOSS 攻击
     void DisWeapon(bool dis)
     {
+        if (playerState == null || !playerState.CanInteractWithWeapons) return;
         if (battleSession == null || !battleSession.TryDrop(out var dropped))
         {
             if (!dis)
@@ -599,10 +590,7 @@ public class PlayerActorView : MonoBehaviour, IBattleDamageReceiver, IGameInputC
         }
 
         soundManager?.Play(PlayerSoundCue.DropWeapon);
-        boss1WeaponSpawner?.CreateWeapon_dis(transform.position, dropped);
-        boss2WeaponSpawner?.CreateWeapon_dis(transform.position, dropped);
-
-        SwitchWeapon(inventory.Current);
+        weaponSpawner?.CreateWeapon_dis(transform.position, dropped);
 
     }
 
@@ -672,10 +660,13 @@ public class PlayerActorView : MonoBehaviour, IBattleDamageReceiver, IGameInputC
 
         if (stateInfo.IsName(animPramName_Atk))
         {
+            // 只有仍属于本次有效攻击的正常退出才能消耗一次性武器。
+            var completedAttack = playerState != null && playerState.IsAttacking;
             battleSession?.EndAttack();
-            if (battleSession.ConsumeAttackWeapon(out _))
+            if (completedAttack && battleSession != null)
             {
-                SwitchWeapon(inventory.Current);
+                // Inventory.Changed 是业务武器变化的唯一表现同步入口。
+                battleSession.ConsumeAttackWeapon(out _);
             }
         }
         //这个方案延后了
@@ -704,7 +695,7 @@ public class PlayerActorView : MonoBehaviour, IBattleDamageReceiver, IGameInputC
             Debug.Log(
                 $"[ColorTiming.Combat][PlayerDamage] action=Resolve result=evaded attacker={damage.Attacker} state={playerState.State}",
                 this);
-            gameTime?.Pulse(0.45f, 0.3f);
+            gameTime?.Pulse(playerConfiguration.HitTimeScale, playerConfiguration.HitTimeDuration);
             //加一个闪避成功回一滴血
             if (battleSession.ResolveSuccessfulDash() > 0)
             {
@@ -731,18 +722,16 @@ public class PlayerActorView : MonoBehaviour, IBattleDamageReceiver, IGameInputC
             Vector2 cv = (new Vector2(transform.position.x, transform.position.y) - cPoint).normalized;
 
             //float force = 10;
-            Vector2 fc = cv * 0.5f;
+            Vector2 fc = cv * playerConfiguration.HitKnockback;
             //rigidbody2D.AddForce(cv * force);
             Vector3 af = new Vector3(fc.x,fc.y,0);
             transform.position += af;
             if (!heldWeapon.IsNormal)
             {
                 soundManager?.Play(PlayerSoundCue.DropWeapon);
-                boss1WeaponSpawner?.CreateWeapon_dis(transform.position, heldWeapon);
-                boss2WeaponSpawner?.CreateWeapon_dis(transform.position, heldWeapon);
-                SwitchWeapon(inventory.Current);
+                weaponSpawner?.CreateWeapon_dis(transform.position, heldWeapon);
             }
-            animator.SetTrigger(animPramName_Hit);
+            animationDriver.RequestHit();
             //这个过程中不可以移动
         }
         else if (resolution == PlayerDamageResolution.Defeated)
@@ -753,12 +742,12 @@ public class PlayerActorView : MonoBehaviour, IBattleDamageReceiver, IGameInputC
             //显示失败，并准备退回开始页面
             SpriteRenderer sprite = animator.GetComponent<SpriteRenderer>();
             //m_SortingOrder  m_SortingLayerID
-            sprite.sortingOrder = 200;
+            sprite.sortingOrder = playerConfiguration.HitSortingOrder;
 
             PlayerCameraLifecycleView heroCamera_ = GetComponent<PlayerCameraLifecycleView>();
             heroCamera_.enabled = false;
 
-            animator.SetTrigger("Death");
+            animationDriver.RequestDeath();
             deathShow?.SetActive(true);
         }
     }
@@ -772,14 +761,14 @@ public class PlayerActorView : MonoBehaviour, IBattleDamageReceiver, IGameInputC
         {
             //角色动画已忽略时间
             //暂停世界
-            animator.speed = 10;
+            animationDriver.SetPlaybackSpeed(playerConfiguration.HitAnimatorSpeed);
             hitSlowMotion?.Dispose();
             hitSlowMotion = gameTime?.Acquire(0.1f);
 
         }
         else
         {
-            animator.speed = 1;
+            animationDriver.SetPlaybackSpeed(1f);
             hitSlowMotion?.Dispose();
             hitSlowMotion = null;
         }
@@ -798,7 +787,11 @@ public class PlayerActorView : MonoBehaviour, IBattleDamageReceiver, IGameInputC
     private void OnDestroy()
     {
         resourceContextReleased = true;
-        pendingControllerWeapon = null;
+        if (inventorySubscribed && inventory != null)
+        {
+            inventory.Changed -= OnInventoryWeaponChanged;
+            inventorySubscribed = false;
+        }
         OnAnimStateEnter.RemoveListener(OnAnimStateEnterF);
         if (heroAnimState != null)
         {

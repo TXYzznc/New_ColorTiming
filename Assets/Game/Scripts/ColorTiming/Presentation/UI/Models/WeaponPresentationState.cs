@@ -11,13 +11,6 @@ namespace ColorTiming.Presentation.UI.Models
     /// </summary>
     public readonly struct WeaponPresentationState
     {
-        public const int NormalIconIndex = 18;
-        public const int NormalCursorIndex = 0;
-        public const int HeldNormalCursorIndex = 5;
-        public const int PauseCursorIndex = 6;
-        public const int RequiredIconCount = 24;
-        public const int RequiredCursorCount = 7;
-
         private WeaponPresentationState(int iconIndex, int cursorIndex, bool usesChargeHint)
         {
             IconIndex = iconIndex;
@@ -30,18 +23,9 @@ namespace ColorTiming.Presentation.UI.Models
         public bool UsesChargeHint { get; }
 
         // 执行From对应的主要流程。
-        public static WeaponPresentationState From(WeaponIdentity identity)
+        public static WeaponPresentationState From(ColorTimingWeaponTable row)
         {
-            var iconIndex = identity.IsNormal
-                ? NormalIconIndex
-                : identity.ToLegacyAnimatorIndex() - 1;
-            var cursorIndex = identity.IsNormal
-                ? NormalCursorIndex
-                : (int)identity.Color + 1;
-            var usesChargeHint = identity.Type == ColorTiming.Combat.WeaponType.Hammer
-                || identity.Type == ColorTiming.Combat.WeaponType.Axe;
-
-            return new WeaponPresentationState(iconIndex, cursorIndex, usesChargeHint);
+            return new WeaponPresentationState(row.IconIndex, row.CursorIndex, row.UsesChargeHint);
         }
     }
 }

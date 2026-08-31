@@ -8,6 +8,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using ColorTiming.Combat;
+using ColorTiming.Presentation.Actors;
+using ColorTiming.Presentation.Audio;
 using ColorTiming.Presentation.Entities;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -33,15 +35,13 @@ public class Boss1AnimationEventRelay : MonoBehaviour, ITransientEntityConsumer
 
     public GameObject mao6;
 
-    public MeshRenderer meshRenderer1;
-    public MeshRenderer meshRenderer2;
-
     //public SkeletonRenderer skeletonRenderer1;
     //public SkeletonRenderer skeletonRenderer2;
     public SkeletonAnimation skeletonAnimation1;
     public SkeletonAnimation skeletonAnimation2;
 
-    Boss1SoundView soundManager1;
+    BossSoundView soundManager1;
+    BossHitFlashView hitFlash;
     ITransientEntityService transientEntities;
 
     // 绑定TransientEntities依赖或事件监听。
@@ -53,38 +53,8 @@ public class Boss1AnimationEventRelay : MonoBehaviour, ITransientEntityConsumer
     // 在首帧启动依赖就绪后的业务或表现流程。
     private void Start()
     {
-      soundManager1 = GetComponent<Boss1SoundView>();
-    }
-    bool flip;
-    float _it;
-    float lerpSpeed = 10;
-    float _showTime = -1;
-    // 逐帧推进需要实时刷新的业务或表现状态。
-    private void Update()
-    {
-
-        if (_showTime > 0)
-        {
-            _showTime -= Time.deltaTime;
-            //print(_showTime);
-
-            ShowHit();
-
-        }
-        else
-        {
-            MaterialPropertyBlock mpb = new MaterialPropertyBlock();
-            //mpb.SetColor("_Black", Color.black);
-            mpb.SetFloat("_FillPhase", 0);
-
-            meshRenderer1.SetPropertyBlock(mpb);
-            meshRenderer2.SetPropertyBlock(mpb);
-            //skeletonAnimation1?.skeleton?.SetColor(Color.white);
-            //skeletonAnimation2?.skeleton?.SetColor(Color.white);
-            //print("sssssssssssss");
-        }
-
-
+      soundManager1 = GetComponent<BossSoundView>();
+      hitFlash = GetComponent<BossHitFlashView>();
     }
 
     // 执行GoAtk对应的主要流程。
@@ -186,7 +156,7 @@ public class Boss1AnimationEventRelay : MonoBehaviour, ITransientEntityConsumer
 
         if(e.ToString() == "atk_read")
         {
-            soundManager1?.Play(Boss1SoundCue.AttackReady);
+            soundManager1?.TryPlay(Boss1SoundCues.AttackReady);
         }
 
 
@@ -201,43 +171,8 @@ public class Boss1AnimationEventRelay : MonoBehaviour, ITransientEntityConsumer
     // 响应Hit回调，并更新本对象状态。
     public void OnHit()
     {
-        soundManager1?.Play(Boss1SoundCue.Hit);
-        _showTime = 0.2f;
-    }
-
-
-    // 显示Hit并同步当前数据。
-    void ShowHit()
-    {
-        float _sp = flip ? -1 : 1;
-        _it += (Time.deltaTime * lerpSpeed * _sp);
-
-        Color _c = new Color(_it, _it, _it, _it);
-
-        MaterialPropertyBlock mpb = new MaterialPropertyBlock();
-        //mpb.SetColor("_Black", _c);
-        mpb.SetFloat("_FillPhase", _it);
-        meshRenderer1.SetPropertyBlock(mpb);
-        meshRenderer2.SetPropertyBlock(mpb);
-        // meshRenderer1.material.SetColor("Dark Color", _c);
-
-
-        //print(_c);
-
-        //print(_it);
-        //skeletonAnimation1?.skeleton?.SetColor(_c);
-        //skeletonAnimation2?.skeleton?.SetColor(_c);
-
-
-        if (flip)
-        {
-            //检查
-            if (_it < 0) flip = false;
-        }
-        else
-        {
-            if (_it > 1) flip = true;
-        }
+        soundManager1?.TryPlay(Boss1SoundCues.Hit);
+        hitFlash?.Play();
     }
 
 

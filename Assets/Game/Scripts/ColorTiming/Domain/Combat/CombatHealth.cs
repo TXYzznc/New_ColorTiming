@@ -68,11 +68,14 @@ namespace ColorTiming.Combat
     public sealed class PlayerVitality
     {
         private bool resultEmitted;
+        private readonly int dashHeal;
 
         // 初始化玩家Vitality实例及其核心依赖。
-        public PlayerVitality(int maximumHealth = 5)
+        public PlayerVitality(int maximumHealth, int dashHeal)
         {
+            if (dashHeal < 0) throw new ArgumentOutOfRangeException(nameof(dashHeal));
             Health = new Health(maximumHealth);
+            this.dashHeal = dashHeal;
         }
 
         public Health Health { get; }
@@ -109,7 +112,7 @@ namespace ColorTiming.Combat
         // 解析成功冲刺并返回可供上层使用的结果。
         public int ResolveSuccessfulDash()
         {
-            return Result == BattleResult.InProgress ? Health.Heal(1) : 0;
+            return Result == BattleResult.InProgress ? Health.Heal(dashHeal) : 0;
         }
     }
 }

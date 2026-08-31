@@ -9,4 +9,13 @@ namespace ColorTiming.Application.Battle
         // 绑定战斗会话依赖或事件监听。
         void BindBattleSession(BattleSession session);
     }
+
+    /// <summary>
+    /// 标识场景中唯一的 Boss 战斗会话参与者。
+    /// 组合根只依赖该角色，不枚举具体 Boss Actor 类型。
+    /// </summary>
+    public interface IBossBattleSessionConsumer : IBattleSessionConsumer
+    {
+        ColorTiming.Combat.BattleKind BattleKind { get; }
+    }
 }

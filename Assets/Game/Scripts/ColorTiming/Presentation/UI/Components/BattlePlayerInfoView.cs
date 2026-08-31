@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using ColorTiming.Application.Battle;
 using ColorTiming.Input;
 using ColorTiming.Combat;
+using ColorTiming.Configuration;
 using ColorTiming.Presentation.UI.Contracts;
 using ColorTiming.Presentation.UI.Models;
 using UnityEngine;
@@ -37,6 +38,16 @@ public class BattlePlayerInfoView : MonoBehaviour, IGameInputConsumer, IColorTim
     Texture2D appliedCursor;
     IGameInput gameInput;
     IColorTimingUiService uiService;
+    IColorTimingConfiguration configuration;
+    ColorTimingPresentationTable presentationConfiguration;
+    ColorTimingWeaponTable normalWeaponConfiguration;
+
+    public void BindConfiguration(IColorTimingConfiguration source)
+    {
+        configuration = source ?? throw new ArgumentNullException(nameof(source));
+        presentationConfiguration = configuration.Presentation;
+        normalWeaponConfiguration = configuration.GetWeapon(new WeaponIdentity(WeaponColor.Red, WeaponType.Normal));
+    }
 
     // 绑定Game输入依赖或事件监听。
     public void BindGameInput(IGameInput input)
@@ -54,7 +65,8 @@ public class BattlePlayerInfoView : MonoBehaviour, IGameInputConsumer, IColorTim
     private void Start()
     {
         BindSession(session);
-        SetCursor(WeaponPresentationState.NormalCursorIndex);
+        EnsureConfiguration();
+        SetCursor(normalWeaponConfiguration.CursorIndex);
     }
 
     // 绑定会话依赖或事件监听。
@@ -90,11 +102,11 @@ public class BattlePlayerInfoView : MonoBehaviour, IGameInputConsumer, IColorTim
             {
                 if (gameInput.AttackHeld)
                 {
-                    SetCursor(WeaponPresentationState.HeldNormalCursorIndex);
+                    SetCursor(presentationConfiguration.HeldNormalCursorIndex);
                 }
                 else
                 {
-                    SetCursor(WeaponPresentationState.NormalCursorIndex);
+                    SetCursor(normalWeaponConfiguration.CursorIndex);
                 }
             }
         }
@@ -114,7 +126,8 @@ public class BattlePlayerInfoView : MonoBehaviour, IGameInputConsumer, IColorTim
     {
         nowWeapon = weapon;
         hasWeaponState = true;
-        var presentation = WeaponPresentationState.From(weapon);
+        EnsureConfiguration();
+        var presentation = WeaponPresentationState.From(configuration.GetWeapon(weapon));
         if (heroWeapon != null && TryGet(weapons, presentation.IconIndex, out var weaponIcon))
         {
             heroWeapon.sprite = weaponIcon;
@@ -139,7 +152,7 @@ public class BattlePlayerInfoView : MonoBehaviour, IGameInputConsumer, IColorTim
         var opened = uiService != null && uiService.TogglePause();
         if (opened)
         {
-            SetCursor(WeaponPresentationState.PauseCursorIndex);
+            SetCursor(presentationConfiguration.PauseCursorIndex);
             return;
         }
 
@@ -157,7 +170,7 @@ public class BattlePlayerInfoView : MonoBehaviour, IGameInputConsumer, IColorTim
         nowWeapon = default;
         hasWeaponState = false;
         if (heroWeapon != null
-            && TryGet(weapons, WeaponPresentationState.NormalIconIndex, out var normalWeaponIcon))
+            && TryGet(weapons, normalWeaponConfiguration.IconIndex, out var normalWeaponIcon))
         {
             heroWeapon.sprite = normalWeaponIcon;
         }
@@ -171,7 +184,12 @@ public class BattlePlayerInfoView : MonoBehaviour, IGameInputConsumer, IColorTim
             weaponTipx.gameObject.SetActive(false);
         }
 
-        SetCursor(WeaponPresentationState.NormalCursorIndex);
+        SetCursor(normalWeaponConfiguration.CursorIndex);
+    }
+
+    void EnsureConfiguration()
+    {
+        if (configuration == null) throw new InvalidOperationException("BattlePlayerInfoView requires runtime configuration.");
     }
 
     // 设置Cursor，并使后续流程使用最新状态。

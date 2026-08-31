@@ -2,6 +2,7 @@
 // 所属模块：ColorTiming / Domain / Bosses / Boss2。
 
 using System;
+using ColorTiming.Configuration;
 
 namespace ColorTiming.Bosses.Boss2
 {
@@ -23,25 +24,27 @@ namespace ColorTiming.Bosses.Boss2
     public static class Boss2ActionSelector
     {
         // 根据当前规则选择本体。
-        public static Boss2Action SelectHead(float distance, bool facingAway, float sample)
+        public static Boss2Action SelectHead(float distance, bool facingAway, float sample, Boss2ActionRules rules)
         {
             Validate(distance, sample);
-            if (distance > 12f || facingAway)
+            if (rules == null) throw new ArgumentNullException(nameof(rules));
+            if (distance > rules.HeadFarDistance || facingAway)
             {
-                return sample < 0.7f ? Boss2Action.Burrow : Boss2Action.Projectile;
+                return sample < rules.HeadBurrowWeight ? Boss2Action.Burrow : Boss2Action.Projectile;
             }
-            return distance < 9f ? Boss2Action.Melee : Boss2Action.Projectile;
+            return distance < rules.HeadMeleeDistance ? Boss2Action.Melee : Boss2Action.Projectile;
         }
 
         // 根据当前规则选择尾部。
-        public static Boss2Action SelectTail(float distance, bool facingAway, float sample)
+        public static Boss2Action SelectTail(float distance, bool facingAway, float sample, Boss2ActionRules rules)
         {
             Validate(distance, sample);
-            if (distance > 10f || facingAway)
+            if (rules == null) throw new ArgumentNullException(nameof(rules));
+            if (distance > rules.TailFarDistance || facingAway)
             {
                 return Boss2Action.Burrow;
             }
-            return sample < 0.5f ? Boss2Action.Melee : Boss2Action.Projectile;
+            return sample < rules.TailMeleeWeight ? Boss2Action.Melee : Boss2Action.Projectile;
         }
 
         private static void Validate(float distance, float sample)
@@ -63,14 +66,19 @@ namespace ColorTiming.Bosses.Boss2
         private bool tailActivated;
 
         // 初始化Boss2Phase协调器实例及其核心依赖。
-        public Boss2PhaseCoordinator(int initialRemaining)
+        public Boss2PhaseCoordinator(int initialRemaining, int activationRemaining)
         {
             if (initialRemaining <= 0)
             {
                 throw new ArgumentOutOfRangeException(nameof(initialRemaining));
             }
             previousRemaining = initialRemaining;
+            if (activationRemaining < 0 || activationRemaining >= initialRemaining)
+                throw new ArgumentOutOfRangeException(nameof(activationRemaining));
+            this.activationRemaining = activationRemaining;
         }
+
+        private readonly int activationRemaining;
 
         public bool IsTailActive => tailActivated;
 
@@ -82,7 +90,7 @@ namespace ColorTiming.Bosses.Boss2
                 throw new ArgumentOutOfRangeException(nameof(remaining));
             }
 
-            var activate = !tailActivated && previousRemaining == 12 && remaining == 11;
+            var activate = !tailActivated && previousRemaining > activationRemaining && remaining <= activationRemaining;
             previousRemaining = remaining;
             if (activate)
             {

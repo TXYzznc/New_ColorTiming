@@ -17,7 +17,7 @@ namespace ColorTiming.Tests.EditMode
             float sample,
             Boss2Action expected)
         {
-            Assert.That(Boss2ActionSelector.SelectHead(distance, facingAway, sample), Is.EqualTo(expected));
+            Assert.That(Boss2ActionSelector.SelectHead(distance, facingAway, sample, TestConfigurationFactory.Boss2Actions()), Is.EqualTo(expected));
         }
 
         [TestCase(11f, false, 0.9f, Boss2Action.Burrow)]
@@ -30,13 +30,13 @@ namespace ColorTiming.Tests.EditMode
             float sample,
             Boss2Action expected)
         {
-            Assert.That(Boss2ActionSelector.SelectTail(distance, facingAway, sample), Is.EqualTo(expected));
+            Assert.That(Boss2ActionSelector.SelectTail(distance, facingAway, sample, TestConfigurationFactory.Boss2Actions()), Is.EqualTo(expected));
         }
 
         [Test]
         public void TailActivation_IsSingleShotOnlyOnTwelveToElevenTransition()
         {
-            var phase = new Boss2PhaseCoordinator(15);
+            var phase = new Boss2PhaseCoordinator(15, 11);
 
             Assert.That(phase.ObserveRemaining(14), Is.False);
             Assert.That(phase.ObserveRemaining(13), Is.False);

@@ -3,6 +3,7 @@ using NUnit.Framework;
 using System.Linq;
 using ColorTiming.Bootstrap;
 using ColorTiming.Combat;
+using ColorTiming.Configuration;
 using ColorTiming.Presentation.UI.Components;
 using ColorTiming.Presentation.UI.Forms;
 using ColorTiming.Presentation.UI.Models;
@@ -70,25 +71,29 @@ namespace ColorTiming.Tests.PlayMode
         {
             var heroInfo = FindActive<BattlePlayerInfoView>();
             Assert.That(heroInfo, Is.Not.Null);
-            var hero = FindActive<PlayerActorView>();
-            Assert.That(hero, Is.Not.Null);
 
+            var session = heroInfo.Session;
+            Assert.That(session, Is.Not.Null);
+            // 测试只关心 HUD 快照消费；直接固定库存，不受开场教程暂停状态影响。
+            session.TryDrop(out _);
             var testWeapon = new WeaponIdentity(WeaponColor.Red, ColorTiming.Combat.WeaponType.Hammer);
-            var testPresentation = WeaponPresentationState.From(testWeapon);
-            Assert.That(hero.PickUPWeapon(testWeapon), Is.True);
+            var configuration = new GfColorTimingConfiguration();
+            var testPresentation = WeaponPresentationState.From(configuration.GetWeapon(testWeapon));
+            Assert.That(session.Inventory.TryPickup(testWeapon), Is.True);
             Assert.That(heroInfo.heroWeapon.sprite, Is.SameAs(heroInfo.weapons[testPresentation.IconIndex]));
             Assert.That(heroInfo.weaponTip.gameObject.activeSelf, Is.False);
             Assert.That(heroInfo.weaponTipx.gameObject.activeSelf, Is.True);
 
-            var session = heroInfo.Session;
             heroInfo.BindSession(null);
+            var normalPresentation = WeaponPresentationState.From(configuration.GetWeapon(
+                new WeaponIdentity(WeaponColor.Red, ColorTiming.Combat.WeaponType.Normal)));
             Assert.That(heroInfo.heroWeapon.sprite,
-                Is.SameAs(heroInfo.weapons[WeaponPresentationState.NormalIconIndex]));
+                Is.SameAs(heroInfo.weapons[normalPresentation.IconIndex]));
             Assert.That(heroInfo.weaponTip.gameObject.activeSelf, Is.True);
             Assert.That(heroInfo.weaponTipx.gameObject.activeSelf, Is.False);
             heroInfo.BindSession(session);
 
-            var bossHud = FindActive<Boss1HealthView>();
+            var bossHud = FindActive<BossHealthView>();
             Assert.That(bossHud, Is.Not.Null);
             for (var i = 0; i < 3; i++)
             {
@@ -118,40 +123,28 @@ namespace ColorTiming.Tests.PlayMode
 
         static void AssertBoss1Hud(BattleHudForm hud)
         {
-            var heroBoxes = Object.FindObjectsOfType<PlayerHealthPipsView>(true);
-            var bossControllers = Object.FindObjectsOfType<Boss1HealthView>(true);
-            var bossControllers2 = Object.FindObjectsOfType<Boss2HealthView>(true);
-            Assert.That(heroBoxes, Has.Length.EqualTo(1));
-            Assert.That(bossControllers, Has.Length.EqualTo(1));
-            Assert.That(bossControllers2, Has.Length.EqualTo(1));
-            Assert.That(heroBoxes[0].transform.IsChildOf(hud.transform), Is.True);
-            Assert.That(bossControllers[0].transform.IsChildOf(hud.transform), Is.True);
-            Assert.That(bossControllers2[0].transform.IsChildOf(hud.transform), Is.True);
-            Assert.That(bossControllers[0].enabled, Is.True);
-            Assert.That(bossControllers2[0].enabled, Is.False);
-
-            AssertHeroLayout(heroBoxes[0]);
-            Assert.That(bossControllers[0].transform.childCount, Is.EqualTo(7));
-            Debug.Log("[ColorTiming HUD] test scene=Boss1 controllers=hero:1 boss1:enabled boss2:disabled staticOutsideHud:0");
+            AssertSharedBossHud(hud, "Boss1");
         }
 
         static void AssertBoss2Hud(BattleHudForm hud)
         {
+            AssertSharedBossHud(hud, "Boss2");
+        }
+
+        static void AssertSharedBossHud(BattleHudForm hud, string sceneName)
+        {
             var heroBoxes = Object.FindObjectsOfType<PlayerHealthPipsView>(true);
-            var bossControllers = Object.FindObjectsOfType<Boss1HealthView>(true);
-            var bossControllers2 = Object.FindObjectsOfType<Boss2HealthView>(true);
+            var bossControllers = Object.FindObjectsOfType<BossHealthView>(true);
             Assert.That(heroBoxes, Has.Length.EqualTo(1));
             Assert.That(bossControllers, Has.Length.EqualTo(1));
-            Assert.That(bossControllers2, Has.Length.EqualTo(1));
             Assert.That(heroBoxes[0].transform.IsChildOf(hud.transform), Is.True);
             Assert.That(bossControllers[0].transform.IsChildOf(hud.transform), Is.True);
-            Assert.That(bossControllers2[0].transform.IsChildOf(hud.transform), Is.True);
-            Assert.That(bossControllers[0].enabled, Is.False);
-            Assert.That(bossControllers2[0].enabled, Is.True);
+            Assert.That(bossControllers[0].transform.name, Is.EqualTo("Slot_BossHP"));
+            Assert.That(bossControllers[0].GetComponent<HorizontalLayoutGroup>(), Is.Not.Null);
 
             AssertHeroLayout(heroBoxes[0]);
-            Assert.That(bossControllers2[0].transform.childCount, Is.EqualTo(7));
-            Debug.Log("[ColorTiming HUD] test scene=Boss2 controllers=hero:1 boss1:disabled boss2:enabled staticOutsideHud:0");
+            Assert.That(bossControllers[0].transform.childCount, Is.EqualTo(7));
+            Debug.Log($"[ColorTiming HUD] test scene={sceneName} controllers=hero:1 boss:1 shared-slot:PASS staticOutsideHud:0");
         }
 
         static void AssertDynamicBattlePresentation(string sceneName)
@@ -161,6 +154,16 @@ namespace ColorTiming.Tests.PlayMode
             Assert.That(Object.FindObjectOfType<BattleTutorialForm>(true), Is.Not.Null,
                 $"{sceneName} must open the runtime battle tutorial form.");
             var scene = SceneManager.GetSceneByName(sceneName);
+            var spawners = scene.GetRootGameObjects()
+                .SelectMany(root => root.GetComponentsInChildren<WeaponSpawnerView>(true))
+                .ToArray();
+            Assert.That(spawners, Has.Length.EqualTo(1),
+                $"{sceneName} must contain exactly one shared WeaponSpawnerView.");
+            Assert.That(spawners[0].GetType(), Is.EqualTo(typeof(WeaponSpawnerView)),
+                $"{sceneName} must not restore a Boss-specific weapon spawner subclass.");
+            Assert.That(spawners[0].GetSupportedWeapons().Count,
+                Is.EqualTo(sceneName == "Boss1" ? 9 : 12),
+                $"{sceneName} must retain its authored weapon rule asset.");
             Assert.That(scene.GetRootGameObjects()
                 .SelectMany(root => root.GetComponentsInChildren<Canvas>(true)), Is.Empty,
                 $"{sceneName} must not retain an authored Canvas UI root.");

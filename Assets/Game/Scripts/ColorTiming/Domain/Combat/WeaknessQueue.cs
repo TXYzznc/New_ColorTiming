@@ -4,15 +4,18 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ColorTiming.Configuration;
 
 namespace ColorTiming.Combat
 {
     public sealed class WeaknessQueue
     {
         private readonly List<WeaponColor> segments;
+        private readonly int upcomingLimit;
 
-        private WeaknessQueue(IEnumerable<WeaponColor> source, IRandomSource random)
+        private WeaknessQueue(IEnumerable<WeaponColor> source, IRandomSource random, int upcomingLimit)
         {
+            this.upcomingLimit = upcomingLimit;
             segments = new List<WeaponColor>(source);
             for (var index = segments.Count - 1; index > 0; index--)
             {
@@ -29,21 +32,17 @@ namespace ColorTiming.Combat
             ? segments[0]
             : throw new InvalidOperationException("The weakness queue is empty.");
 
-        // 创建Boss1并完成必要的初始配置。
-        public static WeaknessQueue CreateBoss1(IRandomSource random)
+        /// <summary>按配置表给出的颜色构成创建队列。</summary>
+        public static WeaknessQueue Create(IRandomSource random, WeaknessComposition composition)
         {
-            return Create(random, 4, 3, 4, 0);
-        }
-
-        // 创建Boss2并完成必要的初始配置。
-        public static WeaknessQueue CreateBoss2(IRandomSource random)
-        {
-            return Create(random, 4, 4, 4, 3);
+            return Create(random, composition.Red, composition.Green, composition.Purple, composition.Orange,
+                composition.UpcomingLimit);
         }
 
         // 执行Upcoming对应的主要流程。
-        public IReadOnlyList<WeaponColor> Upcoming(int maximum = 7)
+        public IReadOnlyList<WeaponColor> Upcoming(int maximum = -1)
         {
+            if (maximum < 0) maximum = upcomingLimit;
             if (maximum < 0)
             {
                 throw new ArgumentOutOfRangeException(nameof(maximum));
@@ -69,7 +68,8 @@ namespace ColorTiming.Combat
             int red,
             int green,
             int purple,
-            int orange)
+            int orange,
+            int upcomingLimit)
         {
             if (random == null)
             {
@@ -81,7 +81,7 @@ namespace ColorTiming.Combat
             Add(values, WeaponColor.Green, green);
             Add(values, WeaponColor.Purple, purple);
             Add(values, WeaponColor.Orange, orange);
-            return new WeaknessQueue(values, random);
+            return new WeaknessQueue(values, random, upcomingLimit);
         }
 
         private static void Add(ICollection<WeaponColor> values, WeaponColor color, int count)

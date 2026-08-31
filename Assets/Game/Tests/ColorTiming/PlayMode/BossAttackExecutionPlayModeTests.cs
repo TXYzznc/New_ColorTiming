@@ -65,6 +65,7 @@ namespace ColorTiming.Tests.PlayMode
             yield return BootToStartMenu();
             FindActive<MainMenuForm>().GoTest1();
             yield return WaitForScene("Boss1", TransitionTimeout);
+            yield return ColorTimingPlayModeBoot.WaitForBattleReady("Boss1", TransitionTimeout);
 
             var boss = FindActive<Boss1ActorView>();
             var presentation = boss.GetComponent<Boss1AnimationEventRelay>();
@@ -140,6 +141,7 @@ namespace ColorTiming.Tests.PlayMode
             yield return BootToStartMenu();
             FindActive<MainMenuForm>().GoTest2();
             yield return WaitForScene("Boss2", TransitionTimeout);
+            yield return ColorTimingPlayModeBoot.WaitForBattleReady("Boss2", TransitionTimeout);
 
             var boss = FindActive<Boss2ActorView>();
             var presentation = boss.GetComponent<Boss2AnimationEventRelay>();
@@ -153,6 +155,15 @@ namespace ColorTiming.Tests.PlayMode
             Assert.That(Boss2HeadBurrow, Is.Not.Null);
             Assert.That(Boss2TailCooldown, Is.Not.Null);
             Assert.That(Boss2TailBurrow, Is.Not.Null);
+
+            // 本测试只验证 Boss 动画事件与实体生成合同。隔离玩家受击，避免长流程中
+            // 实际技能随机击杀玩家并触发场景重载，使后续 Spine 引用失效。
+            var player = FindActive<PlayerActorView>();
+            Assert.That(player, Is.Not.Null);
+            foreach (var playerCollider in player.GetComponentsInChildren<Collider2D>())
+            {
+                playerCollider.enabled = false;
+            }
 
             // FixedUpdate must remain enabled for burrow movement; an infinite cooldown
             // suppresses only the random attack chooser while the forced contracts run.

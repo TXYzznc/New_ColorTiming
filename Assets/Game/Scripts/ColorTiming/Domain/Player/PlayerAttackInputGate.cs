@@ -11,12 +11,21 @@ namespace ColorTiming.Player
     /// </summary>
     public sealed class PlayerAttackInputGate
     {
-        public const float ResumeGuardSeconds = 0.2f;
-        public const float HeldAnimatorThreshold = 0.1f;
+        private readonly float resumeGuardSeconds;
+        private readonly float heldAnimatorThreshold;
+
+        public PlayerAttackInputGate(float resumeGuardSeconds, float heldAnimatorThreshold)
+        {
+            if (resumeGuardSeconds < 0f) throw new ArgumentOutOfRangeException(nameof(resumeGuardSeconds));
+            if (heldAnimatorThreshold < 0f || heldAnimatorThreshold >= 1f)
+                throw new ArgumentOutOfRangeException(nameof(heldAnimatorThreshold));
+            this.resumeGuardSeconds = resumeGuardSeconds;
+            this.heldAnimatorThreshold = heldAnimatorThreshold;
+        }
 
         private float activeTime;
 
-        public bool IsReady => activeTime > ResumeGuardSeconds;
+        public bool IsReady => activeTime > resumeGuardSeconds;
 
         // 按当前时间步推进核心状态，并发布必要的状态变化。
         public void Tick(float deltaTime)
@@ -43,7 +52,7 @@ namespace ColorTiming.Player
         // 执行按住状态Animator值对应的主要流程。
         public float HeldAnimatorValue(bool attackHeld)
         {
-            return IsReady && attackHeld ? 1f : 0f;
+            return IsReady && attackHeld ? Math.Max(heldAnimatorThreshold + 0.001f, 1f) : 0f;
         }
     }
 }

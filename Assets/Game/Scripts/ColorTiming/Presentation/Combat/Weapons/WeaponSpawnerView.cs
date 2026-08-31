@@ -4,18 +4,19 @@
 using Array = System.Array;
 using System.Collections.Generic;
 using ColorTiming.Application.Battle;
+using ColorTiming.Bootstrap.Flow;
 using ColorTiming.Combat;
+using ColorTiming.Configuration;
 using ColorTiming.Player;
 using ColorTiming.Presentation.Entities;
 using UnityEngine;
 
 /// <summary>
-/// Shared Unity-facing lifecycle for the two stage-specific weapon generators.
-/// Existing concrete MonoBehaviour types retain their scene GUIDs and boss event wiring.
+/// 所有 Boss 战共用的武器生成表现；关卡差异由 GF DataTable 注入。
 /// </summary>
-public abstract class WeaponSpawnerView : MonoBehaviour, ITransientEntityConsumer, IBattleSessionConsumer
+public sealed class WeaponSpawnerView : MonoBehaviour, ITransientEntityConsumer, IBattleSessionConsumer,
+    IColorTimingConfigurationConsumer
 {
-    [SerializeField] private WeaponSpawnRuleAsset spawnRule;
     public GameObject weaponItem;
     public Transform weaponT;
 
@@ -29,13 +30,23 @@ public abstract class WeaponSpawnerView : MonoBehaviour, ITransientEntityConsume
     private BattleSession session;
     private int lastWeaknessCount = -1;
     private int trackedWeaponChildCount = -1;
+    private WeaponSpawnConfiguration spawnConfiguration;
+    private int tutorialTipId;
+    private bool started;
 
-    protected abstract int TutorialTipId { get; }
+    public void BindConfiguration(IColorTimingConfiguration configuration, ColorTimingSceneId sceneId)
+    {
+        if (configuration == null) throw new System.ArgumentNullException(nameof(configuration));
+        var battle = configuration.GetBattle(sceneId);
+        spawnConfiguration = configuration.GetWeaponSpawnRule(battle.WeaponSpawnRuleId);
+        tutorialTipId = battle.TutorialId;
+        TryInitializeRuntime();
+    }
 
     /// <summary>Exposes the authored weapon set for scene-level presentation preloading.</summary>
     public IReadOnlyList<WeaponIdentity> GetSupportedWeapons()
     {
-        return spawnRule != null ? spawnRule.GetSupportedWeapons() : Array.Empty<WeaponIdentity>();
+        return spawnConfiguration != null ? spawnConfiguration.AllowedWeapons : Array.Empty<WeaponIdentity>();
     }
 
     // 绑定战斗会话依赖或事件监听。
@@ -54,30 +65,38 @@ public abstract class WeaponSpawnerView : MonoBehaviour, ITransientEntityConsume
     }
 
     // 在首帧启动依赖就绪后的业务或表现流程。
-    protected virtual void Start()
+    void Start()
     {
-        if (spawnRule == null || spawnRule.SpawnInterval <= 0f)
+        started = true;
+        TryInitializeRuntime();
+    }
+
+    private void TryInitializeRuntime()
+    {
+        if (!started || runtime != null || spawnConfiguration == null)
         {
-            Debug.LogError($"{name}: a valid WeaponSpawnRuleAsset must be assigned.", this);
-            enabled = false;
             return;
         }
-
+        if (spawnConfiguration.SpawnInterval <= 0f)
+        {
+            throw new System.InvalidOperationException(
+                $"{name}: weapon spawn table interval must be greater than zero.");
+        }
         runtime = new WeaponSpawnerRuntime(
-            spawnRule.SpawnInterval,
-            spawnRule.CreatePolicy(),
+            spawnConfiguration.SpawnInterval,
+            spawnConfiguration.CreatePolicy(),
             new UnityWeaponRandomSource());
         RefreshPickupCache();
     }
 
     // 组件销毁时释放订阅、句柄和运行时资源。
-    protected virtual void OnDestroy()
+    void OnDestroy()
     {
         if (session != null) session.SnapshotChanged -= OnSnapshotChanged;
     }
 
     // 逐帧推进需要实时刷新的业务或表现状态。
-    protected virtual void Update()
+    void Update()
     {
         if (runtime == null || session == null
             || session.Snapshot.Lifecycle != BattleLifecycle.Running
@@ -196,7 +215,7 @@ public abstract class WeaponSpawnerView : MonoBehaviour, ITransientEntityConsume
             foreach (var pickup in trackedPickups)
             {
                 if (pickup != null && pickup.HasWeapon
-                    && Vector2.Distance(anchor.position, pickup.transform.position) < 1f)
+                    && Vector2.Distance(anchor.position, pickup.transform.position) < spawnConfiguration.MinimumAnchorDistance)
                 {
                     occupied = true;
                     break;
@@ -216,7 +235,7 @@ public abstract class WeaponSpawnerView : MonoBehaviour, ITransientEntityConsume
 
     private void CheckWeaponTip()
     {
-        if (damageCount > 2 || tipCount > damageCount || weaponT == null)
+        if (damageCount >= spawnConfiguration.TutorialDamageLimit || tipCount > damageCount || weaponT == null)
         {
             return;
         }
@@ -230,7 +249,7 @@ public abstract class WeaponSpawnerView : MonoBehaviour, ITransientEntityConsume
         {
             if (pickup != null && pickup.HasWeapon && pickup.Weapon.Color == weakness)
             {
-                pickup.ShowTip(TutorialTipId);
+                pickup.ShowTip(tutorialTipId);
                 tipCount++;
                 return;
             }

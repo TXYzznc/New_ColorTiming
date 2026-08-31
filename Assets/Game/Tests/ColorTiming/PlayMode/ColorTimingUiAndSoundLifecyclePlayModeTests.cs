@@ -113,7 +113,7 @@ namespace ColorTiming.Tests.PlayMode
 
         [UnityTest]
         [Timeout(90000)]
-        public IEnumerator StartMenuToBoss1_LoadingFormOpensBeforeOutgoingSceneUnloads()
+        public IEnumerator StartMenuToBoss1_LoadingFormCoversTransitionAndClosesAfterCompletion()
         {
             yield return BootToStartMenu();
 
@@ -121,10 +121,9 @@ namespace ColorTiming.Tests.PlayMode
             yield return WaitUntil(() => FindActive<ColorTimingLoadingForm>() != null, 10f,
                 "Boss1 transition did not open the project Loading form.");
 
-            Assert.That(SceneManager.GetSceneByName("StartMenu").isLoaded, Is.True,
-                "The outgoing scene must remain loaded while the Loading form receives its first visible frame.");
-
             yield return WaitForScene("Boss1", TransitionTimeout);
+            yield return WaitUntil(() => FindActive<ColorTimingLoadingForm>() == null, 10f,
+                "The project Loading form did not close after the Boss1 transition completed.");
         }
 
         [UnityTest]

@@ -5,6 +5,7 @@ using System;
 using System.Linq;
 using ColorTiming.Bootstrap.Flow;
 using ColorTiming.Combat;
+using ColorTiming.Configuration;
 using ColorTiming.Infrastructure.GF.Audio;
 using ColorTiming.Infrastructure.GF.Entity;
 using ColorTiming.Infrastructure.GF.Settings;
@@ -37,6 +38,7 @@ namespace ColorTiming.Bootstrap
         private GfColorTimingSoundService soundService;
         private GfColorTimingUiService uiService;
         private ColorTimingTransitionScheduler transitionScheduler;
+        private GfColorTimingConfiguration configuration;
         private BattleRuntimeContext battleRuntime;
         private bool initialized;
         private bool disposed;
@@ -51,6 +53,7 @@ namespace ColorTiming.Bootstrap
         public IColorTimingSceneFlow SceneFlow => sceneFlow;
         public IGameInput GameInput => gameInput;
         public IGameTime GameTime => gameTime;
+        public IColorTimingConfiguration Configuration => configuration;
 
         // 执行Initialize对应的主要流程。
         public void Initialize()
@@ -61,16 +64,17 @@ namespace ColorTiming.Bootstrap
                 return;
             }
 
+            configuration = new GfColorTimingConfiguration();
             inputHost = new GameObject("[ColorTiming] Input (Clone)");
             UnityEngine.Object.DontDestroyOnLoad(inputHost);
             gameInput = inputHost.AddComponent<LegacyGameInputAdapter>();
             gameTime = inputHost.AddComponent<UnityGameTimeAdapter>();
             transitionScheduler = inputHost.AddComponent<ColorTimingTransitionScheduler>();
             soundService = inputHost.AddComponent<GfColorTimingSoundService>();
-            soundService.Initialize(gameTime);
-            transientEntities = new GfTransientEntityService(soundService);
+            soundService.Initialize(gameTime, configuration);
+            transientEntities = new GfTransientEntityService(soundService, configuration);
             settings = new GfColorTimingSettings();
-            uiService = new GfColorTimingUiService(gameTime, sceneFlow, settings, gameInput, soundService);
+            uiService = new GfColorTimingUiService(gameTime, sceneFlow, settings, gameInput, soundService, configuration);
             uiService.TransitionPresentationReady += OnTransitionPresentationReady;
             sceneFlow.TransitionStarted += OnTransitionStarted;
             initialized = true;
@@ -164,6 +168,7 @@ namespace ColorTiming.Bootstrap
                 settings = null;
                 soundService = null;
                 transitionScheduler = null;
+                configuration = null;
             }
             sceneFlow.Dispose();
         }
@@ -217,7 +222,7 @@ namespace ColorTiming.Bootstrap
             battleRuntime.ResourcePreparationFailed += error => failPreparation?.Invoke(error);
             battleRuntime.Initialize(
                 anchors, sceneId, gameInput, gameTime, transientEntities,
-                sceneFlow, settings, soundService, uiService);
+                sceneFlow, settings, soundService, uiService, configuration);
         }
 
         private void ThrowIfDisposed()
