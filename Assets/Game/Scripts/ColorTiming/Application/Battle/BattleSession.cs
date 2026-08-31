@@ -150,6 +150,19 @@ namespace ColorTiming.Application.Battle
                    && Inventory.TryPickup(weapon);
         }
 
+        /// <summary>
+        /// 执行一次完整的手动换装：空手时拾取，持有武器时原子替换。
+        /// 攻击、受击等不可交互状态下整次命令都会被拒绝，不会留下延迟输入。
+        /// </summary>
+        public bool TryEquipOrSwap(WeaponIdentity weapon, out WeaponIdentity replaced)
+        {
+            EnsureMutable();
+            replaced = Inventory.Current;
+            return Lifecycle == BattleLifecycle.Running
+                   && PlayerActions.CanInteractWithWeapons
+                   && Inventory.TryEquipOrSwap(weapon, out replaced);
+        }
+
         // 尝试丢弃，并通过返回值报告是否成功。
         public bool TryDrop(out WeaponIdentity weapon)
         {

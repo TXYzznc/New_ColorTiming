@@ -7,6 +7,7 @@ using ColorTiming.Bosses.Boss2;
 using ColorTiming.Application.Battle;
 using ColorTiming.Bootstrap;
 using ColorTiming.Combat;
+using ColorTiming.Configuration;
 using ColorTiming.Infrastructure.GF.Entity;
 using ColorTiming.Presentation.Entities;
 using ColorTiming.Presentation.UI.Components;
@@ -66,6 +67,8 @@ namespace ColorTiming.Tests.PlayMode
             FindActive<MainMenuForm>().GoTest1();
             yield return WaitForScene("Boss1", TransitionTimeout);
             yield return ColorTimingPlayModeBoot.WaitForBattleReady("Boss1", TransitionTimeout);
+
+            AssertAuthoredBossSkillLifetimes();
 
             var boss = FindActive<Boss1ActorView>();
             var presentation = boss.GetComponent<Boss1AnimationEventRelay>();
@@ -454,6 +457,35 @@ namespace ColorTiming.Tests.PlayMode
             return UnityEngine.Object.FindObjectsOfType<ColorTimingTransientEntity>(true)
                 .Where(entity => entity.gameObject.activeInHierarchy)
                 .ToArray();
+        }
+
+        static void AssertAuthoredBossSkillLifetimes()
+        {
+            var configuration = new GfColorTimingConfiguration();
+            var expected = new Dictionary<string, float>
+            {
+                ["sk_Boss1_atk1"] = 0f,
+                ["sk_Boss1_atk2"] = 0.5f,
+                ["sk_Boss1_atk3"] = 0f,
+                ["sk_Boss1_atk3 1"] = 0f,
+                ["sk_Boss1_atk5"] = 0f,
+                ["sk_Boss1_atk5_b"] = 0f,
+                ["sk_boos_atk5_item"] = 0f,
+                ["sk_Boss1_atk6"] = 1f,
+                ["sk_Boss2_Atk1"] = 0.5f,
+                ["sk_Boss2_atk2"] = 0f,
+                ["sk_Boss2_atk2_s"] = 0f,
+                ["sk_Bo2w_atk1-t"] = 0.5f,
+                ["sk_Bo2_atk0"] = 0.8f,
+            };
+
+            foreach (var pair in expected)
+            {
+                Assert.That(configuration.TryGetSkillByEntity(pair.Key, out var skill), Is.True,
+                    $"Missing skill configuration for {pair.Key}.");
+                Assert.That(skill.Lifetime, Is.EqualTo(pair.Value).Within(0.001f),
+                    $"{pair.Key} lifetime no longer matches the authored prefab contract.");
+            }
         }
 
         static IEnumerator BootToStartMenu()

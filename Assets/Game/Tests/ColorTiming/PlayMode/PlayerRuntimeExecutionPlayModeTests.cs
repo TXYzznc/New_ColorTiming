@@ -26,6 +26,10 @@ namespace ColorTiming.Tests.PlayMode
             "playerState",
             BindingFlags.Instance | BindingFlags.NonPublic);
 
+        static readonly MethodInfo InteractWeapon = typeof(PlayerActorView).GetMethod(
+            "DisWeapon",
+            BindingFlags.Instance | BindingFlags.NonPublic);
+
         [UnityTest]
         [Timeout(180000)]
         public IEnumerator SemanticInput_PickupHitDashDeathAndAnimationRestartExecuteInBoss1()
@@ -76,19 +80,50 @@ namespace ColorTiming.Tests.PlayMode
                     yield return new WaitForFixedUpdate();
                 }
                 Assert.That(hero.characterSprite.transform.localScale.x, Is.LessThan(0f));
-                input.Move = Vector2.zero;
 
                 Assert.That(hero.PickUPWeapon(
-                    new WeaponIdentity(WeaponColor.Red, ColorTiming.Combat.WeaponType.Scissors)), Is.True);
-                Assert.That(hero.nowweapon.Type, Is.EqualTo(ColorTiming.Combat.WeaponType.Scissors));
+                    new WeaponIdentity(WeaponColor.Red, ColorTiming.Combat.WeaponType.Hammer)), Is.True);
+                Assert.That(hero.nowweapon.Type, Is.EqualTo(ColorTiming.Combat.WeaponType.Hammer));
                 Assert.That(hero.nowweapon.Color, Is.EqualTo(WeaponColor.Red));
+                yield return WaitUntil(
+                    () => hero.PresentedWeapon.Type == ColorTiming.Combat.WeaponType.Hammer,
+                    3f,
+                    "Moving pickup did not install the preloaded Hammer presentation immediately.");
+                yield return new WaitForFixedUpdate();
+                Assert.That(hero.animator.GetLayerWeight(1), Is.GreaterThan(0.99f),
+                    "Heavy-weapon movement must be owned by the presented weapon, not stale inventory state.");
+
+                var nearbyWeapon = new WeaponIdentity(
+                    WeaponColor.Purple,
+                    ColorTiming.Combat.WeaponType.Scissors);
+                hero.PreloadWeaponAnimation(nearbyWeapon);
+                void PickupNearbyWeapon() => hero.PickUPWeapon(nearbyWeapon);
+                hero.OnPickUPWeapon.AddListener(PickupNearbyWeapon);
+                Assert.That(InteractWeapon, Is.Not.Null);
+                InteractWeapon.Invoke(hero, new object[] { false });
+                hero.OnPickUPWeapon.RemoveListener(PickupNearbyWeapon);
+
+                Assert.That(hero.nowweapon, Is.EqualTo(nearbyWeapon),
+                    "One semantic right-click must swap directly to the nearby weapon.");
+                yield return WaitUntil(
+                    () => hero.PresentedWeapon.Equals(nearbyWeapon),
+                    3f,
+                    "The one-click swap did not install the incoming weapon presentation.");
 
                 hero.ReceiveDamage(BattleDamageTestFactory.ToPlayer(
                     (Vector2)hero.transform.position + Vector2.left, "player-contract-hit"));
                 Assert.That(hero.heroHP, Is.EqualTo(4));
                 Assert.That(hero.nowweapon.Type, Is.EqualTo(ColorTiming.Combat.WeaponType.Normal),
                     "A damaging hit must force the held weapon to drop.");
+                input.Move = Vector2.zero;
                 yield return WaitForHitRecovery(state);
+                yield return WaitUntil(
+                    () => hero.PresentedWeapon.Type == ColorTiming.Combat.WeaponType.Normal,
+                    3f,
+                    "Hit recovery did not restore the empty-hand presentation.");
+                Assert.That(hero.animator.GetLayerWeight(0), Is.GreaterThan(0.99f));
+                Assert.That(hero.animator.GetLayerWeight(1), Is.LessThan(0.01f),
+                    "Heavy movement layer remained active after forced weapon drop.");
 
                 yield return WaitUntil(
                     () => hero.animator.GetCurrentAnimatorStateInfo(0).IsName("Daiji")

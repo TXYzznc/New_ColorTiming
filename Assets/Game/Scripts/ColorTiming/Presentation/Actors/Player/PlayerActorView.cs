@@ -83,6 +83,8 @@ public class PlayerActorView : MonoBehaviour, IBattleSessionConsumer, IBattleDam
     readonly HashSet<WeaponIdentity> failedWeaponControllers = new HashSet<WeaponIdentity>();
     IPlayerAnimationDriver animationDriver;
     MecanimPlayerAnimationDriver mecanimAnimationDriver;
+    bool resolvingWeaponInteraction;
+    bool weaponInteractionHandled;
     bool inventorySubscribed;
     bool resourceContextReleased;
     IColorTimingConfiguration configuration;
@@ -423,8 +425,27 @@ public class PlayerActorView : MonoBehaviour, IBattleSessionConsumer, IBattleDam
     // 执行PickUP武器对应的主要流程。
     public bool PickUPWeapon(WeaponIdentity weapon)
     {
-        if (battleSession == null || !battleSession.TryPickup(weapon))
+        // 同一帧可能重叠多个拾取触发器；一次右键只允许其中一个完成换装。
+        if (resolvingWeaponInteraction && weaponInteractionHandled)
             return false;
+
+        if (battleSession == null || !battleSession.TryEquipOrSwap(weapon, out var replaced))
+        {
+            Debug.Log(
+                $"[ColorTiming.WeaponInteraction] action=EquipOrSwap result=rejected incoming={weapon} resolving={resolvingWeaponInteraction}",
+                this);
+            return false;
+        }
+
+        weaponInteractionHandled = true;
+        Debug.Log(
+            $"[ColorTiming.WeaponInteraction] action=EquipOrSwap result=accepted incoming={weapon} replaced={replaced}",
+            this);
+
+        if (!replaced.IsNormal)
+        {
+            weaponSpawner?.CreateWeapon_dis(transform.position, replaced);
+        }
 
         soundManager?.Play(PlayerSoundCue.PickupWeapon);
 
@@ -581,13 +602,34 @@ public class PlayerActorView : MonoBehaviour, IBattleSessionConsumer, IBattleDam
     void DisWeapon(bool dis)
     {
         if (playerState == null || !playerState.CanInteractWithWeapons) return;
-        if (battleSession == null || !battleSession.TryDrop(out var dropped))
+
+        // 手动右键优先让当前范围内的拾取物完成原子换装；没有目标时才丢弃当前武器。
+        if (!dis)
         {
-            if (!dis)
+            var beforeInteraction = battleSession != null ? battleSession.Inventory.Current : nowweapon;
+            resolvingWeaponInteraction = true;
+            weaponInteractionHandled = false;
+            try
             {
                 OnPickUPWeapon?.Invoke();
             }
+            finally
+            {
+                resolvingWeaponInteraction = false;
+            }
 
+            Debug.Log(
+                $"[ColorTiming.WeaponInteraction] action=ResolveNearby result={(weaponInteractionHandled ? "handled" : "no-target")} before={beforeInteraction} after={(battleSession != null ? battleSession.Inventory.Current : nowweapon)}",
+                this);
+
+            if (weaponInteractionHandled)
+            {
+                return;
+            }
+        }
+
+        if (battleSession == null || !battleSession.TryDrop(out var dropped))
+        {
             return;
         }
 

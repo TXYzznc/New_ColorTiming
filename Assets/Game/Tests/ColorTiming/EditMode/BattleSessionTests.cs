@@ -80,6 +80,57 @@ namespace ColorTiming.Tests.EditMode
             Assert.Throws<ObjectDisposedException>(() => session.TryBeginAttack());
         }
 
+        [Test]
+        public void ManualWeaponInteraction_IsIgnoredDuringAttackAndNotQueued()
+        {
+            using var session = new BattleSession(TestConfigurationFactory.Battle(BattleKind.Boss1), new SeededRandomSource(5));
+            var weapon = new WeaponIdentity(WeaponColor.Green, CombatWeaponType.Hammer);
+
+            Assert.That(session.TryBeginAttack(), Is.True);
+            Assert.That(session.TryPickup(weapon), Is.False);
+            Assert.That(session.Inventory.IsEmpty, Is.True);
+            Assert.That(session.TryDrop(out _), Is.False);
+
+            session.EndAttack();
+            Assert.That(session.Inventory.IsEmpty, Is.True, "Rejected input must not execute after the attack.");
+            Assert.That(session.TryPickup(weapon), Is.True);
+        }
+
+        [Test]
+        public void ManualWeaponInteraction_SwapsHeldWeaponInOneCommand()
+        {
+            using var session = new BattleSession(TestConfigurationFactory.Battle(BattleKind.Boss1), new SeededRandomSource(9));
+            var held = new WeaponIdentity(WeaponColor.Green, CombatWeaponType.Hammer);
+            var incoming = new WeaponIdentity(WeaponColor.Orange, CombatWeaponType.Airplane);
+
+            Assert.That(session.TryPickup(held), Is.True);
+            Assert.That(session.TryEquipOrSwap(incoming, out var replaced), Is.True);
+            Assert.That(replaced, Is.EqualTo(held));
+            Assert.That(session.Inventory.Current, Is.EqualTo(incoming));
+        }
+
+        [Test]
+        public void AcceptedDamage_InterruptsAttackAndForcesWeaponDrop()
+        {
+            using var session = new BattleSession(TestConfigurationFactory.Battle(BattleKind.Boss1), new SeededRandomSource(6));
+            var weapon = new WeaponIdentity(WeaponColor.Purple, CombatWeaponType.Scissors);
+            Assert.That(session.TryPickup(weapon), Is.True);
+            Assert.That(session.TryBeginAttack(), Is.True);
+
+            var result = session.ApplyPlayerDamage(new BattleDamage(
+                ActorId.BossHead,
+                ActorId.Player,
+                new WeaponIdentity(WeaponColor.Red, CombatWeaponType.Normal),
+                new CombatPoint(1f, 0f)));
+
+            Assert.That(result, Is.EqualTo(PlayerDamageResolution.Damaged));
+            Assert.That(session.PlayerActions.State, Is.EqualTo(ColorTiming.Player.PlayerActionState.HitStun));
+            Assert.That(session.Inventory.IsEmpty, Is.True);
+            session.EndAttack();
+            Assert.That(session.PlayerActions.State, Is.EqualTo(ColorTiming.Player.PlayerActionState.HitStun),
+                "A stale attack-exit callback must not cancel hit stun.");
+        }
+
         private static BattleDamage BossDamage(WeaponColor color)
         {
             return new BattleDamage(

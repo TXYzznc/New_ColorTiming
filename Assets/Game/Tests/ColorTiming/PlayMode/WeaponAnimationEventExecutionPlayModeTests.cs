@@ -8,6 +8,7 @@ using ColorTiming.Infrastructure.GF.Entity;
 using ColorTiming.Infrastructure.GF.Settings;
 using ColorTiming.Infrastructure.Unity.Input;
 using ColorTiming.Input;
+using ColorTiming.Player;
 using ColorTiming.Presentation.Entities;
 using ColorTiming.Presentation.UI.Components;
 using ColorTiming.Presentation.UI.Forms;
@@ -39,6 +40,10 @@ namespace ColorTiming.Tests.PlayMode
 
         static readonly FieldInfo SkillParameter = typeof(Skill_base).GetField(
             "parm",
+            BindingFlags.Instance | BindingFlags.NonPublic);
+
+        static readonly FieldInfo PlayerState = typeof(PlayerActorView).GetField(
+            "playerState",
             BindingFlags.Instance | BindingFlags.NonPublic);
 
         [UnityTest]
@@ -152,6 +157,10 @@ namespace ColorTiming.Tests.PlayMode
             string eventParameter)
         {
             yield return HideMatchingEntities(expectedEntityName);
+            var playerState = (PlayerActionStateMachine)PlayerState.GetValue(hero);
+            Assert.That(playerState, Is.Not.Null);
+            Assert.That(playerState.BeginAttack(), Is.True,
+                "The test must establish an authoritative attack before delivering its animation event.");
             eventReceiver.Attack(eventParameter);
 
             ColorTimingTransientEntity entity = null;
@@ -189,6 +198,7 @@ namespace ColorTiming.Tests.PlayMode
             {
                 Assert.That(actualParameter, Is.EqualTo(eventParameter));
             }
+            playerState.EndAttack();
         }
 
         static GameObject ExpectedPrefab(PlayerSkillEmitter fire, CombatWeaponType type)

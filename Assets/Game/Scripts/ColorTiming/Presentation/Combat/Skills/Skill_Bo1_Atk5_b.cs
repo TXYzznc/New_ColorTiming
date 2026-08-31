@@ -62,7 +62,7 @@ public class Skill_Bo1_Atk5_b : Skill_base
     public void ChildTrigger(Collider2D collision)
     {
         if(tr || !gameObject) return;
-        if (cTag != "" && cTag != collision.gameObject.tag) return;
+        if (!MatchesTargetTag(collision)) return;
         OnHit(collision, gameObject);
 
         tr = true;

@@ -22,6 +22,19 @@ namespace ColorTiming.Tests.EditMode
         }
 
         [Test]
+        public void Inventory_EquipOrSwap_ReplacesHeldWeaponAtomically()
+        {
+            var inventory = new PlayerWeaponInventory();
+            var held = new WeaponIdentity(WeaponColor.Green, CombatWeaponType.Hammer);
+            var incoming = new WeaponIdentity(WeaponColor.Purple, CombatWeaponType.Scissors);
+
+            Assert.That(inventory.TryPickup(held), Is.True);
+            Assert.That(inventory.TryEquipOrSwap(incoming, out var replaced), Is.True);
+            Assert.That(replaced, Is.EqualTo(held));
+            Assert.That(inventory.Current, Is.EqualTo(incoming));
+        }
+
+        [Test]
         public void SpawnerRuntime_UsesClock_AndGuaranteesCurrentWeakness()
         {
             var runtime = new WeaponSpawnerRuntime(

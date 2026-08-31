@@ -174,7 +174,8 @@ public class Skill_base : MonoBehaviour, ITransientEntityConsumer, IFrameworkEnt
         //collision.
     }
 
-    private bool MatchesTargetTag(Collider2D collision)
+    /// <summary>允许命中盒挂在目标子节点上，目标标签可由任意父节点声明。</summary>
+    protected bool MatchesTargetTag(Collider2D collision)
     {
         if (string.IsNullOrEmpty(cTag)) return true;
 

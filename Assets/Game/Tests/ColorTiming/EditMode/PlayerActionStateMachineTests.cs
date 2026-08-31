@@ -86,5 +86,18 @@ namespace ColorTiming.Tests.EditMode
             gate.Reset();
             Assert.That(gate.IsReady, Is.False);
         }
+
+        [Test]
+        public void WeaponInteraction_IsAllowedInLocomotionButRejectedDuringAttack()
+        {
+            var state = new PlayerActionStateMachine(1f);
+            Assert.That(state.CanInteractWithWeapons, Is.True);
+
+            Assert.That(state.BeginAttack(), Is.True);
+            Assert.That(state.CanInteractWithWeapons, Is.False);
+
+            state.EndAttack();
+            Assert.That(state.CanInteractWithWeapons, Is.True);
+        }
     }
 }

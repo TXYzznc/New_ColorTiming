@@ -35,6 +35,22 @@ namespace ColorTiming.Player
             return true;
         }
 
+        /// <summary>
+        /// 用场上的目标武器替换当前武器；空手时等价于拾取。
+        /// 返回被替换的旧武器，供表现层在玩家位置生成掉落物。
+        /// </summary>
+        public bool TryEquipOrSwap(WeaponIdentity weapon, out WeaponIdentity replaced)
+        {
+            replaced = Current;
+            if (weapon.IsNormal || weapon.Equals(Current))
+            {
+                return false;
+            }
+
+            Set(weapon);
+            return true;
+        }
+
         // 尝试丢弃，并通过返回值报告是否成功。
         public bool TryDrop(out WeaponIdentity dropped)
         {
