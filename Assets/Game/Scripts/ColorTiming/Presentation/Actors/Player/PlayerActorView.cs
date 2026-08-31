@@ -54,6 +54,8 @@ public class PlayerActorView : MonoBehaviour, IBattleSessionConsumer, IBattleDam
     //float skillMoveSpeed = 26f;    缩短至原来的三分之二 4-29
 
     public WeaponIdentity nowweapon { get; private set; }
+    internal WeaponIdentity PresentedWeapon => animationDriver != null ? animationDriver.PresentedWeapon : nowweapon;
+    internal bool HasPendingWeaponPresentation => animationDriver != null && animationDriver.HasPendingWeaponPresentation;
     AnimatorStateInfo nowAnimStateInfo;
     //动画器跳转事件，1.状态名称 2.true=进入，false=退出
     public UnityEvent<AnimatorStateInfo, bool> OnAnimStateEnter;
