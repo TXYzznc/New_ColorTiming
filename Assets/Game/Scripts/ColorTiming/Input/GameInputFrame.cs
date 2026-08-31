@@ -16,7 +16,9 @@ namespace ColorTiming.Input
             bool pausePressed,
             Vector2 pointerScreenPosition,
             bool anyPressed,
-            bool confirmPressed)
+            bool confirmPressed,
+            bool debugBoss1Attack5PrimaryPressed = false,
+            bool debugBoss1Attack5SecondaryPressed = false)
         {
             Move = move;
             DashPressed = dashPressed;
@@ -27,6 +29,8 @@ namespace ColorTiming.Input
             PointerScreenPosition = pointerScreenPosition;
             AnyPressed = anyPressed;
             ConfirmPressed = confirmPressed;
+            DebugBoss1Attack5PrimaryPressed = debugBoss1Attack5PrimaryPressed;
+            DebugBoss1Attack5SecondaryPressed = debugBoss1Attack5SecondaryPressed;
         }
 
         public Vector2 Move { get; }
@@ -38,6 +42,8 @@ namespace ColorTiming.Input
         public Vector2 PointerScreenPosition { get; }
         public bool AnyPressed { get; }
         public bool ConfirmPressed { get; }
+        public bool DebugBoss1Attack5PrimaryPressed { get; }
+        public bool DebugBoss1Attack5SecondaryPressed { get; }
 
         public static GameInputFrame Empty => new GameInputFrame(
             Vector2.zero, false, false, false, false, false, Vector2.zero, false, false);

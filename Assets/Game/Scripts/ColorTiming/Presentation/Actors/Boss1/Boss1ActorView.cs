@@ -10,12 +10,13 @@ using ColorTiming.Bosses.Boss1;
 using ColorTiming.Combat;
 using ColorTiming.Bootstrap.Flow;
 using ColorTiming.Configuration;
+using ColorTiming.Input;
 using ColorTiming.Presentation.Combat;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.U2D;
 
-public class Boss1ActorView : MonoBehaviour, IBattleDamageReceiver, IBossBattleSessionConsumer,
+public class Boss1ActorView : MonoBehaviour, IBattleDamageReceiver, IBossBattleSessionConsumer, IGameInputConsumer,
     IColorTimingConfigurationConsumer
 {
     public ActorId DamageActorId => ActorId.BossHead;
@@ -45,8 +46,11 @@ public class Boss1ActorView : MonoBehaviour, IBattleDamageReceiver, IBossBattleS
     const string animName_Atk2 = "attack_2_test1_60fps";
     const string animName_Atk3 = "attack_3_test2_60fps";
     const string animName_Atk4 = "attack_4_test1_60fps";
-    // Spine2 contains the authored visual version of Attack5.
-    const string animName_Atk5 = "attack_5_test1_60fps2";
+    // The original scene used the main Spine animation; the refactor introduced a second authored variant.
+    const string animName_Atk5Primary = "attack_5_test1_60fps";
+    const string animName_Atk5Secondary = "attack_5_test1_60fps2";
+    // 暂时使用主 Spine 动画，等待替换为修正后的四段刺资源。
+    const string animName_Atk5 = animName_Atk5Primary;
     const string animName_Atk6 = "attack_6_60fps";
 
     List<int> HP_zi = new List<int>();
@@ -61,6 +65,11 @@ public class Boss1ActorView : MonoBehaviour, IBattleDamageReceiver, IBossBattleS
     bool viewStarted;
     bool sessionInitialized;
     ColorTimingBossTable bossConfiguration;
+    IGameInput gameInput;
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+    bool debugAttack5Active;
+    int debugAttack5EventCount;
+#endif
 
     public void BindConfiguration(IColorTimingConfiguration configuration, ColorTimingSceneId sceneId)
     {
@@ -80,6 +89,11 @@ public class Boss1ActorView : MonoBehaviour, IBattleDamageReceiver, IBossBattleS
         }
         battleSession = session ?? throw new System.ArgumentNullException(nameof(session));
         TryInitializeSession();
+    }
+
+    public void BindGameInput(IGameInput input)
+    {
+        gameInput = input ?? throw new System.ArgumentNullException(nameof(input));
     }
     // 在首帧启动依赖就绪后的业务或表现流程。
     void Start()
@@ -110,6 +124,13 @@ public class Boss1ActorView : MonoBehaviour, IBattleDamageReceiver, IBossBattleS
     // 逐帧推进需要实时刷新的业务或表现状态。
     void Update()
     {
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+        HandleAttack5DebugInput();
+        if (debugAttack5Active)
+        {
+            return;
+        }
+#endif
         if (attackCycle == null || attackSelector == null || battleSession == null
             || battleSession.Snapshot.Lifecycle != BattleLifecycle.Running)
         {
@@ -169,7 +190,7 @@ public class Boss1ActorView : MonoBehaviour, IBattleDamageReceiver, IBossBattleS
     void AnimPlay(string animName, bool loop)
     {
         SkeletonAnimation _skAni;
-        if (animName == animName_Atk5)
+        if (animName == animName_Atk5Secondary)
         {
             _skAni = skeletonAnimation2;
             skeletonAnimation1.gameObject.SetActive(false);
@@ -224,6 +245,15 @@ public class Boss1ActorView : MonoBehaviour, IBattleDamageReceiver, IBossBattleS
         boss1Anim?.GoAtk(trackEntry, e);
         if (e.ToString() == "attack" && e.String == "atk5")
         {
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+            if (debugAttack5Active)
+            {
+                debugAttack5EventCount++;
+                Debug.Log(
+                    $"[ColorTiming.Boss1Attack5Debug] action=AnimationEvent variant={trackEntry.Animation.Name} event=atk5 count={debugAttack5EventCount}",
+                    this);
+            }
+#endif
             battleSession.SetBossDamageable(false);
             OffAllHPColor();
             //进入无敌
@@ -232,6 +262,15 @@ public class Boss1ActorView : MonoBehaviour, IBattleDamageReceiver, IBossBattleS
 
     private void Entry_Complete(TrackEntry trackEntry)
     {
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+        if (debugAttack5Active)
+        {
+            Debug.Log(
+                $"[ColorTiming.Boss1Attack5Debug] action=Completed variant={trackEntry.Animation.Name} atk5EventCount={debugAttack5EventCount}",
+                this);
+            debugAttack5Active = false;
+        }
+#endif
         if (!skeletonAnimation1.gameObject.activeSelf)
         {
             skeletonAnimation1.gameObject.SetActive(true);
@@ -246,6 +285,54 @@ public class Boss1ActorView : MonoBehaviour, IBattleDamageReceiver, IBossBattleS
         battleSession.SetBossDamageable(true);
 
     }
+
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+    private void HandleAttack5DebugInput()
+    {
+        if (gameInput == null || battleSession == null
+            || battleSession.Snapshot.Lifecycle != BattleLifecycle.Running)
+        {
+            return;
+        }
+
+        if (gameInput.DebugBoss1Attack5PrimaryPressed)
+        {
+            TryPlayAttack5Debug(animName_Atk5Primary, "primary");
+        }
+        else if (gameInput.DebugBoss1Attack5SecondaryPressed)
+        {
+            TryPlayAttack5Debug(animName_Atk5Secondary, "secondary");
+        }
+    }
+
+    private void TryPlayAttack5Debug(string animationName, string variant)
+    {
+        if (debugAttack5Active || attackCycle == null || attackCycle.IsAttacking)
+        {
+            Debug.Log(
+                $"[ColorTiming.Boss1Attack5Debug] action=Play result=ignored variant={variant} active={debugAttack5Active} cycleAttacking={attackCycle != null && attackCycle.IsAttacking}",
+                this);
+            return;
+        }
+
+        debugAttack5Active = true;
+        debugAttack5EventCount = 0;
+        Debug.Log($"[ColorTiming.Boss1Attack5Debug] action=Play result=started variant={variant} animation={animationName}", this);
+        AnimPlay(animationName, false);
+    }
+
+    [ContextMenu("ColorTiming/Debug/Attack5 Primary (Key 1)")]
+    private void PlayAttack5PrimaryFromContextMenu()
+    {
+        TryPlayAttack5Debug(animName_Atk5Primary, "primary");
+    }
+
+    [ContextMenu("ColorTiming/Debug/Attack5 Secondary (Key 2)")]
+    private void PlayAttack5SecondaryFromContextMenu()
+    {
+        TryPlayAttack5Debug(animName_Atk5Secondary, "secondary");
+    }
+#endif
 
     private void Entry_End(TrackEntry trackEntry)
     {

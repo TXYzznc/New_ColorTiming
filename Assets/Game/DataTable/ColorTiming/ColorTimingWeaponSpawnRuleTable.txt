@@ -1,4 +1,4 @@
-#	ColorTiming weapon spawn rule entries
+#	ColorTiming weapon spawn rule entries									
 #	Id		RuleId	SpawnInterval	ActiveLimit	GuaranteeThreshold	MinimumAnchorDistance	TutorialDamageLimit	Color	Type
 #	int		int	float	int	int	float	int	int	int
 #		Note	Spawn rule id	Spawn cadence	Active weapon limit	Weakness guarantee threshold	Minimum distance to an occupied anchor	Damage count after which tips stop	Allowed WeaponColor	Allowed WeaponType

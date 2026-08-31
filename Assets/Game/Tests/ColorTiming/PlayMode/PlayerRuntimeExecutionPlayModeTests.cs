@@ -271,6 +271,8 @@ namespace ColorTiming.Tests.PlayMode
             public Vector2 PointerScreenPosition { get; set; }
             public bool AnyPressed { get; set; }
             public bool ConfirmPressed { get; set; }
+            public bool DebugBoss1Attack5PrimaryPressed { get; set; }
+            public bool DebugBoss1Attack5SecondaryPressed { get; set; }
 
             public bool ConsumeAnyPressForOverlay()
             {

@@ -1,4 +1,4 @@
-#	ColorTiming weapon resource and presentation table
+#	ColorTiming weapon resource and presentation table									
 #	Id		Color	Type	AnimatorIndex	IconIndex	CursorIndex	UsesChargeHint	ControllerAsset	SkillId
 #	int		int	int	int	int	int	bool	string	int
 #		Note	WeaponColor	WeaponType	Authored animator parameter value	Authored HUD icon index	Authored cursor index	Whether charge hint is shown	GF animator controller asset name	Skill config id

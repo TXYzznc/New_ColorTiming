@@ -1,4 +1,4 @@
-#	ColorTiming weighted boss attack table
+#	ColorTiming weighted boss attack table												
 #	Id		BossId	ActorPart	DistanceZone	AttackId	Weight	DisallowRepeat	FallbackAttackId	AnimationKey	SoundCueId	SkillId	AnimationEventKey
 #	int		int	string	int	int	float	bool	int	string	string	int	string
 #		Note	Boss config id	Body Head or Tail	Boss1DistanceZone	Attack/action id	Selection weight	Whether this attack may repeat	Fallback attack id	Animation semantic key	Sound cue id	Skill config id	Serialized animation event key

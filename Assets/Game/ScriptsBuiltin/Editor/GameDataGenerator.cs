@@ -413,7 +413,17 @@ namespace UGF.EditorTools
                         cellContent = DataTableProcessor.NormalizeCustomJsonValue(customJsonType, cellContent);
                     }
 
-                    lineTxt.Append(cellContent);
+                    // String.Split keeps an explicit empty field but not a missing final field.
+                    // Serialize an empty terminal data cell as quotes so optional final string
+                    // columns retain their position after exporting from Excel.
+                    if (isDataRow && colIndex == excelSheet.Dimension.End.Column && string.IsNullOrEmpty(cellContent))
+                    {
+                        lineTxt.Append("\"\"");
+                    }
+                    else
+                    {
+                        lineTxt.Append(cellContent);
+                    }
                     if (colIndex < excelSheet.Dimension.End.Column)
                     {
                         lineTxt.Append('\t');

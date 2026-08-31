@@ -89,6 +89,12 @@ public class PlayerActorView : MonoBehaviour, IBattleSessionConsumer, IBattleDam
     bool resourceContextReleased;
     IColorTimingConfiguration configuration;
     ColorTimingPlayerTable playerConfiguration;
+    // 本次攻击的武器快照必须独立于库存：一次性武器在首个有效动画事件后会立即
+    // 从库存移除，但同一段动画中的后续事件（例如剪刀第二段）仍需沿用原武器。
+    WeaponIdentity attackWeaponSnapshot;
+    bool hasAttackWeaponSnapshot;
+    bool attackWeaponConsumed;
+    readonly HashSet<string> firedAttackEventParameters = new HashSet<string>(StringComparer.Ordinal);
 
     public void BindConfiguration(IColorTimingConfiguration config, ColorTimingSceneId sceneId)
     {
@@ -366,24 +372,15 @@ public class PlayerActorView : MonoBehaviour, IBattleSessionConsumer, IBattleDam
 
     void Dashing()
     {
-        if (playerState.CanEvadeDamage)
+        if (!playerState.IsDashing || inputMove.sqrMagnitude <= playerConfiguration.MovementDeadzone * playerConfiguration.MovementDeadzone)
         {
-            Vector2 _dashMove = new Vector2(playerState.FacingX, playerState.DashY);
-            //始终为横向赋值
-            _dashMove.x = _dashMove.x > 0 ? 1 : -1;
-            //检查纵向是否有值
-            if (_dashMove.y != 0) _dashMove.y = _dashMove.y > 0
-                ? playerConfiguration.DashVerticalScale
-                : -playerConfiguration.DashVerticalScale;
-            //Vector2 _dashMove =
-            _dashMove = _dashMove * dashSpeed * Time.deltaTime;
-            _dashMove = transform.position + new Vector3(_dashMove.x, _dashMove.y);
-
-            body.MovePosition(_dashMove);
-
-            //animator.ResetTrigger(animPramNmae_Dash);
-            //如何让其在正确的时机进行关闭？
+            return;
         }
+
+        // Dash is a temporary locomotion-speed modifier. It deliberately follows the
+        // latest movement input instead of snapshotting a facing direction on state entry.
+        var dashMove = inputMove.normalized * dashSpeed * Time.fixedDeltaTime;
+        body.MovePosition(body.position + dashMove);
     }
     void SkillMove()
     {
@@ -419,7 +416,30 @@ public class PlayerActorView : MonoBehaviour, IBattleSessionConsumer, IBattleDam
     {
         // 受击可能先于迟到的 Animation Event 中断攻击；失效事件不得再生成技能伤害。
         if (playerState == null || !playerState.IsAttacking) return;
-        heroFrireSystem?.OnFire(nowweapon, characterSprite.transform.localScale.x,parm);
+
+        EnsureAttackWeaponSnapshot();
+        var weapon = attackWeaponSnapshot;
+        var eventKey = parm ?? string.Empty;
+        if (!firedAttackEventParameters.Add(eventKey))
+        {
+            Debug.Log(
+                $"[ColorTiming.WeaponConsumption] action=Fire result=ignored-duplicate weapon={weapon} event={eventKey}",
+                this);
+            return;
+        }
+
+        heroFrireSystem?.OnFire(weapon, characterSprite.transform.localScale.x, parm);
+
+        // 不再等待 Animator 离开 Atk 状态才消耗。部分控制器会在状态完全退出前
+        // 重复投递 Animation Event；把消耗绑定到首个有效发射事件才能保证投掷物只用一次。
+        if (!weapon.IsNormal && !attackWeaponConsumed && battleSession != null
+            && battleSession.ConsumeAttackWeapon(out var consumed))
+        {
+            attackWeaponConsumed = true;
+            Debug.Log(
+                $"[ColorTiming.WeaponConsumption] action=ConsumeOnFire result=success weapon={consumed} event={parm}",
+                this);
+        }
     }
 
     // 执行PickUP武器对应的主要流程。
@@ -682,13 +702,17 @@ public class PlayerActorView : MonoBehaviour, IBattleSessionConsumer, IBattleDam
 
         if (stateInfo.IsName(animPramName_Atk))
         {
-            battleSession?.TryBeginAttack();
+            if (battleSession != null && battleSession.TryBeginAttack())
+            {
+                BeginAttackWeaponSnapshot();
+            }
         }
 
         if (stateInfo.IsName("Daiji"))
         {
             battleSession?.SetSkillMoving(false);
             battleSession?.EndAttack();
+            ClearAttackWeaponSnapshot();
         }
     }
 
@@ -704,14 +728,8 @@ public class PlayerActorView : MonoBehaviour, IBattleSessionConsumer, IBattleDam
 
         if (stateInfo.IsName(animPramName_Atk))
         {
-            // 只有仍属于本次有效攻击的正常退出才能消耗一次性武器。
-            var completedAttack = playerState != null && playerState.IsAttacking;
             battleSession?.EndAttack();
-            if (completedAttack && battleSession != null)
-            {
-                // Inventory.Changed 是业务武器变化的唯一表现同步入口。
-                battleSession.ConsumeAttackWeapon(out _);
-            }
+            ClearAttackWeaponSnapshot();
         }
         //这个方案延后了
     }
@@ -751,6 +769,12 @@ public class PlayerActorView : MonoBehaviour, IBattleSessionConsumer, IBattleDam
         //parm.Contains()
         var heldWeapon = inventory.Current;
         var resolution = battleSession.ApplyPlayerDamage(damage);
+        // 受击会直接把权威状态切到 HitStun，攻击状态可能没有机会走 Animator 的
+        // 正常退出回调；此时必须丢弃本次攻击快照，避免下一次攻击复用旧武器。
+        if (resolution == PlayerDamageResolution.Damaged || resolution == PlayerDamageResolution.Defeated)
+        {
+            ClearAttackWeaponSnapshot();
+        }
         Debug.Log(
             $"[ColorTiming.Combat][PlayerDamage] action=Resolve result={resolution} attacker={damage.Attacker} state={playerState.State}",
             this);
@@ -794,6 +818,29 @@ public class PlayerActorView : MonoBehaviour, IBattleSessionConsumer, IBattleDam
             animationDriver.RequestDeath();
             deathShow?.SetActive(true);
         }
+    }
+
+    private void BeginAttackWeaponSnapshot()
+    {
+        attackWeaponSnapshot = battleSession != null ? battleSession.Inventory.Current : nowweapon;
+        hasAttackWeaponSnapshot = true;
+        attackWeaponConsumed = false;
+        firedAttackEventParameters.Clear();
+    }
+
+    private void EnsureAttackWeaponSnapshot()
+    {
+        if (!hasAttackWeaponSnapshot)
+        {
+            BeginAttackWeaponSnapshot();
+        }
+    }
+
+    private void ClearAttackWeaponSnapshot()
+    {
+        hasAttackWeaponSnapshot = false;
+        attackWeaponConsumed = false;
+        firedAttackEventParameters.Clear();
     }
 
     // 响应HitAnim回调，并更新本对象状态。

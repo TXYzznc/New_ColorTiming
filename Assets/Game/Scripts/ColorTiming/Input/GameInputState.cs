@@ -20,6 +20,8 @@ namespace ColorTiming.Input
         public Vector2 PointerScreenPosition => frame.PointerScreenPosition;
         public bool AnyPressed => !anyPressConsumed && frame.AnyPressed;
         public bool ConfirmPressed => !gameplaySuppressed && frame.ConfirmPressed;
+        public bool DebugBoss1Attack5PrimaryPressed => !gameplaySuppressed && frame.DebugBoss1Attack5PrimaryPressed;
+        public bool DebugBoss1Attack5SecondaryPressed => !gameplaySuppressed && frame.DebugBoss1Attack5SecondaryPressed;
 
         // 执行Advance帧对应的主要流程。
         public void AdvanceFrame(GameInputFrame nextFrame)

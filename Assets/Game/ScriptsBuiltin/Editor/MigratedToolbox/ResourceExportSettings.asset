@@ -11,15 +11,21 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4d4d1f9a9d9e4a9d8f7c6b5a4e3d2c1b, type: 3}
   m_Name: ResourceExportSettings
-  m_EditorClassIdentifier:
+  m_EditorClassIdentifier: 
   groups:
   - name: "\u7F8E\u672F\u8D44\u6E90"
-    selected: 0
+    selected: 1
     assetPaths:
     - Assets/Game/Animations
     - Assets/Game/Audio
     - Assets/Game/Sprites
     - Assets/Game/Video
+    - Assets/StreamingAssets
+    - Assets/TextMesh Pro
+    - Assets/Game/Font
+    - Assets/Game/DataTable
+    - Assets/Game/ScriptsBuiltin
+    - Assets/Game/Tests
   - name: "\u5176\u4ED6\u6587\u4EF6"
     selected: 0
     assetPaths:

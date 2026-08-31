@@ -46,6 +46,10 @@ namespace ColorTiming.Tests.PlayMode
             "playerState",
             BindingFlags.Instance | BindingFlags.NonPublic);
 
+        static readonly MethodInfo ClearAttackWeaponSnapshot = typeof(PlayerActorView).GetMethod(
+            "ClearAttackWeaponSnapshot",
+            BindingFlags.Instance | BindingFlags.NonPublic);
+
         [UnityTest]
         [Timeout(300000)]
         public IEnumerator EveryAuthoredWeaponColorExecutesAnimationEventThroughGfEntity()
@@ -125,21 +129,35 @@ namespace ColorTiming.Tests.PlayMode
                     Assert.That(hero.PickUPWeapon(weapon), Is.True,
                         $"Could not pick up {color}/{weaponType}.");
                     var expectedPrefab = ExpectedPrefab(fire, weaponType);
-                    yield return ExecuteAndAssert(
-                        hero,
-                        eventReceiver,
-                        expectedPrefab.name,
-                        weapon,
-                        "animation-event");
-
                     if (weaponType == CombatWeaponType.Scissors && color == colors[0])
                     {
                         yield return ExecuteAndAssert(
                             hero,
                             eventReceiver,
+                            expectedPrefab.name,
+                            weapon,
+                            "1",
+                            beginAttack: true,
+                            endAttack: false);
+                        Assert.That(hero.nowweapon.Type, Is.EqualTo(CombatWeaponType.Normal),
+                            "A weapon must be consumed by its first successful attack event.");
+                        yield return ExecuteAndAssert(
+                            hero,
+                            eventReceiver,
                             fire.sk_jiandao2.name,
                             weapon,
-                            "2");
+                            "2",
+                            beginAttack: false,
+                            endAttack: true);
+                    }
+                    else
+                    {
+                        yield return ExecuteAndAssert(
+                            hero,
+                            eventReceiver,
+                            expectedPrefab.name,
+                            weapon,
+                            "animation-event");
                     }
 
                     DropWeapon.Invoke(hero, new object[] { false });
@@ -154,13 +172,24 @@ namespace ColorTiming.Tests.PlayMode
             PlayerAnimationEventRelay eventReceiver,
             string expectedEntityName,
             WeaponIdentity expectedWeapon,
-            string eventParameter)
+            string eventParameter,
+            bool beginAttack = true,
+            bool endAttack = true)
         {
             yield return HideMatchingEntities(expectedEntityName);
             var playerState = (PlayerActionStateMachine)PlayerState.GetValue(hero);
             Assert.That(playerState, Is.Not.Null);
-            Assert.That(playerState.BeginAttack(), Is.True,
-                "The test must establish an authoritative attack before delivering its animation event.");
+            Assert.That(ClearAttackWeaponSnapshot, Is.Not.Null);
+            if (beginAttack)
+            {
+                Assert.That(playerState.BeginAttack(), Is.True,
+                    "The test must establish an authoritative attack before delivering its animation event.");
+            }
+            else
+            {
+                Assert.That(playerState.IsAttacking, Is.True,
+                    "A multi-event animation must remain in the same authoritative attack.");
+            }
             eventReceiver.Attack(eventParameter);
 
             ColorTimingTransientEntity entity = null;
@@ -198,7 +227,11 @@ namespace ColorTiming.Tests.PlayMode
             {
                 Assert.That(actualParameter, Is.EqualTo(eventParameter));
             }
-            playerState.EndAttack();
+            if (endAttack)
+            {
+                playerState.EndAttack();
+                ClearAttackWeaponSnapshot.Invoke(hero, null);
+            }
         }
 
         static GameObject ExpectedPrefab(PlayerSkillEmitter fire, CombatWeaponType type)
@@ -299,6 +332,8 @@ namespace ColorTiming.Tests.PlayMode
             public Vector2 PointerScreenPosition { get; set; }
             public bool AnyPressed => false;
             public bool ConfirmPressed => false;
+            public bool DebugBoss1Attack5PrimaryPressed => false;
+            public bool DebugBoss1Attack5SecondaryPressed => false;
             public bool ConsumeAnyPressForOverlay() => false;
         }
     }

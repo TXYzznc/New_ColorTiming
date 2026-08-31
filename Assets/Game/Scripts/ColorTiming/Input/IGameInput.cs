@@ -16,6 +16,8 @@ namespace ColorTiming.Input
         Vector2 PointerScreenPosition { get; }
         bool AnyPressed { get; }
         bool ConfirmPressed { get; }
+        bool DebugBoss1Attack5PrimaryPressed { get; }
+        bool DebugBoss1Attack5SecondaryPressed { get; }
 
         // 执行ConsumeAnyPressForOverlay对应的主要流程。
         bool ConsumeAnyPressForOverlay();

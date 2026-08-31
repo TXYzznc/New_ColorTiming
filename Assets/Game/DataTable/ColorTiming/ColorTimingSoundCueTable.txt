@@ -1,4 +1,4 @@
-#	ColorTiming semantic sound cue table
+#	ColorTiming semantic sound cue table								
 #	Id		CueId	AnimationEventKey	AssetName	SoundGroup	Loop	Volume	Priority
 #	int		string	string	string	string	bool	float	int
 #		Note	Semantic cue id	Animation event key	GF audio asset name	GF sound group	Loop playback	Cue volume	Playback priority
