@@ -1,9 +1,9 @@
-status=completed
-finishedUtc=2026-08-31T07:55:57.0251632Z
-total=19
-passed=19
+﻿status=completed
+finishedUtc=2026-08-31T10:52:37.5653414Z
+total=2
+passed=2
 failed=0
 skipped=0
 inconclusive=0
-durationSeconds=78.199
+durationSeconds=48.837
 result=Passed
