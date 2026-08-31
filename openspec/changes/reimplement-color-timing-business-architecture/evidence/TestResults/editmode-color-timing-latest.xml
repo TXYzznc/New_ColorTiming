@@ -1,6 +1,591 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<test-suite type="TestSuite" id="1000" name="GameDesinger" fullname="GameDesinger" runstate="Runnable" testcasecount="218" result="Passed" start-time="2026-08-29 15:26:32Z" end-time="2026-08-29 15:26:32Z" duration="0.002847" total="0" passed="0" failed="0" inconclusive="0" skipped="0" asserts="0">
+<?xml version="1.0" encoding="utf-8"?>
+<test-suite type="TestSuite" id="1000" name="GameDesinger" fullname="GameDesinger" runstate="Runnable" testcasecount="223" result="Passed" start-time="2026-08-31 07:54:20Z" end-time="2026-08-31 07:54:23Z" duration="2.517920" total="83" passed="83" failed="0" inconclusive="0" skipped="0" asserts="0">
   <properties>
     <property name="platform" value="EditMode" />
   </properties>
+  <test-suite type="Assembly" id="1124" name="ColorTiming.EditMode.Tests.dll" fullname="D:/unity/UnityProject/ColorTimeing/New/_ColorTiming/Library/ScriptAssemblies/ColorTiming.EditMode.Tests.dll" runstate="Runnable" testcasecount="83" result="Passed" start-time="2026-08-31 07:54:20Z" end-time="2026-08-31 07:54:23Z" duration="2.510620" total="83" passed="83" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="_PID" value="61220" />
+      <property name="_APPDOMAIN" value="Unity Child Domain" />
+      <property name="platform" value="EditMode" />
+      <property name="EditorOnly" value="True" />
+    </properties>
+    <test-suite type="TestSuite" id="1125" name="ColorTiming" fullname="ColorTiming" runstate="Runnable" testcasecount="83" result="Passed" start-time="2026-08-31 07:54:20Z" end-time="2026-08-31 07:54:23Z" duration="2.412237" total="83" passed="83" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties />
+      <test-suite type="TestSuite" id="1126" name="Tests" fullname="ColorTiming.Tests" runstate="Runnable" testcasecount="83" result="Passed" start-time="2026-08-31 07:54:21Z" end-time="2026-08-31 07:54:23Z" duration="2.311476" total="83" passed="83" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1127" name="EditMode" fullname="ColorTiming.Tests.EditMode" runstate="Runnable" testcasecount="83" result="Passed" start-time="2026-08-31 07:54:21Z" end-time="2026-08-31 07:54:23Z" duration="2.212461" total="83" passed="83" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestFixture" id="1019" name="ArchitectureBoundaryTests" fullname="ColorTiming.Tests.EditMode.ArchitectureBoundaryTests" classname="ColorTiming.Tests.EditMode.ArchitectureBoundaryTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-08-31 07:54:21Z" end-time="2026-08-31 07:54:21Z" duration="0.116115" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1021" name="Application_ReferencesDomainButDomainDoesNotReferenceApplication" fullname="ColorTiming.Tests.EditMode.ArchitectureBoundaryTests.Application_ReferencesDomainButDomainDoesNotReferenceApplication" methodname="Application_ReferencesDomainButDomainDoesNotReferenceApplication" classname="ColorTiming.Tests.EditMode.ArchitectureBoundaryTests" runstate="Runnable" seed="1595003998" result="Passed" start-time="2026-08-31 07:54:21Z" end-time="2026-08-31 07:54:21Z" duration="0.010564" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1020" name="DomainAndApplication_DoNotReferenceUnityOrGfAssemblies" fullname="ColorTiming.Tests.EditMode.ArchitectureBoundaryTests.DomainAndApplication_DoNotReferenceUnityOrGfAssemblies" methodname="DomainAndApplication_DoNotReferenceUnityOrGfAssemblies" classname="ColorTiming.Tests.EditMode.ArchitectureBoundaryTests" runstate="Runnable" seed="1931673894" result="Passed" start-time="2026-08-31 07:54:21Z" end-time="2026-08-31 07:54:21Z" duration="0.000909" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1022" name="BattleSceneAnchorsTests" fullname="ColorTiming.Tests.EditMode.BattleSceneAnchorsTests" classname="ColorTiming.Tests.EditMode.BattleSceneAnchorsTests" runstate="Runnable" testcasecount="5" result="Passed" start-time="2026-08-31 07:54:21Z" end-time="2026-08-31 07:54:21Z" duration="0.110616" total="5" passed="5" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1028" name="PlayerManager_SpawnsCloneConfiguresSceneReferencesAndDisposesIt" fullname="ColorTiming.Tests.EditMode.BattleSceneAnchorsTests.PlayerManager_SpawnsCloneConfiguresSceneReferencesAndDisposesIt" methodname="PlayerManager_SpawnsCloneConfiguresSceneReferencesAndDisposesIt" classname="ColorTiming.Tests.EditMode.BattleSceneAnchorsTests" runstate="Runnable" seed="1744401898" result="Passed" start-time="2026-08-31 07:54:21Z" end-time="2026-08-31 07:54:21Z" duration="0.014102" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[[ColorTiming.Player] action=Spawn result=Success instance=Player(Clone) scene= bindings=3
+]]></output>
+            </test-case>
+            <test-case id="1023" name="Validate_AcceptsRuntimePlayerSetupAndOneMatchingBossRole" fullname="ColorTiming.Tests.EditMode.BattleSceneAnchorsTests.Validate_AcceptsRuntimePlayerSetupAndOneMatchingBossRole" methodname="Validate_AcceptsRuntimePlayerSetupAndOneMatchingBossRole" classname="ColorTiming.Tests.EditMode.BattleSceneAnchorsTests" runstate="Runnable" seed="661531826" result="Passed" start-time="2026-08-31 07:54:21Z" end-time="2026-08-31 07:54:21Z" duration="0.001516" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1027" name="Validate_RejectsMismatchedBattleKind" fullname="ColorTiming.Tests.EditMode.BattleSceneAnchorsTests.Validate_RejectsMismatchedBattleKind" methodname="Validate_RejectsMismatchedBattleKind" classname="ColorTiming.Tests.EditMode.BattleSceneAnchorsTests" runstate="Runnable" seed="1796594327" result="Passed" start-time="2026-08-31 07:54:21Z" end-time="2026-08-31 07:54:21Z" duration="0.002457" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-suite type="ParameterizedMethod" id="1026" name="Validate_RejectsMissingOrDuplicateBossRoles" fullname="ColorTiming.Tests.EditMode.BattleSceneAnchorsTests.Validate_RejectsMissingOrDuplicateBossRoles" classname="ColorTiming.Tests.EditMode.BattleSceneAnchorsTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-08-31 07:54:21Z" end-time="2026-08-31 07:54:21Z" duration="0.009002" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1024" name="Validate_RejectsMissingOrDuplicateBossRoles(0)" fullname="ColorTiming.Tests.EditMode.BattleSceneAnchorsTests.Validate_RejectsMissingOrDuplicateBossRoles(0)" methodname="Validate_RejectsMissingOrDuplicateBossRoles" classname="ColorTiming.Tests.EditMode.BattleSceneAnchorsTests" runstate="Runnable" seed="440649019" result="Passed" start-time="2026-08-31 07:54:21Z" end-time="2026-08-31 07:54:21Z" duration="0.001075" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1025" name="Validate_RejectsMissingOrDuplicateBossRoles(2)" fullname="ColorTiming.Tests.EditMode.BattleSceneAnchorsTests.Validate_RejectsMissingOrDuplicateBossRoles(2)" methodname="Validate_RejectsMissingOrDuplicateBossRoles" classname="ColorTiming.Tests.EditMode.BattleSceneAnchorsTests" runstate="Runnable" seed="1714037132" result="Passed" start-time="2026-08-31 07:54:21Z" end-time="2026-08-31 07:54:21Z" duration="0.000520" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+          </test-suite>
+          <test-suite type="TestFixture" id="1029" name="BattleSessionTests" fullname="ColorTiming.Tests.EditMode.BattleSessionTests" classname="ColorTiming.Tests.EditMode.BattleSessionTests" runstate="Runnable" testcasecount="6" result="Passed" start-time="2026-08-31 07:54:21Z" end-time="2026-08-31 07:54:21Z" duration="0.202630" total="6" passed="6" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="ParameterizedMethod" id="1032" name="Constructor_CreatesExpectedWeaknessCount" fullname="ColorTiming.Tests.EditMode.BattleSessionTests.Constructor_CreatesExpectedWeaknessCount" classname="ColorTiming.Tests.EditMode.BattleSessionTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-08-31 07:54:21Z" end-time="2026-08-31 07:54:21Z" duration="0.104355" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1030" name="Constructor_CreatesExpectedWeaknessCount(Boss1,11)" fullname="ColorTiming.Tests.EditMode.BattleSessionTests.Constructor_CreatesExpectedWeaknessCount(Boss1,11)" methodname="Constructor_CreatesExpectedWeaknessCount" classname="ColorTiming.Tests.EditMode.BattleSessionTests" runstate="Runnable" seed="842372023" result="Passed" start-time="2026-08-31 07:54:21Z" end-time="2026-08-31 07:54:21Z" duration="0.004909" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1031" name="Constructor_CreatesExpectedWeaknessCount(Boss2,15)" fullname="ColorTiming.Tests.EditMode.BattleSessionTests.Constructor_CreatesExpectedWeaknessCount(Boss2,15)" methodname="Constructor_CreatesExpectedWeaknessCount" classname="ColorTiming.Tests.EditMode.BattleSessionTests" runstate="Runnable" seed="501380355" result="Passed" start-time="2026-08-31 07:54:21Z" end-time="2026-08-31 07:54:21Z" duration="0.000298" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-case id="1034" name="CorrectColors_EmitOneTerminalVictory" fullname="ColorTiming.Tests.EditMode.BattleSessionTests.CorrectColors_EmitOneTerminalVictory" methodname="CorrectColors_EmitOneTerminalVictory" classname="ColorTiming.Tests.EditMode.BattleSessionTests" runstate="Runnable" seed="842736907" result="Passed" start-time="2026-08-31 07:54:21Z" end-time="2026-08-31 07:54:21Z" duration="0.002031" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1036" name="Dispose_IsIdempotentAndRejectsLaterCommands" fullname="ColorTiming.Tests.EditMode.BattleSessionTests.Dispose_IsIdempotentAndRejectsLaterCommands" methodname="Dispose_IsIdempotentAndRejectsLaterCommands" classname="ColorTiming.Tests.EditMode.BattleSessionTests" runstate="Runnable" seed="1295224225" result="Passed" start-time="2026-08-31 07:54:21Z" end-time="2026-08-31 07:54:21Z" duration="0.000355" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1035" name="PlayerDamage_DropsWeaponAndEndsExactlyOnce" fullname="ColorTiming.Tests.EditMode.BattleSessionTests.PlayerDamage_DropsWeaponAndEndsExactlyOnce" methodname="PlayerDamage_DropsWeaponAndEndsExactlyOnce" classname="ColorTiming.Tests.EditMode.BattleSessionTests" runstate="Runnable" seed="230010770" result="Passed" start-time="2026-08-31 07:54:21Z" end-time="2026-08-31 07:54:21Z" duration="0.001387" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1033" name="WrongColor_DoesNotMutateBossState" fullname="ColorTiming.Tests.EditMode.BattleSessionTests.WrongColor_DoesNotMutateBossState" methodname="WrongColor_DoesNotMutateBossState" classname="ColorTiming.Tests.EditMode.BattleSessionTests" runstate="Runnable" seed="1905102703" result="Passed" start-time="2026-08-31 07:54:21Z" end-time="2026-08-31 07:54:21Z" duration="0.000863" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1037" name="Boss1BattleLogicTests" fullname="ColorTiming.Tests.EditMode.Boss1BattleLogicTests" classname="ColorTiming.Tests.EditMode.Boss1BattleLogicTests" runstate="Runnable" testcasecount="17" result="Passed" start-time="2026-08-31 07:54:21Z" end-time="2026-08-31 07:54:21Z" duration="0.289498" total="17" passed="17" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1056" name="AttackCycle_BlocksOverlapAndRequiresCooldown" fullname="ColorTiming.Tests.EditMode.Boss1BattleLogicTests.AttackCycle_BlocksOverlapAndRequiresCooldown" methodname="AttackCycle_BlocksOverlapAndRequiresCooldown" classname="ColorTiming.Tests.EditMode.Boss1BattleLogicTests" runstate="Runnable" seed="267814756" result="Passed" start-time="2026-08-31 07:54:21Z" end-time="2026-08-31 07:54:21Z" duration="0.000579" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-suite type="ParameterizedMethod" id="1054" name="AttackSelector_PreservesSourceWeightBoundaries" fullname="ColorTiming.Tests.EditMode.Boss1BattleLogicTests.AttackSelector_PreservesSourceWeightBoundaries" classname="ColorTiming.Tests.EditMode.Boss1BattleLogicTests" runstate="Runnable" testcasecount="11" result="Passed" start-time="2026-08-31 07:54:21Z" end-time="2026-08-31 07:54:21Z" duration="0.113762" total="11" passed="11" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1043" name="AttackSelector_PreservesSourceWeightBoundaries(Near,0.1f,Attack2)" fullname="ColorTiming.Tests.EditMode.Boss1BattleLogicTests.AttackSelector_PreservesSourceWeightBoundaries(Near,0.1f,Attack2)" methodname="AttackSelector_PreservesSourceWeightBoundaries" classname="ColorTiming.Tests.EditMode.Boss1BattleLogicTests" runstate="Runnable" seed="1062531155" result="Passed" start-time="2026-08-31 07:54:21Z" end-time="2026-08-31 07:54:21Z" duration="0.004549" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1044" name="AttackSelector_PreservesSourceWeightBoundaries(Near,0.5f,Attack1)" fullname="ColorTiming.Tests.EditMode.Boss1BattleLogicTests.AttackSelector_PreservesSourceWeightBoundaries(Near,0.5f,Attack1)" methodname="AttackSelector_PreservesSourceWeightBoundaries" classname="ColorTiming.Tests.EditMode.Boss1BattleLogicTests" runstate="Runnable" seed="1769060604" result="Passed" start-time="2026-08-31 07:54:21Z" end-time="2026-08-31 07:54:21Z" duration="0.000149" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1045" name="AttackSelector_PreservesSourceWeightBoundaries(Near,0.7f,Attack3)" fullname="ColorTiming.Tests.EditMode.Boss1BattleLogicTests.AttackSelector_PreservesSourceWeightBoundaries(Near,0.7f,Attack3)" methodname="AttackSelector_PreservesSourceWeightBoundaries" classname="ColorTiming.Tests.EditMode.Boss1BattleLogicTests" runstate="Runnable" seed="1490683823" result="Passed" start-time="2026-08-31 07:54:21Z" end-time="2026-08-31 07:54:21Z" duration="0.000100" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1046" name="AttackSelector_PreservesSourceWeightBoundaries(Near,0.95f,Attack4)" fullname="ColorTiming.Tests.EditMode.Boss1BattleLogicTests.AttackSelector_PreservesSourceWeightBoundaries(Near,0.95f,Attack4)" methodname="AttackSelector_PreservesSourceWeightBoundaries" classname="ColorTiming.Tests.EditMode.Boss1BattleLogicTests" runstate="Runnable" seed="1687969523" result="Passed" start-time="2026-08-31 07:54:21Z" end-time="2026-08-31 07:54:21Z" duration="0.000094" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1047" name="AttackSelector_PreservesSourceWeightBoundaries(Middle,0.1f,Attack6)" fullname="ColorTiming.Tests.EditMode.Boss1BattleLogicTests.AttackSelector_PreservesSourceWeightBoundaries(Middle,0.1f,Attack6)" methodname="AttackSelector_PreservesSourceWeightBoundaries" classname="ColorTiming.Tests.EditMode.Boss1BattleLogicTests" runstate="Runnable" seed="1862225411" result="Passed" start-time="2026-08-31 07:54:21Z" end-time="2026-08-31 07:54:21Z" duration="0.000094" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1048" name="AttackSelector_PreservesSourceWeightBoundaries(Middle,0.5f,Attack1)" fullname="ColorTiming.Tests.EditMode.Boss1BattleLogicTests.AttackSelector_PreservesSourceWeightBoundaries(Middle,0.5f,Attack1)" methodname="AttackSelector_PreservesSourceWeightBoundaries" classname="ColorTiming.Tests.EditMode.Boss1BattleLogicTests" runstate="Runnable" seed="1900531717" result="Passed" start-time="2026-08-31 07:54:21Z" end-time="2026-08-31 07:54:21Z" duration="0.000086" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1049" name="AttackSelector_PreservesSourceWeightBoundaries(Middle,0.7f,Attack3)" fullname="ColorTiming.Tests.EditMode.Boss1BattleLogicTests.AttackSelector_PreservesSourceWeightBoundaries(Middle,0.7f,Attack3)" methodname="AttackSelector_PreservesSourceWeightBoundaries" classname="ColorTiming.Tests.EditMode.Boss1BattleLogicTests" runstate="Runnable" seed="1964740392" result="Passed" start-time="2026-08-31 07:54:21Z" end-time="2026-08-31 07:54:21Z" duration="0.000129" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1050" name="AttackSelector_PreservesSourceWeightBoundaries(Middle,0.95f,Attack4)" fullname="ColorTiming.Tests.EditMode.Boss1BattleLogicTests.AttackSelector_PreservesSourceWeightBoundaries(Middle,0.95f,Attack4)" methodname="AttackSelector_PreservesSourceWeightBoundaries" classname="ColorTiming.Tests.EditMode.Boss1BattleLogicTests" runstate="Runnable" seed="922718475" result="Passed" start-time="2026-08-31 07:54:21Z" end-time="2026-08-31 07:54:21Z" duration="0.000129" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1051" name="AttackSelector_PreservesSourceWeightBoundaries(Far,0.1f,Attack3)" fullname="ColorTiming.Tests.EditMode.Boss1BattleLogicTests.AttackSelector_PreservesSourceWeightBoundaries(Far,0.1f,Attack3)" methodname="AttackSelector_PreservesSourceWeightBoundaries" classname="ColorTiming.Tests.EditMode.Boss1BattleLogicTests" runstate="Runnable" seed="1008618146" result="Passed" start-time="2026-08-31 07:54:21Z" end-time="2026-08-31 07:54:21Z" duration="0.000094" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1052" name="AttackSelector_PreservesSourceWeightBoundaries(Far,0.5f,Attack4)" fullname="ColorTiming.Tests.EditMode.Boss1BattleLogicTests.AttackSelector_PreservesSourceWeightBoundaries(Far,0.5f,Attack4)" methodname="AttackSelector_PreservesSourceWeightBoundaries" classname="ColorTiming.Tests.EditMode.Boss1BattleLogicTests" runstate="Runnable" seed="303596647" result="Passed" start-time="2026-08-31 07:54:21Z" end-time="2026-08-31 07:54:21Z" duration="0.000092" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1053" name="AttackSelector_PreservesSourceWeightBoundaries(Far,0.9f,Attack5)" fullname="ColorTiming.Tests.EditMode.Boss1BattleLogicTests.AttackSelector_PreservesSourceWeightBoundaries(Far,0.9f,Attack5)" methodname="AttackSelector_PreservesSourceWeightBoundaries" classname="ColorTiming.Tests.EditMode.Boss1BattleLogicTests" runstate="Runnable" seed="977068114" result="Passed" start-time="2026-08-31 07:54:21Z" end-time="2026-08-31 07:54:21Z" duration="0.000219" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="ParameterizedMethod" id="1042" name="DistanceZones_HaveStableNearToFarPrecedence" fullname="ColorTiming.Tests.EditMode.Boss1BattleLogicTests.DistanceZones_HaveStableNearToFarPrecedence" classname="ColorTiming.Tests.EditMode.Boss1BattleLogicTests" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-08-31 07:54:21Z" end-time="2026-08-31 07:54:21Z" duration="0.085617" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1038" name="DistanceZones_HaveStableNearToFarPrecedence(True,True,Near)" fullname="ColorTiming.Tests.EditMode.Boss1BattleLogicTests.DistanceZones_HaveStableNearToFarPrecedence(True,True,Near)" methodname="DistanceZones_HaveStableNearToFarPrecedence" classname="ColorTiming.Tests.EditMode.Boss1BattleLogicTests" runstate="Runnable" seed="1199736540" result="Passed" start-time="2026-08-31 07:54:21Z" end-time="2026-08-31 07:54:21Z" duration="0.000521" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1039" name="DistanceZones_HaveStableNearToFarPrecedence(True,False,Near)" fullname="ColorTiming.Tests.EditMode.Boss1BattleLogicTests.DistanceZones_HaveStableNearToFarPrecedence(True,False,Near)" methodname="DistanceZones_HaveStableNearToFarPrecedence" classname="ColorTiming.Tests.EditMode.Boss1BattleLogicTests" runstate="Runnable" seed="1426901517" result="Passed" start-time="2026-08-31 07:54:21Z" end-time="2026-08-31 07:54:21Z" duration="0.000080" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1040" name="DistanceZones_HaveStableNearToFarPrecedence(False,True,Middle)" fullname="ColorTiming.Tests.EditMode.Boss1BattleLogicTests.DistanceZones_HaveStableNearToFarPrecedence(False,True,Middle)" methodname="DistanceZones_HaveStableNearToFarPrecedence" classname="ColorTiming.Tests.EditMode.Boss1BattleLogicTests" runstate="Runnable" seed="138277369" result="Passed" start-time="2026-08-31 07:54:21Z" end-time="2026-08-31 07:54:21Z" duration="0.000052" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1041" name="DistanceZones_HaveStableNearToFarPrecedence(False,False,Far)" fullname="ColorTiming.Tests.EditMode.Boss1BattleLogicTests.DistanceZones_HaveStableNearToFarPrecedence(False,False,Far)" methodname="DistanceZones_HaveStableNearToFarPrecedence" classname="ColorTiming.Tests.EditMode.Boss1BattleLogicTests" runstate="Runnable" seed="1062209605" result="Passed" start-time="2026-08-31 07:54:21Z" end-time="2026-08-31 07:54:21Z" duration="0.000047" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-case id="1055" name="FarZone_DoesNotSelectAttack5TwiceInARow" fullname="ColorTiming.Tests.EditMode.Boss1BattleLogicTests.FarZone_DoesNotSelectAttack5TwiceInARow" methodname="FarZone_DoesNotSelectAttack5TwiceInARow" classname="ColorTiming.Tests.EditMode.Boss1BattleLogicTests" runstate="Runnable" seed="44681818" result="Passed" start-time="2026-08-31 07:54:21Z" end-time="2026-08-31 07:54:21Z" duration="0.000202" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1057" name="Boss2BattleLogicTests" fullname="ColorTiming.Tests.EditMode.Boss2BattleLogicTests" classname="ColorTiming.Tests.EditMode.Boss2BattleLogicTests" runstate="Runnable" testcasecount="12" result="Passed" start-time="2026-08-31 07:54:21Z" end-time="2026-08-31 07:54:22Z" duration="0.298109" total="12" passed="12" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1071" name="BurrowFlow_RejectsOutOfOrderTransitions_AndCanBeInterrupted" fullname="ColorTiming.Tests.EditMode.Boss2BattleLogicTests.BurrowFlow_RejectsOutOfOrderTransitions_AndCanBeInterrupted" methodname="BurrowFlow_RejectsOutOfOrderTransitions_AndCanBeInterrupted" classname="ColorTiming.Tests.EditMode.Boss2BattleLogicTests" runstate="Runnable" seed="265309473" result="Passed" start-time="2026-08-31 07:54:22Z" end-time="2026-08-31 07:54:22Z" duration="0.000551" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-suite type="ParameterizedMethod" id="1064" name="HeadSelector_PreservesDistanceAndFacingRules" fullname="ColorTiming.Tests.EditMode.Boss2BattleLogicTests.HeadSelector_PreservesDistanceAndFacingRules" classname="ColorTiming.Tests.EditMode.Boss2BattleLogicTests" runstate="Runnable" testcasecount="6" result="Passed" start-time="2026-08-31 07:54:22Z" end-time="2026-08-31 07:54:22Z" duration="0.100870" total="6" passed="6" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1058" name="HeadSelector_PreservesDistanceAndFacingRules(13.0f,False,0.1f,Burrow)" fullname="ColorTiming.Tests.EditMode.Boss2BattleLogicTests.HeadSelector_PreservesDistanceAndFacingRules(13.0f,False,0.1f,Burrow)" methodname="HeadSelector_PreservesDistanceAndFacingRules" classname="ColorTiming.Tests.EditMode.Boss2BattleLogicTests" runstate="Runnable" seed="1089003063" result="Passed" start-time="2026-08-31 07:54:22Z" end-time="2026-08-31 07:54:22Z" duration="0.000759" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1059" name="HeadSelector_PreservesDistanceAndFacingRules(13.0f,False,0.9f,Projectile)" fullname="ColorTiming.Tests.EditMode.Boss2BattleLogicTests.HeadSelector_PreservesDistanceAndFacingRules(13.0f,False,0.9f,Projectile)" methodname="HeadSelector_PreservesDistanceAndFacingRules" classname="ColorTiming.Tests.EditMode.Boss2BattleLogicTests" runstate="Runnable" seed="896138261" result="Passed" start-time="2026-08-31 07:54:22Z" end-time="2026-08-31 07:54:22Z" duration="0.000088" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1060" name="HeadSelector_PreservesDistanceAndFacingRules(5.0f,True,0.1f,Burrow)" fullname="ColorTiming.Tests.EditMode.Boss2BattleLogicTests.HeadSelector_PreservesDistanceAndFacingRules(5.0f,True,0.1f,Burrow)" methodname="HeadSelector_PreservesDistanceAndFacingRules" classname="ColorTiming.Tests.EditMode.Boss2BattleLogicTests" runstate="Runnable" seed="1270335831" result="Passed" start-time="2026-08-31 07:54:22Z" end-time="2026-08-31 07:54:22Z" duration="0.000059" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1061" name="HeadSelector_PreservesDistanceAndFacingRules(5.0f,True,0.9f,Projectile)" fullname="ColorTiming.Tests.EditMode.Boss2BattleLogicTests.HeadSelector_PreservesDistanceAndFacingRules(5.0f,True,0.9f,Projectile)" methodname="HeadSelector_PreservesDistanceAndFacingRules" classname="ColorTiming.Tests.EditMode.Boss2BattleLogicTests" runstate="Runnable" seed="177821923" result="Passed" start-time="2026-08-31 07:54:22Z" end-time="2026-08-31 07:54:22Z" duration="0.000054" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1062" name="HeadSelector_PreservesDistanceAndFacingRules(8.0f,False,0.4f,Melee)" fullname="ColorTiming.Tests.EditMode.Boss2BattleLogicTests.HeadSelector_PreservesDistanceAndFacingRules(8.0f,False,0.4f,Melee)" methodname="HeadSelector_PreservesDistanceAndFacingRules" classname="ColorTiming.Tests.EditMode.Boss2BattleLogicTests" runstate="Runnable" seed="1705464252" result="Passed" start-time="2026-08-31 07:54:22Z" end-time="2026-08-31 07:54:22Z" duration="0.000092" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1063" name="HeadSelector_PreservesDistanceAndFacingRules(10.0f,False,0.4f,Projectile)" fullname="ColorTiming.Tests.EditMode.Boss2BattleLogicTests.HeadSelector_PreservesDistanceAndFacingRules(10.0f,False,0.4f,Projectile)" methodname="HeadSelector_PreservesDistanceAndFacingRules" classname="ColorTiming.Tests.EditMode.Boss2BattleLogicTests" runstate="Runnable" seed="1025575451" result="Passed" start-time="2026-08-31 07:54:22Z" end-time="2026-08-31 07:54:22Z" duration="0.000059" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-case id="1070" name="TailActivation_IsSingleShotOnlyOnTwelveToElevenTransition" fullname="ColorTiming.Tests.EditMode.Boss2BattleLogicTests.TailActivation_IsSingleShotOnlyOnTwelveToElevenTransition" methodname="TailActivation_IsSingleShotOnlyOnTwelveToElevenTransition" classname="ColorTiming.Tests.EditMode.Boss2BattleLogicTests" runstate="Runnable" seed="998766296" result="Passed" start-time="2026-08-31 07:54:22Z" end-time="2026-08-31 07:54:22Z" duration="0.000227" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-suite type="ParameterizedMethod" id="1069" name="TailSelector_PreservesBurrowAndAttackRules" fullname="ColorTiming.Tests.EditMode.Boss2BattleLogicTests.TailSelector_PreservesBurrowAndAttackRules" classname="ColorTiming.Tests.EditMode.Boss2BattleLogicTests" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-08-31 07:54:22Z" end-time="2026-08-31 07:54:22Z" duration="0.097774" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1065" name="TailSelector_PreservesBurrowAndAttackRules(11.0f,False,0.9f,Burrow)" fullname="ColorTiming.Tests.EditMode.Boss2BattleLogicTests.TailSelector_PreservesBurrowAndAttackRules(11.0f,False,0.9f,Burrow)" methodname="TailSelector_PreservesBurrowAndAttackRules" classname="ColorTiming.Tests.EditMode.Boss2BattleLogicTests" runstate="Runnable" seed="303603586" result="Passed" start-time="2026-08-31 07:54:22Z" end-time="2026-08-31 07:54:22Z" duration="0.000403" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1066" name="TailSelector_PreservesBurrowAndAttackRules(5.0f,True,0.9f,Burrow)" fullname="ColorTiming.Tests.EditMode.Boss2BattleLogicTests.TailSelector_PreservesBurrowAndAttackRules(5.0f,True,0.9f,Burrow)" methodname="TailSelector_PreservesBurrowAndAttackRules" classname="ColorTiming.Tests.EditMode.Boss2BattleLogicTests" runstate="Runnable" seed="1887441530" result="Passed" start-time="2026-08-31 07:54:22Z" end-time="2026-08-31 07:54:22Z" duration="0.000083" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1067" name="TailSelector_PreservesBurrowAndAttackRules(5.0f,False,0.2f,Melee)" fullname="ColorTiming.Tests.EditMode.Boss2BattleLogicTests.TailSelector_PreservesBurrowAndAttackRules(5.0f,False,0.2f,Melee)" methodname="TailSelector_PreservesBurrowAndAttackRules" classname="ColorTiming.Tests.EditMode.Boss2BattleLogicTests" runstate="Runnable" seed="695026653" result="Passed" start-time="2026-08-31 07:54:22Z" end-time="2026-08-31 07:54:22Z" duration="0.000091" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1068" name="TailSelector_PreservesBurrowAndAttackRules(5.0f,False,0.8f,Projectile)" fullname="ColorTiming.Tests.EditMode.Boss2BattleLogicTests.TailSelector_PreservesBurrowAndAttackRules(5.0f,False,0.8f,Projectile)" methodname="TailSelector_PreservesBurrowAndAttackRules" classname="ColorTiming.Tests.EditMode.Boss2BattleLogicTests" runstate="Runnable" seed="1418602550" result="Passed" start-time="2026-08-31 07:54:22Z" end-time="2026-08-31 07:54:22Z" duration="0.000056" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+          </test-suite>
+          <test-suite type="TestFixture" id="1072" name="BossSoundMappingTests" fullname="ColorTiming.Tests.EditMode.BossSoundMappingTests" classname="ColorTiming.Tests.EditMode.BossSoundMappingTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-08-31 07:54:22Z" end-time="2026-08-31 07:54:22Z" duration="0.105282" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1074" name="DuplicateSemanticCueIsRejected" fullname="ColorTiming.Tests.EditMode.BossSoundMappingTests.DuplicateSemanticCueIsRejected" methodname="DuplicateSemanticCueIsRejected" classname="ColorTiming.Tests.EditMode.BossSoundMappingTests" runstate="Runnable" seed="1613411735" result="Passed" start-time="2026-08-31 07:54:22Z" end-time="2026-08-31 07:54:22Z" duration="0.002894" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1075" name="HitFlash_ResetsShaderPropertyAndDisablesIdleUpdate" fullname="ColorTiming.Tests.EditMode.BossSoundMappingTests.HitFlash_ResetsShaderPropertyAndDisablesIdleUpdate" methodname="HitFlash_ResetsShaderPropertyAndDisablesIdleUpdate" classname="ColorTiming.Tests.EditMode.BossSoundMappingTests" runstate="Runnable" seed="709189325" result="Passed" start-time="2026-08-31 07:54:22Z" end-time="2026-08-31 07:54:22Z" duration="0.002167" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1073" name="SemanticAndAnimationCuesUseTheSameConfiguredCueId" fullname="ColorTiming.Tests.EditMode.BossSoundMappingTests.SemanticAndAnimationCuesUseTheSameConfiguredCueId" methodname="SemanticAndAnimationCuesUseTheSameConfiguredCueId" classname="ColorTiming.Tests.EditMode.BossSoundMappingTests" runstate="Runnable" seed="897393868" result="Passed" start-time="2026-08-31 07:54:22Z" end-time="2026-08-31 07:54:22Z" duration="0.001381" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1076" name="ColorTimingSceneFlowTests" fullname="ColorTiming.Tests.EditMode.ColorTimingSceneFlowTests" classname="ColorTiming.Tests.EditMode.ColorTimingSceneFlowTests" runstate="Runnable" testcasecount="8" result="Passed" start-time="2026-08-31 07:54:22Z" end-time="2026-08-31 07:54:22Z" duration="0.197023" total="8" passed="8" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="ParameterizedMethod" id="1085" name="LoadingPolicy_OnlySkipsInitialStartMenu" fullname="ColorTiming.Tests.EditMode.ColorTimingSceneFlowTests.LoadingPolicy_OnlySkipsInitialStartMenu" classname="ColorTiming.Tests.EditMode.ColorTimingSceneFlowTests" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-08-31 07:54:22Z" end-time="2026-08-31 07:54:22Z" duration="0.100645" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1081" name="LoadingPolicy_OnlySkipsInitialStartMenu(null,StartMenu,False)" fullname="ColorTiming.Tests.EditMode.ColorTimingSceneFlowTests.LoadingPolicy_OnlySkipsInitialStartMenu(null,StartMenu,False)" methodname="LoadingPolicy_OnlySkipsInitialStartMenu" classname="ColorTiming.Tests.EditMode.ColorTimingSceneFlowTests" runstate="Runnable" seed="1670806221" result="Passed" start-time="2026-08-31 07:54:22Z" end-time="2026-08-31 07:54:22Z" duration="0.001042" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1082" name="LoadingPolicy_OnlySkipsInitialStartMenu(null,Boss1,True)" fullname="ColorTiming.Tests.EditMode.ColorTimingSceneFlowTests.LoadingPolicy_OnlySkipsInitialStartMenu(null,Boss1,True)" methodname="LoadingPolicy_OnlySkipsInitialStartMenu" classname="ColorTiming.Tests.EditMode.ColorTimingSceneFlowTests" runstate="Runnable" seed="450137613" result="Passed" start-time="2026-08-31 07:54:22Z" end-time="2026-08-31 07:54:22Z" duration="0.000092" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1083" name="LoadingPolicy_OnlySkipsInitialStartMenu(Boss1,StartMenu,True)" fullname="ColorTiming.Tests.EditMode.ColorTimingSceneFlowTests.LoadingPolicy_OnlySkipsInitialStartMenu(Boss1,StartMenu,True)" methodname="LoadingPolicy_OnlySkipsInitialStartMenu" classname="ColorTiming.Tests.EditMode.ColorTimingSceneFlowTests" runstate="Runnable" seed="368336007" result="Passed" start-time="2026-08-31 07:54:22Z" end-time="2026-08-31 07:54:22Z" duration="0.000117" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1084" name="LoadingPolicy_OnlySkipsInitialStartMenu(StartMenu,Boss2,True)" fullname="ColorTiming.Tests.EditMode.ColorTimingSceneFlowTests.LoadingPolicy_OnlySkipsInitialStartMenu(StartMenu,Boss2,True)" methodname="LoadingPolicy_OnlySkipsInitialStartMenu" classname="ColorTiming.Tests.EditMode.ColorTimingSceneFlowTests" runstate="Runnable" seed="2471663" result="Passed" start-time="2026-08-31 07:54:22Z" end-time="2026-08-31 07:54:22Z" duration="0.000072" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-case id="1079" name="Transition_RejectsConcurrentAndSameSceneRequests" fullname="ColorTiming.Tests.EditMode.ColorTimingSceneFlowTests.Transition_RejectsConcurrentAndSameSceneRequests" methodname="Transition_RejectsConcurrentAndSameSceneRequests" classname="ColorTiming.Tests.EditMode.ColorTimingSceneFlowTests" runstate="Runnable" seed="722947598" result="Passed" start-time="2026-08-31 07:54:22Z" end-time="2026-08-31 07:54:22Z" duration="0.000579" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1080" name="TransitionContext_DistinguishesInitialAndSubsequentTransitions" fullname="ColorTiming.Tests.EditMode.ColorTimingSceneFlowTests.TransitionContext_DistinguishesInitialAndSubsequentTransitions" methodname="TransitionContext_DistinguishesInitialAndSubsequentTransitions" classname="ColorTiming.Tests.EditMode.ColorTimingSceneFlowTests" runstate="Runnable" seed="444589643" result="Passed" start-time="2026-08-31 07:54:22Z" end-time="2026-08-31 07:54:22Z" duration="0.001612" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1078" name="TransitionDispatch_IsSingleShotAfterPresentation" fullname="ColorTiming.Tests.EditMode.ColorTimingSceneFlowTests.TransitionDispatch_IsSingleShotAfterPresentation" methodname="TransitionDispatch_IsSingleShotAfterPresentation" classname="ColorTiming.Tests.EditMode.ColorTimingSceneFlowTests" runstate="Runnable" seed="2058320319" result="Passed" start-time="2026-08-31 07:54:22Z" end-time="2026-08-31 07:54:22Z" duration="0.000229" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1077" name="TransitionProgress_IsMonotonicAndCompletesAtOne" fullname="ColorTiming.Tests.EditMode.ColorTimingSceneFlowTests.TransitionProgress_IsMonotonicAndCompletesAtOne" methodname="TransitionProgress_IsMonotonicAndCompletesAtOne" classname="ColorTiming.Tests.EditMode.ColorTimingSceneFlowTests" runstate="Runnable" seed="1624105375" result="Passed" start-time="2026-08-31 07:54:22Z" end-time="2026-08-31 07:54:22Z" duration="0.001351" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1086" name="CombatDomainTests" fullname="ColorTiming.Tests.EditMode.CombatDomainTests" classname="ColorTiming.Tests.EditMode.CombatDomainTests" runstate="Runnable" testcasecount="8" result="Passed" start-time="2026-08-31 07:54:22Z" end-time="2026-08-31 07:54:22Z" duration="0.097474" total="8" passed="8" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1087" name="AllLegacyWeaponPresentationIndicesRoundTrip" fullname="ColorTiming.Tests.EditMode.CombatDomainTests.AllLegacyWeaponPresentationIndicesRoundTrip" methodname="AllLegacyWeaponPresentationIndicesRoundTrip" classname="ColorTiming.Tests.EditMode.CombatDomainTests" runstate="Runnable" seed="642812386" result="Passed" start-time="2026-08-31 07:54:22Z" end-time="2026-08-31 07:54:22Z" duration="0.000428" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1089" name="Boss1WeaknessDistributionIsStableAcrossShuffle" fullname="ColorTiming.Tests.EditMode.CombatDomainTests.Boss1WeaknessDistributionIsStableAcrossShuffle" methodname="Boss1WeaknessDistributionIsStableAcrossShuffle" classname="ColorTiming.Tests.EditMode.CombatDomainTests" runstate="Runnable" seed="880479932" result="Passed" start-time="2026-08-31 07:54:22Z" end-time="2026-08-31 07:54:22Z" duration="0.000627" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1090" name="Boss2WeaknessDistributionIncludesOrange" fullname="ColorTiming.Tests.EditMode.CombatDomainTests.Boss2WeaknessDistributionIncludesOrange" methodname="Boss2WeaknessDistributionIncludesOrange" classname="ColorTiming.Tests.EditMode.CombatDomainTests" runstate="Runnable" seed="890279148" result="Passed" start-time="2026-08-31 07:54:22Z" end-time="2026-08-31 07:54:22Z" duration="0.000320" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1091" name="BossRejectsWrongColorAndInvulnerabilityWithoutMutation" fullname="ColorTiming.Tests.EditMode.CombatDomainTests.BossRejectsWrongColorAndInvulnerabilityWithoutMutation" methodname="BossRejectsWrongColorAndInvulnerabilityWithoutMutation" classname="ColorTiming.Tests.EditMode.CombatDomainTests" runstate="Runnable" seed="88290553" result="Passed" start-time="2026-08-31 07:54:22Z" end-time="2026-08-31 07:54:22Z" duration="0.000297" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1092" name="BossVictoryIsSingleShot" fullname="ColorTiming.Tests.EditMode.CombatDomainTests.BossVictoryIsSingleShot" methodname="BossVictoryIsSingleShot" classname="ColorTiming.Tests.EditMode.CombatDomainTests" runstate="Runnable" seed="1850940729" result="Passed" start-time="2026-08-31 07:54:22Z" end-time="2026-08-31 07:54:22Z" duration="0.000401" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1088" name="FrameworkSoundNamesIncludeFolderAndWaveExtension" fullname="ColorTiming.Tests.EditMode.CombatDomainTests.FrameworkSoundNamesIncludeFolderAndWaveExtension" methodname="FrameworkSoundNamesIncludeFolderAndWaveExtension" classname="ColorTiming.Tests.EditMode.CombatDomainTests" runstate="Runnable" seed="500464730" result="Passed" start-time="2026-08-31 07:54:22Z" end-time="2026-08-31 07:54:22Z" duration="0.000206" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1093" name="PlayerHealthClampsHealsAndDefeatIsSingleShot" fullname="ColorTiming.Tests.EditMode.CombatDomainTests.PlayerHealthClampsHealsAndDefeatIsSingleShot" methodname="PlayerHealthClampsHealsAndDefeatIsSingleShot" classname="ColorTiming.Tests.EditMode.CombatDomainTests" runstate="Runnable" seed="467396677" result="Passed" start-time="2026-08-31 07:54:22Z" end-time="2026-08-31 07:54:22Z" duration="0.000354" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1094" name="UpcomingProjectionDoesNotMutateQueue" fullname="ColorTiming.Tests.EditMode.CombatDomainTests.UpcomingProjectionDoesNotMutateQueue" methodname="UpcomingProjectionDoesNotMutateQueue" classname="ColorTiming.Tests.EditMode.CombatDomainTests" runstate="Runnable" seed="225073628" result="Passed" start-time="2026-08-31 07:54:22Z" end-time="2026-08-31 07:54:22Z" duration="0.000484" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1095" name="FrameworkEntityLifecycleTests" fullname="ColorTiming.Tests.EditMode.FrameworkEntityLifecycleTests" classname="ColorTiming.Tests.EditMode.FrameworkEntityLifecycleTests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-08-31 07:54:22Z" end-time="2026-08-31 07:54:22Z" duration="0.096286" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1096" name="SkillAnimationEnd_ReleasesFrameworkEntityExactlyOnce" fullname="ColorTiming.Tests.EditMode.FrameworkEntityLifecycleTests.SkillAnimationEnd_ReleasesFrameworkEntityExactlyOnce" methodname="SkillAnimationEnd_ReleasesFrameworkEntityExactlyOnce" classname="ColorTiming.Tests.EditMode.FrameworkEntityLifecycleTests" runstate="Runnable" seed="1901157566" result="Passed" start-time="2026-08-31 07:54:22Z" end-time="2026-08-31 07:54:22Z" duration="0.000813" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1097" name="GameInputStateTests" fullname="ColorTiming.Tests.EditMode.GameInputStateTests" classname="ColorTiming.Tests.EditMode.GameInputStateTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-08-31 07:54:22Z" end-time="2026-08-31 07:54:22Z" duration="0.100144" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1098" name="FramePreservesPressAndHeldSemantics" fullname="ColorTiming.Tests.EditMode.GameInputStateTests.FramePreservesPressAndHeldSemantics" methodname="FramePreservesPressAndHeldSemantics" classname="ColorTiming.Tests.EditMode.GameInputStateTests" runstate="Runnable" seed="1697152831" result="Passed" start-time="2026-08-31 07:54:22Z" end-time="2026-08-31 07:54:22Z" duration="0.001101" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1100" name="PauseRemainsAvailableWhileGameplayIsSuppressed" fullname="ColorTiming.Tests.EditMode.GameInputStateTests.PauseRemainsAvailableWhileGameplayIsSuppressed" methodname="PauseRemainsAvailableWhileGameplayIsSuppressed" classname="ColorTiming.Tests.EditMode.GameInputStateTests" runstate="Runnable" seed="459885011" result="Passed" start-time="2026-08-31 07:54:22Z" end-time="2026-08-31 07:54:22Z" duration="0.000214" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1099" name="TutorialConsumptionSuppressesSameFrameGameplayOnlyOnce" fullname="ColorTiming.Tests.EditMode.GameInputStateTests.TutorialConsumptionSuppressesSameFrameGameplayOnlyOnce" methodname="TutorialConsumptionSuppressesSameFrameGameplayOnlyOnce" classname="ColorTiming.Tests.EditMode.GameInputStateTests" runstate="Runnable" seed="397670512" result="Passed" start-time="2026-08-31 07:54:22Z" end-time="2026-08-31 07:54:22Z" duration="0.000420" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1101" name="PlayerActionStateMachineTests" fullname="ColorTiming.Tests.EditMode.PlayerActionStateMachineTests" classname="ColorTiming.Tests.EditMode.PlayerActionStateMachineTests" runstate="Runnable" testcasecount="5" result="Passed" start-time="2026-08-31 07:54:22Z" end-time="2026-08-31 07:54:22Z" duration="0.099475" total="5" passed="5" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1106" name="AttackGate_PreservesResumeGuardAndHeldAnimatorContract" fullname="ColorTiming.Tests.EditMode.PlayerActionStateMachineTests.AttackGate_PreservesResumeGuardAndHeldAnimatorContract" methodname="AttackGate_PreservesResumeGuardAndHeldAnimatorContract" classname="ColorTiming.Tests.EditMode.PlayerActionStateMachineTests" runstate="Runnable" seed="894958095" result="Passed" start-time="2026-08-31 07:54:22Z" end-time="2026-08-31 07:54:22Z" duration="0.000482" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1102" name="Dash_CapturesFacingAndVerticalInput_AndBlocksMovement" fullname="ColorTiming.Tests.EditMode.PlayerActionStateMachineTests.Dash_CapturesFacingAndVerticalInput_AndBlocksMovement" methodname="Dash_CapturesFacingAndVerticalInput_AndBlocksMovement" classname="ColorTiming.Tests.EditMode.PlayerActionStateMachineTests" runstate="Runnable" seed="94127217" result="Passed" start-time="2026-08-31 07:54:22Z" end-time="2026-08-31 07:54:22Z" duration="0.000522" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1103" name="DashInvulnerabilitySignal_MayArriveBeforeAnimatorStateEntry" fullname="ColorTiming.Tests.EditMode.PlayerActionStateMachineTests.DashInvulnerabilitySignal_MayArriveBeforeAnimatorStateEntry" methodname="DashInvulnerabilitySignal_MayArriveBeforeAnimatorStateEntry" classname="ColorTiming.Tests.EditMode.PlayerActionStateMachineTests" runstate="Runnable" seed="828000333" result="Passed" start-time="2026-08-31 07:54:22Z" end-time="2026-08-31 07:54:22Z" duration="0.000119" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1105" name="Death_ClearsTransientFlags_AndPermanentlyBlocksActions" fullname="ColorTiming.Tests.EditMode.PlayerActionStateMachineTests.Death_ClearsTransientFlags_AndPermanentlyBlocksActions" methodname="Death_ClearsTransientFlags_AndPermanentlyBlocksActions" classname="ColorTiming.Tests.EditMode.PlayerActionStateMachineTests" runstate="Runnable" seed="931051106" result="Passed" start-time="2026-08-31 07:54:22Z" end-time="2026-08-31 07:54:22Z" duration="0.000278" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1104" name="HitStun_HasOneSecondDamageRejection_IndependentOfAnimationExit" fullname="ColorTiming.Tests.EditMode.PlayerActionStateMachineTests.HitStun_HasOneSecondDamageRejection_IndependentOfAnimationExit" methodname="HitStun_HasOneSecondDamageRejection_IndependentOfAnimationExit" classname="ColorTiming.Tests.EditMode.PlayerActionStateMachineTests" runstate="Runnable" seed="1589745427" result="Passed" start-time="2026-08-31 07:54:22Z" end-time="2026-08-31 07:54:22Z" duration="0.000183" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1107" name="PlayerWeaponRuntimeTests" fullname="ColorTiming.Tests.EditMode.PlayerWeaponRuntimeTests" classname="ColorTiming.Tests.EditMode.PlayerWeaponRuntimeTests" runstate="Runnable" testcasecount="6" result="Passed" start-time="2026-08-31 07:54:22Z" end-time="2026-08-31 07:54:23Z" duration="0.201393" total="6" passed="6" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="ParameterizedMethod" id="1114" name="AnimatorIndex_RoundTripsDomainIdentity" fullname="ColorTiming.Tests.EditMode.PlayerWeaponRuntimeTests.AnimatorIndex_RoundTripsDomainIdentity" classname="ColorTiming.Tests.EditMode.PlayerWeaponRuntimeTests" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-08-31 07:54:23Z" end-time="2026-08-31 07:54:23Z" duration="0.100034" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1110" name="AnimatorIndex_RoundTripsDomainIdentity(Red,Scissors)" fullname="ColorTiming.Tests.EditMode.PlayerWeaponRuntimeTests.AnimatorIndex_RoundTripsDomainIdentity(Red,Scissors)" methodname="AnimatorIndex_RoundTripsDomainIdentity" classname="ColorTiming.Tests.EditMode.PlayerWeaponRuntimeTests" runstate="Runnable" seed="1984730982" result="Passed" start-time="2026-08-31 07:54:23Z" end-time="2026-08-31 07:54:23Z" duration="0.000620" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1111" name="AnimatorIndex_RoundTripsDomainIdentity(Green,Hammer)" fullname="ColorTiming.Tests.EditMode.PlayerWeaponRuntimeTests.AnimatorIndex_RoundTripsDomainIdentity(Green,Hammer)" methodname="AnimatorIndex_RoundTripsDomainIdentity" classname="ColorTiming.Tests.EditMode.PlayerWeaponRuntimeTests" runstate="Runnable" seed="1464501811" result="Passed" start-time="2026-08-31 07:54:23Z" end-time="2026-08-31 07:54:23Z" duration="0.000099" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1112" name="AnimatorIndex_RoundTripsDomainIdentity(Purple,Bomb)" fullname="ColorTiming.Tests.EditMode.PlayerWeaponRuntimeTests.AnimatorIndex_RoundTripsDomainIdentity(Purple,Bomb)" methodname="AnimatorIndex_RoundTripsDomainIdentity" classname="ColorTiming.Tests.EditMode.PlayerWeaponRuntimeTests" runstate="Runnable" seed="1465068516" result="Passed" start-time="2026-08-31 07:54:23Z" end-time="2026-08-31 07:54:23Z" duration="0.000072" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1113" name="AnimatorIndex_RoundTripsDomainIdentity(Orange,Airplane)" fullname="ColorTiming.Tests.EditMode.PlayerWeaponRuntimeTests.AnimatorIndex_RoundTripsDomainIdentity(Orange,Airplane)" methodname="AnimatorIndex_RoundTripsDomainIdentity" classname="ColorTiming.Tests.EditMode.PlayerWeaponRuntimeTests" runstate="Runnable" seed="504798154" result="Passed" start-time="2026-08-31 07:54:23Z" end-time="2026-08-31 07:54:23Z" duration="0.000063" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-case id="1108" name="Inventory_AllowsOnlyOneWeapon_AndReturnsDroppedIdentity" fullname="ColorTiming.Tests.EditMode.PlayerWeaponRuntimeTests.Inventory_AllowsOnlyOneWeapon_AndReturnsDroppedIdentity" methodname="Inventory_AllowsOnlyOneWeapon_AndReturnsDroppedIdentity" classname="ColorTiming.Tests.EditMode.PlayerWeaponRuntimeTests" runstate="Runnable" seed="1217887382" result="Passed" start-time="2026-08-31 07:54:23Z" end-time="2026-08-31 07:54:23Z" duration="0.000198" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1109" name="SpawnerRuntime_UsesClock_AndGuaranteesCurrentWeakness" fullname="ColorTiming.Tests.EditMode.PlayerWeaponRuntimeTests.SpawnerRuntime_UsesClock_AndGuaranteesCurrentWeakness" methodname="SpawnerRuntime_UsesClock_AndGuaranteesCurrentWeakness" classname="ColorTiming.Tests.EditMode.PlayerWeaponRuntimeTests" runstate="Runnable" seed="756194003" result="Passed" start-time="2026-08-31 07:54:23Z" end-time="2026-08-31 07:54:23Z" duration="0.003123" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1115" name="TimeAndSpawnPolicyTests" fullname="ColorTiming.Tests.EditMode.TimeAndSpawnPolicyTests" classname="ColorTiming.Tests.EditMode.TimeAndSpawnPolicyTests" runstate="Runnable" testcasecount="6" result="Passed" start-time="2026-08-31 07:54:23Z" end-time="2026-08-31 07:54:23Z" duration="0.097959" total="6" passed="6" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1117" name="BattleEndResetRestoresTimeAndInvalidatesOutstandingScopes" fullname="ColorTiming.Tests.EditMode.TimeAndSpawnPolicyTests.BattleEndResetRestoresTimeAndInvalidatesOutstandingScopes" methodname="BattleEndResetRestoresTimeAndInvalidatesOutstandingScopes" classname="ColorTiming.Tests.EditMode.TimeAndSpawnPolicyTests" runstate="Runnable" seed="1535075590" result="Passed" start-time="2026-08-31 07:54:23Z" end-time="2026-08-31 07:54:23Z" duration="0.001493" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1118" name="Boss1SpawnGuaranteesMissingCurrentColorAtThreshold" fullname="ColorTiming.Tests.EditMode.TimeAndSpawnPolicyTests.Boss1SpawnGuaranteesMissingCurrentColorAtThreshold" methodname="Boss1SpawnGuaranteesMissingCurrentColorAtThreshold" classname="ColorTiming.Tests.EditMode.TimeAndSpawnPolicyTests" runstate="Runnable" seed="1577791150" result="Passed" start-time="2026-08-31 07:54:23Z" end-time="2026-08-31 07:54:23Z" duration="0.000755" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1119" name="Boss2SpawnSupportsOrangeAndOnlyBoss2Families" fullname="ColorTiming.Tests.EditMode.TimeAndSpawnPolicyTests.Boss2SpawnSupportsOrangeAndOnlyBoss2Families" methodname="Boss2SpawnSupportsOrangeAndOnlyBoss2Families" classname="ColorTiming.Tests.EditMode.TimeAndSpawnPolicyTests" runstate="Runnable" seed="1766491661" result="Passed" start-time="2026-08-31 07:54:23Z" end-time="2026-08-31 07:54:23Z" duration="0.000256" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1120" name="SpawnAtLimitProducesNoDecision" fullname="ColorTiming.Tests.EditMode.TimeAndSpawnPolicyTests.SpawnAtLimitProducesNoDecision" methodname="SpawnAtLimitProducesNoDecision" classname="ColorTiming.Tests.EditMode.TimeAndSpawnPolicyTests" runstate="Runnable" seed="1679184237" result="Passed" start-time="2026-08-31 07:54:23Z" end-time="2026-08-31 07:54:23Z" duration="0.000158" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1121" name="SpawnClockIsReadyImmediatelyAndFiresOnThresholdCrossing" fullname="ColorTiming.Tests.EditMode.TimeAndSpawnPolicyTests.SpawnClockIsReadyImmediatelyAndFiresOnThresholdCrossing" methodname="SpawnClockIsReadyImmediatelyAndFiresOnThresholdCrossing" classname="ColorTiming.Tests.EditMode.TimeAndSpawnPolicyTests" runstate="Runnable" seed="1953074768" result="Passed" start-time="2026-08-31 07:54:23Z" end-time="2026-08-31 07:54:23Z" duration="0.000116" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1116" name="TimeRequestsRestoreCorrectlyOutOfOrder" fullname="ColorTiming.Tests.EditMode.TimeAndSpawnPolicyTests.TimeRequestsRestoreCorrectlyOutOfOrder" methodname="TimeRequestsRestoreCorrectlyOutOfOrder" classname="ColorTiming.Tests.EditMode.TimeAndSpawnPolicyTests" runstate="Runnable" seed="531273438" result="Passed" start-time="2026-08-31 07:54:23Z" end-time="2026-08-31 07:54:23Z" duration="0.000148" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1122" name="WeaknessSlotLedgerTests" fullname="ColorTiming.Tests.EditMode.WeaknessSlotLedgerTests" classname="ColorTiming.Tests.EditMode.WeaknessSlotLedgerTests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-08-31 07:54:23Z" end-time="2026-08-31 07:54:23Z" duration="0.099534" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1123" name="OrangeConsumption_UsesOrangeSlotWithoutMutatingPurple" fullname="ColorTiming.Tests.EditMode.WeaknessSlotLedgerTests.OrangeConsumption_UsesOrangeSlotWithoutMutatingPurple" methodname="OrangeConsumption_UsesOrangeSlotWithoutMutatingPurple" classname="ColorTiming.Tests.EditMode.WeaknessSlotLedgerTests" runstate="Runnable" seed="369691716" result="Passed" start-time="2026-08-31 07:54:23Z" end-time="2026-08-31 07:54:23Z" duration="0.002668" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[Saving results to: C:/Users/WIN10/AppData/LocalLow/DefaultCompany/GameDesinger\TestResults.xml
+]]></output>
+            </test-case>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
 </test-suite>

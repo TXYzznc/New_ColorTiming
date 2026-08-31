@@ -16,9 +16,14 @@ Hero 当前按武器异步加载候选 Animator Controller。资源完成回调�
 - Loading UI 展示场景加载、必需战斗资源预加载和运行时组合初始化的聚合进度。
 - 本场景/上下文可能生成的 Hero 武器候选 Controller 必须在进入 `BattleLifecycle.Running` 前
   完成预加载；战斗中的拾取、攻击和受击路径不得发起 Controller 加载。
-- Animator Controller 仅可在稳定待机边界安装；移动、攻击、Dash、受击、死亡、场景释放与
-  Animator 过渡期间禁止 `Rebind()`。
+- Animator Controller 可在稳定的 Locomotion（待机或移动）边界安装；攻击、Dash、受击、死亡、
+  技能位移、场景释放与 Animator 过渡期间禁止 `Rebind()`。移动中拾取或丢弃后必须立即更新
+  对应武器表现，不再等待输入归零。
 - 资源计划由配置描述；加载与释放由上下文拥有者管理，`PlayerActorView` 只消费已就绪资源。
+- 玩家武器库存是业务状态唯一真相；动画 Driver 维护 requested/presented 两种表现状态。当前使用
+  Mecanim Driver，后续可在不改变战斗规则的前提下替换为 Spine Driver。
+- 攻击进行中忽略玩家发起的拾取/丢弃交互；有效受击仍会中断攻击并强制掉落武器，已被中断攻击
+  的迟到 Animation Event 不得造成伤害或消耗武器。
 
 ## 范围
 

@@ -31,6 +31,16 @@ ColorTiming 已完成从源工程到 GF_X 的第一阶段迁移，但业务层�
 
 ## Decisions
 
+### 0. 业务调参以 GF DataTable 为唯一权威源
+
+战斗、角色、Boss、武器、技能、声音、关卡流程和 UI 表现中的可调业务参数统一进入
+`GameData/DataTables/ColorTiming/`。运行时只通过只读配置仓库取得类型化配置；表中资源字段保存稳定资源名或语义 ID，
+不保存 Unity Object、GUID 或场景对象引用。ScriptableObject 不再承担运行时业务数据库职责。
+
+Prefab/Scene 继续作者化组件、骨骼、碰撞器、RectTransform、出生锚点和挂点等结构引用；这些引用不是数值配置，
+也不得为追求“全部进表”而转换成脆弱的路径查找。迁移期间配置仓库对缺表、缺行、重复 ID 和非法枚举采取
+启动失败策略，不静默回退到代码默认值，从而保证只有一个事实源。
+
 ### 1. 选择分层会话架构，而不是继续修补或 ECS 重写
 
 采用：
@@ -174,6 +184,8 @@ GF Input / Physics / Serialized Art Event
 7. 运行编译、Domain EditMode、全 EditMode、目标 PlayMode、全 PlayMode、三场景生命周期、Missing Script、event manifest、asset manifest 和 framework purity。
 8. 所有自动化与资源契约通过后删除 `Legacy` 旧业务类型、兼容 adapter 和无用扫描器；再次运行全量验证。
 9. 更新功能 ID 映射、OpenSpec evidence 与用户人工验收清单，由用户验证画面、音效和手感。
+10. 建立 ColorTiming 业务 DataTable、只读配置仓库和启动校验；依次替换 SO、代码常量和重复序列化数值，
+    删除运行时业务配置双轨，同时保持场景/Prefab 结构引用和受保护美术资源不变。
 
 ### Rollback
 

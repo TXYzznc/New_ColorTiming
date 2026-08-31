@@ -16,11 +16,22 @@ The player SHALL never replace its RuntimeAnimatorController during an unsafe an
 
 #### Scenario: Pick up while moving
 - **WHEN** a player picks up a weapon while moving
-- **THEN** the weapon is authoritative for gameplay immediately, but its controller installs only after the stable idle boundary
+- **THEN** the weapon is authoritative for gameplay immediately, and its preloaded controller installs at the stable moving Locomotion boundary without waiting for zero input
 
 #### Scenario: Controller becomes ready during an attack
 - **WHEN** a requested weapon controller becomes ready while the player is attacking, dashing, hit-stunned or dying
 - **THEN** no Animator Rebind occurs until the player reaches the configured safe installation boundary
+
+### Requirement: Weapon interactions preserve attack consistency
+The game SHALL keep manual weapon interaction and forced damage-drop rules deterministic across animation events.
+
+#### Scenario: Manual interaction during attack
+- **WHEN** the player requests pickup or drop while the authoritative action state is Attacking
+- **THEN** the request is ignored and cannot execute later after the attack
+
+#### Scenario: Damage interrupts an attack
+- **WHEN** valid damage is accepted while the player is attacking with a weapon
+- **THEN** the weapon drops immediately, the player enters HitStun, and stale attack events neither emit damage nor consume another weapon
 
 #### Scenario: Context is released before an asynchronous completion
 - **WHEN** a battle load context is replaced or released before a resource callback completes

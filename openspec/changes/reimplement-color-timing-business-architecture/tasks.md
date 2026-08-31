@@ -53,3 +53,12 @@
 - [x] 7.4 Run framework purity and repository integrity audits without modifying `ScriptsBuiltin`
 - [x] 7.5 Update the feature audit, migration evidence and manual visual/audio/feel acceptance checklist
 - [x] 7.6 Hand final scoped changes to the Git integration task for Chinese commits without pushing
+## 10. GF DataTable business configuration
+
+- [x] 10.1 Add authoritative Excel sources, generated text assets and row types for battle, player, boss, boss attacks, weapons, spawn rules, skills, sound cues and presentation parameters
+- [x] 10.2 Add a read-only configuration repository with fail-fast validation and no code/SO fallback
+- [x] 10.3 Inject typed battle/player/boss configuration into `BattleSession`, selectors and actor views
+- [x] 10.4 Replace `WeaponSpawnRuleAsset`, `PlayerSceneProfileAsset`, `HeroWeaponAnimationCatalogAsset` and `BossSoundCueCatalogAsset` runtime ownership
+- [x] 10.5 Replace magic damage strings, array-index presentation contracts and scene-flow constants with typed table IDs
+- [x] 10.6 Preserve all prefab/scene structural references and protected art hashes while removing duplicated serialized numeric fields
+- [x] 10.7 Add configuration integrity tests, compile validation and runtime smoke evidence

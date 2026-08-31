@@ -2,6 +2,7 @@
 
 > 日期：2026-08-28
 > 变更：`reimplement-color-timing-business-architecture`
+> 最近回归：2026-08-31
 
 ## 实施结论
 
@@ -17,8 +18,8 @@
 | 项目 | 结果 |
 |---|---|
 | Unity 编译 | 0 error |
-| 全量 EditMode | 212/212 通过 |
-| 全量 PlayMode | 15/15 通过（84.810 秒） |
+| ColorTiming EditMode | 83/83 通过（2.518 秒） |
+| ColorTiming PlayMode | 19/19 通过（78.199 秒） |
 | Missing Script | Prefab 搜索 0 项 |
 | GF.UI 结构验证 | BattleHud、Loading、Battle UI 生命周期验证通过 |
 | OpenSpec | `openspec validate reimplement-color-timing-business-architecture --strict` 通过 |
@@ -49,3 +50,17 @@
 7. URP、Spine、材质、字体、视频、粒子、Animator、相机与视差的最终画面无退化。
 
 任何未列入 FIX-001～FIX-004 的可见或可听差异均按缺陷处理，不因架构重构自动接受。
+
+## 2026-08-31 GF DataTable 配置迁移增量
+
+- 新增 9 份 Excel 权威表，并通过项目 GF 工具重新生成 9 份运行时文本和行类型。
+- `GfColorTimingConfiguration` 已覆盖唯一键、枚举、跨表 ID、Boss 攻击权重、声音 Cue、武器 Controller 和技能实体映射的启动期校验。
+- 已移除四类重复配置源：`WeaponSpawnRuleAsset`、`PlayerSceneProfileAsset`、`HeroWeaponAnimationCatalogAsset`、`BossSoundCueCatalogAsset`。
+- 静态资源解析检查通过：41 个声音 Cue、22 个武器配置行、23 个技能配置行，缺失资源 0。
+- 修正 `ColorTimingBattleTable` 与 `ColorTimingBossTable` 的 `BattleKind` 枚举值，使 Boss1/Boss2 与代码中的 0/1 定义一致；其余枚举列已逐项核对。
+- 修正 `WeaponSpawnerView` 对 Unity `Start` 早于运行时配置注入的错误假设，改为配置与生命周期双条件的幂等初始化。
+- Boss HUD 按 Boss 配置的 `UpcomingLimit` 创建和显示弱点项，不再把 11/15 个总弱点全部实例化为 UI 节点。
+- PlayMode 用例统一等待 `BattleRuntimeContext.IsReady` 后读取动态角色、Boss、声音和 HUD 依赖。
+- Unity 重新生成后编译为 0 error，Console 最终为 0 error。
+- `git diff` 未包含纹理、音频、动画、AnimatorController、材质、Shader、模型等受保护原始美术文件；本增量只修改代码、表格、场景/预制体的旧配置字段和文档。
+- UnitySkills 已切换为 Bypass，并完成最新项目级回归：EditMode 83/83、PlayMode 19/19；10.7 已闭环。
