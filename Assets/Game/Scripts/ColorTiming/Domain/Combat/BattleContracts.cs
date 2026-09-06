@@ -65,13 +65,15 @@ namespace ColorTiming.Combat
             ActorId target,
             WeaponIdentity weapon,
             CombatPoint contactPoint,
-            string parameter = "")
+            string parameter = "",
+            DamagePhaseId? damagePhase = null)
         {
             Attacker = attacker;
             Target = target;
             Weapon = weapon;
             ContactPoint = contactPoint;
             Parameter = parameter ?? string.Empty;
+            DamagePhase = damagePhase;
         }
 
         public ActorId Attacker { get; }
@@ -79,6 +81,7 @@ namespace ColorTiming.Combat
         public WeaponIdentity Weapon { get; }
         public CombatPoint ContactPoint { get; }
         public string Parameter { get; }
+        public DamagePhaseId? DamagePhase { get; }
         public bool IsInstantKill => Parameter.IndexOf("miaosha", StringComparison.OrdinalIgnoreCase) >= 0;
     }
 }

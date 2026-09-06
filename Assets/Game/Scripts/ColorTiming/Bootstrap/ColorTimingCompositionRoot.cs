@@ -16,6 +16,7 @@ using ColorTiming.Input;
 using ColorTiming.Presentation.Entities;
 using ColorTiming.Presentation.Audio;
 using ColorTiming.Presentation.Camera;
+using ColorTiming.Presentation.Combat;
 using ColorTiming.Settings;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -39,6 +40,7 @@ namespace ColorTiming.Bootstrap
         private GfColorTimingUiService uiService;
         private ColorTimingTransitionScheduler transitionScheduler;
         private GfColorTimingConfiguration configuration;
+        private CombatDamageDeliveryService damageDelivery;
         private BattleRuntimeContext battleRuntime;
         private bool initialized;
         private bool disposed;
@@ -72,7 +74,8 @@ namespace ColorTiming.Bootstrap
             transitionScheduler = inputHost.AddComponent<ColorTimingTransitionScheduler>();
             soundService = inputHost.AddComponent<GfColorTimingSoundService>();
             soundService.Initialize(gameTime, configuration);
-            transientEntities = new GfTransientEntityService(soundService, configuration);
+            damageDelivery = new CombatDamageDeliveryService();
+            transientEntities = new GfTransientEntityService(soundService, configuration, damageDelivery);
             settings = new GfColorTimingSettings();
             uiService = new GfColorTimingUiService(gameTime, sceneFlow, settings, gameInput, soundService, configuration);
             uiService.TransitionPresentationReady += OnTransitionPresentationReady;

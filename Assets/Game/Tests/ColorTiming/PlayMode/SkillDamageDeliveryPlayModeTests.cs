@@ -23,6 +23,7 @@ namespace ColorTiming.Tests.PlayMode
                 targetChild.transform.SetParent(targetRoot.transform);
                 var receiver = targetRoot.AddComponent<DamageProbe>();
                 var collider = targetChild.AddComponent<BoxCollider2D>();
+                var secondCollider = targetRoot.AddComponent<CircleCollider2D>();
                 var skill = skillObject.AddComponent<Skill_base>();
                 skill.cTag = "Player";
                 skill.SetSkillData(
@@ -33,11 +34,52 @@ namespace ColorTiming.Tests.PlayMode
 
                 Assert.That(OnHit, Is.Not.Null);
                 OnHit.Invoke(skill, new object[] { collider, skillObject });
+                OnHit.Invoke(skill, new object[] { secondCollider, skillObject });
 
                 Assert.That(receiver.ReceivedCount, Is.EqualTo(1));
                 Assert.That(receiver.LastDamage.Attacker, Is.EqualTo(ActorId.BossHead));
                 Assert.That(receiver.LastDamage.Target, Is.EqualTo(ActorId.Player));
                 Assert.That(receiver.LastDamage.Weapon.Color, Is.EqualTo(WeaponColor.Red));
+                Assert.That(receiver.LastDamage.DamagePhase.HasValue, Is.True);
+            }
+            finally
+            {
+                Object.DestroyImmediate(skillObject);
+                Object.DestroyImmediate(targetRoot);
+            }
+        }
+
+        [Test]
+        public void SeparateDamagePhases_CanDeliverToTheSameLogicalTarget()
+        {
+            var targetRoot = new GameObject("PlayerDamageReceiver") { tag = "Player" };
+            var skillObject = new GameObject("BossSkill");
+            try
+            {
+                var receiver = targetRoot.AddComponent<DamageProbe>();
+                var collider = targetRoot.AddComponent<BoxCollider2D>();
+                var skill = skillObject.AddComponent<Skill_base>();
+                skill.cTag = "Player";
+
+                var firstPhase = DamagePhaseContext.CreateRoot();
+                skill.SetSkillData(
+                    ActorId.BossHead,
+                    new WeaponIdentity(WeaponColor.Red, WeaponType.Normal),
+                    1,
+                    "first",
+                    firstPhase);
+                OnHit.Invoke(skill, new object[] { collider, skillObject });
+
+                skill.SetSkillData(
+                    ActorId.BossHead,
+                    new WeaponIdentity(WeaponColor.Red, WeaponType.Normal),
+                    1,
+                    "second",
+                    firstPhase.CreateNextPhase());
+                OnHit.Invoke(skill, new object[] { collider, skillObject });
+
+                Assert.That(receiver.ReceivedCount, Is.EqualTo(2));
+                Assert.That(receiver.LastDamage.DamagePhase.Value.PhaseIndex, Is.EqualTo(2));
             }
             finally
             {

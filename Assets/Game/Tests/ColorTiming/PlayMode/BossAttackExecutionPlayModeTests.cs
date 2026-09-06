@@ -59,6 +59,10 @@ namespace ColorTiming.Tests.PlayMode
             "hasDamagePayload",
             BindingFlags.Instance | BindingFlags.NonPublic);
 
+        static readonly FieldInfo Attack5ItemIndex = typeof(Skill_Bo1_Atk5_Item).GetField(
+            "index",
+            BindingFlags.Instance | BindingFlags.NonPublic);
+
         [UnityTest]
         [Timeout(180000)]
         public IEnumerator Boss1_AllSixAttacksPlayAndDispatchTheirAuthoredSpineEvents()
@@ -78,6 +82,14 @@ namespace ColorTiming.Tests.PlayMode
             Assert.That(SkillHasDamagePayload, Is.Not.Null);
             var session = FindActive<BattleRuntimeContext>()?.Session;
             Assert.That(session, Is.Not.Null);
+            // This contract exercises every authored Boss1 attack in sequence. Isolate the
+            // player collider so a successful multi-wave attack 5 cannot end and reload the scene.
+            var player = FindActive<PlayerActorView>();
+            Assert.That(player, Is.Not.Null);
+            foreach (var playerCollider in player.GetComponentsInChildren<Collider2D>())
+            {
+                playerCollider.enabled = false;
+            }
             // Keep the authored Spine tracks and callbacks live while preventing the
             // controller Update loop from starting a random attack over the forced contract run.
             boss.enabled = false;
@@ -115,8 +127,8 @@ namespace ColorTiming.Tests.PlayMode
                 presentation.sk3_1.name);
             yield return VerifyAttack(
                 boss,
-                boss.skeletonAnimation2,
-                "attack_5_test1_60fps2",
+                boss.skeletonAnimation1,
+                "attack_5_test1_60fps",
                 session,
                 true,
                 presentation.sk5.name);
@@ -257,14 +269,55 @@ namespace ColorTiming.Tests.PlayMode
             var completed = false;
             var sawInvulnerability = false;
             var seenEntities = new HashSet<string>();
+            var activeAttack5Waves = new HashSet<int>();
+            var visibleAttack5Waves = new HashSet<int>();
+            var attack5AnimatorTimes = new float[8];
+            var isPrimaryAttack5 = animationName == "attack_5_test1_60fps";
+            var attack5Origin = isPrimaryAttack5
+                ? boss.GetComponent<Boss1AnimationEventRelay>().mao5.transform.position
+                : Vector3.zero;
             entry.Complete += _ => completed = true;
 
             var deadline = Time.realtimeSinceStartup + AttackTimeout;
             while (Time.realtimeSinceStartup < deadline)
             {
+                // Boss1's production Complete callback immediately installs Idle and may
+                // end the old TrackEntry before this test's later callback is dispatched.
+                completed |= !ReferenceEquals(view.AnimationState.GetCurrent(0), entry);
+
                 if (!session.Snapshot.BossDamageable)
                 {
                     sawInvulnerability = true;
+                }
+
+                if (isPrimaryAttack5)
+                {
+                    foreach (var attack5Item in UnityEngine.Object.FindObjectsOfType<Skill_Bo1_Atk5_Item>())
+                    {
+                        if (!attack5Item.gameObject.activeInHierarchy)
+                        {
+                            continue;
+                        }
+
+                        var renderer = attack5Item.GetComponent<SpriteRenderer>();
+                        var waveIndex = (int)Attack5ItemIndex.GetValue(attack5Item);
+                        activeAttack5Waves.Add(waveIndex);
+                        var animator = attack5Item.GetComponent<Animator>();
+                        if (animator != null && animator.runtimeAnimatorController != null)
+                        {
+                            attack5AnimatorTimes[waveIndex] = Mathf.Max(
+                                attack5AnimatorTimes[waveIndex],
+                                animator.GetCurrentAnimatorStateInfo(0).normalizedTime);
+                        }
+                        if (renderer != null && renderer.enabled && renderer.sprite != null)
+                        {
+                            var expectedDistance = waveIndex * 1.8f;
+                            var actualDistance = Vector2.Distance(attack5Item.transform.position, attack5Origin);
+                            Assert.That(actualDistance, Is.EqualTo(expectedDistance).Within(0.05f),
+                                $"Boss1 attack 5 wave {waveIndex} spawned at the wrong world position.");
+                            visibleAttack5Waves.Add(waveIndex);
+                        }
+                    }
                 }
 
                 foreach (var entity in ActiveTransientEntities())
@@ -285,7 +338,8 @@ namespace ColorTiming.Tests.PlayMode
 
                 if (completed
                     && expectedEntityNames.All(seenEntities.Contains)
-                    && (!expectInvulnerability || sawInvulnerability))
+                    && (!expectInvulnerability || sawInvulnerability)
+                    && (!isPrimaryAttack5 || visibleAttack5Waves.IsSupersetOf(Enumerable.Range(1, 7))))
                 {
                     break;
                 }
@@ -300,6 +354,15 @@ namespace ColorTiming.Tests.PlayMode
                 $"{animationName} produced an unexpected invulnerability contract.");
             Assert.That(session.Snapshot.BossDamageable, Is.True,
                 $"{animationName} did not restore boss damageability on completion.");
+            if (isPrimaryAttack5)
+            {
+                Assert.That(observedEvents.Count(value => value == "attack:atk5"), Is.EqualTo(1),
+                    "The original Boss1 attack 5 contract dispatches exactly one root skill event.");
+                Assert.That(visibleAttack5Waves, Is.SupersetOf(Enumerable.Range(1, 7)),
+                    "Boss1 attack 5 spawned its chained entities, but one or more waves never became visible. " +
+                    $"Active=[{string.Join(",", activeAttack5Waves.OrderBy(value => value))}], " +
+                    $"AnimatorTimes=[{string.Join(",", attack5AnimatorTimes.Select(value => value.ToString("F2")))}]");
+            }
             view.AnimationState.Event -= RecordEvent;
         }
 

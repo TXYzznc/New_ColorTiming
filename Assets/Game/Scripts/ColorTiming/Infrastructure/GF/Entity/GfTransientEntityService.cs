@@ -8,6 +8,7 @@ using ColorTiming.Bootstrap;
 using ColorTiming.Configuration;
 using ColorTiming.Presentation.Audio;
 using ColorTiming.Presentation.Entities;
+using ColorTiming.Presentation.Combat;
 using UnityEngine;
 
 namespace ColorTiming.Infrastructure.GF.Entity
@@ -21,12 +22,17 @@ namespace ColorTiming.Infrastructure.GF.Entity
         private readonly HashSet<int> activeEntityIds = new HashSet<int>();
         private readonly IColorTimingSoundService soundService;
         private readonly IColorTimingConfiguration configuration;
+        private readonly ICombatDamageDeliveryService damageDelivery;
 
         // 初始化GfTransient实体Service实例及其核心依赖。
-        public GfTransientEntityService(IColorTimingSoundService soundService, IColorTimingConfiguration configuration)
+        public GfTransientEntityService(
+            IColorTimingSoundService soundService,
+            IColorTimingConfiguration configuration,
+            ICombatDamageDeliveryService damageDelivery)
         {
             this.soundService = soundService ?? throw new ArgumentNullException(nameof(soundService));
             this.configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
+            this.damageDelivery = damageDelivery ?? throw new ArgumentNullException(nameof(damageDelivery));
         }
 
         // 执行生成对应的主要流程。
@@ -68,6 +74,10 @@ namespace ColorTiming.Infrastructure.GF.Entity
                 foreach (var consumer in behaviours.OfType<IColorTimingSoundConsumer>())
                 {
                     consumer.BindSoundService(soundService);
+                }
+                foreach (var consumer in behaviours.OfType<ICombatDamageDeliveryConsumer>())
+                {
+                    consumer.BindCombatDamageDelivery(damageDelivery);
                 }
                 if (configuration.TryGetSkillByEntity(prefabName, out var skillConfiguration))
                     foreach (var consumer in behaviours.OfType<IColorTimingSkillConfigurationConsumer>())

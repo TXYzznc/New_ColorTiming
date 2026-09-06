@@ -2,22 +2,25 @@
 // 所属模块：ColorTiming / Presentation / Combat / Skills。
 
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using ColorTiming.Presentation.Entities;
 using UnityEngine;
 
 
-public class Skill_Bo1_Atk5_Item : MonoBehaviour, ITransientEntityConsumer, IFrameworkEntityParticipant
+public class Skill_Bo1_Atk5_Item : MonoBehaviour, IFrameworkEntityParticipant
 {
     public GameObject item;
 
     Vector2 dir = Vector2.zero;
     int index = 0;
     Skill_Bo1_Atk5_b con;
-    ITransientEntityService transientEntities;
     Action frameworkRelease;
     bool releasing;
+    Animator effectAnimator;
+
+    private void Awake()
+    {
+        effectAnimator = GetComponent<Animator>();
+    }
     //设置角度
     public void SetAtk5(Vector2 _dir,int _index,Skill_Bo1_Atk5_b _con)
     {
@@ -38,18 +41,18 @@ public class Skill_Bo1_Atk5_Item : MonoBehaviour, ITransientEntityConsumer, IFra
             return;
         }
 
-        Vector3 pos = transform.position + new Vector3(dir.x, dir.y, 0);
-        if (transientEntities == null)
-        {
-            throw new InvalidOperationException("Attack5 item entities were not bound before spawning the next ring.");
-        }
-        transientEntities.Spawn(
-            item.name,
-            pos,
-            Quaternion.identity,
-            transform.parent,
-            instance => instance.GetComponent<Skill_Bo1_Atk5_Item>()?.SetAtk5(dir, index, con));
-        //为啥只创建了3波？
+        // This authored chain depends on the next wave appearing synchronously on the
+        // Cerate animation event. GF.Entity.ShowEntity is asynchronous and can miss that
+        // visual window, so only the root/first wave uses GF and subsequent waves retain
+        // the source project's synchronous Instantiate/Destroy contract.
+        Vector2 nextDirection = dir;
+        int nextIndex = index;
+        Skill_Bo1_Atk5_b nextController = con;
+        Transform nextParent = transform.parent;
+        Vector3 nextPosition = transform.position + new Vector3(nextDirection.x, nextDirection.y, 0);
+        GameObject nextItem = Instantiate(item, nextPosition, Quaternion.identity, nextParent);
+        nextItem.GetComponent<Skill_Bo1_Atk5_Item>()
+            ?.SetAtk5(nextDirection, nextIndex, nextController);
     }
 
     public void End()
@@ -67,13 +70,6 @@ public class Skill_Bo1_Atk5_Item : MonoBehaviour, ITransientEntityConsumer, IFra
         {
             Destroy(gameObject);
         }
-        //print("weisha shanchu le ?");
-    }
-
-    // 绑定TransientEntities依赖或事件监听。
-    public void BindTransientEntities(ITransientEntityService entities)
-    {
-        transientEntities = entities ?? throw new ArgumentNullException(nameof(entities));
     }
 
     // 绑定FrameworkRelease依赖或事件监听。
@@ -86,11 +82,21 @@ public class Skill_Bo1_Atk5_Item : MonoBehaviour, ITransientEntityConsumer, IFra
     public void OnFrameworkEntitySpawned()
     {
         releasing = false;
+
+        // The source project instantiated a fresh Animator for every spike. GF.Entity reuses
+        // the same object, so explicitly restore the default state's first frame on every show.
+        if (effectAnimator != null && effectAnimator.runtimeAnimatorController != null)
+        {
+            effectAnimator.Play(0, 0, 0f);
+            effectAnimator.Update(0f);
+        }
     }
 
     // 响应Framework实体Despawned回调，并更新本对象状态。
     public void OnFrameworkEntityDespawned()
     {
+        dir = Vector2.zero;
+        index = 0;
         con = null;
         releasing = false;
     }

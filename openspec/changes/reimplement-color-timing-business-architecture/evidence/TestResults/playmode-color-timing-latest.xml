@@ -1,100 +1,39 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<test-suite type="TestSuite" id="1037" name="GameDesinger" fullname="GameDesinger" runstate="Runnable" testcasecount="19" result="Failed" site="Child" start-time="2026-08-31 15:59:03Z" end-time="2026-08-31 15:59:11Z" duration="7.471307" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+<test-suite type="TestSuite" id="1038" name="GameDesinger" fullname="GameDesinger" runstate="Runnable" testcasecount="20" result="Passed" start-time="2026-09-05 07:53:33Z" end-time="2026-09-05 07:53:33Z" duration="0.146490" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
   <properties>
     <property name="platform" value="PlayMode" />
   </properties>
-  <failure>
-    <message><![CDATA[One or more child tests had errors]]></message>
-  </failure>
-  <test-suite type="Assembly" id="1031" name="ColorTiming.PlayMode.Tests.dll" fullname="F:/unityProject/ColorTimer/New_ColorTiming/Library/ScriptAssemblies/ColorTiming.PlayMode.Tests.dll" runstate="Runnable" testcasecount="19" result="Failed" site="Child" start-time="2026-08-31 15:59:03Z" end-time="2026-08-31 15:59:11Z" duration="7.452983" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+  <test-suite type="Assembly" id="1032" name="ColorTiming.PlayMode.Tests.dll" fullname="F:/unityProject/ColorTimer/New_ColorTiming/Library/ScriptAssemblies/ColorTiming.PlayMode.Tests.dll" runstate="Runnable" testcasecount="20" result="Passed" start-time="2026-09-05 07:53:33Z" end-time="2026-09-05 07:53:33Z" duration="0.131825" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
     <properties>
-      <property name="_PID" value="29900" />
+      <property name="_PID" value="26048" />
       <property name="_APPDOMAIN" value="Unity Child Domain" />
       <property name="platform" value="PlayMode" />
       <property name="EditorOnly" value="False" />
     </properties>
-    <failure>
-      <message><![CDATA[One or more child tests had errors]]></message>
-    </failure>
-    <test-suite type="TestSuite" id="1032" name="ColorTiming" fullname="ColorTiming" runstate="Runnable" testcasecount="19" result="Failed" site="Child" start-time="2026-08-31 15:59:03Z" end-time="2026-08-31 15:59:11Z" duration="7.435775" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+    <test-suite type="TestSuite" id="1033" name="ColorTiming" fullname="ColorTiming" runstate="Runnable" testcasecount="20" result="Passed" start-time="2026-09-05 07:53:33Z" end-time="2026-09-05 07:53:33Z" duration="0.125928" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
       <properties />
-      <failure>
-        <message><![CDATA[One or more child tests had errors]]></message>
-      </failure>
-      <test-suite type="TestSuite" id="1033" name="Tests" fullname="ColorTiming.Tests" runstate="Runnable" testcasecount="19" result="Failed" site="Child" start-time="2026-08-31 15:59:03Z" end-time="2026-08-31 15:59:11Z" duration="7.421067" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+      <test-suite type="TestSuite" id="1034" name="Tests" fullname="ColorTiming.Tests" runstate="Runnable" testcasecount="20" result="Passed" start-time="2026-09-05 07:53:33Z" end-time="2026-09-05 07:53:33Z" duration="0.106897" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
         <properties />
-        <failure>
-          <message><![CDATA[One or more child tests had errors]]></message>
-        </failure>
-        <test-suite type="TestSuite" id="1034" name="PlayMode" fullname="ColorTiming.Tests.PlayMode" runstate="Runnable" testcasecount="19" result="Failed" site="Child" start-time="2026-08-31 15:59:03Z" end-time="2026-08-31 15:59:11Z" duration="7.399940" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+        <test-suite type="TestSuite" id="1035" name="PlayMode" fullname="ColorTiming.Tests.PlayMode" runstate="Runnable" testcasecount="20" result="Passed" start-time="2026-09-05 07:53:33Z" end-time="2026-09-05 07:53:33Z" duration="0.090707" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
           <properties />
-          <failure>
-            <message><![CDATA[One or more child tests had errors]]></message>
-          </failure>
-          <test-suite type="TestFixture" id="1029" name="WeaponAnimationEventExecutionPlayModeTests" fullname="ColorTiming.Tests.PlayMode.WeaponAnimationEventExecutionPlayModeTests" classname="ColorTiming.Tests.PlayMode.WeaponAnimationEventExecutionPlayModeTests" runstate="Runnable" testcasecount="1" result="Failed" site="Child" start-time="2026-08-31 15:59:03Z" end-time="2026-08-31 15:59:11Z" duration="7.373749" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+          <test-suite type="TestFixture" id="1025" name="SkillDamageDeliveryPlayModeTests" fullname="ColorTiming.Tests.PlayMode.SkillDamageDeliveryPlayModeTests" classname="ColorTiming.Tests.PlayMode.SkillDamageDeliveryPlayModeTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-09-05 07:53:33Z" end-time="2026-09-05 07:53:33Z" duration="0.074394" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
             <properties />
-            <failure>
-              <message><![CDATA[One or more child tests had errors]]></message>
-            </failure>
-            <test-case id="1030" name="EveryAuthoredWeaponColorExecutesAnimationEventThroughGfEntity" fullname="ColorTiming.Tests.PlayMode.WeaponAnimationEventExecutionPlayModeTests.EveryAuthoredWeaponColorExecutesAnimationEventThroughGfEntity" methodname="EveryAuthoredWeaponColorExecutesAnimationEventThroughGfEntity" classname="ColorTiming.Tests.PlayMode.WeaponAnimationEventExecutionPlayModeTests" runstate="Runnable" seed="308733903" result="Failed" start-time="2026-08-31 15:59:03Z" end-time="2026-08-31 15:59:11Z" duration="7.339584" asserts="0">
+            <test-case id="1026" name="BossSkill_ForwardsPayloadToReceiverOnTaggedParent" fullname="ColorTiming.Tests.PlayMode.SkillDamageDeliveryPlayModeTests.BossSkill_ForwardsPayloadToReceiverOnTaggedParent" methodname="BossSkill_ForwardsPayloadToReceiverOnTaggedParent" classname="ColorTiming.Tests.PlayMode.SkillDamageDeliveryPlayModeTests" runstate="Runnable" seed="1196718647" result="Passed" start-time="2026-09-05 07:53:33Z" end-time="2026-09-05 07:53:33Z" duration="0.045146" asserts="0">
               <properties>
-                <property name="_JOINTYPE" value="UnityCombinatorial" />
-                <property name="Timeout" value="300000" />
                 <property name="retryIteration" value="0" />
                 <property name="repeatIteration" value="0" />
               </properties>
-              <failure>
-                <message><![CDATA[  A multi-event animation must remain in the same authoritative attack.
-  Expected: True
-  But was:  False
-]]></message>
-                <stack-trace><![CDATA[at ColorTiming.Tests.PlayMode.WeaponAnimationEventExecutionPlayModeTests+<ExecuteAndAssert>d__10.MoveNext () [0x000e5] in F:\unityProject\ColorTimer\New_ColorTiming\Assets\Game\Tests\ColorTiming\PlayMode\WeaponAnimationEventExecutionPlayModeTests.cs:190
-at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0004e] in .\Library\PackageCache\com.unity.test-framework@1.4.6\UnityEngine.TestRunner\NUnitExtensions\Attributes\TestEnumerator.cs:44
-]]></stack-trace>
-              </failure>
-              <output><![CDATA[<color=#2BD988>------------Set ResourceMode:Package------------</color>
-<color=#2BD988>----------UI Match:0----------</color>
-[UnitySkills] [Self-Test] Starting (ProcessJobQueue ticks=20, listener=True)
-<color=#2BD988>进入HybridCLR热更流程! 预加载游戏数据...</color>
-<color=#2BD988>初始化游戏设置. 游戏语言:English,系统语言:ChineseSimplified</color>
-<color=#2BD988>Framework preload completed. Entering the generic ready state.</color>
-[ColorTiming.SceneFlow] action=Transition.Begin result=Started target=StartMenu asset=Assets/Game/Scene/StartMenu.unity targetAlreadyUnloading=False realtime=11.862
-[ColorTiming.SceneFlow] action=Transition.Prepare result=Completed target=StartMenu elapsed=0.004s loadedSceneCount=0
-[ColorTiming.SceneFlow] action=SceneLoad.Request result=Started target=StartMenu asset=Assets/Game/Scene/StartMenu.unity waitingForTargetUnload=False transitionElapsed=0.005s
-[ColorTiming.SceneFlow] action=SceneLoad.Progress result=Observed target=StartMenu source=UnityAsyncOperation rawProgress=0.9 samples=1
-[ColorTiming.SceneFlow] action=Loading.Progress result=Reported target=StartMenu source=AdaptiveDuration elapsed=0.016s estimatedDuration=0.250s mappedProgress=0.035
-[ColorTiming.SceneFlow] action=SceneLoad.Success result=Completed target=StartMenu asset=Assets/Game/Scene/StartMenu.unity sceneValid=True loadElapsed=0.033s transitionElapsed=0.038s rawProgress=0.9 samples=1
-[ColorTiming.SceneFlow] action=Loading.Duration result=Updated target=StartMenu observedDuration=0.046s previousEstimate=0.250s updatedEstimate=0.250s
-[ColorTiming.SceneFlow] action=SceneBind result=Completed target=StartMenu bindElapsed=0.010s transitionElapsed=0.048s
-[ColorTiming.SceneFlow] action=Transition.Begin result=Started target=Boss1 asset=Assets/Game/Scene/Boss1.unity targetAlreadyUnloading=False realtime=12.328
-[ColorTiming.SceneFlow] action=Transition.Prepare result=Completed target=Boss1 elapsed=0.001s loadedSceneCount=1
-[ColorTiming.SceneFlow] action=SceneLoad.Request result=Started target=Boss1 asset=Assets/Game/Scene/Boss1.unity waitingForTargetUnload=False transitionElapsed=0.006s
-[ColorTiming.SceneFlow] action=SceneLoad.Progress result=Observed target=Boss1 source=UnityAsyncOperation rawProgress=0.036 samples=1
-[ColorTiming.SceneFlow] action=SceneUnload result=Completed sceneAsset=Assets/Game/Scene/StartMenu.unity transitionElapsed=0.022s
-[ColorTiming.SceneFlow] action=Loading.Progress result=Reported target=Boss1 source=AdaptiveDuration elapsed=0.022s estimatedDuration=6.164s mappedProgress=0.002
-[ColorTiming.SceneFlow] action=SceneLoad.Progress result=Observed target=Boss1 source=UnityAsyncOperation rawProgress=0.9 samples=2
-[ColorTiming.SceneFlow] action=Loading.Progress result=Reported target=Boss1 source=AdaptiveDuration elapsed=3.835s estimatedDuration=6.164s mappedProgress=0.342
-[ColorTiming.SceneFlow] action=Loading.Progress result=Reported target=Boss1 source=AdaptiveDuration elapsed=4.500s estimatedDuration=6.164s mappedProgress=0.402
-[ColorTiming.SceneFlow] action=SceneLoad.Success result=Completed target=Boss1 asset=Assets/Game/Scene/Boss1.unity sceneValid=True loadElapsed=5.184s transitionElapsed=5.191s rawProgress=0.9 samples=9
-[ColorTiming.Player] action=Spawn result=Success instance=Player(Clone) scene=Boss1 bindings=7
-[ColorTiming.BattleLoad] action=Prepare.Begin context=Boss1.Initial controllers=9
-[ColorTiming.SceneFlow] action=SceneBind result=Completed target=Boss1 bindElapsed=0.030s transitionElapsed=5.221s
-[ColorTiming.SceneFlow] action=Loading.Progress result=Reported target=Boss1 source=AdaptiveDuration elapsed=5.221s estimatedDuration=6.164s mappedProgress=0.466
-已初始化BOSS血量:11
-[ColorTiming.BattleLoad] action=Prepare.Completed context=Boss1.Initial
-[ColorTiming.SceneFlow] action=Loading.Duration result=Updated target=Boss1 observedDuration=5.394s previousEstimate=6.164s updatedEstimate=5.894s
-[ColorTiming.HeroAnimation] action=ControllerInstalled weapon=Red/Scissors version=2
-[ColorTiming.WeaponInteraction] action=EquipOrSwap result=accepted incoming=Red/Scissors replaced=Red/Normal
-[ColorTiming.Combat][BossDamage] action=Resolve boss=Boss1 result=RejectedWrongColor attacker=Actor:1 weapon=Red expected=Purple remaining=11
-颜色不同，不造成伤害
-[ColorTiming.Combat][SkillHit] action=Deliver result=sent skill=sk_nor(Clone) attacker=Actor:1 target=Actor:2 weapon=Red
-[ColorTiming.WeaponConsumption] action=ConsumeOnFire result=success weapon=Red/Scissors event=1
-[ColorTiming.Combat][BossDamage] action=Resolve boss=Boss1 result=RejectedWrongColor attacker=Actor:1 weapon=Red expected=Purple remaining=11
-颜色不同，不造成伤害
-[ColorTiming.Combat][SkillHit] action=Deliver result=sent skill=sk_jiandao(Clone) attacker=Actor:1 target=Actor:2 weapon=Red
-[ColorTiming.Combat][BossDamage] action=Resolve boss=Boss1 result=RejectedWrongColor attacker=Actor:1 weapon=Red expected=Purple remaining=11
-颜色不同，不造成伤害
-[ColorTiming.Combat][SkillHit] action=Deliver result=sent skill=sk_jiandao(Clone) attacker=Actor:1 target=Actor:2 weapon=Red
+              <output><![CDATA[[ColorTiming.Combat][SkillHit] action=Deliver result=sent execution=1 phase=1 targetHandle=-58026 skill=BossSkill attacker=Actor:2 target=Actor:1 weapon=Red
+[ColorTiming.Combat][SkillHit] action=Deliver result=suppressed-duplicate phase=1:1 targetHandle=-58026 skill=BossSkill
+]]></output>
+            </test-case>
+            <test-case id="1027" name="SeparateDamagePhases_CanDeliverToTheSameLogicalTarget" fullname="ColorTiming.Tests.PlayMode.SkillDamageDeliveryPlayModeTests.SeparateDamagePhases_CanDeliverToTheSameLogicalTarget" methodname="SeparateDamagePhases_CanDeliverToTheSameLogicalTarget" classname="ColorTiming.Tests.PlayMode.SkillDamageDeliveryPlayModeTests" runstate="Runnable" seed="468218963" result="Passed" start-time="2026-09-05 07:53:33Z" end-time="2026-09-05 07:53:33Z" duration="0.002963" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[[ColorTiming.Combat][SkillHit] action=Deliver result=sent execution=2 phase=1 targetHandle=-58042 skill=BossSkill attacker=Actor:2 target=Actor:1 weapon=Red
+[ColorTiming.Combat][SkillHit] action=Deliver result=sent execution=2 phase=2 targetHandle=-58042 skill=BossSkill attacker=Actor:2 target=Actor:1 weapon=Red
 Saving results to: C:/Users/86135/AppData/LocalLow/DefaultCompany/GameDesinger\TestResults.xml
 ]]></output>
             </test-case>

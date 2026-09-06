@@ -9,7 +9,7 @@ using ColorTiming.Presentation.Entities;
 using UnityEngine;
 
 public class Skill_base : MonoBehaviour, ITransientEntityConsumer, IFrameworkEntityParticipant,
-    IColorTimingSkillConfigurationConsumer
+    IColorTimingSkillConfigurationConsumer, ICombatDamageDeliveryConsumer
 {
     [NonSerialized] public float life = 1f;
     public GameObject HitFX;
@@ -28,6 +28,8 @@ public class Skill_base : MonoBehaviour, ITransientEntityConsumer, IFrameworkEnt
     float configuredLife;
     Action frameworkRelease;
     ITransientEntityService transientEntities;
+    ICombatDamageDeliveryService damageDelivery = new CombatDamageDeliveryService();
+    DamagePhaseContext damagePhase;
 
     public void BindSkillConfiguration(ColorTimingSkillTable configuration)
     {
@@ -36,6 +38,11 @@ public class Skill_base : MonoBehaviour, ITransientEntityConsumer, IFrameworkEnt
         life = configuredLife;
         damageParm = configuration.InstantKill ? "miaosha" : string.Empty;
         OnSkillConfigurationApplied(configuration);
+    }
+
+    public void BindCombatDamageDelivery(ICombatDamageDeliveryService service)
+    {
+        damageDelivery = service ?? throw new ArgumentNullException(nameof(service));
     }
 
     protected virtual void OnSkillConfigurationApplied(ColorTimingSkillTable configuration) { }
@@ -49,10 +56,22 @@ public class Skill_base : MonoBehaviour, ITransientEntityConsumer, IFrameworkEnt
     // 设置技能数据，并使后续流程使用最新状态。
     public void SetSkillData(ActorId sourceActor, WeaponIdentity weapon, int facing, string parameter)
     {
+        SetSkillData(sourceActor, weapon, facing, parameter, DamagePhaseContext.CreateRoot());
+    }
+
+    public void SetSkillData(
+        ActorId sourceActor,
+        WeaponIdentity weapon,
+        int facing,
+        string parameter,
+        DamagePhaseContext phase)
+    {
+        if (phase == null) throw new ArgumentNullException(nameof(phase));
         attackerId = sourceActor;
         filp = facing;
         parm = parameter;
         atkWeapon = weapon;
+        damagePhase = phase;
         hasDamagePayload = true;
     }
     // 在首帧启动依赖就绪后的业务或表现流程。
@@ -115,24 +134,6 @@ public class Skill_base : MonoBehaviour, ITransientEntityConsumer, IFrameworkEnt
         //一个技能只传递一次伤害
 
 
-        if (HitFX)
-        {
-            filp = filp > 0 ? 1 : -1;
-            if (transientEntities != null)
-            {
-                transientEntities.Spawn(
-                    HitFX.name,
-                    transform.position,
-                    Quaternion.identity,
-                    null,
-                    fx => fx.transform.localScale = new Vector3(filp, 1, 1));
-            }
-            else
-            {
-                GameObject fx = Instantiate(HitFX, transform.position, Quaternion.identity);
-                fx.transform.localScale = new Vector3(filp, 1, 1);
-            }
-        }
         var receiver = collision.GetComponent<IBattleDamageReceiver>()
                        ?? collision.GetComponentInParent<IBattleDamageReceiver>();
         //print("xxxxx" + i_);
@@ -165,10 +166,43 @@ public class Skill_base : MonoBehaviour, ITransientEntityConsumer, IFrameworkEnt
             receiver.DamageActorId,
             atkWeapon,
             new CombatPoint(v2.x, v2.y),
-            damageParm);
-        receiver.ReceiveDamage(damage);
+            damageParm,
+            damagePhase?.Id);
+        if (damagePhase == null)
+        {
+            Debug.LogError($"[ColorTiming.Combat][SkillHit] action=Deliver result=missing-phase skill={name}", this);
+            return;
+        }
+
+        var delivery = damageDelivery.TryDeliver(damagePhase, receiver, damage, out var targetHandle);
+        if (delivery == DamageDeliveryResult.SuppressedDuplicateTarget)
+        {
+            Debug.Log(
+                $"[ColorTiming.Combat][SkillHit] action=Deliver result=suppressed-duplicate phase={damagePhase.Id} targetHandle={targetHandle} skill={name}",
+                this);
+            return;
+        }
+
+        if (HitFX)
+        {
+            filp = filp > 0 ? 1 : -1;
+            if (transientEntities != null)
+            {
+                transientEntities.Spawn(
+                    HitFX.name,
+                    transform.position,
+                    Quaternion.identity,
+                    null,
+                    fx => fx.transform.localScale = new Vector3(filp, 1, 1));
+            }
+            else
+            {
+                GameObject fx = Instantiate(HitFX, transform.position, Quaternion.identity);
+                fx.transform.localScale = new Vector3(filp, 1, 1);
+            }
+        }
         Debug.Log(
-            $"[ColorTiming.Combat][SkillHit] action=Deliver result=sent skill={name} attacker={damage.Attacker} target={damage.Target} weapon={damage.Weapon.Color}",
+            $"[ColorTiming.Combat][SkillHit] action=Deliver result=sent execution={damagePhase.Id.ExecutionId} phase={damagePhase.Id.PhaseIndex} targetHandle={targetHandle} skill={name} attacker={damage.Attacker} target={damage.Target} weapon={damage.Weapon.Color}",
             this);
 
         //collision.
@@ -216,6 +250,7 @@ public class Skill_base : MonoBehaviour, ITransientEntityConsumer, IFrameworkEnt
         atkWeapon = default;
         hasDamagePayload = false;
         parm = null;
+        damagePhase = null;
     }
 
     // 释放Self及其临时资源。
@@ -261,7 +296,9 @@ public class Skill_base : MonoBehaviour, ITransientEntityConsumer, IFrameworkEnt
     /// 将当前技能的攻击来源、武器和动画事件参数传递给运行时生成的子技能。
     /// 子技能仍保留自己预制体上配置的碰撞标签、伤害参数与生命周期。
     /// </summary>
-    protected T ConfigureNestedSkill<T>(GameObject instance) where T : Skill_base
+    protected T ConfigureNestedSkill<T>(
+        GameObject instance,
+        NestedDamagePhasePolicy phasePolicy = NestedDamagePhasePolicy.InheritParent) where T : Skill_base
     {
         if (instance == null)
         {
@@ -280,7 +317,10 @@ public class Skill_base : MonoBehaviour, ITransientEntityConsumer, IFrameworkEnt
                 $"Transient entity '{instance.name}' does not contain the expected skill '{typeof(T).Name}'.");
         }
 
-        nestedSkill.SetSkillData(attackerId, atkWeapon, filp, parm);
+        var nestedPhase = phasePolicy == NestedDamagePhasePolicy.CreateNewPhase
+            ? damagePhase.CreateNextPhase()
+            : damagePhase;
+        nestedSkill.SetSkillData(attackerId, atkWeapon, filp, parm, nestedPhase);
         return nestedSkill;
     }
 

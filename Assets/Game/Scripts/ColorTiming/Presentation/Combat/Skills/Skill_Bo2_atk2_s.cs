@@ -56,7 +56,11 @@ public class Skill_Bo2_atk2_s : Skill_base
                     transform.position,
                     Quaternion.identity,
                     null,
-                    instance => ConfigureNestedSkill<Skill_Bo2_Atk2>(instance).Set(_p));
+                    // Each falling projectile is an authored independent strike, not multiple
+                    // colliders for one AoE. Preserve its own damage opportunity.
+                    instance => ConfigureNestedSkill<Skill_Bo2_Atk2>(
+                        instance,
+                        ColorTiming.Combat.NestedDamagePhasePolicy.CreateNewPhase).Set(_p));
             }
         }
 
@@ -65,7 +69,9 @@ public class Skill_Bo2_atk2_s : Skill_base
             transform.position,
             Quaternion.identity,
             null,
-            instance => ConfigureNestedSkill<Skill_Bo2_Atk2>(instance).Set(targetPos));
+            instance => ConfigureNestedSkill<Skill_Bo2_Atk2>(
+                instance,
+                ColorTiming.Combat.NestedDamagePhasePolicy.CreateNewPhase).Set(targetPos));
 
         ReleaseSelf();
     }
