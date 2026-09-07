@@ -14,18 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   groups:
   - name: "\u7F8E\u672F\u8D44\u6E90"
-    selected: 1
+    selected: 0
     assetPaths:
     - Assets/Game/Animations
     - Assets/Game/Audio
     - Assets/Game/Sprites
     - Assets/Game/Video
     - Assets/StreamingAssets
-    - Assets/TextMesh Pro
     - Assets/Game/Font
     - Assets/Game/DataTable
-    - Assets/Game/ScriptsBuiltin
-    - Assets/Game/Tests
   - name: "\u5176\u4ED6\u6587\u4EF6"
     selected: 0
     assetPaths:
@@ -64,3 +61,8 @@ MonoBehaviour:
     - Assets/Screenshots
     - Assets/Settings
     - Assets/TextMesh Pro
+  - name: "\u7F8E\u672F\u8D44\u6E90\u6D4B\u8BD5"
+    selected: 1
+    assetPaths:
+    - Assets/Game/Sprites
+    - Assets/Game/Animations
