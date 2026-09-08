@@ -1,1 +1,284 @@
-.intro-loader{position:fixed;z-index:100;inset:0;display:grid;place-items:center;background:#17131d;color:#fff;animation:loaderOut .9s 1.7s cubic-bezier(.76,0,.24,1) forwards;pointer-events:none}.loader-logo{position:absolute;top:11%;left:50%;transform:translateX(-50%);font:800 14px/1 Arial;letter-spacing:.2em;text-align:center}.loader-logo span{color:var(--lime)}.loader-sigil{font-size:74px;color:var(--violet);animation:sigilPulse 1s ease-in-out infinite}.loader-line{position:absolute;bottom:14%;width:min(280px,35vw);height:2px;background:#ffffff40;overflow:hidden}.loader-line span{display:block;width:100%;height:100%;background:#fff;transform:translateX(-100%);animation:loaderLine 1.7s cubic-bezier(.76,0,.24,1) forwards}.intro-loader p{position:absolute;bottom:9%;font-size:10px;letter-spacing:.24em;opacity:.7}.hero-copy h1,.chapter-copy h2,.rule-layout h2,.boss-title h2,.cta-inner h2{animation:wordRise 1s .2s both cubic-bezier(.16,1,.3,1)}.hero-art img{transform:translate3d(calc(var(--mx,0)*-12px),calc(var(--my,0)*-12px),0) rotate(calc(var(--mx,0)*-2deg));transition:transform .25s ease-out}.comic-frame,.boss-stage{transition:transform .8s cubic-bezier(.16,1,.3,1)}.comic-frame:hover{transform:rotate(-1deg) scale(1.015)}.boss-stage:hover{transform:scale(1.008)}[data-chapter] .chapter-copy,[data-chapter] .comic-frame,[data-chapter] .rule-card,[data-chapter] .boss-stage{animation:sectionIn linear both;animation-timeline:view();animation-range:entry 10% cover 35%}.topbar{animation:navIn 1s 2s both cubic-bezier(.16,1,.3,1)}@keyframes loaderLine{to{transform:translateX(0)}}@keyframes sigilPulse{50%{transform:scale(1.15) rotate(12deg);opacity:.65}}@keyframes loaderOut{to{opacity:0;visibility:hidden}}@keyframes wordRise{from{opacity:0;transform:translateY(35px)}to{opacity:1;transform:none}}@keyframes navIn{from{opacity:0;transform:translateY(-18px)}to{opacity:1;transform:none}}@keyframes sectionIn{from{opacity:.2;transform:translateY(60px) scale(.97)}to{opacity:1;transform:none}}
+/* Original game frames; stop when offscreen, paused, or reduced motion is requested. */
+.sprite-strip {
+  animation: game-frames var(--duration) steps(var(--frames), end) infinite;
+}
+.sprite-status {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 11px;
+  color: #dcd6e6;
+  background: #171121cc;
+}
+@keyframes game-frames {
+  to {
+    transform: translateX(-100%);
+  }
+}
+.hero-copy {
+  animation: hero-enter 1s ease-out both;
+}
+.hero .cinematic-art {
+  inset: 0;
+  opacity: 1;
+}
+.cinematic-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 65% center;
+}
+.cinematic-loop {
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+.cinematic-loop.is-playing {
+  opacity: 1;
+}
+.hero .hero-copy {
+  position: relative;
+  z-index: 1;
+  text-shadow: 0 2px 24px #000;
+}
+.hero .cinematic-art::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, #08070cee 0%, #08070c88 37%, transparent 72%),
+    linear-gradient(0deg, #08070caa, transparent 30%);
+}
+.cinematic-controls {
+  position: absolute;
+  bottom: 24px;
+  right: var(--gutter);
+  left: var(--gutter);
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  justify-content: flex-end;
+  z-index: 2;
+  font-size: 11px;
+  color: #dcd6e6;
+}
+.cinematic-controls button {
+  padding: 7px 0;
+  border-bottom: 1px solid #ffffff50;
+  cursor: pointer;
+}
+.cinematic-controls button:hover {
+  color: var(--lime);
+  border-color: currentColor;
+}
+.cinematic-caption {
+  margin-right: auto;
+  letter-spacing: 0.12em;
+}
+.hero .hero-edition {
+  display: none;
+}
+.opening-curtain {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  color: #f2eee7;
+}
+/* Keep the prerendered curtain closed until React starts its matching timer. */
+.opening-curtain:not(.is-ready) * {
+  animation-play-state: paused;
+}
+.opening-curtain:not(.is-ready) .opening-name {
+  visibility: hidden;
+}
+@media (prefers-reduced-motion: reduce) {
+  .opening-curtain {
+    display: none;
+  }
+}
+.opening-panel {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 50.1%;
+  background: #171719;
+  animation: curtain-up 0.85s cubic-bezier(0.76, 0, 0.24, 1) 2.1s both;
+}
+.opening-panel-top {
+  top: 0;
+}
+.opening-panel-bottom {
+  bottom: 0;
+  animation-name: curtain-down;
+}
+.opening-name {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  font-family: 'Songti SC', SimSun, Georgia, serif;
+  text-align: center;
+  animation: name-reveal 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) 0.15s both;
+}
+.opening-chinese {
+  font-size: clamp(80px, 15vw, 230px);
+  line-height: 1.25;
+  letter-spacing: 0.16em;
+  padding-left: 0.16em;
+  animation: name-up 0.85s cubic-bezier(0.76, 0, 0.24, 1) 2.1s both;
+}
+.opening-english {
+  font-family: Georgia, serif;
+  font-size: clamp(16px, 3vw, 46px);
+  line-height: 1.5;
+  letter-spacing: 0.22em;
+  animation: name-down 0.85s cubic-bezier(0.76, 0, 0.24, 1) 2.1s both;
+}
+.opening-index {
+  position: absolute;
+  bottom: 13%;
+  width: 100%;
+  text-align: center;
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  animation: intro-note 2.8s both;
+}
+.motion-enter {
+  animation: section-enter 0.85s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+.comic-strip figure:nth-child(2),
+.art-grid > :nth-child(3n + 2) {
+  animation-delay: 0.1s;
+}
+.comic-strip figure:nth-child(3),
+.art-grid > :nth-child(3n) {
+  animation-delay: 0.2s;
+}
+.weapon-object img {
+  animation: weapon-hover 5s ease-in-out infinite;
+}
+.art-grid button img,
+.boss-entry figure img {
+  transition: transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.art-grid button:hover img,
+.boss-entry figure:hover img {
+  transform: scale(1.035);
+}
+@keyframes name-reveal {
+  from {
+    clip-path: inset(50% 0);
+    transform: scale(0.94);
+  }
+  to {
+    clip-path: inset(0);
+    transform: scale(1);
+  }
+}
+@keyframes curtain-up {
+  to {
+    transform: translateY(-101%);
+  }
+}
+@keyframes curtain-down {
+  to {
+    transform: translateY(101%);
+  }
+}
+@keyframes name-up {
+  to {
+    transform: translateY(-50vh);
+    opacity: 0;
+  }
+}
+@keyframes name-down {
+  to {
+    transform: translateY(50vh);
+    opacity: 0;
+  }
+}
+@keyframes intro-note {
+  0%,
+  15% {
+    opacity: 0;
+  }
+  35%,
+  65% {
+    opacity: 0.6;
+  }
+  85%,
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes section-enter {
+  from {
+    opacity: 0.15;
+    transform: translateY(32px);
+    clip-path: inset(0 0 6%);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    clip-path: inset(0);
+  }
+}
+@keyframes weapon-hover {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-3deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(3deg);
+  }
+}
+@media (max-width: 700px) {
+  .hero .cinematic-art {
+    inset: 106px 0 0;
+  }
+  .cinematic-video {
+    object-position: 64% center;
+  }
+  .cinematic-controls {
+    gap: 14px;
+    bottom: 12px;
+    font-size: 10px;
+  }
+  .cinematic-caption {
+    display: none;
+  }
+  .hero.hero {
+    padding-bottom: 100px;
+  }
+}
+@keyframes hero-enter {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+.hero:has(.opening-curtain) {
+  z-index: 30;
+}

@@ -1,0 +1,587 @@
+[
+  {
+    "file": "art/title.webp",
+    "source": "Assets/Game/Sprites/ColorTiming/UI/MainMenu/标题.png",
+    "width": 833,
+    "height": 485,
+    "bytes": 63474
+  },
+  {
+    "file": "art/cover.webp",
+    "source": "Assets/Game/Sprites/ColorTiming/UI/MainMenu/封面.png",
+    "width": 1800,
+    "height": 1013,
+    "bytes": 54360
+  },
+  {
+    "file": "art/scissors-red.webp",
+    "source": "Assets/Game/Sprites/ColorTiming/Weapons/Icons/武器图标_剪刀_01_默认.png",
+    "width": 144,
+    "height": 60,
+    "bytes": 3666
+  },
+  {
+    "file": "art/scissors-purple.webp",
+    "source": "Assets/Game/Sprites/ColorTiming/Weapons/Icons/武器图标_剪刀_02_默认.png",
+    "width": 144,
+    "height": 60,
+    "bytes": 3574
+  },
+  {
+    "file": "art/scissors-green.webp",
+    "source": "Assets/Game/Sprites/ColorTiming/Weapons/Icons/武器图标_剪刀_03_默认.png",
+    "width": 144,
+    "height": 60,
+    "bytes": 3608
+  },
+  {
+    "file": "art/ringblade-red.webp",
+    "source": "Assets/Game/Sprites/ColorTiming/Weapons/Icons/武器图标_戒刀_01_默认.png",
+    "width": 81,
+    "height": 97,
+    "bytes": 3176
+  },
+  {
+    "file": "art/ringblade-purple.webp",
+    "source": "Assets/Game/Sprites/ColorTiming/Weapons/Icons/武器图标_戒刀_02_默认.png",
+    "width": 81,
+    "height": 98,
+    "bytes": 3046
+  },
+  {
+    "file": "art/ringblade-green.webp",
+    "source": "Assets/Game/Sprites/ColorTiming/Weapons/Icons/武器图标_戒刀_03_默认.png",
+    "width": 82,
+    "height": 100,
+    "bytes": 3284
+  },
+  {
+    "file": "art/ringblade-orange.webp",
+    "source": "Assets/Game/Sprites/ColorTiming/Weapons/Icons/武器图标_戒刀_04_默认.png",
+    "width": 82,
+    "height": 98,
+    "bytes": 3256
+  },
+  {
+    "file": "art/axe-red.webp",
+    "source": "Assets/Game/Sprites/ColorTiming/Weapons/Icons/武器图标_斧头_01_默认.png",
+    "width": 102,
+    "height": 112,
+    "bytes": 4122
+  },
+  {
+    "file": "art/axe-purple.webp",
+    "source": "Assets/Game/Sprites/ColorTiming/Weapons/Icons/武器图标_斧头_02_默认.png",
+    "width": 100,
+    "height": 111,
+    "bytes": 3994
+  },
+  {
+    "file": "art/axe-green.webp",
+    "source": "Assets/Game/Sprites/ColorTiming/Weapons/Icons/武器图标_斧头_03_默认.png",
+    "width": 102,
+    "height": 111,
+    "bytes": 4300
+  },
+  {
+    "file": "art/axe-orange.webp",
+    "source": "Assets/Game/Sprites/ColorTiming/Weapons/Icons/武器图标_斧头_04_默认.png",
+    "width": 101,
+    "height": 112,
+    "bytes": 4304
+  },
+  {
+    "file": "art/bomb-red.webp",
+    "source": "Assets/Game/Sprites/ColorTiming/Weapons/Icons/武器图标_炸弹_01_默认.png",
+    "width": 100,
+    "height": 84,
+    "bytes": 3960
+  },
+  {
+    "file": "art/bomb-purple.webp",
+    "source": "Assets/Game/Sprites/ColorTiming/Weapons/Icons/武器图标_炸弹_02_默认.png",
+    "width": 100,
+    "height": 84,
+    "bytes": 3878
+  },
+  {
+    "file": "art/bomb-green.webp",
+    "source": "Assets/Game/Sprites/ColorTiming/Weapons/Icons/武器图标_炸弹_03_默认.png",
+    "width": 100,
+    "height": 84,
+    "bytes": 4098
+  },
+  {
+    "file": "art/hammer-red.webp",
+    "source": "Assets/Game/Sprites/ColorTiming/Weapons/Icons/武器图标_锤子_01_默认.png",
+    "width": 128,
+    "height": 73,
+    "bytes": 3616
+  },
+  {
+    "file": "art/hammer-purple.webp",
+    "source": "Assets/Game/Sprites/ColorTiming/Weapons/Icons/武器图标_锤子_02_默认.png",
+    "width": 128,
+    "height": 73,
+    "bytes": 3512
+  },
+  {
+    "file": "art/hammer-green.webp",
+    "source": "Assets/Game/Sprites/ColorTiming/Weapons/Icons/武器图标_锤子_03_默认.png",
+    "width": 128,
+    "height": 73,
+    "bytes": 3620
+  },
+  {
+    "file": "art/plane-red.webp",
+    "source": "Assets/Game/Sprites/ColorTiming/Weapons/Icons/武器图标_飞机_01_默认.png",
+    "width": 75,
+    "height": 90,
+    "bytes": 3340
+  },
+  {
+    "file": "art/plane-purple.webp",
+    "source": "Assets/Game/Sprites/ColorTiming/Weapons/Icons/武器图标_飞机_02_默认.png",
+    "width": 75,
+    "height": 88,
+    "bytes": 3162
+  },
+  {
+    "file": "art/plane-green.webp",
+    "source": "Assets/Game/Sprites/ColorTiming/Weapons/Icons/武器图标_飞机_03_默认.png",
+    "width": 74,
+    "height": 89,
+    "bytes": 3552
+  },
+  {
+    "file": "art/plane-orange.webp",
+    "source": "Assets/Game/Sprites/ColorTiming/Weapons/Icons/武器图标_飞机_04_默认.png",
+    "width": 75,
+    "height": 87,
+    "bytes": 3390
+  },
+  {
+    "file": "art/hero-idle-strip.webp",
+    "source": "Assets/Game/Sprites/ColorTiming/Hero/Sequences/Idle",
+    "width": 3072,
+    "height": 256,
+    "bytes": 44056,
+    "frames": 12,
+    "duration": 0.4,
+    "sourcePrefix": "英雄_待机"
+  },
+  {
+    "file": "art/hero-run-strip.webp",
+    "source": "Assets/Game/Sprites/ColorTiming/Hero/Sequences/Move/Front",
+    "width": 1536,
+    "height": 256,
+    "bytes": 26306,
+    "frames": 6,
+    "duration": 0.2,
+    "sourcePrefix": "英雄_移动"
+  },
+  {
+    "file": "art/scissors-purple-strip.webp",
+    "source": "Assets/Game/Sprites/ColorTiming/Hero/Sequences/Scissors/Attack",
+    "width": 5632,
+    "height": 256,
+    "bytes": 102068,
+    "frames": 22,
+    "duration": 0.733,
+    "sourcePrefix": "英雄_剪刀_攻击_紫色"
+  },
+  {
+    "file": "art/scissors-red-strip.webp",
+    "source": "Assets/Game/Sprites/ColorTiming/Hero/Sequences/Scissors/Attack",
+    "width": 5632,
+    "height": 256,
+    "bytes": 102128,
+    "frames": 22,
+    "duration": 0.733,
+    "sourcePrefix": "英雄_剪刀_攻击_红色"
+  },
+  {
+    "file": "art/scissors-green-strip.webp",
+    "source": "Assets/Game/Sprites/ColorTiming/Hero/Sequences/Scissors/Attack",
+    "width": 5632,
+    "height": 256,
+    "bytes": 98714,
+    "frames": 22,
+    "duration": 0.733,
+    "sourcePrefix": "英雄_剪刀_攻击_绿色"
+  },
+  {
+    "file": "art/axe-orange-strip.webp",
+    "source": "Assets/Game/Sprites/ColorTiming/Hero/Sequences/Axe/Idle",
+    "width": 3072,
+    "height": 256,
+    "bytes": 83284,
+    "frames": 12,
+    "duration": 0.4,
+    "sourcePrefix": "英雄_斧头_待机_橙色"
+  },
+  {
+    "file": "art/axe-purple-strip.webp",
+    "source": "Assets/Game/Sprites/ColorTiming/Hero/Sequences/Axe/Idle",
+    "width": 3072,
+    "height": 256,
+    "bytes": 80036,
+    "frames": 12,
+    "duration": 0.4,
+    "sourcePrefix": "英雄_斧头_待机_紫色"
+  },
+  {
+    "file": "art/axe-red-strip.webp",
+    "source": "Assets/Game/Sprites/ColorTiming/Hero/Sequences/Axe/Idle",
+    "width": 3072,
+    "height": 256,
+    "bytes": 83752,
+    "frames": 12,
+    "duration": 0.4,
+    "sourcePrefix": "英雄_斧头_待机_红色"
+  },
+  {
+    "file": "art/axe-green-strip.webp",
+    "source": "Assets/Game/Sprites/ColorTiming/Hero/Sequences/Axe/Idle",
+    "width": 3072,
+    "height": 256,
+    "bytes": 86494,
+    "frames": 12,
+    "duration": 0.4,
+    "sourcePrefix": "英雄_斧头_待机_绿色"
+  },
+  {
+    "file": "art/hammer-purple-strip.webp",
+    "source": "Assets/Game/Sprites/ColorTiming/Hero/Sequences/Hammer/Idle",
+    "width": 3072,
+    "height": 256,
+    "bytes": 64186,
+    "frames": 12,
+    "duration": 0.4,
+    "sourcePrefix": "英雄_锤子_待机_紫色"
+  },
+  {
+    "file": "art/hammer-red-strip.webp",
+    "source": "Assets/Game/Sprites/ColorTiming/Hero/Sequences/Hammer/Idle",
+    "width": 3072,
+    "height": 256,
+    "bytes": 66158,
+    "frames": 12,
+    "duration": 0.4,
+    "sourcePrefix": "英雄_锤子_待机_红色"
+  },
+  {
+    "file": "art/hammer-green-strip.webp",
+    "source": "Assets/Game/Sprites/ColorTiming/Hero/Sequences/Hammer/Idle",
+    "width": 3072,
+    "height": 256,
+    "bytes": 68044,
+    "frames": 12,
+    "duration": 0.4,
+    "sourcePrefix": "英雄_锤子_待机_绿色"
+  },
+  {
+    "file": "art/bomb-purple-strip.webp",
+    "source": "Assets/Game/Sprites/ColorTiming/Hero/Sequences/Bomb/Idle",
+    "width": 3072,
+    "height": 256,
+    "bytes": 56438,
+    "frames": 12,
+    "duration": 0.4,
+    "sourcePrefix": "英雄_炸弹_待机_紫色"
+  },
+  {
+    "file": "art/bomb-red-strip.webp",
+    "source": "Assets/Game/Sprites/ColorTiming/Hero/Sequences/Bomb/Idle",
+    "width": 3072,
+    "height": 256,
+    "bytes": 58130,
+    "frames": 12,
+    "duration": 0.4,
+    "sourcePrefix": "英雄_炸弹_待机_红色"
+  },
+  {
+    "file": "art/bomb-green-strip.webp",
+    "source": "Assets/Game/Sprites/ColorTiming/Hero/Sequences/Bomb/Idle",
+    "width": 3072,
+    "height": 256,
+    "bytes": 59190,
+    "frames": 12,
+    "duration": 0.4,
+    "sourcePrefix": "英雄_炸弹_待机_绿色"
+  },
+  {
+    "file": "art/plane-orange-strip.webp",
+    "source": "Assets/Game/Sprites/ColorTiming/Hero/Sequences/Plane/Idle",
+    "width": 3072,
+    "height": 256,
+    "bytes": 69458,
+    "frames": 12,
+    "duration": 0.4,
+    "sourcePrefix": "英雄_飞机_待机_橙色"
+  },
+  {
+    "file": "art/plane-purple-strip.webp",
+    "source": "Assets/Game/Sprites/ColorTiming/Hero/Sequences/Plane/Idle",
+    "width": 3072,
+    "height": 256,
+    "bytes": 65334,
+    "frames": 12,
+    "duration": 0.4,
+    "sourcePrefix": "英雄_飞机_待机_紫色"
+  },
+  {
+    "file": "art/plane-red-strip.webp",
+    "source": "Assets/Game/Sprites/ColorTiming/Hero/Sequences/Plane/Idle",
+    "width": 3072,
+    "height": 256,
+    "bytes": 68518,
+    "frames": 12,
+    "duration": 0.4,
+    "sourcePrefix": "英雄_飞机_待机_红色"
+  },
+  {
+    "file": "art/plane-green-strip.webp",
+    "source": "Assets/Game/Sprites/ColorTiming/Hero/Sequences/Plane/Idle",
+    "width": 3072,
+    "height": 256,
+    "bytes": 69868,
+    "frames": 12,
+    "duration": 0.4,
+    "sourcePrefix": "英雄_飞机_待机_绿色"
+  },
+  {
+    "file": "art/ringblade-orange-strip.webp",
+    "source": "Assets/Game/Sprites/ColorTiming/Hero/Sequences/RingBlade/Idle",
+    "width": 3072,
+    "height": 256,
+    "bytes": 63594,
+    "frames": 12,
+    "duration": 0.4,
+    "sourcePrefix": "英雄_戒刀_待机_橙色"
+  },
+  {
+    "file": "art/ringblade-purple-strip.webp",
+    "source": "Assets/Game/Sprites/ColorTiming/Hero/Sequences/RingBlade/Idle",
+    "width": 3072,
+    "height": 256,
+    "bytes": 60636,
+    "frames": 12,
+    "duration": 0.4,
+    "sourcePrefix": "英雄_戒刀_待机_紫色"
+  },
+  {
+    "file": "art/ringblade-red-strip.webp",
+    "source": "Assets/Game/Sprites/ColorTiming/Hero/Sequences/RingBlade/Idle",
+    "width": 3072,
+    "height": 256,
+    "bytes": 62324,
+    "frames": 12,
+    "duration": 0.4,
+    "sourcePrefix": "英雄_戒刀_待机_红色"
+  },
+  {
+    "file": "art/ringblade-green-strip.webp",
+    "source": "Assets/Game/Sprites/ColorTiming/Hero/Sequences/RingBlade/Idle",
+    "width": 3072,
+    "height": 256,
+    "bytes": 63964,
+    "frames": 12,
+    "duration": 0.4,
+    "sourcePrefix": "英雄_戒刀_待机_绿色"
+  },
+  {
+    "file": "art/lost-world.webp",
+    "source": "Arts/失物语设定集.pdf",
+    "width": 1444,
+    "height": 794,
+    "bytes": 73068,
+    "pdfPage": 5,
+    "crop": [
+      0.198,
+      0,
+      1,
+      0.97
+    ],
+    "kind": "concept-art"
+  },
+  {
+    "file": "art/weaver-arena.webp",
+    "source": "Arts/失物语设定集.pdf",
+    "width": 1384,
+    "height": 795,
+    "bytes": 120410,
+    "pdfPage": 13,
+    "crop": [
+      0.201,
+      0.01,
+      0.97,
+      0.98
+    ],
+    "kind": "concept-art"
+  },
+  {
+    "file": "art/bookworm-arena.webp",
+    "source": "Arts/失物语设定集.pdf",
+    "width": 1390,
+    "height": 795,
+    "bytes": 113454,
+    "pdfPage": 27,
+    "crop": [
+      0.2,
+      0.01,
+      0.972,
+      0.98
+    ],
+    "kind": "concept-art"
+  },
+  {
+    "file": "art/data-arena.webp",
+    "source": "Arts/失物语设定集.pdf",
+    "width": 1388,
+    "height": 795,
+    "bytes": 116596,
+    "pdfPage": 44,
+    "crop": [
+      0.199,
+      0.01,
+      0.97,
+      0.98
+    ],
+    "kind": "concept-art"
+  },
+  {
+    "file": "art/weaver-study.webp",
+    "source": "Arts/失物语设定集.pdf",
+    "width": 1600,
+    "height": 728,
+    "bytes": 142134,
+    "pdfPage": 18,
+    "crop": [
+      0,
+      0,
+      1,
+      1
+    ],
+    "kind": "concept-art"
+  },
+  {
+    "file": "art/bookworm-study.webp",
+    "source": "Arts/失物语设定集.pdf",
+    "width": 1600,
+    "height": 728,
+    "bytes": 180470,
+    "pdfPage": 33,
+    "crop": [
+      0,
+      0,
+      1,
+      1
+    ],
+    "kind": "concept-art"
+  },
+  {
+    "file": "art/hero-study.webp",
+    "source": "Arts/失物语设定集.pdf",
+    "width": 1600,
+    "height": 728,
+    "bytes": 109920,
+    "pdfPage": 9,
+    "crop": [
+      0,
+      0,
+      1,
+      1
+    ],
+    "kind": "concept-art"
+  },
+  {
+    "file": "art/weapon-study.webp",
+    "source": "Arts/失物语设定集.pdf",
+    "width": 1600,
+    "height": 728,
+    "bytes": 90602,
+    "pdfPage": 25,
+    "crop": [
+      0,
+      0,
+      1,
+      1
+    ],
+    "kind": "concept-art"
+  },
+  {
+    "file": "art/paper-weapons.webp",
+    "source": "Arts/失物语设定集.pdf",
+    "width": 1600,
+    "height": 728,
+    "bytes": 82512,
+    "pdfPage": 42,
+    "crop": [
+      0,
+      0,
+      1,
+      1
+    ],
+    "kind": "concept-art"
+  },
+  {
+    "file": "art/comic-awakening.webp",
+    "source": "Arts/失物语设定集.pdf",
+    "width": 734,
+    "height": 397,
+    "bytes": 45174,
+    "pdfPage": 55,
+    "crop": [
+      0.052,
+      0.008,
+      0.46,
+      0.493
+    ],
+    "kind": "concept-art"
+  },
+  {
+    "file": "art/comic-weaver.webp",
+    "source": "Arts/失物语设定集.pdf",
+    "width": 743,
+    "height": 403,
+    "bytes": 49360,
+    "pdfPage": 55,
+    "crop": [
+      0.555,
+      0.008,
+      0.968,
+      0.5
+    ],
+    "kind": "concept-art"
+  },
+  {
+    "file": "art/comic-colour.webp",
+    "source": "Arts/失物语设定集.pdf",
+    "width": 659,
+    "height": 373,
+    "bytes": 24954,
+    "pdfPage": 56,
+    "crop": [
+      0.574,
+      0.022,
+      0.94,
+      0.477
+    ],
+    "kind": "concept-art"
+  },
+  {
+    "file": "art/boss2-scene.webp",
+    "source": "Web/public/images/boss2-scene.jpg",
+    "width": 1600,
+    "height": 886,
+    "bytes": 138746
+  },
+  {
+    "file": "art/boss2-fight.webp",
+    "source": "Web/public/images/boss2-fight.jpg",
+    "width": 1600,
+    "height": 886,
+    "bytes": 84894
+  }
+]

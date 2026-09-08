@@ -1,0 +1,117 @@
+{
+  "hero-idle": {
+    "src": "/art/hero-idle-strip.webp",
+    "frames": 12,
+    "duration": 0.4
+  },
+  "hero-run": {
+    "src": "/art/hero-run-strip.webp",
+    "frames": 6,
+    "duration": 0.2
+  },
+  "scissors-purple": {
+    "src": "/art/scissors-purple-strip.webp",
+    "frames": 22,
+    "duration": 0.733
+  },
+  "scissors-red": {
+    "src": "/art/scissors-red-strip.webp",
+    "frames": 22,
+    "duration": 0.733
+  },
+  "scissors-green": {
+    "src": "/art/scissors-green-strip.webp",
+    "frames": 22,
+    "duration": 0.733
+  },
+  "axe-orange": {
+    "src": "/art/axe-orange-strip.webp",
+    "frames": 12,
+    "duration": 0.4
+  },
+  "axe-purple": {
+    "src": "/art/axe-purple-strip.webp",
+    "frames": 12,
+    "duration": 0.4
+  },
+  "axe-red": {
+    "src": "/art/axe-red-strip.webp",
+    "frames": 12,
+    "duration": 0.4
+  },
+  "axe-green": {
+    "src": "/art/axe-green-strip.webp",
+    "frames": 12,
+    "duration": 0.4
+  },
+  "hammer-purple": {
+    "src": "/art/hammer-purple-strip.webp",
+    "frames": 12,
+    "duration": 0.4
+  },
+  "hammer-red": {
+    "src": "/art/hammer-red-strip.webp",
+    "frames": 12,
+    "duration": 0.4
+  },
+  "hammer-green": {
+    "src": "/art/hammer-green-strip.webp",
+    "frames": 12,
+    "duration": 0.4
+  },
+  "bomb-purple": {
+    "src": "/art/bomb-purple-strip.webp",
+    "frames": 12,
+    "duration": 0.4
+  },
+  "bomb-red": {
+    "src": "/art/bomb-red-strip.webp",
+    "frames": 12,
+    "duration": 0.4
+  },
+  "bomb-green": {
+    "src": "/art/bomb-green-strip.webp",
+    "frames": 12,
+    "duration": 0.4
+  },
+  "plane-orange": {
+    "src": "/art/plane-orange-strip.webp",
+    "frames": 12,
+    "duration": 0.4
+  },
+  "plane-purple": {
+    "src": "/art/plane-purple-strip.webp",
+    "frames": 12,
+    "duration": 0.4
+  },
+  "plane-red": {
+    "src": "/art/plane-red-strip.webp",
+    "frames": 12,
+    "duration": 0.4
+  },
+  "plane-green": {
+    "src": "/art/plane-green-strip.webp",
+    "frames": 12,
+    "duration": 0.4
+  },
+  "ringblade-orange": {
+    "src": "/art/ringblade-orange-strip.webp",
+    "frames": 12,
+    "duration": 0.4
+  },
+  "ringblade-purple": {
+    "src": "/art/ringblade-purple-strip.webp",
+    "frames": 12,
+    "duration": 0.4
+  },
+  "ringblade-red": {
+    "src": "/art/ringblade-red-strip.webp",
+    "frames": 12,
+    "duration": 0.4
+  },
+  "ringblade-green": {
+    "src": "/art/ringblade-green-strip.webp",
+    "frames": 12,
+    "duration": 0.4
+  }
+}
