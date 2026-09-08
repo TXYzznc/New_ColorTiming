@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ToolHubSettings
   m_EditorClassIdentifier: 
   locked: 0
-  selectedIndex: 2
+  selectedIndex: 4
   tools:
   - typeName: LogConfigPanel, Builtin.Editor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
     displayName: "\u65E5\u5FD7\u914D\u7F6E\u7BA1\u7406\u5668"
@@ -32,3 +32,7 @@ MonoBehaviour:
     displayName: "\u5FEB\u901F\u9009\u4E2D"
     description: "\u5728 Game \u89C6\u56FE\u4E2D\u901A\u8FC7\u9F20\u6807\u4E2D\u952E\u5FEB\u901F\u5B9A\u4F4D\u5E76\u9009\u4E2D
       UI\u30013D \u6216 2D \u5BF9\u8C61"
+  - typeName: UnityCameraRecording.CameraRecorderPanel, CameraRecording.Editor, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+    displayName: "\u6444\u50CF\u673A\u89C6\u9891\u5F55\u5236"
+    description: "\u6307\u5B9A\u6444\u50CF\u673A\u9AD8\u5206\u8FA8\u7387 MP4 \u5F55\u5236\uFF0C\u5305\u542B\u6E38\u620F\u58F0\u97F3"

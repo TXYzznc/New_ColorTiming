@@ -175,4 +175,5 @@ Assets/Game/Font/Common/SIMHEI SDF.asset
 # Local Codex artifact-tool workspaces and exported verification copies.
 /.codex-tmp/
 /outputs/
+/Recordings/
 *.inspect.ndjson

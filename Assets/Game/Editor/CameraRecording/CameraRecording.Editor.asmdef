@@ -1,0 +1,6 @@
+{
+  "name": "CameraRecording.Editor",
+  "references": ["Builtin.Editor", "Unity.Recorder.Editor", "Unity.RenderPipelines.Universal.Runtime", "Unity.RenderPipelines.Core.Runtime"],
+  "includePlatforms": ["Editor"],
+  "autoReferenced": true
+}

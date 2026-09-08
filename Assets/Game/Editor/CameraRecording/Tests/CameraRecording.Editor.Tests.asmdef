@@ -1,0 +1,7 @@
+{
+  "name": "CameraRecording.Editor.Tests",
+  "references": ["CameraRecording.Editor", "Builtin.Editor", "Unity.RenderPipelines.Universal.Runtime", "Unity.RenderPipelines.Core.Runtime"],
+  "includePlatforms": ["Editor"],
+  "autoReferenced": false,
+  "optionalUnityReferences": ["TestAssemblies"]
+}
